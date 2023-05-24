@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Api\v1\InteractionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,6 +15,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+Route::group(['prefix' => 'interactions'], function () {
+    Route::get('/', [InteractionController::class, 'index']);
+    Route::get('/{id}', [InteractionController::class, 'show']);
+    Route::post('/', [InteractionController::class, 'store']);
+    Route::put('/{id}', [InteractionController::class, 'update']);
+    Route::delete('/{id}', [InteractionController::class, 'destroy']);
 });
