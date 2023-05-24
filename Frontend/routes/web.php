@@ -1,7 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\AuthController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -13,4 +14,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+//call middleware for check login
+Route::group(['middleware' => 'auth'], function () {
+    Route::get('/', [HomeController::class, 'index'])->name('home');
+});
 
+//route for login
+Route::get('/login', [AuthController::class, 'login'])->name('login');

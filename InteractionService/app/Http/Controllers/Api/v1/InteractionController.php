@@ -16,32 +16,32 @@ class InteractionController extends Controller
      */
     public function index(Request $request)
     {
-        $token = $request->header('Authorization');
+        // $token = $request->header('Authorization');
 
-        // Kiểm tra xác thực token
-        if (!$token) {
-            return response()->json(['error' => 'Unauthorized'], 401);
-        }
-        $client = new Client();
-        try {
-            $response = $client->request('GET', 'http://userservice.test:8080/api/auth/user-profile', [
-                'headers' => [
-                    'Authorization' => $token,
-                ],
-            ]);
-        } catch (\Exception $e) {
-            return response()->json(['error' => 'Unauthorized'], 401);
-        }
-        $user = json_decode($response->getBody()->getContents());
-        if (!$user) {
-            return response()->json(['error' => 'Unauthorized'], 401);
-        }
-        return response()->json([
-            'message' => 'success',
-            'data' => [
-                'user' => $user,
-            ],
-        ], 200);
+        // // Kiểm tra xác thực token
+        // if (!$token) {
+        //     return response()->json(['error' => 'Unauthorized'], 401);
+        // }
+        // $client = new Client();
+        // try {
+        //     $response = $client->request('GET', 'http://userservice.test:8080/api/auth/user-profile', [
+        //         'headers' => [
+        //             'Authorization' => $token,
+        //         ],
+        //     ]);
+        // } catch (\Exception $e) {
+        //     return response()->json(['error' => 'Unauthorized'], 401);
+        // }
+        // $user = json_decode($response->getBody()->getContents());
+        // if (!$user) {
+        //     return response()->json(['error' => 'Unauthorized'], 401);
+        // }
+        // return response()->json([
+        //     'message' => 'success',
+        //     'data' => [
+        //         'user' => $user,
+        //     ],
+        // ], 200);
     }
 
     /**
