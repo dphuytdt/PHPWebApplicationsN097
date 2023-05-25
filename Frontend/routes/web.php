@@ -14,14 +14,23 @@ use App\Http\Controllers\AuthController;
 |
 */
 
-//call middleware for check login
+
 // Route::group(['middleware' => 'check.auth'], function () {
     Route::get('/', [HomeController::class, 'index'])->name('home');
 // });
 
-//route for login
+//route for Auth
 Route::prefix('auth')->group(function () {
     Route::get('/login', [AuthController::class, 'login'])->name('login');
     Route::post('/login', [AuthController::class, 'postLogin'])->name('postLogin');
     Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
+
+    Route::get('/register', [AuthController::class, 'register'])->name('register');
+    Route::post('/register', [AuthController::class, 'postRegister'])->name('postRegister');
+
+    Route::get('/forgot-password', [AuthController::class, 'forgotPassword'])->name('forgotPassword');
+    Route::post('/forgot-password', [AuthController::class, 'postForgotPassword'])->name('postForgotPassword');
+
+    Route::get('/input-otp', [AuthController::class, 'inputOtp'])->name('inputOtp');
+    Route::post('/input-otp', [AuthController::class, 'postInputOtp'])->name('postInputOtp');
 });

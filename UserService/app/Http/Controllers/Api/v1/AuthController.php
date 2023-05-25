@@ -112,4 +112,27 @@ class AuthController extends Controller
         ], 201);
     }
 
+    public function forgotPassword(Request $request) {
+        //check email exist
+        $validator = Validator::make($request->all(), [
+            'email' => 'required|string|email|max:100',
+        ]);
+
+        if($validator->fails()){
+            return response()->json($validator->errors()->toJson(), 400);
+        }
+
+        $user = User::where('email', $request->email)->first();
+        if(!$user){
+            return response()->json([
+                'message' => 'Email not exist',
+            ], 201);
+        }
+
+        return response()->json([
+            'message' => 'User successfully forgot password',
+            'user' => $user,
+        ], 201);
+    }
+
 }
