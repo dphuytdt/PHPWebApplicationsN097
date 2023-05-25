@@ -7,11 +7,26 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Tymon\JWTAuth\Exceptions\JWTException;
+use Tymon\JWTAuth\Facades\JWTAuth;
 
 class AuthController extends Controller
 {
     public function __construct() {
         $this->middleware('auth:api', ['except' => ['login', 'register']]);
+    }
+
+    public function checkAuth(Request $request)
+    {
+        try {
+            $user = JWTAuth::parseToken()->authenticate();
+
+            // Người dùng đã xác thực thành công
+            return response()->json(['message' => 'Authenticated']);
+        } catch (JWTException $e) {
+            // Lỗi xác thực token
+            return response()->json(['error' => 'Unauthorized'], 401);
+        }
     }
 
     public function login(Request $request){

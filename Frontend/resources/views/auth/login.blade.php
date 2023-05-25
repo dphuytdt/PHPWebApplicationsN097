@@ -108,8 +108,10 @@
 <body>
     <div class="container">
         <h2 class="login-title">Log in</h2>
-    
-        <form class="login-form" method="POST" action="{{URL::to('http://userservice.test:8080/api/auth/login')}}">
+        @if (session('error'))
+            <p>{{ session('error') }}</p>
+        @endif
+        <form class="login-form" method="POST" action="{{ route('login') }}">
             @csrf
           <div>
             <label for="email">Email </label>
