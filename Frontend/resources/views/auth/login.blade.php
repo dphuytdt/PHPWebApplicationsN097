@@ -4,7 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>Login </title>
+    {{-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous"> --}}
+    <link rel="icon" type="image/png" href="{{ asset('images/logo.png') }}" />
     <style>
     * {
         margin: 0;
@@ -109,7 +111,9 @@
     <div class="container">
         <h2 class="login-title">Log in</h2>
         @if (session('error'))
-            <p>{{ session('error') }}</p>
+            <div class="alert alert-danger">
+                {{ session('error') }}
+            </div>
         @endif
         <form class="login-form" method="POST" action="{{ route('login') }}">
             @csrf
