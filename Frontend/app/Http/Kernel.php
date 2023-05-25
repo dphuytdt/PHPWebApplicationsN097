@@ -68,6 +68,9 @@ class Kernel extends HttpKernel
         // ...
         'jwt.auth' => \App\Http\Middleware\JwtMiddleware::class, // Middleware xác thực token
         'redirectIfAuthenticated' => \App\Http\Middleware\RedirectIfAuthenticated::class,
+        // ...
+        'check.auth' => \App\Http\Middleware\CheckAuthentication::class, // Middleware kiểm tra xác thực
+        'apply' => \App\Http\Middleware\ApplyMiddleware::class, // Middleware áp dụng xác thực
     ];
 
 }
