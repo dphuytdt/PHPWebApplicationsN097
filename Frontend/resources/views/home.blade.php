@@ -1,6 +1,9 @@
 <h1> This is Home Page </h1>
 
+@if (session('token'))
 {{-- logout --}}
 <a href="{{ route('logout') }}">Logout</a>
-
-{{-- profile --}}
+@else
+{{-- login --}}
+<a href="{{ route('login') }}">Login</a>
+@endif

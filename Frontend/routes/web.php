@@ -15,9 +15,9 @@ use App\Http\Controllers\AuthController;
 */
 
 //call middleware for check login
-Route::group(['middleware' => 'check.auth'], function () {
+// Route::group(['middleware' => 'check.auth'], function () {
     Route::get('/', [HomeController::class, 'index'])->name('home');
-});
+// });
 
 //route for login
 Route::prefix('auth')->group(function () {
