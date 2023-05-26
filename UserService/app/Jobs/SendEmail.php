@@ -15,7 +15,7 @@ class SendEmail implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    protected $data;
+    // protected $data;
     protected $user;
 
     /**
@@ -23,9 +23,8 @@ class SendEmail implements ShouldQueue
      *
      * @param $data
      */
-    public function __construct($data, $user)
+    public function __construct( $user)
     {
-        $this->data = $data;
         $this->user = $user;
     }
 

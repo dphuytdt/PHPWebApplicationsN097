@@ -79,9 +79,7 @@
                                                 <table border="0" cellpadding="0" cellspacing="0" width="100%">
                                                     <tr>
                                                         <td valign="top" class="textContent">
-                                                            <h3 style="color:#5F5F5F;line-height:125%;font-family:Helvetica,Arial,sans-serif;font-size:20px;font-weight:normal;margin-top:0;margin-bottom:3px;text-align:left;">This is your OTP</h3>
-                                                            <div style="text-align:left;font-family:Helvetica,Arial,sans-serif;font-size:15px;margin-bottom:0;margin-top:3px;color:#5F5F5F;line-height:135%;"> </div>
-                                                            <div style="text-align:left;font-family:Helvetica,Arial,sans-serif;font-size:15px;margin-bottom:0;margin-top:3px;color:#5F5F5F;line-height:135%;"> </div>
+                                                            <h3 style="color:#5F5F5F;line-height:125%;font-family:Helvetica,Arial,sans-serif;font-size:20px;font-weight:normal;margin-top:0;margin-bottom:3px;text-align:left;">This is your OTP: {{   $user['otp']    }}</h3>
                                                         </td>
                                                     </tr>
                                                 </table>
@@ -110,7 +108,7 @@
                                                 <table border="0" cellpadding="0" cellspacing="0" width="50%" class="emailButton" style="background-color: #2E7D32;">
                                                     <tr>
                                                         <td align="center" valign="middle" class="buttonContent" style="padding-top:15px;padding-bottom:15px;padding-right:15px;padding-left:15px;">
-                                                            <a style="color:#FFFFFF;text-decoration:none;font-family:Helvetica,Arial,sans-serif;font-size:20px;line-height:135%;" href="" target="_blank">Access Here</a>
+                                                            <a style="color:#FFFFFF;text-decoration:none;font-family:Helvetica,Arial,sans-serif;font-size:20px;line-height:135%;" href="{{URL::to('http://frontend.test:8080/auth/input-otp')}}" target="_blank">Access Here</a>
                                                         </td>
                                                     </tr>
                                                 </table>

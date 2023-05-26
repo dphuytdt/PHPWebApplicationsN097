@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use GuzzleHttp\Client;
+use Illuminate\Support\Facades\Http;
 class AuthController extends Controller
 {
     public function login()
@@ -121,28 +122,35 @@ class AuthController extends Controller
 
     public function postForgotPassword(Request $request)
     {
+        $userService = 'http://userservice.test:8080/api/auth';
+        // $mailService = 'http://mailservice.test:8080/api';
+        $email = $request->email;
         $client = new Client();
-        $response = $client->post('http://userservice.test:8080/api/auth/forgot-password', [
+        $response = $client->post($userService . '/forgot-password', [
             'json' => $request->only('email'),
         ]);
-        // try {
-        //     // Gửi yêu cầu quên mật khẩu từ Home service tới UserService
-        //     $response = $client->post('http://userservice.test:8080/api/auth/forgot-password', [
-        //         'json' => $request->all(),
+        if ($response->getStatusCode() == 200) {
+            return redirect()->route('inputOtp')->with('message', 'Please check your email to get OTP');
+        }
+        return redirect()->back()->with('error', 'Send OTP failed');
+        // dd($response->getStatusCode());
+        //$result = json_decode($response->getBody(), true);
+        // if ($response->getStatusCode() == 200) {
+        //     $response = $client->post($mailService . '/sendOTP', [
+        //         'json' => [
+        //             'email' => $result['user']['email'],
+        //             'name' => $result['user']['name'],
+        //             // 'subject' => 'Reset password',
+        //         ],
         //     ]);
-
         //     $result = json_decode($response->getBody(), true);
-        //     //get status code
-        //     if ($response->getStatusCode() == 201) {
-        //         // Gửi mã OTP thành công, chuyển hướng đến trang nhập mã OTP
-        //         return redirect()->route('inputOtp')->with('message', 'OTP is sent');
-        //     } else {
-        //         // Gửi mã OTP thất bại, chuyển hướng đến trang quên mật khẩu
-        //         return redirect()->route('forgotPassword')->with('error', 'Can not use this service now');
+        //     // dd($result);
+        //     if ($response->getStatusCode() == 200) {
+        //         return redirect()->route('inputOtp')->with('message', 'Please check your email to get OTP');
         //     }
-        // } catch (\Exception $e) {
-        //     return redirect()->route('forgotPassword')->with('error', 'Can not use this service now');
+        //     return redirect()->back()->with('error', 'Send OTP failed');
         // }
+        // return redirect()->back()->with('error', 'Email does not exist');
     }
 
     public function inputOtp()

@@ -12,13 +12,13 @@ use Illuminate\Queue\SerializesModels;
 class MailNotify extends Mailable
 {
     use Queueable, SerializesModels;
-    public $data;
+    public $user;
     /**
      * Create a new message instance.
      */
-    public function __construct($data)
+    public function __construct($user)
     {
-        $this->data = $data;
+        $this->user = $user;
     }
 
     public function build(){

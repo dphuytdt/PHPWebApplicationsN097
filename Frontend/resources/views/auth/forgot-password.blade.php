@@ -17,7 +17,7 @@
                 {{ session('error') }}
             </div>
         @endif
-        <form class="login-form" method="POST" action="{{ route('postForgotPassword') }}">
+        <form class="login-form" method="POST" action="{{ route('postForgotPassword') }}" enctype="multipart/form-data">
             @csrf
             <div>
                 <label for="email">Email </label>

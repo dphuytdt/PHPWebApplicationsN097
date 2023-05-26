@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\v1;
 
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
+use App\Jobs\SendEmail;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -13,7 +14,7 @@ use Tymon\JWTAuth\Facades\JWTAuth;
 class AuthController extends Controller
 {
     public function __construct() {
-        $this->middleware('auth:api', ['except' => ['login', 'register']]);
+        $this->middleware('auth:api', ['except' => ['login', 'register', 'forgotPassword']]);
     }
 
     public function checkAuth(Request $request)
@@ -113,7 +114,7 @@ class AuthController extends Controller
     }
 
     public function forgotPassword(Request $request) {
-        //check email exist
+        $email = $request->email;
         $validator = Validator::make($request->all(), [
             'email' => 'required|string|email|max:100',
         ]);
@@ -121,18 +122,40 @@ class AuthController extends Controller
         if($validator->fails()){
             return response()->json($validator->errors()->toJson(), 400);
         }
+        // Xử lý logic để lấy thông tin người dùng từ database hoặc bất kỳ nguồn dữ liệu nào khác
+        $user = User::where('email', $email)->first();
+            // dd($user);
 
-        $user = User::where('email', $request->email)->first();
-        if(!$user){
-            return response()->json([
-                'message' => 'Email not exist',
-            ], 201);
+        if ($user) {
+            $otp = rand(100000, 999999);
+            $user = [
+                'email' => $email,
+                'name' => $user->name,
+                'otp' => $otp,
+            ];
+            if (SendEmail::dispatch($user)) {
+                return response()->json([
+                    'status' => true,
+                    'message' => 'Email sent successfully',
+                    'data' => $user,
+                ], 200);
+            } else {
+                return response()->json([
+                    'status' => false,
+                    'message' => 'Email not sent',
+                    'data' => $user,
+                ], 400);
+            }
         }
+        // if ($user) {
+        //     return response()->json([
+        //         'status' => true,
+        //         'message' => 'User found',
+        //         'user' => $user,
+        //     ], 200);
+        // }
 
-        return response()->json([
-            'message' => 'User successfully forgot password',
-            'user' => $user,
-        ], 201);
+        return response()->json(['error' => 'User not found'], 404);
     }
 
 }
