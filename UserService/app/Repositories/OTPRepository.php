@@ -21,7 +21,7 @@ class OTPRepository implements OTPRepositoryInterface
 
     public function createOTP($email, $otp, $user_id) 
     {
-        $user = $this->user->where('user_id', $user_id)->first();
+        $user = $this->user->where('id', $user_id)->first();
         if ($user) {
             $this->otp->create([
                 'email' => $email,
@@ -45,5 +45,10 @@ class OTPRepository implements OTPRepositoryInterface
         }
 
         return false;
+    }
+
+    public function deleteOTP($email, $otp, $user_id) 
+    {
+        $this->otp->where('email', $email)->where('otp', $otp)->where('user_id', $user_id)->delete();
     }
 }

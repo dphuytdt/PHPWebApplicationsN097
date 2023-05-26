@@ -18,7 +18,7 @@ class AuthController extends Controller
     private UserRepositoryInterface $userRepository;
     private OTPRepositoryInterface $otpRepository;
     public function __construct(UserRepositoryInterface $userRepository, OTPRepositoryInterface $otpRepository) {
-        $this->middleware('auth:api', ['except' => ['login', 'register', 'forgotPassword']]);
+        $this->middleware('auth:api', ['except' => ['login', 'register', 'forgotPassword', 'verifyOTP' ]]);
         $this->userRepository = $userRepository;
         $this->otpRepository = $otpRepository;
     }
@@ -179,6 +179,8 @@ class AuthController extends Controller
             $user_id = $user->id;
             $otp = $this->otpRepository->checkOTP($email, $otp, $user_id);
             if ($otp ==true) {
+                //delete otp
+                $this->otpRepository->deleteOTP($email, $otp, $user_id);
                 return response()->json([
                     'status' => true,
                     'message' => 'OTP verified successfully',

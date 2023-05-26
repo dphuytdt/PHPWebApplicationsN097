@@ -17,7 +17,6 @@ return new class extends Migration
             $table->string('otp');
             $table->integer('user_id');
             $table->timestamps();
-            $table->foreign('user_id')->references('id')->on('tbl_users')->onDelete('cascade');
         });
     }
 

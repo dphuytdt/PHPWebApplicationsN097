@@ -10,4 +10,6 @@ interface OTPRepositoryInterface
     public function createOTP($email, $otp, $user_id);
 
     public function checkOTP($email, $otp, $user_id);
+
+    public function deleteOTP($email, $otp, $user_id);
 }
