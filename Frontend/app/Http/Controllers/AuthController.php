@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use GuzzleHttp\Client;
 use Illuminate\Support\Facades\Http;
+use App\Models\Province;
+use App\Models\District;
+use App\Models\Ward;
 class AuthController extends Controller
 {
     public function login()
@@ -80,7 +83,10 @@ class AuthController extends Controller
         }
 
         // Hiển thị trang đăng ký
-        return view('auth.register');
+        $provicce = new Province();
+        // dd($provicce->getAll());
+        $data['provinces'] = $provicce->getAll();
+        return view('auth.register')->with('data', $data);
     }
 
     public function postRegister(Request $request)
@@ -190,5 +196,21 @@ class AuthController extends Controller
             // Lỗi xảy ra hoặc nhập mã OTP thất bại
             return redirect()->route('inputOtp')->with('error', 'OTP is incorrect');
         }
+    }
+
+    public function chooseDistrict(Request $request){
+        $data = $request->all();
+        $district = new District();
+        $data['districts'] = $district->getDistrictByProvinceId($data['province_id']);
+        //delete session
+        //Session::forget('data');
+        return response()->json($data);
+    }
+
+    public function chooseWard(Request $request){
+        $data = $request->all();
+        $ward = new Ward();
+        $data['wards'] = $ward->getWardByDistrictId($data['district_id']);
+        return response()->json($data);
     }
 }

@@ -10,11 +10,14 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Tymon\JWTAuth\Exceptions\JWTException;
 use Tymon\JWTAuth\Facades\JWTAuth;
-
+use App\Interfaces\UserRepositoryInterface;
 class AuthController extends Controller
 {
-    public function __construct() {
+
+    private UserRepositoryInterface $userRepository;
+    public function __construct(UserRepositoryInterface $userRepository) {
         $this->middleware('auth:api', ['except' => ['login', 'register', 'forgotPassword']]);
+        $this->userRepository = $userRepository;
     }
 
     public function checkAuth(Request $request)
@@ -123,30 +126,31 @@ class AuthController extends Controller
             return response()->json($validator->errors()->toJson(), 400);
         }
         // Xử lý logic để lấy thông tin người dùng từ database hoặc bất kỳ nguồn dữ liệu nào khác
-        $user = User::where('email', $email)->first();
-            // dd($user);
-
-        if ($user) {
-            $otp = rand(100000, 999999);
-            $user = [
-                'email' => $email,
-                'name' => $user->name,
-                'otp' => $otp,
-            ];
-            if (SendEmail::dispatch($user)) {
-                return response()->json([
-                    'status' => true,
-                    'message' => 'Email sent successfully',
-                    'data' => $user,
-                ], 200);
-            } else {
-                return response()->json([
-                    'status' => false,
-                    'message' => 'Email not sent',
-                    'data' => $user,
-                ], 400);
-            }
-        }
+        // $user = User::where('email', $email)->first();
+        //     // dd($user);
+        $user  = $this->userRepository->checkEmail($email);
+        dd($user);
+        // if ($user) {
+        //     $otp = rand(100000, 999999);
+        //     $user = [
+        //         'email' => $email,
+        //         'name' => $user->name,
+        //         'otp' => $otp,
+        //     ];
+        //     if (SendEmail::dispatch($user)) {
+        //         return response()->json([
+        //             'status' => true,
+        //             'message' => 'Email sent successfully',
+        //             'data' => $user,
+        //         ], 200);
+        //     } else {
+        //         return response()->json([
+        //             'status' => false,
+        //             'message' => 'Email not sent',
+        //             'data' => $user,
+        //         ], 400);
+        //     }
+        // }
         // if ($user) {
         //     return response()->json([
         //         'status' => true,

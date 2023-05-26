@@ -38,7 +38,45 @@
                     <span class="datails">Confirm Password</span>
                     <input type="text" placeholder="Confirm your Password" required>
                 </div>
+                <div class="input_pox">
+                    <span class="datails"><label class="datails">Choose Province</label></span>
+                    <select class="form-control" data-label="Province" id="province" name="province">
+                        <option>Choose Province</option>
+                        @foreach($data['provinces'] as $province)
+                            @if(isset($data['province']) && $data['province'] == $province->id)
+                                <option value="{{$province->id}}" selected>{{$province->name}}</option>
+                                @continue
+                                <option value="{{$province->id}}">{{$province->name}}</option>
+                            @else
+                                <option value="{{$province->id}}">{{$province->name}}</option>
+                            @endif
+                        @endforeach
+                    </select>
+                </div>
+                <div class="input_pox">
+                    <span class="datails"><label class="datails">Choose District</label></span>
+                    <select class="ggg" class="form-control" data-label="District" id="district" name="district">
+                        <option class="ggg">Choose District</option>
+                        {{-- @if(isset($data['district_name']))
+                            <option value="{{$data['district']}}" selected>{{$data['district_name']}}</option>
+                        @endif --}}
+                    </select>
+                </div>
+                <div class="input_pox">
+                    <span class="datails"><label class="datails">Choose Ward</label></span>
+                    <select class="form-control" data-label="Ward" id="ward" name="ward">
+                        <option value="">Choose Ward</option>
+                        {{-- @if(isset($data['wards']))
+                            <option value="{{$data['wards']}}" selected>{{$data['ward_name']}}</option>
+                        @endif --}}
+                    </select>
+                </div>
+                <div class="input_pox">
+                    <span class="datails">Address</span>
+                    <input type="text" placeholder="enter your Address" required>
+                </div>
             </div>
+
             <div class="gender_details">
                 <input type="radio" name="gender" id="dot-1">
                 <input type="radio" name="gender" id="dot-2">
@@ -66,5 +104,10 @@
             <div class="link">Already have an account? <a href="{{ route('login') }}">Login here</a></div>
     </div>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.js"></script>
+    <script>
+        var urlAddressDistrict = '{{route('register.choose.district')}}';
+        var urlAddressWard = '{{route('register.choose.ward')}}';
+    </script>
+    <script type="text/javascript" src="{{asset('js/auth/address.js')}}"></script>
 </body>
 </html>
