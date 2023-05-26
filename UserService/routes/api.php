@@ -19,17 +19,14 @@ use App\Http\Controllers\Api\v1\AuthController;
 //     return $request->user();
 // });
 
-Route::group([
-    'middleware' => 'api',
-    'prefix' => 'auth'
-
-], function ($router) {
-    Route::post('/login', [AuthController::class, 'login']);
-    Route::post('/register', [AuthController::class, 'register']);
-    Route::post('/logout', [AuthController::class, 'logout']);
-    Route::post('/refresh', [AuthController::class, 'refresh']);
-    Route::get('/user-profile', [AuthController::class, 'userProfile']);
-    Route::post('/change-pass', [AuthController::class, 'changePassWord']);   
-    Route::get('/check-auth', [AuthController::class, 'checkAuth']); 
-    Route::post('/forgot-password', [AuthController::class, 'forgotPassword']);
+Route::group(['middleware' => 'api','prefix' => 'auth'], function ($router) {
+    Route::post('login', [AuthController::class, 'login']);
+    Route::post('register', [AuthController::class, 'register']);
+    Route::post('logout', [AuthController::class, 'logout']);
+    Route::post('refresh', [AuthController::class, 'refresh']);
+    Route::get('user-profile', [AuthController::class, 'userProfile']);
+    Route::post('change-pass', [AuthController::class, 'changePassWord']);   
+    Route::get('check-auth', [AuthController::class, 'checkAuth']); 
+    Route::post('forgot-password', [AuthController::class, 'forgotPassword']);
+    Route::post('verify-otp', [AuthController::class, 'verifyOTP']);
 });

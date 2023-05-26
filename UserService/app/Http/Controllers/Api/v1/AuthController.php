@@ -11,13 +11,16 @@ use Illuminate\Support\Facades\Validator;
 use Tymon\JWTAuth\Exceptions\JWTException;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use App\Interfaces\UserRepositoryInterface;
+use App\Interfaces\OTPRepositoryInterface;
 class AuthController extends Controller
 {
 
     private UserRepositoryInterface $userRepository;
-    public function __construct(UserRepositoryInterface $userRepository) {
+    private OTPRepositoryInterface $otpRepository;
+    public function __construct(UserRepositoryInterface $userRepository, OTPRepositoryInterface $otpRepository) {
         $this->middleware('auth:api', ['except' => ['login', 'register', 'forgotPassword']]);
         $this->userRepository = $userRepository;
+        $this->otpRepository = $otpRepository;
     }
 
     public function checkAuth(Request $request)
@@ -125,40 +128,69 @@ class AuthController extends Controller
         if($validator->fails()){
             return response()->json($validator->errors()->toJson(), 400);
         }
-        // Xử lý logic để lấy thông tin người dùng từ database hoặc bất kỳ nguồn dữ liệu nào khác
-        // $user = User::where('email', $email)->first();
-        //     // dd($user);
         $user  = $this->userRepository->checkEmail($email);
-        dd($user);
-        // if ($user) {
-        //     $otp = rand(100000, 999999);
-        //     $user = [
-        //         'email' => $email,
-        //         'name' => $user->name,
-        //         'otp' => $otp,
-        //     ];
-        //     if (SendEmail::dispatch($user)) {
-        //         return response()->json([
-        //             'status' => true,
-        //             'message' => 'Email sent successfully',
-        //             'data' => $user,
-        //         ], 200);
-        //     } else {
-        //         return response()->json([
-        //             'status' => false,
-        //             'message' => 'Email not sent',
-        //             'data' => $user,
-        //         ], 400);
-        //     }
-        // }
-        // if ($user) {
-        //     return response()->json([
-        //         'status' => true,
-        //         'message' => 'User found',
-        //         'user' => $user,
-        //     ], 200);
-        // }
+        if ($user) {
+            $user_id = $user->id;
+            $otp = rand(100000, 999999);
+            $this->otpRepository->createOTP($email, $otp, $user_id);
+            $user = [
+                'email' => $email,
+                'name' => $user->name,
+                'otp' => $otp,
+            ];
+            if (SendEmail::dispatch($user)) {
+                return response()->json([
+                    'status' => true,
+                    'message' => 'Email sent successfully',
+                    'data' => $user,
+                ], 200);
+            } else {
+                return response()->json([
+                    'status' => false,
+                    'message' => 'Email not sent',
+                    'data' => $user,
+                ], 400);
+            }
+        }
+        if ($user) {
+            return response()->json([
+                'status' => true,
+                'message' => 'User found',
+                'user' => $user,
+            ], 200);
+        }
 
+        return response()->json(['error' => 'User not found'], 404);
+    }
+
+    public function verifyOTP(Request $request) {
+        $email = $request->email;
+        $otp = $request->otp;
+        $validator = Validator::make($request->all(), [
+            'email' => 'required|string|email|max:100',
+            'otp' => 'required|string|max:6',
+        ]);
+
+        if($validator->fails()){
+            return response()->json($validator->errors()->toJson(), 400);
+        }
+        $user  = $this->userRepository->checkEmail($email);
+        if ($user) {
+            $user_id = $user->id;
+            $otp = $this->otpRepository->checkOTP($email, $otp, $user_id);
+            if ($otp ==true) {
+                return response()->json([
+                    'status' => true,
+                    'message' => 'OTP verified successfully',
+                    'user' => $user,
+                ], 200);
+            }
+            return response()->json([
+                'status' => false,
+                'message' => 'OTP not verified',
+                'user' => $user,
+            ], 400);
+        }
         return response()->json(['error' => 'User not found'], 404);
     }
 
