@@ -28,6 +28,11 @@ Route::prefix('auth')->group(function () {
     Route::get('/register', [AuthController::class, 'register'])->name('register');
     Route::post('/register', [AuthController::class, 'postRegister'])->name('postRegister');
 
+    Route::prefix('choose')->group(function () {
+        Route::get('/district', [AuthController::class, 'chooseDistrict'])->name('register.choose.district');
+        Route::get('/ward', [AuthController::class, 'chooseWard'])->name('register.choose.ward');
+    });
+
     Route::get('/forgot-password', [AuthController::class, 'forgotPassword'])->name('forgotPassword');
     Route::post('/forgot-password', [AuthController::class, 'postForgotPassword'])->name('postForgotPassword');
 
