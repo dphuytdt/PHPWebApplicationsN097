@@ -22,6 +22,8 @@ use App\Http\Controllers\BookController;
     Route::get('/book-details/{id}' , [BookController::class, 'show'])->name('bookDetails');
     //search book
     Route::get('/search', [BookController::class, 'search'])->name('search');
+    //404
+    Route::any('{catchall}', [HomeController::class, 'notFound'])->where('catchall', '.*');
 // });
 
 //route for Auth

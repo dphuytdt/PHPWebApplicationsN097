@@ -44,7 +44,7 @@ class BookController extends Controller
             }
         } 
         catch (\Exception $e) {
-            return redirect()->intended('/')->with('error', 'Login failed');
+            return redirect()->intended('/')->with('error', 'Error');
         }
     }
 }

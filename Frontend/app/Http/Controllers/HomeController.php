@@ -26,4 +26,9 @@ class HomeController extends Controller
             return redirect()->route('login')->with('error', 'Login failed');
         }
     }
+
+    public function notFound()
+    {
+        return view('errors.404');
+    }
 }

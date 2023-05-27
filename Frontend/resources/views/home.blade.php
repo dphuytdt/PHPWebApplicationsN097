@@ -1,9 +1,10 @@
 @extends('layouts.main')
 @section('content')
+@section('title', 'Home')
 <h1> This is Home Page </h1>
 {{-- search box --}}
 <form action="{{ route('search') }}" method="GET">
-    <input type="text" name="keyword" />
+    <input type="text" name="query" />
     <input type="submit" value="Search" />
 </form>
 @foreach($books as $key => $book)

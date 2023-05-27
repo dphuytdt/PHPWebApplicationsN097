@@ -1,3 +1,6 @@
+@extends('layouts.main')
+@section('content')
+@section('title', 'Search Result')
 @foreach ( $books as $key => $book )
     <a href="{{ route('bookDetails', ['id' => $book['id']]) }}">
         <div class="card" style="width: 18rem;">
@@ -10,3 +13,5 @@
         </div>
     </a>
 @endforeach
+{{ $books->links() }}
+@endsection
