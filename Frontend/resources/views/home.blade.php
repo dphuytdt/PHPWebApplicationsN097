@@ -1,7 +1,11 @@
 @extends('layouts.main')
 @section('content')
 <h1> This is Home Page </h1>
-
+{{-- search box --}}
+<form action="{{ route('search') }}" method="GET">
+    <input type="text" name="keyword" />
+    <input type="submit" value="Search" />
+</form>
 @foreach($books as $key => $book)
 <a href="{{ route('bookDetails', ['id' => $book['id']]) }}">
 <div class="card" style="width: 18rem;">

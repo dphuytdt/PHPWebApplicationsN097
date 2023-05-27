@@ -72,4 +72,11 @@ class BookController extends Controller
     {
         //
     }
+
+    //search book
+    public function search(string $keyword)
+    {
+        $books = $this->bookRepository->searchBook($keyword);
+        return response()->json($books, 200);
+    }
 }

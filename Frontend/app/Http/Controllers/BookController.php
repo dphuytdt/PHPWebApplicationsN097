@@ -21,4 +21,30 @@ class BookController extends Controller
             return redirect()->intended('/')->with('error', 'Login failed');
         }
     }
+
+    public function search(Request $request)
+    {
+        $client = new Client();
+        //call to book service to get book by id
+        try {
+            $response = $client->get($this->bookService.'books/search/'.$request->keyword);
+            $books = json_decode($response->getBody(), true);
+            //paginate books
+            if($books){
+                $paginate = 5;
+                $page = isset($_GET['page']) ? $_GET['page'] : 1;
+                $offSet = ($page * $paginate) - $paginate;
+                $itemsForCurrentPage = array_slice($books, $offSet, $paginate, true);
+                $books = new \Illuminate\Pagination\LengthAwarePaginator($itemsForCurrentPage, count($books), $paginate, $page);
+                $books->setPath(request()->url());
+                return view('books.search-result', compact('books'));
+            }
+            else{
+                return redirect()->intended('/')->with('error', 'No result');
+            }
+        } 
+        catch (\Exception $e) {
+            return redirect()->intended('/')->with('error', 'Login failed');
+        }
+    }
 }

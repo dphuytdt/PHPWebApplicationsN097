@@ -20,6 +20,8 @@ use App\Http\Controllers\BookController;
     Route::get('/', [HomeController::class, 'index'])->name('home');
     // Route::get('/books' , [BookController::class, 'index'])->name('books');
     Route::get('/book-details/{id}' , [BookController::class, 'show'])->name('bookDetails');
+    //search book
+    Route::get('/search', [BookController::class, 'search'])->name('search');
 // });
 
 //route for Auth

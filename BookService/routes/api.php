@@ -20,4 +20,6 @@ Route::prefix('books')->group(function () {
     // Route::apiResource('/', BookController::class);
     Route::get('/', [BookController::class, 'index']);
     Route::get('/{id}', [BookController::class, 'show']);
+    //search book
+    Route::get('/search/{keyword}', [BookController::class, 'search']);
 });
