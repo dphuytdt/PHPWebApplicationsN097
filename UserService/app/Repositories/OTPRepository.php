@@ -50,5 +50,6 @@ class OTPRepository implements OTPRepositoryInterface
     public function deleteOTP($email, $otp, $user_id) 
     {
         $this->otp->where('email', $email)->where('otp', $otp)->where('user_id', $user_id)->delete();
+        return true;
     }
 }

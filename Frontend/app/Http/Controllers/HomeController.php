@@ -10,9 +10,8 @@ class HomeController extends Controller
     public function index()
     {
         $client = new Client();
-        //call to book service to get all books
         try {
-            $response = $client->get($this->bookService.'books');
+            $response = $client->get($this->bookService . 'books');
             $books = json_decode($response->getBody(), true);
             //paginate books
             $paginate = 5;
