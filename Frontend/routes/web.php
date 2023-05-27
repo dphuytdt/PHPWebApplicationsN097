@@ -18,8 +18,8 @@ use App\Http\Controllers\BookController;
 
 // Route::group(['middleware' => 'check.auth'], function () {
     Route::get('/', [HomeController::class, 'index'])->name('home');
-    Route::get('/books' , [BookController::class, 'index'])->name('books');
-    Route::get('/books/{id}' , [BookController::class, 'show'])->name('books.show');
+    // Route::get('/books' , [BookController::class, 'index'])->name('books');
+    Route::get('/book-details/{id}' , [BookController::class, 'show'])->name('bookDetails');
 // });
 
 //route for Auth

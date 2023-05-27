@@ -8,7 +8,7 @@ class BookController extends Controller
 {
     public $bookService = 'http://bookservice.test:8080/api/';
     
-    public function getBook($id)
+    public function show($id)
     {
         $client = new Client();
         //call to book service to get book by id
