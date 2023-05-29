@@ -8,7 +8,7 @@
 				<div class="colored">
 					<h1 class="page-title">Shop</h1>
 					<div class="breadcum-items">
-						<span class="item"><a href="index.html">Home /</a></span>
+						<span class="item"><a href="{{route('home')}}">Home /</a></span>
 						<span class="item colored">Shop</span>
 					</div>
 				</div>

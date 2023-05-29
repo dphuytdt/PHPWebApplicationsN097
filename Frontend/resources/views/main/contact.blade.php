@@ -7,7 +7,7 @@
 			<div class="col-md-12">
 				<h1 class="page-title">Contact us</h1>
 				<div class="breadcrumbs">
-					<span class="item"><a href="index.html">Home /</a></span>
+					<span class="item"><a href="{{route('home')}}">Home /</a></span>
 					<span class="item">Contact us</span>
 				</div>
 			</div>
@@ -49,7 +49,7 @@
 				
 				<div class="contact-information">
 					<h2>Send A Message</h2>
-					<form name="contactform" action="contact.php" method="post" class="contact-form d-flex flex-wrap mt-4">
+					<form name="contactform" action="" method="post" class="contact-form d-flex flex-wrap mt-4">
 						<div class="row">
 					    	<div class="col-md-6">
 								<input type="text" minlength="2" name="name" placeholder="Name" class="u-full-width" required>
