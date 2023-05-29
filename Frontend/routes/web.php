@@ -22,8 +22,12 @@ use App\Http\Controllers\BookController;
     Route::get('/book-details/{id}' , [BookController::class, 'show'])->name('bookDetails');
     //search book
     Route::get('/search', [BookController::class, 'search'])->name('search');
+
+    Route::get('/about', [HomeController::class, 'about'])->name('about');
+
+    Route::get('/contact', [HomeController::class, 'contact'])->name('contact');
     //404
-    Route::any('{catchall}', [HomeController::class, 'notFound'])->where('catchall', '.*');
+    // Route::any('{catchall}', [HomeController::class, 'notFound'])->where('catchall', '.*');
 // });
 
 //route for Auth

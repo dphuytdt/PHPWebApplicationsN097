@@ -24,11 +24,14 @@ class UserFactory extends Factory
             $name .= $alphabet[rand(0, strlen($alphabet) - 1)];
         }
         return [
-            'name' => fake()->name(),
+            'fullname' => fake()->name(),
             'email' => $name . rand(0, 1000000) . '@yopmail.com',
             'email_verified_at' => now(),
             'password' => $password, // password
             'remember_token' => Str::random(10),
+            'role_id' => 1,
+            'wallet' => 0,
+            'created_at' => now(),
         ];
     }
 

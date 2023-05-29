@@ -20,15 +20,20 @@ class HomeController extends Controller
             $itemsForCurrentPage = array_slice($books, $offSet, $paginate, true);
             $books = new \Illuminate\Pagination\LengthAwarePaginator($itemsForCurrentPage, count($books), $paginate, $page);
             $books->setPath(request()->url());
-            return view('home', compact('books'));
+            return view('main.home', compact('books'));
         } 
         catch (\Exception $e) {
             return redirect()->route('login')->with('error', 'Login failed');
         }
     }
-
-    public function notFound()
+    
+    public function about()
     {
-        return view('errors.404');
+        return view('main.about');
+    }
+
+    public function contact()
+    {
+        return view('main.contact');
     }
 }

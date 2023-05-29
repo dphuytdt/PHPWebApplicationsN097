@@ -15,7 +15,7 @@ class BookController extends Controller
         try {
             $response = $client->get($this->bookService.'books/'.$id);
             $book = json_decode($response->getBody(), true);
-            return view('books.book-details', compact('book'));
+            return view('main.book-details', compact('book'));
         } 
         catch (\Exception $e) {
             return redirect()->intended('/')->with('error', 'Login failed');
@@ -37,7 +37,7 @@ class BookController extends Controller
                 $itemsForCurrentPage = array_slice($books, $offSet, $paginate, true);
                 $books = new \Illuminate\Pagination\LengthAwarePaginator($itemsForCurrentPage, count($books), $paginate, $page);
                 $books->setPath(request()->url());
-                return view('books.search-result', compact('books'));
+                return view('main.search-result', compact('books'));
             }
             else{
                 return redirect()->intended('/')->with('error', 'No result');
@@ -47,4 +47,5 @@ class BookController extends Controller
             return redirect()->intended('/')->with('error', 'Error');
         }
     }
+
 }
