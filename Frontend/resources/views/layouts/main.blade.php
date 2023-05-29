@@ -40,16 +40,16 @@
 					<div class="col-md-6">
 						<div class="right-element">
 							<a href="#" class="user-account for-buy"><i class="icon icon-user"></i><span>Account</span></a>
-							<a href="#" class="cart for-buy"><i class="icon icon-clipboard"></i><span>Cart:(0 $)</span></a>
-	
+							<a href="#" class="cart for-buy"><i class="icon icon-clipboard"></i><span>Cart</span></a>
+							<a href="#" class="language for-buy"><i class="icon icon-notes"></i><span>Language</span></a>
 							<div class="action-menu">
 	
 								<div class="search-bar">
 									<a href="#" class="search-button search-toggle" data-selector="#header-wrap">
 										<i class="icon icon-search"></i>
 									</a>
-									<form role="search" method="get" class="search-box">
-										<input class="search-field text search-input" placeholder="Search" type="search">
+									<form role="search" method="get" action="{{route('search')}}" class="search-box">
+										<input class="search-field text search-input" name="keyword" placeholder="Search" type="search">
 									</form>
 								</div>
 							</div>
