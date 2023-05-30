@@ -10,7 +10,7 @@
 	<meta name="author" content="">
 	<meta name="keywords" content="">
 	<meta name="description" content="">
-
+	<link rel="icon" type="image/png" href="{{ asset('images/logo.png') }}" />
 	<link rel="stylesheet" type="text/css" href="{{asset('css/home/normalize.css')}}">
 	<link rel="stylesheet" type="text/css" href="{{asset('icomoon/icomoon.css')}}">
 	<link rel="stylesheet" type="text/css" href="{{asset('css/home/vendor.css')}}">

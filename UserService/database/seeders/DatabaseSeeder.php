@@ -4,7 +4,8 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-
+use App\Models\User;
+use App\Models\UserDetail;
 class DatabaseSeeder extends Seeder
 {
     /**
@@ -12,7 +13,12 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        //create 100 users
-        \App\Models\User::factory(100)->create();
+        $user = User::factory()->count(300)->create();
+
+        foreach ($user as $item) {
+            UserDetail::factory()->create([
+                'user_id' => $item->id,
+            ]);
+        }
     }
 }

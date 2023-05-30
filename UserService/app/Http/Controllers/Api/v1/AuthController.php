@@ -18,7 +18,7 @@ class AuthController extends Controller
     private UserRepositoryInterface $userRepository;
     private OTPRepositoryInterface $otpRepository;
     public function __construct(UserRepositoryInterface $userRepository, OTPRepositoryInterface $otpRepository) {
-        $this->middleware('auth:api', ['except' => ['login', 'register', 'forgotPassword', 'verifyOTP' ]]);
+        $this->middleware('auth:api', ['except' => ['login', 'register', 'forgotPassword', 'verifyOTP', 'adminLogin' ]]);
         $this->userRepository = $userRepository;
         $this->otpRepository = $otpRepository;
     }
@@ -210,8 +210,9 @@ class AuthController extends Controller
         if (! $token = auth()->attempt($validator->validated())) {
             return response()->json(['error' => 'Unauthorized'], 401);
         }
+        
         $user = auth()->user();
-        if ($user->role == 'admin') {
+        if ($user->role_id == 0) {
             return $this->createNewToken($token);
         }
         return response()->json(['error' => 'Unauthorized'], 401);

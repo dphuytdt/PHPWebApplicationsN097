@@ -15,10 +15,6 @@ use App\Http\Controllers\Api\v1\AuthController;
 |
 */
 
-// Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-//     return $request->user();
-// });
-
 Route::group(['middleware' => 'api','prefix' => 'auth'], function ($router) {
     Route::post('login', [AuthController::class, 'login']);
     Route::post('register', [AuthController::class, 'register']);
@@ -29,4 +25,5 @@ Route::group(['middleware' => 'api','prefix' => 'auth'], function ($router) {
     Route::get('check-auth', [AuthController::class, 'checkAuth']); 
     Route::post('forgot-password', [AuthController::class, 'forgotPassword']);
     Route::post('verify-otp', [AuthController::class, 'verifyOTP']);
+    Route::post('admin-login', [AuthController::class, 'adminLogin']);
 });

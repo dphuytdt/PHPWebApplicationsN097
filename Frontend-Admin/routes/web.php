@@ -13,11 +13,14 @@ use App\Http\Controllers\AuthController;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+Route::prefix('auth')->group(function () {
+    Route::get('login', [AuthController::class, 'login'])->name('login');
+    Route::post('login', [AuthController::class, 'postLogin'])->name('postLogin');
+    Route::get('logout', [AuthController::class, 'logout'])->name('logout');
+});
 
-//admin route
-Route::prefix('admin')->group(function () {
-    // Route::get('/', [HomeController::class, 'index'])->name('home');
-    Route::get('auth/login', [AuthController::class, 'login'])->name('login');
+Route::group(['middleware' => 'check.auth'] , function(){
+    Route::get('/', [HomeController::class, 'index'])->name('home');
 });
 
 

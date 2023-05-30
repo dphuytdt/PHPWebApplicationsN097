@@ -18,7 +18,7 @@ return new class extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->string('wallet')->default(0);
-            $table->interger('role_id')->default(1);
+            $table->integer('role_id')->default(1);
             // $table->interger('user_detail_id');
             $table->rememberToken();
             $table->dateTime('created_at');
