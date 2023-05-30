@@ -8,6 +8,12 @@
     {{-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous"> --}}
     <link rel="icon" type="image/png" href="{{ asset('images/logo.png') }}" />
     <link rel="stylesheet" href="{{asset('css/auth/login.css')}}" type="text/css"/>
+    <style>
+        .login-links{
+            display: flex;
+            justify-content: center;
+        }
+    </style>
 </head>
 <body>
     <div class="container">
@@ -27,6 +33,7 @@
                 Input OTP
             </button>
         </form>
+        <br>
         <div class="login-links">
             <a href="{{ route('forgotPassword') }}">Back</a>
         </div>

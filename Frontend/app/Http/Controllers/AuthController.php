@@ -199,4 +199,16 @@ class AuthController extends Controller
         $data['wards'] = $ward->getWardByDistrictId($data['district_id']);
         return response()->json($data);
     }
+
+    public function resetPassword()
+    {
+        // Kiểm tra xem người dùng đã đăng nhập hay chưa
+        if (session()->has('token')) {
+            // Người dùng đã đăng nhập, chuyển hướng đến trang home
+            return redirect()->intended('/');
+        }
+
+        // Hiển thị trang đổi mật khẩu
+        return view('auth.reset-password');
+    }
 }

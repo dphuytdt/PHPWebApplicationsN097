@@ -130,12 +130,18 @@ class AuthController extends Controller
         }
         $user  = $this->userRepository->checkEmail($email);
         if ($user) {
+            //check if user already exist otp
+            $otp = $this->otpRepository->checkOTPExist($email);
+            if ($otp == true) {
+                //delete otp
+                $this->otpRepository->deleteOTP($email, $otp, $user->id);
+            }
             $user_id = $user->id;
             $otp = rand(100000, 999999);
             $this->otpRepository->createOTP($email, $otp, $user_id);
             $user = [
                 'email' => $email,
-                'name' => $user->name,
+                'name' => $user->fullname,
                 'otp' => $otp,
             ];
             if (SendEmail::dispatch($user)) {

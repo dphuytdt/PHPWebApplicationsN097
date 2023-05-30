@@ -16,19 +16,16 @@ use App\Http\Controllers\BookController;
 */
 
 
-// Route::group(['middleware' => 'check.auth'], function () {
-    Route::get('/', [HomeController::class, 'index'])->name('home');
-    // Route::get('/books' , [BookController::class, 'index'])->name('books');
-    Route::get('/book-details/{id}' , [BookController::class, 'show'])->name('bookDetails');
-    //search book
-    Route::get('/search', [BookController::class, 'search'])->name('search');
 
-    Route::get('/about', [HomeController::class, 'about'])->name('about');
+Route::get('/', [HomeController::class, 'index'])->name('home');
 
-    Route::get('/contact', [HomeController::class, 'contact'])->name('contact');
-    //404
-    // Route::any('{catchall}', [HomeController::class, 'notFound'])->where('catchall', '.*');
-// });
+Route::get('/book-details/{id}' , [BookController::class, 'show'])->name('bookDetails');
+//search book
+Route::get('/search', [BookController::class, 'search'])->name('search');
+
+Route::get('/about', [HomeController::class, 'about'])->name('about');
+
+Route::get('/contact', [HomeController::class, 'contact'])->name('contact');
 
 //route for Auth
 Route::prefix('auth')->group(function () {
@@ -49,11 +46,7 @@ Route::prefix('auth')->group(function () {
 
     Route::get('input-otp', [AuthController::class, 'inputOtp'])->name('inputOtp');
     Route::post('input-otp', [AuthController::class, 'postInputOtp'])->name('postInputOtp');
-});
 
-// //admin login
-// Route::prefix('admin')->group(function () {
-//     Route::get('login', [AuthController::class, 'adminLogin'])->name('admin.login');
-//     Route::post('login', [AuthController::class, 'postAdminLogin'])->name('postAdminLogin');
-//     // Route::get('logout', [AuthController::class, 'adminLogout'])->name('admin.logout');
-// });
+    Route::get('reset-password', [AuthController::class, 'resetPassword'])->name('resetPassword');
+    Route::post('reset-password', [AuthController::class, 'postResetPassword'])->name('postResetPassword');
+});

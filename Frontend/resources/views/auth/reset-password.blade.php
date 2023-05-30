@@ -4,69 +4,68 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Login </title>
-    {{-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous"> --}}
+    <title>Reset Password</title>
     <link rel="icon" type="image/png" href="{{ asset('images/logo.png') }}" />
     <link rel="stylesheet" href="{{asset('css/auth/login.css')}}" type="text/css"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <style>
-        .login-links{
+        .login-links {
             display: flex;
             justify-content: center;
         }
-        
-        .login-form {
-        position: relative;
+
+        .password-container {
+            position: relative;
         }
 
         .password-toggle-icon {
             position: absolute;
-            top: 65%;
             right: 10px;
+            top: 50%;
             transform: translateY(-50%);
             cursor: pointer;
-            z-index: 2;
         }
 
         input[type="password"] {
             padding-right: 30px; /* Khoảng cách giữa icon và nội dung của input */
         }
+
     </style>
 </head>
 <body>
     <div class="container">
-        <h2 class="login-title">Log in</h2>
+        <h2 class="login-title">Reset Password</h2>
         @if (session('error'))
             <div class="alert alert-danger">
                 {{ session('error') }}
             </div>
         @endif
-        <form class="login-form" method="POST" action="{{ route('login') }}">
+        <form class="login-form" method="POST" action="{{route('postResetPassword')}}">
             @csrf
             <div>
-                <label for="email">Email </label>
-                <input id="email" type="email" placeholder="me@example.com" name="email" required/>
-                
+                <label for="psw">New Password</label>
+                <div class="password-container">
+                    <input id="psw" type="password" placeholder="Input New Password" name="psw" required/>
+                    <i class="fas fa-eye password-toggle-icon" id="psw-toggle" onclick="togglePasswordVisibility('psw')"></i>
+                </div>
             </div>
-        
             <div>
-                <label for="password">Password </label>
-                <input id="password" type="password" placeholder="password" name="password" required/>
-                <i class="fas fa-eye password-toggle-icon" id="psw-toggle" onclick="togglePasswordVisibility('password')"></i>
+                <label for="confpsw">Password Confirmation</label>
+                <div class="password-container">
+                    <input id="confpsw" type="password" placeholder="Input Password Confirmation" name="confpsw" required/>
+                    <i class="fas fa-eye password-toggle-icon" id="confpsw-toggle" onclick="togglePasswordVisibility('confpsw')"></i>
+                </div>
             </div>
-            <button class="btn btn--form" type="submit" value="Log in">
-                Log in
+            <button class="btn btn--form" type="submit" value="Input OTP">
+                Reset
             </button>
         </form>
         <br>
         <div class="login-links">
-            <a href="{{ route('register') }}">Create an account</a>
-        </div>
-        <br>
-        <div class="login-links">
-            <a href="{{ route('forgotPassword') }}">Forgot your password?</a>
+            <a href="{{ route('inputOtp') }}">Back</a>
         </div>
     </div>
+
     <script>
         function togglePasswordVisibility(inputId) {
             const passwordInput = document.getElementById(inputId);
