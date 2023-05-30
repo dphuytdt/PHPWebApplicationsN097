@@ -39,7 +39,11 @@
 					</div>
 					<div class="col-md-6">
 						<div class="right-element">
-							<a href="#" class="user-account for-buy"><i class="icon icon-user"></i><span>Account</span></a>
+							@if(Session::has('token'))
+								<a href="{{route('logout')}}" class="login for-buy"><i class="icon icon-user"></i><span>Logout</span></a>
+							@else
+								<a href="{{route('login')}}" class="login for-buy"><i class="icon icon-user"></i><span>Login</span></a>
+							@endif
 							<a href="#" class="cart for-buy"><i class="icon icon-clipboard"></i><span>Cart</span></a>
 							<a href="#" class="language for-buy"><i class="icon icon-notes"></i><span>Language</span></a>
 							<div class="action-menu">

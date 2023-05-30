@@ -33,11 +33,15 @@ class AuthController extends Controller
             ]);
 
             $result = json_decode($response->getBody(), true);
-
+            $user = $result['user'];
             // Kiểm tra kết quả từ UserService
             if (isset($result['access_token'])) {
                 // Lưu token vào session
                 session(['token' => $result['access_token']]);
+                //push user info to session
+                session(['user' => $result['user']]);
+                //push role info to session
+                session(['role' => $user['role']]);
 
                 // Đăng nhập thành công, chuyển hướng đến trang home
                 return redirect()->route('home');
@@ -213,4 +217,44 @@ class AuthController extends Controller
         $data['wards'] = $ward->getWardByDistrictId($data['district_id']);
         return response()->json($data);
     }
+
+    // public function adminLogin()
+    // {
+    //     // Kiểm tra xem người dùng đã đăng nhập hay chưa
+    //     if (session()->has('token') && session()->get('role') == 0) {
+    //         // Người dùng đã đăng nhập, chuyển hướng đến trang home
+    //         return redirect()->intended('/');
+    //     }
+
+    //     // Hiển thị trang đăng nhập
+    //     return view('auth.admin-login');
+    // }
+
+    // public function postAdminLogin(Request $request)
+    // {
+    //     $client = new Client();
+
+    //     try {
+    //         // Gửi yêu cầu đăng nhập từ Home service tới UserService
+    //         $response = $client->post('http://userservice.test:8080/api/auth/login', [
+    //             'json' => $request->all(),
+    //         ]);
+
+    //         $result = json_decode($response->getBody(), true);
+    //         if (isset($result['message'])) {
+    //             // Đăng nhập thành công, chuyển hướng đến trang home
+    //             session()->put('token', $result['token']);
+    //             session()->put('role', $result['user']['role']);
+    //             session()->put('user_id', $result['user']['id']);
+    //             return redirect()->intended('/');
+    //         } else {
+    //             // Đăng nhập thất bại, chuyển hướng đến trang đăng nhập
+    //             return redirect()->route('adminLogin')->with('error', 'Login failed');
+    //         }
+
+    //     } catch (\Exception $e) {
+    //         // Lỗi xảy ra hoặc đăng nhập thất bại
+    //         return redirect()->route('adminLogin')->with('error', 'Login failed');
+    //     }
+    // }
 }

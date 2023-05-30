@@ -50,3 +50,10 @@ Route::prefix('auth')->group(function () {
     Route::get('input-otp', [AuthController::class, 'inputOtp'])->name('inputOtp');
     Route::post('input-otp', [AuthController::class, 'postInputOtp'])->name('postInputOtp');
 });
+
+// //admin login
+// Route::prefix('admin')->group(function () {
+//     Route::get('login', [AuthController::class, 'adminLogin'])->name('admin.login');
+//     Route::post('login', [AuthController::class, 'postAdminLogin'])->name('postAdminLogin');
+//     // Route::get('logout', [AuthController::class, 'adminLogout'])->name('admin.logout');
+// });

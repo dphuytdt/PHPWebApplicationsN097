@@ -71,6 +71,7 @@ class Kernel extends HttpKernel
         // ...
         'check.auth' => \App\Http\Middleware\CheckAuthentication::class, // Middleware kiểm tra xác thực
         'apply' => \App\Http\Middleware\ApplyMiddleware::class, // Middleware áp dụng xác thực
+        'locale' => \App\Http\Middleware\Locale::class, // Middleware đổi ngôn ngữ
     ];
 
 }

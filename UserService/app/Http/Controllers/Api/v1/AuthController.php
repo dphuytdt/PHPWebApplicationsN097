@@ -197,4 +197,24 @@ class AuthController extends Controller
         return response()->json(['error' => 'User not found'], 404);
     }
 
+    public function adminLogin(Request $request){
+        $validator = Validator::make($request->all(), [
+            'email' => 'required|email',
+            'password' => 'required|string|min:6',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json($validator->errors(), 422);
+        }
+
+        if (! $token = auth()->attempt($validator->validated())) {
+            return response()->json(['error' => 'Unauthorized'], 401);
+        }
+        $user = auth()->user();
+        if ($user->role == 'admin') {
+            return $this->createNewToken($token);
+        }
+        return response()->json(['error' => 'Unauthorized'], 401);
+    }
+
 }

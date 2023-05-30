@@ -45,7 +45,7 @@
 	
 </section>
 
-<section id="client-holder" data-aos="fade-up">
+{{-- <section id="client-holder" data-aos="fade-up">
 	<div class="container">
 		<div class="row">
 			<div class="inner-content">
@@ -61,7 +61,7 @@
 			</div>
 		</div>
 	</div>
-</section>
+</section> --}}
 
 <section id="featured-books">
 	<div class="container">
