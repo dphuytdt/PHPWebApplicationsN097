@@ -140,6 +140,7 @@ class AuthController extends Controller
             'json' => $request->only('email'),
         ]);
         if ($response->getStatusCode() == 200) {
+            session(['emailForgot' => $email]);
             return redirect()->route('inputOtp')->with('message', 'Please check your email to get OTP');
         }
         return redirect()->back()->with('error', 'Send OTP failed');
@@ -151,10 +152,12 @@ class AuthController extends Controller
         if (session()->has('token')) {
             // Người dùng đã đăng nhập, chuyển hướng đến trang home
             return redirect()->intended('/');
+        } else if (!session()->has('emailForgot')) {
+            // Người dùng chưa nhập email, chuyển hướng đến trang quên mật khẩu
+            return redirect()->route('forgotPassword')->with('error', 'Please input email first');
+        } else {
+            return view('auth.verify-otp');
         }
-
-        // Hiển thị trang nhập mã OTP
-        return view('auth.verify-otp');
     }
 
     public function postInputOtp(Request $request)
@@ -172,6 +175,7 @@ class AuthController extends Controller
             //check status code
             if ($response->getStatusCode() == 200) {
                 // Nhập mã OTP thành công, chuyển hướng đến trang đổi mật khẩu
+                session(['otpForgot' => $request->otp]);
                 return redirect()->route('changePassword')->with('message', 'OTP is correct');
             } else {
                 // Nhập mã OTP thất bại, chuyển hướng đến trang nhập mã OTP
@@ -206,9 +210,11 @@ class AuthController extends Controller
         if (session()->has('token')) {
             // Người dùng đã đăng nhập, chuyển hướng đến trang home
             return redirect()->intended('/');
+        } else if (!session()->has('emailForgot') || !session()->has('otpForgot')) {
+            // Người dùng chưa nhập email hoặc nhập mã OTP, chuyển hướng đến trang quên mật khẩu
+            return redirect()->route('forgotPassword')->with('error', 'Please input email first');
+        } else {
+            return view('auth.reset-password');
         }
-
-        // Hiển thị trang đổi mật khẩu
-        return view('auth.reset-password');
     }
 }

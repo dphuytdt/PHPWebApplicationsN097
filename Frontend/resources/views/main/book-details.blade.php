@@ -7,15 +7,18 @@
 		<div class="row">
 
 			<div class="col-md-6">
-				<a href="#" class="product-image"><img src="images/main-banner2.jpg"></a>
+				<a href="#" class="product-image"><img src="{{asset('images/main-banner2.jpg')}}"></a>
 			</div>
 
 			<div class="col-md-6 pl-5">
 				<div class="product-detail">
 					<h1>Birds Gonna Be Happy</h1>
 					<p>Fiction</p>
+					@if($book['price'] == 0)
+						<span class="price colored">Free</span>
+					@else
 					<span class="price colored">$45.00</span>
-
+					@endif
 					<p>
 						Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
 						tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
@@ -27,9 +30,11 @@
 						cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
 						proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
 					</p>
-
-					<button type="submit" name="add-to-cart" value="27545" class="button">Add to cart</button>
-					
+					@if($book['price'] == 0)
+						<button type="submit" name="add-to-cart" value="27545" class="button">Read Now!</button>
+					@else
+						<button type="submit" name="add-to-cart" value="27545" class="button">Add to cart</button>
+					@endif
 				</div>
 			</div>
 
@@ -65,7 +70,7 @@
 					<div class="comment-list mt-4">
 
 						<article class="flex-container d-flex mb-3">
-							<img src="images/default.png" alt="default" class="commentorImg">
+							<img src="{{asset('images/default.pn')}}g" alt="default" class="commentorImg">
 							<div class="author-post">
 								<div class="comment-meta d-flex">
 									<h4>Michael Watson</h4>
@@ -80,7 +85,7 @@
 
 						<div class="child-comments">
 							<article class="flex-container d-flex">
-								<img src="images/default.png" alt="sara" class="commentorImg">
+								<img src="{{asset('images/default.png')}}" alt="sara" class="commentorImg">
 								<div class="author-post">
 									<div class="comment-meta d-flex">
 										<h4>Chris Gyale</h4>
