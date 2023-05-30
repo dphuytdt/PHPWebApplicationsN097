@@ -8,6 +8,7 @@ use App\Interfaces\BookRepositoryInterface;
 use App\Models\Book;
 use App\Models\Author;
 use App\Models\Category;
+use Illuminate\Pagination\Paginator;
 class BookController extends Controller
 {
     protected BookRepositoryInterface $bookRepository;
@@ -18,10 +19,17 @@ class BookController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $books = $this->bookRepository->getAllBooks();
-        return response()->json($books, 200);
+        $currentPage = $request->query('page', 1);
+        $perPage = $request->query('perPage', 10);
+        Paginator::currentPageResolver(function () use ($currentPage) {
+            return $currentPage;
+        });
+        
+        $books = Book::paginate($perPage);
+        
+        return response()->json($books);
     }
 
     /**

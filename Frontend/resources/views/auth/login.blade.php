@@ -51,7 +51,7 @@
         
             <div>
                 <label for="password">Password </label>
-                <input id="password" type="password" placeholder="password" name="password" required/>
+                <input id="password" type="password" placeholder="Password" name="password" required/>
                 <i class="fas fa-eye password-toggle-icon" id="psw-toggle" onclick="togglePasswordVisibility('password')"></i>
             </div>
             <button class="btn btn--form" type="submit" value="Log in">

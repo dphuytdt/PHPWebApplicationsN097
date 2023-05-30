@@ -48,4 +48,32 @@ class BookController extends Controller
         }
     }
 
+    public function allBook(Request $request){
+        $currentPage = $request->query('page', 1);
+        $perPage = $request->query('perPage', 10);
+        
+        $http = new Client(
+            [
+                'base_uri' => $this->bookService,
+                'timeout' => 2.0,
+            ]
+        );
+
+        $response = $http->request('GET', 'books', [
+            'query' => [
+                'page' => $currentPage,
+                'perPage' => $perPage,
+            ]
+        ]);
+
+        $books = json_decode($response->getBody(), true);
+        $paginator = new \Illuminate\Pagination\LengthAwarePaginator(
+            $books['data'],
+            $books['total'],
+            $perPage,
+            $currentPage,
+            ['path' => url()->current()]
+        );
+    }
+
 }

@@ -77,7 +77,7 @@
 
 			<div class="product-list" data-aos="fade-up">
 				<div class="row">
-
+					{{-- @foreach ($books as $book) --}}
 					<div class="col-md-3">
 						<figure class="product-style">
 							<img src="images/product-item1.jpg" alt="Books" class="product-item">
@@ -89,6 +89,9 @@
 							</figcaption>
 						</figure>
 					</div>
+					{{-- @endforeach --}}
+
+					{{-- {{ $books->links('vendor.pagination.default') }} --}}
 				
 					<div class="col-md-3">
 						<figure class="product-style">
@@ -124,7 +127,7 @@
 								<div class="item-price">$ 35.00</div>
 							</figcaption>
 						</figure>
-					</div>
+					</div> 
 
 			    </div><!--ft-books-slider-->				
 			</div><!--grid-->
