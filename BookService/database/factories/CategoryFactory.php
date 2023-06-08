@@ -16,12 +16,6 @@ class CategoryFactory extends Factory
      */
     public function definition(): array
     {
-        return [
-            'name' => $this->faker->name(),
-            'status' => $this->faker->numberBetween(1, 10),
-            'description' => $this->faker->text(),
-            'created_at' => $this->faker->dateTime(),
-            'updated_at' => $this->faker->dateTime(),
-        ];
+
     }
 }

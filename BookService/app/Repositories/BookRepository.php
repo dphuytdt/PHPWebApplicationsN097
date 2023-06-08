@@ -67,4 +67,27 @@ class BookRepository implements BookRepositoryInterface
         return $query->get();
     }
 
+    //get book featured
+    public function getFeaturedBooks()
+    {
+        return Book::where('is_featured', 1)->orderBy('updated_at', 'desc')->take(4)->get();
+    }
+
+    //insertBook
+    public function createBook($data)
+    {
+        return Book::create($data);
+    }
+
+    //updateBook
+    public function updateBookById($id, $data)
+    {
+        return Book::find($id)->update($data);
+    }
+
+    //deleteBook
+    public function deleteBookById($id)
+    {
+        return Book::find($id)->update(['deleted_at' => now()]);
+    }
 }

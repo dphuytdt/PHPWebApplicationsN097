@@ -13,17 +13,17 @@ return new class extends Migration
     {
         Schema::create('tbl_book', function (Blueprint $table) {
             $table->id();
-            $table->string('title', 100);
-            $table->integer('author_id');
-            $table->integer('category_id');
-            // $table->integer('publisher_id');
+            $table->string('title', 255);
+            $table->string('author_id');
+            $table->string('category_id');
             $table->integer('quantity');
-            $table->bigInteger('price');
-            $table->string('description', 255);
-            $table->string('image', 255);
+            $table->decimal('price', 8, 2);
+            $table->text('description')->nullable();
+            $table->string('cover_image')->nullable();
             $table->text('content');
-            $table->tinyInteger('is_free');
-            $table->integer('status');
+            $table->boolean('is_free')->default(0);
+            $table->boolean('is_featured')->default(0);
+            $table->boolean('status')->default(1);
             $table->dateTime('created_at');
             $table->dateTime('updated_at')->nullable();
             $table->dateTime('deleted_at')->nullable();

@@ -87,4 +87,10 @@ class BookController extends Controller
         $books = $this->bookRepository->searchBook($keyword);
         return response()->json($books, 200);
     }
+
+    public function featured()
+    {
+        $books = $this->bookRepository->getFeaturedBooks();
+        return response()->json($books, 200);
+    }
 }

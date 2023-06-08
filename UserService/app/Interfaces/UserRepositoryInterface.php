@@ -8,4 +8,6 @@ use App\Http\Requests\UpdatePostRequest;
 interface UserRepositoryInterface 
 {
     public function checkEmail($email);
+
+    public function getUserById($id);
 }

@@ -74,6 +74,8 @@ class BookController extends Controller
             $currentPage,
             ['path' => url()->current()]
         );
+
+        // return view('main.all-book', compact('paginator'));
     }
 
 }

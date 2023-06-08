@@ -2,7 +2,8 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\Api\v1\PaymentController;
+use App\Http\Controllers\Api\v1\PaypalPaymentController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -13,7 +14,14 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "api" middleware group. Make something great!
 |
 */
+// Route::group(['prefix' => 'payment/paypal'], function ($router) {
+//     Route::post('/', [PaymentController::class, 'createPayment']);
+//     Route::post('execute', [PaymentController::class, 'executePayment']);
+//     Route::get('cancel', function () {
+//         return response()->json(['message' => 'Payment Canceled']);
+//     });
+// });
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+Route::post('/payment', [PaypalPaymentController::class, 'makePayment'])->name('payment.make');
+Route::get('/payment/success', [PaypalPaymentController::class, 'paymentSuccess'])->name('payment.success');
+Route::get('/payment/cancel', [PaypalPaymentController::class, 'paymentCancel'])->name('payment.cancel');

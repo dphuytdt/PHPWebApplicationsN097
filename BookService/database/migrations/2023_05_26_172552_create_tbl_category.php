@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('tbl_category', function (Blueprint $table) {
             $table->id();
-            $table->string('name', 100);
-            $table->integer('status');
+            $table->string('name', 100)->unique();
+            $table->boolean('status')->default(1);
             $table->text('description')->nullable();
             $table->dateTime('created_at');
             $table->dateTime('updated_at')->nullable();

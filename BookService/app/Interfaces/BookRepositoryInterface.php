@@ -30,4 +30,16 @@ interface BookRepositoryInterface
 
     //search book
     public function searchBook($keyword);
+
+    //get book featured
+    public function getFeaturedBooks();
+
+    //insertBook
+    public function createBook($data);
+
+    //updateBook
+    public function updateBookById($id, $data);
+
+    //deleteBook
+    public function deleteBookById($id);
 }

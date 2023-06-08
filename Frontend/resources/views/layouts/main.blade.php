@@ -46,6 +46,16 @@
 							@endif
 							<a href="#" class="cart for-buy"><i class="icon icon-clipboard"></i><span>Cart</span></a>
 							<a href="#" class="language for-buy"><i class="icon icon-notes"></i><span>Language</span></a>
+							@if(Session::has('user'))
+								@php 
+									$is_vip = Session::get('user')['is_vip'];
+								@endphp
+								@if($is_vip == 1)
+									<a href="#" class="language for-buy"><i class="icon icon-currency-dollar"></i><span>VIP</span></a>
+								@else 
+									<a href="#" class="language for-buy"><i class="icon icon-currency-dollar"></i><span>Upgrade to VIP</span></a>
+								@endif
+							@endif
 							<div class="action-menu">
 	
 								<div class="search-bar">

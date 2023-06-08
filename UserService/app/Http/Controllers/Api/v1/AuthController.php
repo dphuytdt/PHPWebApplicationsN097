@@ -184,8 +184,7 @@ class AuthController extends Controller
         if ($user) {
             $user_id = $user->id;
             $otp = $this->otpRepository->checkOTP($email, $otp, $user_id);
-            if ($otp ==true) {
-                //delete otp
+            if ($otp == true) {
                 $this->otpRepository->deleteOTP($email, $otp, $user_id);
                 return response()->json([
                     'status' => true,
@@ -218,7 +217,7 @@ class AuthController extends Controller
         }
         
         $user = auth()->user();
-        if ($user->role_id == 0) {
+        if ($user->is_admin == 0) {
             return $this->createNewToken($token);
         }
         return response()->json(['error' => 'Unauthorized'], 401);
