@@ -27,6 +27,9 @@ Route::get('/about', [HomeController::class, 'about'])->name('about');
 
 Route::get('/contact', [HomeController::class, 'contact'])->name('contact');
 
+//category
+Route::get('/category/{id}', [BookController::class, 'category'])->name('category');
+
 //route for Auth
 Route::prefix('auth')->group(function () {
     Route::get('login', [AuthController::class, 'login'])->name('login');

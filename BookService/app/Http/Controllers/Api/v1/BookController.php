@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\v1;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Interfaces\BookRepositoryInterface;
+use App\Interfaces\CategoryRepositoryInterface;
 use App\Models\Book;
 use App\Models\Author;
 use App\Models\Category;
@@ -12,10 +13,14 @@ use Illuminate\Pagination\Paginator;
 class BookController extends Controller
 {
     protected BookRepositoryInterface $bookRepository;
-    public function __construct(BookRepositoryInterface $bookRepository)
+    protected CategoryRepositoryInterface $categoryRepository;
+    public function __construct(BookRepositoryInterface $bookRepository, CategoryRepositoryInterface $categoryRepository)
     {
         $this->bookRepository = $bookRepository;
+        $this->categoryRepository = $categoryRepository;
+
     }
+
     /**
      * Display a listing of the resource.
      */
@@ -33,52 +38,12 @@ class BookController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
      * Display the specified resource.
      */
     public function show(string $id)
     {
         $book = $this->bookRepository->getBookById($id);
         return response()->json($book, 200);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
     }
 
     //search book
@@ -88,9 +53,18 @@ class BookController extends Controller
         return response()->json($books, 200);
     }
 
-    public function featured()
+    public function getFeaturedBooks()
     {
         $books = $this->bookRepository->getFeaturedBooks();
+        // dd($books);
+        // dd('abc');
         return response()->json($books, 200);
+    }
+
+    //get category
+    public function getCategory()
+    {
+        $categories = $this->categoryRepository->getAllCategory();
+        return response()->json($categories, 200);
     }
 }

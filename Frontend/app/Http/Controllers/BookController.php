@@ -4,10 +4,16 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use GuzzleHttp\Client;
+use App\Services\CategoryService;
 class BookController extends Controller
 {
     public $bookService = 'http://bookservice.test:8080/api/';
-    
+    protected $categoryService;
+
+    public function __construct(CategoryService $categoryService)
+    {
+        $this->categoryService = $categoryService;
+    }
     public function show($id)
     {
         $client = new Client();
@@ -25,6 +31,7 @@ class BookController extends Controller
     public function search(Request $request)
     {
         $client = new Client();
+        $categories = $this->categoryService->getCategory();
         //call to book service to get book by id
         try {
             $response = $client->get($this->bookService.'books/search/'.$request->keyword);
@@ -37,14 +44,14 @@ class BookController extends Controller
                 $itemsForCurrentPage = array_slice($books, $offSet, $paginate, true);
                 $books = new \Illuminate\Pagination\LengthAwarePaginator($itemsForCurrentPage, count($books), $paginate, $page);
                 $books->setPath(request()->url());
-                return view('main.search-result', compact('books'));
+                return view('main.search-result', compact('books', 'categories'));
             }
             else{
-                return redirect()->intended('/')->with('error', 'No result');
+                return redirect()->intended('/')->with('error', 'No result')->withInput()->with('categories', $categories);
             }
         } 
         catch (\Exception $e) {
-            return redirect()->intended('/')->with('error', 'Error');
+            return redirect()->intended('/')->with('error', 'Error', 'categories', $categories);
         }
     }
 

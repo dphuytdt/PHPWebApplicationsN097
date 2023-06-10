@@ -16,12 +16,15 @@ use App\Http\Controllers\Api\v1\AdminBookController;
 */
 
 // Path: routes\api.php
-
 Route::prefix('books')->group(function () {
+    Route::get('featured', [BookController::class, 'getFeaturedBooks']);
     Route::get('/', [BookController::class, 'index']);
     Route::get('/{id}', [BookController::class, 'show']);
     Route::get('search/{keyword}', [BookController::class, 'search']);
-    Route::get('featured', [BookController::class, 'featured']);
+});
+
+Route::prefix('category')->group(function () {
+    Route::get('/', [BookController::class, 'getCategory']);
 });
 
 
@@ -30,5 +33,5 @@ Route::prefix('admin/books')->group(function () {
     Route::get('/{id}', [AdminBookController::class, 'show']);
     Route::post('/', [AdminBookController::class, 'store']);
     Route::put('/{id}', [AdminBookController::class, 'update']);
-    Route::post('/delete/{id}', [AdminBookController::class, 'delete']);
+    Route::post('delete/{id}', [AdminBookController::class, 'delete']);
 });
