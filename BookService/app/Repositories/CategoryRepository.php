@@ -15,4 +15,11 @@ class CategoryRepository implements CategoryRepositoryInterface
         $categories = Category::all();
         return $categories;
     }
+
+    //get selected category
+    public function getSelectedCategory()
+    {
+        $categories = Category::orderBy('created_at', 'desc')->take(8)->get();
+        return $categories;
+    }
 }

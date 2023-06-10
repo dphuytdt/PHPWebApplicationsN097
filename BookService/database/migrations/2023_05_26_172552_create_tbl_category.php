@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('tbl_category', function (Blueprint $table) {
             $table->id();
             $table->string('name', 100)->unique();
+            $table->string('image', 100)->nullable();
             $table->boolean('status')->default(1);
             $table->text('description')->nullable();
             $table->dateTime('created_at');

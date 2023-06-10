@@ -73,8 +73,16 @@
                                     <a href="">English</a>
                                     <!-- Header Top Menu's Dropdown -->
                                     <ul class="user-sub-menu">
-                                        <li><a href=""><img class="user-sub-menu-in-icon" src="assets/images/icon/lang-en.png" alt=""> English</a></li>
-                                        <li><a href=""><img class="user-sub-menu-in-icon" src="assets/images/icon/lang-gr.png" alt=""> Germany</a></li>
+                                       <style type="text/css">
+                                          /* ajust icon language size */
+                                          .user-sub-menu-in-icon {
+                                              width: 20px;
+                                              height: 20px;
+                                          }
+                                      </style>
+                                      <li><a href=""><img class="user-sub-menu-in-icon" src="assets/images/icon/united-kingdom.png" alt=""> English</a></li>
+                                      <li><a href=""><img class="user-sub-menu-in-icon" src="assets/images/icon/vietnam.png" alt=""> VietNam</a></li>
+                                      <li><a href=""><img class="user-sub-menu-in-icon" src="assets/images/icon/japan.png" alt=""> Japan</a></li>
                                     </ul>
                                 </li>
                                 <li><a href=""><i class="icon-repeat"></i> Compare (0)</a></li>

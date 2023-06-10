@@ -5,4 +5,7 @@ namespace App\Interfaces;
 interface CategoryRepositoryInterface 
 {
     public function getAllCategory();
+
+    
+    public function getSelectedCategory();
 }

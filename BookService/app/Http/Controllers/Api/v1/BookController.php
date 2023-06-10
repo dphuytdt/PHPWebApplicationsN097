@@ -61,10 +61,17 @@ class BookController extends Controller
         return response()->json($books, 200);
     }
 
-    //get category
     public function getCategory()
     {
         $categories = $this->categoryRepository->getAllCategory();
         return response()->json($categories, 200);
     }
+
+    //get category
+    public function getSelectedCategory()
+    {
+        $categories = $this->categoryRepository->getSelectedCategory();
+        return response()->json($categories, 200);
+    }
+
 }

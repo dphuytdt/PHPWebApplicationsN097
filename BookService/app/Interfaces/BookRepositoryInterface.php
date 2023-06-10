@@ -42,4 +42,5 @@ interface BookRepositoryInterface
 
     //deleteBook
     public function deleteBookById($id);
+
 }
