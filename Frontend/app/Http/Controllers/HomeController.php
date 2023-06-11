@@ -7,8 +7,14 @@ use GuzzleHttp\Client;
 use GuzzleHttp\Promise;
 use Illuminate\Support\Facades\Http;
 use App\Services\CategoryService;
+use Illuminate\Support\Facades\Config;
+use React\Http\Browser;
+use GuzzleHttp\Promise\Utils;
+use Illuminate\Pagination\Paginator;
+
 class HomeController extends Controller
 {
+    // //CALL TO ENVIRONMENT VARIABLE TO GET BOOK SERVICE URL
     public $bookService = 'http://bookservice.test:8080/api/';
     protected $categoryService;
 
@@ -19,9 +25,12 @@ class HomeController extends Controller
 
     public function index(Request $request){
         $client = new Client();
-        //get categorieS
         $categories = $this->categoryService->getCategory();
-        return view('main.home')->with('categories', $categories);
+        $response = $client->get($this->bookService.'books/is_free');
+        $books = json_decode($response->getBody(), true);
+        // $paginatedBooks = new Paginator($books, 5);
+        // $paginatedBooks->withPath('/');
+        return view('main.home')->with('books', $books)->with('categories', $categories);
     }
     
     public function about()
@@ -35,4 +44,6 @@ class HomeController extends Controller
         $categories = $this->categoryService->getCategory();
         return view('main.contact')->with('categories', $categories);
     }
+
+
 }

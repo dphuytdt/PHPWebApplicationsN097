@@ -43,4 +43,10 @@ interface BookRepositoryInterface
     //deleteBook
     public function deleteBookById($id);
 
+    //get book by category
+    public function readBook($id);
+
+    //get free book
+    public function getFreeBook();
+
 }

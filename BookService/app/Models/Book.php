@@ -24,7 +24,7 @@ class Book extends Model
         'description',
         'cover_image',
         'content',
-        'is_free',
+        'discount',
         'is_featured',
         'status',
         'created_at',

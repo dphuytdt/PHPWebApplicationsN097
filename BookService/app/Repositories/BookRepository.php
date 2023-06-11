@@ -90,4 +90,16 @@ class BookRepository implements BookRepositoryInterface
     {
         return Book::find($id)->update(['deleted_at' => now()]);
     }
+
+    //readBook
+    public function readBook($id)
+    {
+        $result = Book::find($id);
+    }
+
+    //get free book
+    public function getFreeBook()
+    {
+        return Book::where('price', 0)->get();
+    }
 }

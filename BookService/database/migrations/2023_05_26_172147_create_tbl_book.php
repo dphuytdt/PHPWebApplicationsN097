@@ -21,7 +21,7 @@ return new class extends Migration
             $table->text('description')->nullable();
             $table->string('cover_image')->nullable();
             $table->text('content');
-            $table->boolean('is_free')->default(0);
+            $table->integer('discount')->nullable();
             $table->boolean('is_featured')->default(0);
             $table->boolean('status')->default(1);
             $table->dateTime('created_at');

@@ -74,4 +74,18 @@ class BookController extends Controller
         return response()->json($categories, 200);
     }
 
+    //read book
+    public function readBook(string $id)
+    {
+        $book = $this->bookRepository->readBook($id);
+        return response()->json($book, 200);
+    }
+
+    //get free book
+    public function getFreeBook()
+    {
+        $books = $this->bookRepository->getFreeBook();
+        return response()->json($books, 200);
+    }
+
 }

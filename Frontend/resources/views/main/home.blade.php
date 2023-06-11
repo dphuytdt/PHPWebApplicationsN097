@@ -366,15 +366,15 @@
 		<!-- Start Hero Slider Single -->
 		<div class="hero-area-single">
 			<div class="hero-area-bg">
-				<img class="hero-img" src="assets/images/slider_images/home_1/aments_home_1_slider_1.jpg" alt="">
+				<img class="hero-img" src="https://img.freepik.com/premium-photo/turning-paper-book-pages-literature-banner-with-copy-space-text_361816-5089.jpg" alt="">
 			</div>
 			<div class="hero-content">
 				<div class="container">
 					<div class="row">
 						<div class="col-10 col-md-8 col-xl-6">
-							<h5>World Best Quality</h5>
-							<h2>New Car Parts</h2>
-							<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit sed do eiu</p>
+							<h5>The Quality of Our Products is Unmatched</h5>
+							<h2>Book Store</h2>
+							<p>Books with a variety of genres and the best quality</p>
 							<a href="product-details-default.html" class="hero-button">Shopping Now</a>
 						</div>
 					</div>
@@ -384,15 +384,15 @@
 		<!-- Start Hero Slider Single -->
 		<div class="hero-area-single">
 			<div class="hero-area-bg">
-				<img class="hero-img" src="assets/images/slider_images/home_1/aments_home_1_slider_2.jpg" alt="">
+				<img class="hero-img" src="https://t3.ftcdn.net/jpg/02/60/92/70/360_F_260927075_10lMM4OgNQ2emzsMhKQAlhsBsSGp4KNv.jpg" alt="">
 			</div>
 			<div class="hero-content">
 				<div class="container">
 					<div class="row">
 						<div class="col-10 col-md-8 col-xl-6">
-							<h5>World Best Quality</h5>
-							<h2>New Car Parts</h2>
-							<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit sed do eiu</p>
+							<h5>World Best Book</h5>
+							<h2>New Book</h2>
+							<p>With the help of consectetur adipisicing elit sed do eiu</p>
 							<a href="product-details-default.html" class="hero-button">Shopping Now</a>
 						</div>
 					</div>
@@ -459,7 +459,7 @@
 					<!-- Start Banner Single -->
 					<div class="banner-single">
 						<a href="product-details-default.html" class="banner-img-link">
-							<img class="banner-img" src="assets/images/banner_images/aments_banner_01.jpg" alt="">
+							<img class="banner-img" src="https://img.freepik.com/premium-vector/online-library-outline-isometric-education-concept-open-book-with-loupe-isolated-white_119523-8406.jpg" alt="">
 						</a>
 						<div class="banner-content">
 							<span class="banner-text-tiny">Car Wheel</span>
@@ -472,7 +472,7 @@
 					<!-- Start Banner Single -->
 					<div class="banner-single">
 						<a href="product-details-default.html" class="banner-img-link">
-							<img class="banner-img" src="assets/images/banner_images/aments_banner_02.jpg" alt="">
+							<img class="banner-img" src="https://img.freepik.com/premium-vector/collection-cat-with-pile-book-set_77984-276.jpg" alt="">
 						</a>
 						<div class="banner-content">
 							<span class="banner-text-tiny">Car Vails</span>
@@ -485,7 +485,7 @@
 					<!-- Start Banner Single -->
 					<div class="banner-single">
 						<a href="product-details-default.html" class="banner-img-link">
-							<img class="banner-img" src="assets/images/banner_images/aments_banner_03.jpg" alt="">
+							<img class="banner-img" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSbT_Tb79QYgsvr3knZa-cWA-6vxuv3ZFzh0clS46Y2QjPV2VLIRb1VR4-iXRbbwMZiDLM&usqp=CAU" alt="">
 						</a>
 						<div class="banner-content">
 							<span class="banner-text-tiny">Car Vails</span>
@@ -507,11 +507,11 @@
 			<div class="row">
 				<div class="section-content d-flex justify-content-between align-items-md-center align-items-start flex-md-row flex-column">
 					<h3 class="section-title">New Books</h3>
-					<ul class="tablist nav product-tab-btn">
+					{{-- <ul class="tablist nav product-tab-btn">
 						<li><a class="nav-link active" data-toggle="tab" href="#car_and_drive">Car & Drive </a></li>
 						<li><a class="nav-link" data-toggle="tab" href="#motorcycle">Motorcycle</a></li>
 						<li><a class="nav-link" data-toggle="tab" href="#truck_drive">Truck & Drive</a></li>
-					</ul>
+					</ul> --}}
 				</div>
 			</div>
 		</div>
@@ -1030,11 +1030,11 @@
 			<div class="row">
 				<div class="section-content d-flex justify-content-between align-items-md-center align-items-start flex-md-row flex-column">
 					<h3 class="section-title">Free Books</h3>
-					<ul class="tablist nav product-tab-btn">
+					{{-- <ul class="tablist nav product-tab-btn">
 						<li><a class="nav-link active" data-toggle="tab" href="#car_and_drive">Car & Drive </a></li>
 						<li><a class="nav-link" data-toggle="tab" href="#motorcycle">Motorcycle</a></li>
 						<li><a class="nav-link" data-toggle="tab" href="#truck_drive">Truck & Drive</a></li>
-					</ul>
+					</ul> --}}
 				</div>
 			</div>
 		</div>
@@ -1049,10 +1049,11 @@
 						<div class="tab-pane show active" id="car_and_drive">
 							<div class="product-default-slider product-default-slider-4grids-1row">
 								<!-- Start Product Defautlt Single -->
+								@foreach ($books as $book)
 								<div class="product-default-single border-around">
 									<div class="product-img-warp">
-										<a href="product-details-default.html" class="product-default-img-link">
-											<img src="assets/images/products_images/aments_products_image_2.jpg" alt="" class="product-default-img img-fluid">
+										<a href="{{URL::to('/book-details/'.$book['id'])}}" class="product-default-img-link">
+											<img src="{{$book['cover_image']}}" alt="" class="product-default-img img-fluid">
 										</a>
 										<div class="product-action-icon-link">
 											<ul>
@@ -1064,11 +1065,12 @@
 										</div>
 									</div>
 									<div class="product-default-content">
-										<h6 class="product-default-link"><a href="product-details-default.html">New Balance Fresh Foam Kaymin Car Purts</a></h6>
-										<span class="product-default-price"><del class="product-default-price-off">$30.12</del> $25.12</span>
+										<h6 class="product-default-link"><a href="product-details-default.html">{{$book['title']}}</a></h6>
+										{{-- <span class="product-default-price"><del class="product-default-price-off">$30.12</del> $25.12</span> --}}
+										<span class="product-default-price">Free for now</span>
 									</div>
 								</div> <!-- End Product Defautlt Single -->
-								<!-- Start Product Defautlt Single -->
+								{{-- <!-- Start Product Defautlt Single -->
 								<div class="product-default-single border-around">
 									<div class="product-img-warp">
 										<a href="product-details-default.html" class="product-default-img-link">
@@ -1207,10 +1209,11 @@
 										<h6 class="product-default-link"><a href="product-details-default.html">New Balance Fresh Foam Kaymin Car Purts</a></h6>
 										<span class="product-default-price"><del class="product-default-price-off">$30.12</del> $25.12</span>
 									</div>
-								</div> <!-- End Product Defautlt Single -->
+								</div> <!-- End Product Defautlt Single --> --}}
+								@endforeach
 							</div>
 						</div>
-						<div class="tab-pane" id="motorcycle">
+						{{-- <div class="tab-pane" id="motorcycle">
 							<div class="product-default-slider product-default-slider-4grids-1row">
 								<!-- Start Product Defautlt Single -->
 								<div class="product-default-single border-around">
@@ -1537,7 +1540,7 @@
 									</div>
 								</div> <!-- End Product Defautlt Single -->
 							</div>
-						</div>
+						</div> --}}
 					</div>
 				</div>
 			</div>
@@ -1577,11 +1580,11 @@
 			<div class="row">
 				<div class="section-content d-flex justify-content-between align-items-md-center align-items-start flex-md-row flex-column">
 					<h3 class="section-title">Hot Deals</h3>
-					<ul class="tablist nav product-tab-btn">
+					{{-- <ul class="tablist nav product-tab-btn">
 						<li><a class="nav-link active" data-toggle="tab" href="#drive_and_car">Drive & Car </a></li>
 						<li><a class="nav-link" data-toggle="tab" href="#bike">Bikes</a></li>
 						<li><a class="nav-link" data-toggle="tab" href="#drive_trucks">Drive & Truck</a></li>
-					</ul>
+					</ul> --}}
 				</div>
 			</div>
 		</div>

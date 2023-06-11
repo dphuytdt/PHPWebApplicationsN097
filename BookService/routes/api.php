@@ -18,6 +18,8 @@ use App\Http\Controllers\Api\v1\AdminBookController;
 // Path: routes\api.php
 Route::prefix('books')->group(function () {
     Route::get('featured', [BookController::class, 'getFeaturedBooks']);
+    Route::get('is_free', [BookController::class, 'getFreeBook']);
+    Route::get('read/{id}', [BookController::class, 'readBook']);
     Route::get('/', [BookController::class, 'index']);
     Route::get('/{id}', [BookController::class, 'show']);
     Route::get('search/{keyword}', [BookController::class, 'search']);

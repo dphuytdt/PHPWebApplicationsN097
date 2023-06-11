@@ -22,8 +22,7 @@
     <link rel="stylesheet" href="{{asset('assets/css/plugins/venobox.min.css')}}">
 
     <!-- Main CSS -->
-    <link rel="stylesheet" href="{{('assets/css/style.css')}}">
-
+    <link rel="stylesheet" href="{{asset('assets/css/style.css')}}">
     <!-- Use the minified version files listed below for better performance and remove the files listed above -->
     <!-- <link rel="stylesheet" href="assets/css/vendor/vendor.min.css">
     <link rel="stylesheet" href="assets/css/plugins/plugins.min.css">
@@ -99,8 +98,15 @@
                 <div class="row d-flex justify-content-between align-items-center">
                     <div class="col-3">
                         <!-- Logo Header -->
+                        <style type="text/css">
+                            /* ajust logo size */
+                            .header-logo img {
+                                width: 50px;
+                                height: 50px;
+                            }
+                        </style>
                         <div class="header-logo">
-                            <a href="index.html"><img src="assets/images/logo/logo.png" alt=""></a>
+                            <a href="{{route('home')}}"><img src="{{asset('images/logo.png')}}" alt=""></a>
                         </div>
                     </div>
                     <div class="col-6">
@@ -150,14 +156,9 @@
                             <nav>
                                 <ul>
                                     <li class="has-dropdown">
-                                        <a class="active main-menu-link" href="index.html">Home <i class="fa fa-angle-down"></i></a>
-                                        <!-- Sub Menu -->
-                                        <ul class="sub-menu">
-                                            <li><a href="index.html">Home 1</a></li>
-                                            <li><a href="index-2.html">Home 2</a></li>
-                                        </ul>
+                                        <a class="active main-menu-link" href="{{route('home')}}">Home</a>
                                     </li>
-                                    <li class="has-dropdown has-megaitem">
+                                    {{-- <li class="has-dropdown has-megaitem">
                                         <a href="product-details-default.html">Shop <i class="fa fa-angle-down"></i></a>
                                         <!-- Mega Menu -->
                                         <div class="mega-menu">
@@ -215,7 +216,7 @@
                                                 </a>
                                             </div>
                                         </div>
-                                    </li>
+                                    </li> --}}
                                     <li class="has-dropdown">
                                         <a href="blog-single-sidebar-left.html">Category <i class="fa fa-angle-down"></i></a>
                                         <!-- Sub Menu -->

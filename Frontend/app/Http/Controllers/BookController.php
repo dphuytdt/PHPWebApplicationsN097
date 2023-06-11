@@ -14,14 +14,14 @@ class BookController extends Controller
     {
         $this->categoryService = $categoryService;
     }
-    public function show($id)
+    public function bookDetails($id)
     {
+        $categories = $this->categoryService->getCategory();
         $client = new Client();
-        //call to book service to get book by id
         try {
             $response = $client->get($this->bookService.'books/'.$id);
             $book = json_decode($response->getBody(), true);
-            return view('main.book-details', compact('book'));
+            return view('main.book-details', compact('book', 'categories'));
         } 
         catch (\Exception $e) {
             return redirect()->intended('/')->with('error', 'Login failed');

@@ -19,7 +19,7 @@ use App\Http\Controllers\BookController;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
-Route::get('/book-details/{id}' , [BookController::class, 'show'])->name('bookDetails');
+Route::get('/book-details/{id}' , [BookController::class, 'bookDetails'])->name('bookDetails');
 //search book
 Route::get('/search', [BookController::class, 'search'])->name('search');
 

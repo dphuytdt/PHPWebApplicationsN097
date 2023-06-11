@@ -31,6 +31,7 @@ class BookFactory extends Factory
             'description' => $this->faker->text(),
             'cover_image' => $this->faker->imageUrl(),
             'content' => $this->faker->text(),
+            'discount' => $this->faker->numberBetween(1, 10),
             'is_free' => $this->faker->numberBetween(0, 1),
             'is_featured' => $this->faker->numberBetween(0, 1),
             'status' => $this->faker->numberBetween(1, 10),
