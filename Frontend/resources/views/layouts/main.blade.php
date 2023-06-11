@@ -112,9 +112,10 @@
                     <div class="col-6">
                         <!-- Start Header Search -->
                         <div class="header-search">
-                            <form action="#" method="post">
+                            <form action="{{route('search')}}" method="GET">
+                                {{-- @csrf --}}
                                 <div class="header-search-box default-search-style d-flex">
-                                    <input class="default-search-style-input-box border-around border-right-none" type="search" placeholder="Search entire store here ..." required>
+                                    <input name="keyword" class="default-search-style-input-box border-around border-right-none" type="search" placeholder="Type any Keyword and press Enter ..." required>
                                     <button class="default-search-style-input-btn" type="submit"><i class="icon-search"></i></button>
                                 </div>
                             </form>
@@ -258,8 +259,15 @@
                 <div class="row">
                     <div class="col-lg-3 col-md-3 col-sm-5">
                         <div class="footer-widget footer-widget-contact">
+                            {{-- change logo size --}}
+                            <style type="text/css">
+                                .footer-logo img {
+                                    width: 40%;
+                                    height: 50%;
+                                }
+                            </style>
                             <div class="footer-logo">
-                                <a href="index.html"><img src="assets/images/logo/logo.png" alt="" class="img-fluid"></a>
+                                <a href="index.html"><img src="{{ asset('images/logo.png') }}" alt="" class="img-fluid"></a>
                             </div>
                             <div class="footer-contact">
                                 <p>We are a team of designers and developers that create high quality Magento, Prestashop, Opencart...</p>
@@ -322,7 +330,7 @@
                 <div class="row align-items-center">
                     <div class="col-lg-6 col-md-6">
                         <div class="copyright-area">
-                            <p class="copyright-area-text">Copyright © 2020 <a class="copyright-link" href="https://hasthemes.com/">Hasthemes</a></p>
+                            <p class="copyright-area-text">Copyright © 2020 <a class="copyright-link" ></a></p>
                         </div>
                     </div>
                     <div class="col-lg-6 col-md-6">

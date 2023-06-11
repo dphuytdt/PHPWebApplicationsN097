@@ -10,6 +10,8 @@ use App\Models\Book;
 use App\Models\Author;
 use App\Models\Category;
 use Illuminate\Pagination\Paginator;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Pagination\LengthAwarePaginator;
 class BookController extends Controller
 {
     protected BookRepositoryInterface $bookRepository;
@@ -47,10 +49,23 @@ class BookController extends Controller
     }
 
     //search book
-    public function search(string $keyword)
+    public function search(string $keyword, Request $request)
     {
-        $books = $this->bookRepository->searchBook($keyword);
-        return response()->json($books, 200);
+        $books = Book::where('title', 'like', "%{$keyword}%")
+            ->orWhere('description', 'like', "%{$keyword}%")
+            ->orWhere('content', 'like', "%{$keyword}%")
+            ->orWhere('price', 'like', "%{$keyword}%")
+            // ->orWhere('discount', 'like', "%{$keyword}%")
+            ->orWhere('quantity', 'like', "%{$keyword}%")
+            ->orWhere('status', 'like', "%{$keyword}%")
+            ->orWhere('is_featured', 'like', "%{$keyword}%")
+            ->orWhereHas('author', function ($query) use ($keyword) {
+                $query->where('name', 'like', "%{$keyword}%");
+            })
+            ->orWhereHas('category', function ($query) use ($keyword) {
+                $query->where('name', 'like', "%{$keyword}%");
+            })->paginate(8);
+        return response()->json($books);
     }
 
     public function getFeaturedBooks()

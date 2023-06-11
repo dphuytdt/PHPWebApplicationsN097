@@ -8,3 +8,8 @@
         $trail->parent('home');
         $trail->push($book['title'], route('bookDetails', $book['id']));
     });
+
+    Breadcrumbs::for('search', function ($trail) {
+        $trail->parent('home');
+        $trail->push('Search', route('search'));
+    });
