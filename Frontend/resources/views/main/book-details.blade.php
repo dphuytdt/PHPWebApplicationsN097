@@ -833,7 +833,13 @@
                             </style>
                             <br>
                             <h3 class="text-center">Start Reading</h3>
-                            <p id="content" class="content">{{$book['content']}}</p>
+                            @if($book['content_type'] == 'text')
+                            <div class="content">
+                                <p>{{$book['content']}}</p>
+                            @else
+                            <div class="content">
+                                <img src="{{$book['content']}}" alt="" class="center">
+                            @endif
                         </div>
                     </div>
 

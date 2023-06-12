@@ -23,6 +23,7 @@ class Book extends Model
         'price',
         'description',
         'cover_image',
+        'content_type',
         'content',
         'discount',
         'is_featured',

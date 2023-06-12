@@ -3,6 +3,8 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
+use PhpOffice\PhpWord\IOFactory;
+use Illuminate\Support\Facades\Storage;
 use App\Models\Book;
 use App\Models\Category;
 /**
@@ -31,7 +33,13 @@ class BookFactory extends Factory
             'https://salt.tikicdn.com/cache/750x750/ts/product/a8/5d/dc/5b51ac19e74a067c8fe4dd048ea9709d.jpg.webp',
             'https://salt.tikicdn.com/cache/750x750/ts/product/0d/3e/8b/61ea373ffb9145b08eb3feab3fab8dfc.jpg.webp',
         ];
+        $filePath = storage_path('app/public/content.docx');
 
+        // Đọc nội dung từ tệp tin docx
+        $content = '';
+        if (Storage::exists('public/content.docx')) {
+            $content = $this->parseDocxContent($filePath);
+        }
         return [
             'title' => $this->faker->name(),
             'author' => $this->faker->name(),
@@ -41,7 +49,8 @@ class BookFactory extends Factory
             'price' => $this->faker->randomFloat(2, 1, 10000),
             'description' => $this->faker->text(),
             'cover_image' => $this->faker->randomElement($cover_image_list),
-            'content' => $this->faker->text(),
+            // 'content_type' => $this->faker->numberBetween(1, 2),
+            'content' => $content,
             'discount' => $this->faker->numberBetween(0, 100),
             'is_featured' => $this->faker->numberBetween(0, 1),
             'status' => $this->faker->numberBetween(1, 10),
@@ -49,5 +58,19 @@ class BookFactory extends Factory
             'updated_at' => $this->faker->dateTime(),
         ];
 
+    }
+
+    function parseDocxContent($filePath)
+    {
+        $content = '';
+        $phpWord = IOFactory::load($filePath);
+        $sections = $phpWord->getSections();
+        foreach ($sections as $section) {
+            $elements = $section->getElements();
+            foreach ($elements as $element) {
+                $content .= $element->getText();
+            }
+        }
+        return $content;
     }
 }

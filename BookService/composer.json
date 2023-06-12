@@ -14,7 +14,8 @@
         "maatwebsite/excel": "^3.1",
         "phpoffice/phpspreadsheet": "^1.18",
         "symfony/dom-crawler": "^6.3",
-        "weidner/goutte": "^2.3"
+        "weidner/goutte": "^2.3",
+        "phpoffice/phpword": "*"
     },
     "require-dev": {
         "fakerphp/faker": "^1.9.1",
