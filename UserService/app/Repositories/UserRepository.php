@@ -6,7 +6,7 @@ use App\Http\Requests\StorePostRequest;
 use App\Http\Requests\UpdatePostRequest;
 use App\Interfaces\UserRepositoryInterface;
 use App\Models\User;
-
+use App\Models\UserDetail;
 class UserRepository implements UserRepositoryInterface 
 {
     private User $user;
@@ -28,6 +28,17 @@ class UserRepository implements UserRepositoryInterface
     public function checkUserExist($email) 
     {
         $user = $this->user->where('email', $email)->first();
+        return $user;
+    }
+
+    public function getAllUser() 
+    {
+        $user = $this->user->all();
+        //get user detail for each user
+        foreach($user as $u) {
+            $user_detail = UserDetail::where('user_id', $u->id)->first();
+            $u->user_detail = $user_detail;
+        }
         return $user;
     }
 }

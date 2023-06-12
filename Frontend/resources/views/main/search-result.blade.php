@@ -548,7 +548,9 @@
                 <!-- Start Pagination -->
                 <div class="pagination-container">
                     <div class="pagination">
-                        {{-- Hiển thị nút Previous --}}
+                        @if ($paginator->currentPage() != 1)
+                            <a href="{{ $paginator->url(1) }}">First</a>
+                        @endif
                         @if ($paginator->onFirstPage())
                             <span class="disabled">Previous</span>
                         @else
@@ -570,6 +572,9 @@
                         @else
                             <span class="disabled">Next</span>
                         @endif
+                        @if ($paginator->currentPage() != $paginator->lastPage())
+                        <a href="{{ $paginator->url($paginator->lastPage()) }}">Last</a>
+                    @endif
                     </div> <!-- End Pagination -->
                 </div>
             </div> <!-- End Shop Product Sorting Section  -->

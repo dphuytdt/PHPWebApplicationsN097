@@ -2,7 +2,7 @@
 @section('content')
 @section('title', 'Category List')
 {{-- <script src="https://code.jquery.com/jquery-2.2.4.js"></script> --}}
-<script>
+{{-- <script>
     $(document).ready(function() {
       $("#exampleInputPassword1").on("change", function() {
         var input = this;
@@ -15,7 +15,7 @@
         }
       });
     });
-</script>
+</script> --}}
 <!-- Begin Page Content -->
 <div class="container-fluid">
 
@@ -30,44 +30,46 @@
         </div> --}}
         <div class="card-body">
             <div class="table-responsive">
-                <table id="listCategory" class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <table id="listUsers" class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                     <thead>
                         <tr>
-                            <th>Name</th>
-                            <th>Cover Image</th>
-                            <th>Status</th>
-                            <th>Description</th>
-                            <th>Create Date</th>
+                            <th>Full Name</th>
+                            <th>Email</th>
+                            <th>Wallet</th>
+                            <th>Role</th>
+                            <th>Vip Member</th>
+                            <th>Created Date</th>
                             <th>Update Date</th>
                             <th>Delete Date</th>
                             <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @if(isset($paginator))
-                            @foreach($paginator as $category)
+                        @if(isset($users))
+                            @foreach($user_infor as $user)
                                 <tr>
-                                    <td>{{$category['name']}}</td>
-                                    <td><img src="{{$category['image']}}" alt="{{$category['name']}}" width="100px" height="100px"></td>
-                                    @if($category['status'] == 1)
-                                        <td>Active</td>
-                                    @else
-                                        <td>Deactive</td>
-                                    @endif
-                                    <td>{{$category['description']}}</td>
-                                    <td>{{$category['created_at']}}</td>
-                                    @if($category['updated_at'] == null)
-                                        <td>Not Updated</td>
-                                    @else
-                                        <td>{{$category['updated_at']}}</td>
-                                    @endif
-                                    @if($category['deleted_at'] == null)
-                                        <td>Not Deleted</td>
-                                    @else
-                                        <td>{{$category['deleted_at']}}</td>
-                                    @endif
+                                    <td>{{$user['fullname']}}</td>
+                                    <td>{{$user['email']}}</td>
+                                    <td>{{$user['wallet']}}</td>
                                     <td>
-                                        <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#exampleModalCenter-{{$category['id']}}">
+                                        @if($user['role_id'] == 1)
+                                            <span class="badge badge-danger">User</span>
+                                        @else
+                                            <span class="badge badge-success">Admin</span>
+                                        @endif
+                                    </td>
+                                    <td>
+                                        @if($user['is_vip'] == 0)
+                                            <span class="badge badge-danger">No</span>
+                                        @else
+                                            <span class="badge badge-success">Yes</span>
+                                        @endif
+                                    </td>
+                                    <td>{{$user['created_at']}}</td>
+                                    <td>{{$user['updated_at']}}</td>
+                                    <td>{{$user['deleted_at']}}</td>
+                                    <td>
+                                        <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#exampleModalCenter-{{$user['id']}}">
                                             Edit
                                         </button>
                                         <button type="button" class="btn btn-danger btn-sm">
@@ -97,11 +99,11 @@
 
 </div>
 
-@if(isset($paginator))
-    @foreach($paginator as $category)
-    <form class="form-edit-category" method="POST" action="{{route('category.update', $category['id'])}}" enctype="multipart/form-data">
+{{-- @if(isset($users))
+    @foreach($users as $user)
+    <form class="form-edit-category" method="POST" action="{{route('users.update', $user['id'])}}" enctype="multipart/form-data">
         @csrf
-        <div class="modal fade" id="exampleModalCenter-{{$category['id']}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle-{{$category['id']}}" aria-hidden="true">
+        <div class="modal fade" id="exampleModalCenter-{{$user['id']}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle-{{$category['id']}}" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
             <div class="modal-header">
@@ -152,7 +154,7 @@
         </div>
     </form>
     @endforeach
-@endif
+@endif --}}
 <script type="text/javascript">
     $(document).ready(function(){
         $('.btn-danger').click(function(){
@@ -161,7 +163,7 @@
             url = url.replace('id', id);
             swal({
                 title: "Are you sure?",
-                text: "Once deleted, you will not be able to recover this imaginary file!",
+                text: "Once deleted, user's data will be lost forever!",
                 icon: "warning",
                 buttons: true,
                 dangerMode: true,
@@ -172,14 +174,14 @@
                         url: url,
                         data: {id: id},
                         success: function(data){
-                            swal("Poof! Your imaginary file has been deleted!", {
+                            swal("Poof! Action success!", {
                                 icon: "success",
                             });
                             location.reload();
                         }
                     });
                 } else {
-                    swal("Your imaginary file is safe!",{
+                    swal("Action canceled!", {
                         icon: "success",
                     });
                 }
@@ -191,10 +193,7 @@
 
 <script>
     $(document).ready(function() {
-        //custom 5 row per page
-        $('#listCategory').dataTable( {
-            "pageLength": 3,
-        } );
+        $('#listUsers').DataTable();
     });
 </script>
 @endsection

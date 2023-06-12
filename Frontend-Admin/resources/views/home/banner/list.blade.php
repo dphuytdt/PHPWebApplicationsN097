@@ -91,6 +91,54 @@
                         @endif
                     </tbody>
                 </table>
+                {{-- <style >
+                    .pagination-container {
+                        text-align: center;
+                    }
+
+                    .pagination {
+                        display: inline-block;
+                        margin-top: 10px;
+                    }
+
+                    .pagination a, .pagination span {
+                        display: inline-block;
+                        padding: 5px 10px;
+                        margin-right: 5px;
+                        border: 1px solid #ccc;
+                        text-decoration: none;
+                        color: #333;
+                    }
+
+                    .pagination a:hover {
+                        background-color: #f5f5f5;
+                    }
+
+                    .pagination .current {
+                        background-color: #ccc;
+                        color: #fff;
+                    }
+
+                </style> --}}
+                {{-- <div class="pagination">
+                    @if ($paginator->onFirstPage())
+                        <span class="disabled">Previous</span>
+                    @else
+                        <a href="{{ $paginator->previousPageUrl() }}">Previous</a>
+                    @endif
+                    @for ($i = 1; $i <= $paginator->lastPage(); $i++)
+                    @if ($i === $paginator->currentPage())
+                        <span class="current">{{ $i }}</span>
+                    @else
+                        <a href="{{ $paginator->url($i) }}">{{ $i }}</a>
+                    @endif
+                    @endfor
+                    @if ($paginator->hasMorePages())
+                        <a href="{{ $paginator->nextPageUrl() }}">Next</a>
+                    @else
+                        <span class="disabled">Next</span>
+                    @endif
+                </div> --}}
             </div>
         </div>
     </div>
@@ -191,10 +239,7 @@
 
 <script>
     $(document).ready(function() {
-        //custom 5 row per page
-        $('#listCategory').dataTable( {
-            "pageLength": 3,
-        } );
+        $('#listCategory').DataTable();
     });
 </script>
 @endsection

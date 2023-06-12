@@ -8,3 +8,8 @@
         $trail->parent('home');
         $trail->push('Category List', route('category.index'));
     });
+
+    Breadcrumbs::for('category.create', function ($trail) {
+        $trail->parent('category.index');
+        $trail->push('Create Category', route('category.create'));
+    });

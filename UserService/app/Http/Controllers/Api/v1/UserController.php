@@ -29,4 +29,9 @@ class UserController extends Controller
         }
 
     }
+
+    public function getAllUser() {
+        $users = $this->userRepository->getAllUser();
+        return response()->json(['users' => $users]);
+    }
 }

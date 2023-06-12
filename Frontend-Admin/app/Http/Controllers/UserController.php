@@ -6,23 +6,29 @@ use Illuminate\Http\Request;
 use GuzzleHttp\Client;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
-class CategoryController extends Controller
+class UserController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public $bookService = 'http://bookservice.test:8080/api/';
-    public function index(Request $request)
+    public $userService = 'http://userservice.test:8080/api/auth/';
+    public function index()
     {
-        // dd($request);
         $client = new Client();
         try {
-            $response = $client->get($this->bookService.'category/admin');
-            $paginator = json_decode($response->getBody(), true);
-            return view('home.category.list', compact('paginator'));
+            $response = $client->get($this->userService.'admin/user', [
+                'headers' => [
+                    'Authorization' => 'Bearer ' . session('token'), // Truyền token từ session
+                    "Accept"=>"application/json"
+                ],
+
+            ]);
+            $users = json_decode($response->getBody(), true);
+            $user_infor = $users['users'];
+            return view('home.user.list', compact('users', 'user_infor'));
         } catch (\Exception $e) {
             dd($e);
-            // return view('home.category.list')->withErrors(['errors' => 'Cannot connect to server']);
+            // return view('home.user.list')->withErrors(['errors' => 'Cannot connect to server']);
         }
     }
 
@@ -31,7 +37,7 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        return view('home.category.create');
+        //
     }
 
     /**
@@ -71,14 +77,6 @@ class CategoryController extends Controller
      */
     public function destroy(string $id)
     {
-        $client = new Client();
-        try {
-            $response = $client->delete($this->bookService.'category/'.$id);
-            $categories = json_decode($response->getBody(), true);
-            return redirect()->route('home.category.list')->with('success', 'Delete category successfully');
-        } catch (\Exception $e) {
-            dd($e);
-            // return view('home.category.list')->withErrors(['errors' => 'Cannot connect to server']);
-        }
+        //
     }
 }

@@ -26,7 +26,7 @@ class CategoryRepository implements CategoryRepositoryInterface
     //get all category for admin
     public function getAllCategoryForAdmin()
     {
-        $categories = Category::orderBy('name', 'asc')->paginate(4);
+        $categories = Category::orderBy('name', 'asc')->get();
         return $categories;
     }
 }

@@ -21,6 +21,14 @@
     <link href="{{asset('admin/css/sb-admin-2.min.css')}}" rel="stylesheet">
     <meta name="_token" content="{{ csrf_token() }}">
 
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.5/dist/jquery.validate.js" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.css" />
+    
+    <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.js"></script>
+
 </head>
 
 <body id="page-top">
@@ -34,7 +42,7 @@
             <!-- Sidebar - Brand -->
             <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
                 <div class="sidebar-brand-icon rotate-n-15">
-                    <i class="fas fa-laugh-wink"></i>
+                    <i><img src="{{ asset('admin/img/logo.png') }}" alt="" width="50px"></i>
                 </div>
                 <div class="sidebar-brand-text mx-3">Admin <sup>Ebook</sup></div>
             </a>
@@ -67,7 +75,7 @@
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Action</h6>
-                        <a class="collapse-item" href="">List User</a>
+                        <a class="collapse-item" href="{{route('users.index')}}">List User</a>
                         <a class="collapse-item" href="">Add User</a>
                     </div>
                 </div>
@@ -85,7 +93,7 @@
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Manage Category</h6>
                         <a class="collapse-item" href="{{ route('category.index') }}">List Category</a>
-                        <a class="collapse-item" href="">Add Category</a>
+                        <a class="collapse-item" href="{{ route('category.create') }}">Add Category</a>
                     </div>
                 </div>
             </li>
@@ -327,13 +335,18 @@
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                @php 
-                                    $user = session('user');
-                                    $name = $user['fullname']
-                                @endphp
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{$name}}
-                                <img class="img-profile rounded-circle"
-                                    src="{{asset('admin/img/undraw_profile.svg')}}">
+                                @if(session('user') != null)
+                                    @php 
+                                        $user = session('user');
+                                        $name = $user['fullname']
+                                    @endphp
+                                    <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{$name}}
+                                    <img class="img-profile rounded-circle" src="{{asset('admin/img/undraw_profile.svg')}}">
+                                @else
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">
+                                <img class="img-profile rounded-circle" src="{{asset('admin/img/undraw_profile.svg')}}">
+                                @endif
+                                
                             </a>
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
@@ -351,7 +364,7 @@
                                     Activity Log
                                 </a>
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="{{route('logout')}}" data-toggle="modal" data-target="#logoutModal">
+                                <a class="dropdown-item" href="{{route('logout')}}">
                                     <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Logout
                                 </a>
@@ -411,7 +424,7 @@
     </div>
 
     <!-- Bootstrap core JavaScript-->
-    <script src="{{asset('admin/vendor/jquery/jquery.min.js')}}"></script>
+    {{-- <script src="{{asset('admin/vendor/jquery/jquery.min.js')}}"></script> --}}
     <script src="{{asset('admin/vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
 
     <!-- Core plugin JavaScript-->

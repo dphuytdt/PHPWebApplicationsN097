@@ -11,4 +11,9 @@ class HomeController extends Controller
     {
         return view('home.dashboard');
     }
+
+    public function handleError()
+    {
+        return view('errors.404');
+    }
 }

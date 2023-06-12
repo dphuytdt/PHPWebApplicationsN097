@@ -10,7 +10,8 @@ class AuthController extends Controller
     public $userService = 'http://userservice.test:8080/api/';
     public function login()
     {
-        $role = session()->get('role');
+        $role = session()->get('is_admin');
+        // dd($role);
         if (session()->has('token') && $role == 0) {
             return redirect()->intended('/');
         }
@@ -32,7 +33,8 @@ class AuthController extends Controller
             $user = $data['user'];
             session()->put('token', $data['access_token']);
             session()->put('user', $user);
-            session()->put('role', $user['role_id']);
+            session()->put('is_admin', $user['is_admin']);
+            // dd(session()->get('is_admin'));
             return redirect()->intended('/');
         } else {
             return redirect()->back()->with('error', 'Wrong email or password');
@@ -50,10 +52,10 @@ class AuthController extends Controller
             ]);
             session()->forget('token');
             session()->forget('user');
-            session()->forget('role');
+            session()->forget('is_admin');
+            Auth::logout();
             return redirect()->route('login')->with('message', 'Logout successful');
         } catch (\Exception $e) {
-            // Lỗi xảy ra hoặc logout thất bại
             return redirect()->route('login')->with('error', 'Logout failed');
         }
     }

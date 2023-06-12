@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\v1\AuthController;
 use App\Http\Controllers\Api\v1\UserController;
+use App\Http\Controllers\Api\v1\AdminAuthController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -25,6 +26,12 @@ Route::group(['middleware' => 'api','prefix' => 'auth'], function ($router) {
     Route::get('check-auth', [AuthController::class, 'checkAuth']); 
     Route::post('forgot-password', [AuthController::class, 'forgotPassword']);
     Route::post('verify-otp', [AuthController::class, 'verifyOTP']);
-    Route::post('admin-login', [AuthController::class, 'adminLogin']);
+
+    Route::group(['prefix' => 'admin'], function ($router) {
+        Route::post('login', [AdminAuthController::class, 'login']);
+        Route::post('logout', [AdminAuthController::class, 'logout']);
+        Route::get('user', [UserController::class, 'getAllUser']);
+    });
+
     Route::post('upgrate-user', [UserController::class, 'upgrateUser']);
 });
