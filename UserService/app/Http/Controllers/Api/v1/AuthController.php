@@ -128,29 +128,35 @@ class AuthController extends Controller
         if($validator->fails()){
             return response()->json($validator->errors()->toJson(), 400);
         }
-        $user  = $this->userRepository->checkEmail($email);
+        $user  = $this->userRepository->checkUserExist($email);
         if ($user) {
-            //check if user already exist otp
-            $otp = $this->otpRepository->checkOTPExist($email);
-            if ($otp == true) {
-                //delete otp
-                $this->otpRepository->deleteOTP($email, $otp, $user->id);
-            }
-            $user_id = $user->id;
             $otp = rand(100000, 999999);
-            $this->otpRepository->createOTP($email, $otp, $user_id);
-            $user = [
-                'email' => $email,
-                'name' => $user->fullname,
-                'otp' => $otp,
-            ];
+            $user_id = $user->id;
+            $userCheck = $this->otpRepository->checkUserExistInOTP($email, $user_id);
+            if ($userCheck == true) {
+                $this->otpRepository->updateOTP($email, $otp, $user->id);
+                $user = [
+                    'email' => $email,
+                    'name' => $user->fullname,
+                    'otp' => $otp,
+                ];
+            } else {
+                $this->otpRepository->createOTP($email, $otp, $user_id);
+                $user = [
+                    'email' => $email,
+                    'name' => $user->fullname,
+                    'otp' => $otp,
+                ];
+            }
             if (SendEmail::dispatch($user)) {
                 return response()->json([
                     'status' => true,
                     'message' => 'Email sent successfully',
                     'data' => $user,
+                    'otp' => $otp,
                 ], 200);
             } else {
+                $this->otpRepository->deleteOTP($email, $user_id, $otp);
                 return response()->json([
                     'status' => false,
                     'message' => 'Email not sent',
@@ -158,14 +164,6 @@ class AuthController extends Controller
                 ], 400);
             }
         }
-        if ($user) {
-            return response()->json([
-                'status' => true,
-                'message' => 'User found',
-                'user' => $user,
-            ], 200);
-        }
-
         return response()->json(['error' => 'User not found'], 404);
     }
 

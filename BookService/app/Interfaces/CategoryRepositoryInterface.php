@@ -8,4 +8,6 @@ interface CategoryRepositoryInterface
 
     
     public function getSelectedCategory();
+
+    public function getAllCategoryForAdmin();
 }

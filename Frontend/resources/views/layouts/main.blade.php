@@ -347,7 +347,7 @@
     <button class="material-scrolltop" type="button"></button>
 
     <!-- Start Modal Add cart -->
-    <div class="modal fade" id="modalAddcart" tabindex="-1" role="dialog" aria-hidden="true">
+    {{-- <div class="modal fade" id="modalAddcart" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog  modal-dialog-centered modal-xl" role="document">
             <div class="modal-content">
                 <div class="modal-body">
@@ -388,10 +388,10 @@
                 </div>
             </div>
         </div>
-    </div> <!-- End Modal Add cart -->
+    </div> <!-- End Modal Add cart --> --}}
 
     <!-- Start Modal Quickview cart -->
-    <div class="modal fade" id="modalQuickview" tabindex="-1" role="dialog" aria-hidden="true">
+    {{-- <div class="modal fade" id="modalQuickview" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog  modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-body">
@@ -519,7 +519,7 @@
                 </div>
             </div>
         </div>
-    </div> <!-- End Modal Quickview cart -->
+    </div> <!-- End Modal Quickview cart --> --}}
 
     <!-- ::::::::::::::All JS Files here :::::::::::::: -->
     <!-- Global Vendor, plugins JS -->
@@ -542,7 +542,7 @@
 
     <!-- Main JS -->
     <script src="{{asset('assets/js/main.js')}}"></script>
-
+    
 </body>
 
 </html>

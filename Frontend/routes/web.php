@@ -21,7 +21,7 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 
 Route::get('/book-details/{id}' , [BookController::class, 'bookDetails'])->name('bookDetails');
 //search book
-Route::get('/search', [BookController::class, 'search'])->name('search');
+Route::get('/search/{page?}', [BookController::class, 'search'])->name('search');
 
 Route::get('/about', [HomeController::class, 'about'])->name('about');
 
@@ -53,3 +53,6 @@ Route::prefix('auth')->group(function () {
     Route::get('reset-password', [AuthController::class, 'resetPassword'])->name('resetPassword');
     Route::post('reset-password', [AuthController::class, 'postResetPassword'])->name('postResetPassword');
 });
+
+//404 page
+Route::fallback([HomeController::class, 'handleError'])->name('handleError');

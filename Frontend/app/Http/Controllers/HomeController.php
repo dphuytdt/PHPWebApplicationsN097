@@ -45,5 +45,12 @@ class HomeController extends Controller
         return view('main.contact')->with('categories', $categories);
     }
 
+    //custom 404 page
+    public function handleError()
+    {
+        $categories = $this->categoryService->getCategory();
+        return view('errors.404')->with('categories', $categories);
+    }
+
 
 }

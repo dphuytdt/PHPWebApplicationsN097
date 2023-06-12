@@ -48,4 +48,6 @@ class CategorySeeder extends Seeder
             ]);
         }
     }
+
+    
 }

@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>EBook Admin Login</title>
+    <title> Admin Login | Ebook</title>
     <link rel="icon" type="image/png" href="{{ asset('admin/img/logo.png') }}" />
     <!-- Custom fonts for this template-->
     <link href="{{asset('admin/vendor/fontawesome-free/css/all.min.css')}}" rel="stylesheet" type="text/css">

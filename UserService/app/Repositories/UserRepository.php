@@ -24,4 +24,10 @@ class UserRepository implements UserRepositoryInterface
     {
         return $this->user->where('id', $id)->first();
     }
+
+    public function checkUserExist($email) 
+    {
+        $user = $this->user->where('email', $email)->first();
+        return $user;
+    }
 }

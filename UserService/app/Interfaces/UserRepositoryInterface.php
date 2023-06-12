@@ -10,4 +10,6 @@ interface UserRepositoryInterface
     public function checkEmail($email);
 
     public function getUserById($id);
+
+    public function checkUserExist($email);
 }

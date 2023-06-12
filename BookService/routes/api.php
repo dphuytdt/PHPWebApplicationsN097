@@ -27,6 +27,7 @@ Route::prefix('books')->group(function () {
 
 Route::prefix('category')->group(function () {
     Route::get('/', [BookController::class, 'getCategory']);
+    Route::get('admin', [BookController::class, 'getCategoryForAdmin']);
     Route::get('selected', [BookController::class, 'getSelectedCategory']);
 });
 

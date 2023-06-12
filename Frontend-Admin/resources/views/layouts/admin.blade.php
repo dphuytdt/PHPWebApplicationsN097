@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>@yield("title")</title>
+    <title>@yield('title') | Ebook</title>
     <link rel="icon" type="image/png" href="{{ asset('admin/img/logo.png') }}" />
     <!-- Custom fonts for this template-->
     <link href="{{asset('admin/vendor/fontawesome-free/css/all.min.css')}}" rel="stylesheet" type="text/css">
@@ -19,6 +19,7 @@
 
     <!-- Custom styles for this template-->
     <link href="{{asset('admin/css/sb-admin-2.min.css')}}" rel="stylesheet">
+    <meta name="_token" content="{{ csrf_token() }}">
 
 </head>
 
@@ -83,7 +84,7 @@
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Manage Category</h6>
-                        <a class="collapse-item" href="">List Category</a>
+                        <a class="collapse-item" href="{{ route('category.index') }}">List Category</a>
                         <a class="collapse-item" href="">Add Category</a>
                     </div>
                 </div>

@@ -13,3 +13,8 @@
         $trail->parent('home');
         $trail->push('Search', route('search'));
     });
+
+    Breadcrumbs::for('handleError', function ($trail) {
+        $trail->parent('home');
+        $trail->push('404', route('handleError', 404));
+    });

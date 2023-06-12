@@ -46,18 +46,24 @@ class OTPRepository implements OTPRepositoryInterface
         return false;
     }
 
-    public function deleteOTP($email, $otp, $user_id) 
+    public function updateOTP($email, $otp, $user_id) 
     {
-        return $this->otp->where('email', $email)->where('otp', $otp)->delete();
+        return $this->otp->where('email', $email)->where('user_id', $user_id)->update([
+            'otp' => $otp
+        ]);
     }
 
-    public function checkOTPExist($email) 
+    public function checkUserExistInOTP($email, $user_id) 
     {
-        $otp = $this->otp->where('email', $email)->first();
+        $otp = $this->otp->where('email', $email)->where('user_id', $user_id)->first();
         if ($otp) {
             return true;
         }
-
         return false;
+    }
+
+    public function deleteOTP($email, $otp, $user_id) 
+    {
+        return $this->otp->where('email', $email)->where('otp', $otp)->where('user_id', $user_id)->delete();
     }
 }

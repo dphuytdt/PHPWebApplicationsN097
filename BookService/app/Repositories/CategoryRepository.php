@@ -22,4 +22,11 @@ class CategoryRepository implements CategoryRepositoryInterface
         $categories = Category::orderBy('created_at', 'desc')->take(8)->get();
         return $categories;
     }
+
+    //get all category for admin
+    public function getAllCategoryForAdmin()
+    {
+        $categories = Category::orderBy('name', 'asc')->paginate(4);
+        return $categories;
+    }
 }

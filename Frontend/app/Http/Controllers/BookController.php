@@ -39,7 +39,7 @@ class BookController extends Controller
         $categories = $this->categoryService->getCategory();
         // //call to book service to get book by id
         try {
-            $response = $client->get($this->bookService.'books/search/'.$request->keyword);
+            $response = $client->get($this->bookService.'books/search/'.$keyword.'?page='.$page);
             $responseData  = json_decode($response->getBody(), true);
             //paginate books
             if($responseData){

@@ -366,7 +366,7 @@
             <div class="container">
                 <div class="row">
                     <div class="col-12 d-flex justify-content-between justify-content-md-between  align-items-center flex-md-row flex-column">
-                        <h3 class="breadcrumb-title">Product Details Default</h3>
+                        <h3 class="breadcrumb-title">Product Details - {{ $book['title'] }}</h3>
                         {{-- <div class="breadcrumb-nav"> --}}
                             {{-- <nav aria-label="breadcrumb">
                                 <ul>
@@ -393,41 +393,13 @@
                             <div class="product-image-large-single zoom-image-hover">
                                 <img src="{{$book['cover_image']}}" alt="">
                             </div>
-                            <div class="product-image-large-single zoom-image-hover">
-                                <img src="{{$book['cover_image']}}" alt="">
-                            </div>
-                            <div class="product-image-large-single zoom-image-hover">
-                                <img src="{{$book['cover_image']}}" alt="">
-                            </div>
-                            <div class="product-image-large-single zoom-image-hover">
-                                <img src="{{$book['cover_image']}}" alt="">
-                            </div>
-                            <div class="product-image-large-single zoom-image-hover">
-                                <img src="{{$book['cover_image']}}" alt="">
-                            </div>
-                            <div class="product-image-large-single zoom-image-hover">
-                                <img src="{{$book['cover_image']}}" alt="">
-                            </div>
+                            
                         </div>
                         <div class="product-image-thumb product-image-thumb-horizontal pos-relative">
                             <div class="zoom-active product-image-thumb-single">
                                 <img class="img-fluid" src="{{asset('assets/images/products_images/aments_products_image_1.jpg')}}" alt="">
                             </div>
-                            <div class="product-image-thumb-single">
-                                <img class="img-fluid" src="{{asset('assets/images/products_images/aments_products_image_2.jpg')}}" alt="">
-                            </div>
-                            <div class="product-image-thumb-single">
-                                <img class="img-fluid" src="{{asset('assets/images/products_images/aments_products_image_3.jpg')}}" alt="">
-                            </div>
-                            <div class="product-image-thumb-single">
-                                <img class="img-fluid" src="{{asset('assets/images/products_images/aments_products_image_4.jpg')}}" alt="">
-                            </div>
-                            <div class="product-image-thumb-single">
-                                <img class="img-fluid" src="{{asset('assets/images/products_images/aments_products_image_5.jph')}}" alt="">
-                            </div>
-                            <div class="product-image-thumb-single">
-                                <img class="img-fluid" src="{{asset('assets/images/products_images/aments_products_image_6.jpg')}}" alt="">
-                            </div>
+                            
                         </div>
                     </div>
                 </div>
@@ -489,17 +461,17 @@
                             </div> --}}
                             <!-- Product Variable Single Item -->
                             <div class="d-flex align-items-center">
-                                <div class="variable-single-item ">
-                                    <span>Quantity Available</span>
-                                    <div class="product-variable-quantity">
-                                        <input  value="{{$book['quantity']}}" type="text" readonly disabled>
-                                    </div>
-                                </div>
                                 @if ($book['price'] == 0)
                                     <div class="product-add-to-cart-btn">
                                         <a href="#" data-toggle="modal" data-target="#modalAddcart">Read Now</a>
                                     </div>
                                 @else
+                                    <div class="variable-single-item ">
+                                        <span>Quantity Available</span>
+                                        <div class="product-variable-quantity">
+                                            <input  value="{{$book['quantity']}}" type="text" readonly disabled>
+                                        </div>
+                                    </div>
                                     <div class="product-add-to-cart-btn">
                                         <a href="#" data-toggle="modal" data-target="#modalAddcart">Add To Cart</a>
                                     </div>
@@ -507,6 +479,7 @@
                             </div>
                         </div> <!-- End Product Variable Area -->
                         <!-- Start  Product Details Meta Area-->
+                        <br>
                         <div class="product-details-meta mb-20">
                             <ul>
                                 <li><a href=""><i class="icon-heart"></i>Add to wishlist</a></li>

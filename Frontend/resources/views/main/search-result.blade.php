@@ -373,10 +373,23 @@
         </div>
     </div>
 </div> <!-- ...:::: End Breadcrumb Section:::... -->
-@if(session('error'))
-<div class="alert alert-danger">
-    {{ session()->get('error') }}
-</div>
+@if($paginator->count() == 0)
+{{-- //display center, color red --}}
+<style type="text/css">
+    .alert-danger {
+        text-align: center;
+        color: red;
+    }
+</style>
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="alert alert-danger" role="alert">
+                    No products found
+                </div>
+            </div>
+        </div>
+    </div>
 @else 
 <!-- ...:::: Start Shop Section:::... -->
 <div class="shop-section">
@@ -402,8 +415,6 @@
                                     <form action="#">
                                         <fieldset>
                                             <select name="speed" id="speed">
-                                                <option>Sort by average rating</option>
-                                                <option>Sort by popularity</option>
                                                 <option selected="selected">Sort by newness</option>
                                                 <option>Sort by price: low to high</option>
                                                 <option>Sort by price: high to low</option>
@@ -445,136 +456,61 @@
                                                             <ul>
                                                                 <li><a href="wishlist.html"><i class="icon-heart"></i></a></li>
                                                                 <li><a href="compare.html"><i class="icon-repeat"></i></a></li>
-                                                                <li><a href="#" data-toggle="modal" data-target="#modalQuickview"><i class="icon-eye"></i></a></li>
-                                                                <li><a href="#" data-toggle="modal" data-target="#modalAddcart"><i class="icon-shopping-cart"></i></a></li>
+                                                                <li><a href="#" data-toggle="modal" data-target="#modalQuickview-{{$book['id']}}"><i class="icon-eye"></i></a></li>
+                                                                @if($book['price'] != 0) 
+                                                                <li><a href="#" data-toggle="modal" data-target="#modalAddcart-{{$book['id']}}"><i class="icon-shopping-cart"></i></a></li>
+                                                                @endif
                                                             </ul>
                                                         </div>
                                                     </div>
                                                     <div class="product-default-content">
-                                                        <h6 class="product-default-link"><a href="product-details-default.html">{{$book['title']}}</a></h6>
+                                                        <h6 class="product-default-link"><a href="{{URL::to('/book-details/'.$book['id'])}}">{{$book['title']}}</a></h6>
                                                         @if($book['price'] == 0) 
-                                                        <span class="product-default-price">Free</span>
+                                                            <span class="product-default-price">Free for now</span>
                                                         @else
-                                                            < <span class="product-default-price">$ {{$book['price']}}</span>
+                                                            <span class="product-default-price">$ {{$book['price']}}</span>
                                                         @endif
-                                                       
                                                     </div>
                                                 </div> <!-- End Product Defautlt Single -->
                                             </div>
                                             @endforeach
                                         </div>
                                     </div> <!-- End Grid View Product -->
-                                    <!-- Start List View Product -->
-                                    {{-- <div class="tab-pane sort-layout-single" id="layout-list">
+                                    <div class="tab-pane sort-layout-single" id="layout-list">
                                         <div class="row">
+                                            @foreach($paginator as $book)
                                             <div class="col-12">
                                                 <!-- Start Product Defautlt Single -->
                                                 <div class="product-list-single border-around">
-                                                    <a href="product-details-default.html" class="product-list-img-link">
-                                                        <img src="assets/images/products_images/aments_products_image_5.jpg" alt="" class="img-fluid">
+                                                    <a href="{{URL::to('/book-details/'.$book['id'])}}"" class="product-list-img-link">
+                                                        <img src="{{$book['cover_image']}}" alt="" class="img-fluid">
                                                     </a>
                                                     <div class="product-list-content">
-                                                        <h5 class="product-list-link"><a href="product-details-default.html">New Balance Fresh Foam Kaymin Car Purts</a></h5>
-                                                        <span class="product-list-price"><del class="product-list-price-off">$30.12</del> $25.12</span>
-                                                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nobis ad, iure incidunt. Ab consequatur temporibus non eveniet inventore doloremque necessitatibus sed, ducimus quisquam, ad asperiores</p>
+                                                        <h5 class="product-list-link"><a href="{{URL::to('/book-details/'.$book['id'])}}">{{$book['title']}}</a></h5>
+                                                        @if($book['price'] == 0) 
+                                                        <span class="product-list-price">Free for now</span>
+                                                        @else
+                                                        <span class="product-list-price">$ {{$book['price']}}</span>
+                                                        @endif
+                                                        <p>{{$book['description']}}</p>
                                                         <div class="product-action-icon-link-list">
                                                             <ul>
                                                                 <li><a href="wishlist.html"><i class="icon-heart"></i></a></li>
                                                                 <li><a href="compare.html"><i class="icon-repeat"></i></a></li>
-                                                                <li><a href="#" data-toggle="modal" data-target="#modalQuickview"><i class="icon-eye"></i></a></li>
-                                                                <li><a href="#" data-toggle="modal" data-target="#modalAddcart"><i class="icon-shopping-cart"></i></a></li>
+                                                                <li><a href="#" data-toggle="modal" data-target="#modalQuickview-{{$book['id']}}"><i class="icon-eye"></i></a></li>
+                                                                @if($book['price'] != 0) 
+                                                                    <li><a href="#" data-toggle="modal" data-target="#modalAddcart-{{$book['id']}}"><i class="icon-shopping-cart"></i></a></li>
+                                                                @endif
                                                             </ul>
                                                         </div>
                                                     </div>
                                                 </div> <!-- End Product Defautlt Single -->
                                             </div>
-                                            <div class="col-12">
-                                                <!-- Start Product Defautlt Single -->
-                                                <div class="product-list-single border-around">
-                                                    <a href="product-details-default.html" class="product-list-img-link">
-                                                        <img src="assets/images/products_images/aments_products_image_2.jpg" alt="" class="img-fluid">
-                                                    </a>
-                                                    <div class="product-list-content">
-                                                        <h5 class="product-list-link"><a href="product-details-default.html">New Balance Fresh Foam Kaymin Car Purts</a></h5>
-                                                        <span class="product-list-price"><del class="product-list-price-off">$30.12</del> $25.12</span>
-                                                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nobis ad, iure incidunt. Ab consequatur temporibus non eveniet inventore doloremque necessitatibus sed, ducimus quisquam, ad asperiores</p>
-                                                        <div class="product-action-icon-link-list">
-                                                            <ul>
-                                                                <li><a href="wishlist.html"><i class="icon-heart"></i></a></li>
-                                                                <li><a href="compare.html"><i class="icon-repeat"></i></a></li>
-                                                                <li><a href="#" data-toggle="modal" data-target="#modalQuickview"><i class="icon-eye"></i></a></li>
-                                                                <li><a href="#" data-toggle="modal" data-target="#modalAddcart"><i class="icon-shopping-cart"></i></a></li>
-                                                            </ul>
-                                                        </div>
-                                                    </div>
-                                                </div> <!-- End Product Defautlt Single -->
-                                            </div>
-                                            <div class="col-12">
-                                                <!-- Start Product Defautlt Single -->
-                                                <div class="product-list-single border-around">
-                                                    <a href="product-details-default.html" class="product-list-img-link">
-                                                        <img src="assets/images/products_images/aments_products_image_1.jpg" alt="" class="img-fluid">
-                                                    </a>
-                                                    <div class="product-list-content">
-                                                        <h5 class="product-list-link"><a href="product-details-default.html">New Balance Fresh Foam Kaymin Car Purts</a></h5>
-                                                        <span class="product-list-price"><del class="product-list-price-off">$30.12</del> $25.12</span>
-                                                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nobis ad, iure incidunt. Ab consequatur temporibus non eveniet inventore doloremque necessitatibus sed, ducimus quisquam, ad asperiores</p>
-                                                        <div class="product-action-icon-link-list">
-                                                            <ul>
-                                                                <li><a href="wishlist.html"><i class="icon-heart"></i></a></li>
-                                                                <li><a href="compare.html"><i class="icon-repeat"></i></a></li>
-                                                                <li><a href="#" data-toggle="modal" data-target="#modalQuickview"><i class="icon-eye"></i></a></li>
-                                                                <li><a href="#" data-toggle="modal" data-target="#modalAddcart"><i class="icon-shopping-cart"></i></a></li>
-                                                            </ul>
-                                                        </div>
-                                                    </div>
-                                                </div> <!-- End Product Defautlt Single -->
-                                            </div>
-                                            <div class="col-12">
-                                                <!-- Start Product Defautlt Single -->
-                                                <div class="product-list-single border-around">
-                                                    <a href="product-details-default.html" class="product-list-img-link">
-                                                        <img src="assets/images/products_images/aments_products_image_4.jpg" alt="" class="img-fluid">
-                                                    </a>
-                                                    <div class="product-list-content">
-                                                        <h5 class="product-list-link"><a href="product-details-default.html">New Balance Fresh Foam Kaymin Car Purts</a></h5>
-                                                        <span class="product-list-price"><del class="product-list-price-off">$30.12</del> $25.12</span>
-                                                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nobis ad, iure incidunt. Ab consequatur temporibus non eveniet inventore doloremque necessitatibus sed, ducimus quisquam, ad asperiores</p>
-                                                        <div class="product-action-icon-link-list">
-                                                            <ul>
-                                                                <li><a href="wishlist.html"><i class="icon-heart"></i></a></li>
-                                                                <li><a href="compare.html"><i class="icon-repeat"></i></a></li>
-                                                                <li><a href="#" data-toggle="modal" data-target="#modalQuickview"><i class="icon-eye"></i></a></li>
-                                                                <li><a href="#" data-toggle="modal" data-target="#modalAddcart"><i class="icon-shopping-cart"></i></a></li>
-                                                            </ul>
-                                                        </div>
-                                                    </div>
-                                                </div> <!-- End Product Defautlt Single -->
-                                            </div>
-                                            <div class="col-12">
-                                                <!-- Start Product Defautlt Single -->
-                                                <div class="product-list-single border-around">
-                                                    <a href="product-details-default.html" class="product-list-img-link">
-                                                        <img src="assets/images/products_images/aments_products_image_3.jpg" alt="" class="img-fluid">
-                                                    </a>
-                                                    <div class="product-list-content">
-                                                        <h5 class="product-list-link"><a href="product-details-default.html">New Balance Fresh Foam Kaymin Car Purts</a></h5>
-                                                        <span class="product-list-price"><del class="product-list-price-off">$30.12</del> $25.12</span>
-                                                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nobis ad, iure incidunt. Ab consequatur temporibus non eveniet inventore doloremque necessitatibus sed, ducimus quisquam, ad asperiores</p>
-                                                        <div class="product-action-icon-link-list">
-                                                            <ul>
-                                                                <li><a href="wishlist.html"><i class="icon-heart"></i></a></li>
-                                                                <li><a href="compare.html"><i class="icon-repeat"></i></a></li>
-                                                                <li><a href="#" data-toggle="modal" data-target="#modalQuickview"><i class="icon-eye"></i></a></li>
-                                                                <li><a href="#" data-toggle="modal" data-target="#modalAddcart"><i class="icon-shopping-cart"></i></a></li>
-                                                            </ul>
-                                                        </div>
-                                                    </div>
-                                                </div> <!-- End Product Defautlt Single -->
-                                            </div>
+                                            @endforeach
                                         </div>
-                                    </div> <!-- End List View Product --> --}}
+                                    </div> <!-- End List View Product -->
                                 </div>
+
                             </div>
                         </div>
                     </div>
@@ -640,5 +576,140 @@
         </div>
     </div>
 </div> <!-- ...:::: End Shop Section:::... -->
+    @foreach($paginator as $book)
+    <div class="modal fade" id="modalQuickview-{{$book['id']}}" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog  modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col text-right">
+                                <button type="button" class="close modal-close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true"> <i class="fa fa-times"></i></span>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="product-details-gallery-area">
+                                    <div class="product-large-image modal-product-image-large">
+                                        <div class="product-image-large-single">
+                                            <img class="img-fluid" src="{{$book['cover_image']}}" alt="">
+                                        </div>
+                                        <div class="product-image-large-single">
+                                            <img class="img-fluid" src="assets/images/products_images/aments_products_image_2.jpg" alt="">
+                                        </div>
+                                    </div>
+                                    <div class="product-image-thumb modal-product-image-thumb">
+                                        <div class="zoom-active product-image-thumb-single">
+                                            <img class="img-fluid" src="assets/images/products_images/aments_products_image_1.jpg" alt="">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="product-details-content-area">
+                                    <!-- Start  Product Details Text Area-->
+                                    <div class="product-details-text">
+                                        <h4 class="title">{{$book['title']}}</h4>
+                                        @if($book['price'] == 0)
+                                            <div class="price">Free for now</div>
+                                        @else
+                                            <div class="price">${{$book['price']}}</div>
+
+                                        @endif
+                                        <p>{{$book['description']}}</p>
+                                    </div> <!-- End  Product Details Text Area-->
+                                    <!-- Start Product Variable Area -->
+                                    <div class="product-details-variable">
+                                        <!-- Product Variable Single Item -->
+                                        <!-- Product Variable Single Item -->
+                                        
+                                        @if ($book['price'] == 0)
+                                            <div class="product-add-to-cart-btn">
+                                                <a href="#" data-toggle="modal" data-target="#modalAddcart">Read Now</a>
+                                            </div>
+                                            <br>
+                                        @else
+                                            <div class="variable-single-item ">
+                                                <span>Quantity Available</span>
+                                                <div class="product-variable-quantity">
+                                                    <input  value="{{$book['quantity']}}" type="text" readonly disabled>
+                                                </div>
+                                            </div>
+                                            <div class="product-add-to-cart-btn">
+                                                <a href="#" data-toggle="modal" data-target="#modalAddcart">Add To Cart</a>
+                                            </div>
+                                            <br>
+                                        @endif
+                                    </div> <!-- End Product Variable Area -->
+                                    <!-- Start  Product Details Meta Area-->
+                                    <div class="product-details-meta mb-20">
+                                        <ul>
+                                            <li><a href=""><i class="icon-heart"></i>Add to wishlist</a></li>
+                                            <li><a href=""><i class="icon-repeat"></i>Compare</a></li>
+                                            <li><a href="#" data-toggle="modal" data-target="#modalQuickview-{{$book['id']}}"><i class="icon-eye"></i>Quick view</a></li>
+                                        </ul>
+                                    </div> <!-- End  Product Details Meta Area-->
+                                    <!-- Start  Product Details Social Area-->
+                                    <ul class="modal-product-details-social">
+                                        <li><a href="#" class="facebook"><i class="fa fa-facebook"></i></a></li>
+                                        <li><a href="#" class="twitter"><i class="fa fa-twitter"></i></a></li>
+                                        <li><a href="#" class="pinterest"><i class="fa fa-pinterest"></i></a></li>
+                                        <li><a href="#" class="google-plus"><i class="fa fa-google-plus"></i></a></li>
+                                        <li><a href="#" class="linkedin"><i class="fa fa-linkedin"></i></a></li>
+                                    </ul> <!-- End  Product Details Social Area-->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> <!-- End Modal Quickview cart -->
+
+    <div class="modal fade" id="modalAddcart-{{$book['id']}}" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog  modal-dialog-centered modal-xl" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col text-right">
+                                <button type="button" class="close modal-close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true"> <i class="fa fa-times"></i></span>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-7">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="modal-add-cart-product-img">
+                                            <img class="img-fluid" src="{{$book['cover_image']}}" alt="">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <div class="modal-add-cart-info"><i class="fa fa-check-square"></i>Added to cart successfully!</div>
+                                        <div class="modal-add-cart-product-cart-buttons">
+                                            <a href="cart.html">View Cart</a>
+                                            <a href="checkout.html">Checkout</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-5 modal-border">
+                                <ul class="modal-add-cart-product-shipping-info">
+                                    {{-- <li> <strong><i class="icon-shopping-cart"></i> There Are 5 Items In Your Cart.</strong></li>
+                                    <li> <strong>TOTAL PRICE: </strong> <span>$187.00</span></li> --}}
+                                    <li class="modal-continue-button"><a href="#" data-dismiss="modal">CONTINUE SHOPPING</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> <!-- End Modal Add cart -->
+    @endforeach
 @endif
 @endsection
