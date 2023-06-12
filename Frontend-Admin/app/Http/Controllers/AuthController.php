@@ -10,7 +10,7 @@ class AuthController extends Controller
     public $userService = 'http://userservice.test:8080/api/';
     public function login()
     {
-        $role = session()->get('is_admin');
+        $role = session()->get('role_id');
         // dd($role);
         if (session()->has('token') && $role == 0) {
             return redirect()->intended('/');
@@ -33,7 +33,7 @@ class AuthController extends Controller
             $user = $data['user'];
             session()->put('token', $data['access_token']);
             session()->put('user', $user);
-            session()->put('is_admin', $user['is_admin']);
+            session()->put('role_id', $user['role_id']);
             // dd(session()->get('is_admin'));
             return redirect()->intended('/');
         } else {
@@ -52,7 +52,7 @@ class AuthController extends Controller
             ]);
             session()->forget('token');
             session()->forget('user');
-            session()->forget('is_admin');
+            session()->forget('role_id');
             Auth::logout();
             return redirect()->route('login')->with('message', 'Logout successful');
         } catch (\Exception $e) {

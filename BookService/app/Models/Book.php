@@ -17,7 +17,7 @@ class Book extends Model
 
     protected $fillable = [
         'title',
-        'author_id',
+        'author',
         'category_id',
         'quantity',
         'price',
@@ -32,11 +32,6 @@ class Book extends Model
         'deleted_at',
     ];
 
-    //relationship
-    public function author()
-    {
-        return $this->belongsTo(Author::class, 'author_id', 'id');
-    }
 
     public function category()
     {

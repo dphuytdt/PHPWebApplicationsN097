@@ -1,6 +1,16 @@
 @extends('layouts.main')
 @section('title', $book['title'])
 @section('content')
+<style>
+    .highlight {
+        background-color: yellow;
+    }
+    .btn-continue,
+    .btn-restart {
+        display: none;
+    }
+</style>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <!-- ...:::: Start Mobile Header Section:::... -->
     <div class="mobile-header-section d-block d-lg-none">
         <!-- Start Mobile Header Wrapper -->
@@ -463,7 +473,7 @@
                             <div class="d-flex align-items-center">
                                 @if ($book['price'] == 0)
                                     <div class="product-add-to-cart-btn">
-                                        <a href="#" data-toggle="modal" data-target="#modalAddcart">Read Now</a>
+                                        <a href="#" data-toggle="modal" data-target=".bd-example-modal-lg-{{$book['id']}}">Read now</a>
                                     </div>
                                 @else
                                     <div class="variable-single-item ">
@@ -476,6 +486,12 @@
                                         <a href="#" data-toggle="modal" data-target="#modalAddcart">Add To Cart</a>
                                     </div>
                                 @endif
+                                <div class="product-add-to-cart-btn">
+                                    <button class="btn-continue">Continue</button>
+                                </div>
+                                <div class="product-add-to-cart-btn">
+                                    <button class="btn-restart">Restart</button>
+                                </div>
                             </div>
                         </div> <!-- End Product Variable Area -->
                         <!-- Start  Product Details Meta Area-->
@@ -774,4 +790,137 @@
             </div>
         </div> <!-- End product Wrapper -->
     </div> <!-- ...:::: End Product Section:::... -->
+
+    <!-- Large modal -->
+
+    <div class="modal fade bd-example-modal-lg-{{$book['id']}}" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">>
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">{{$book['title']}}</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    {{-- display content here with scroll bar --}}
+                    <div class="row">
+                        <div class="col-md-6">
+                            <img src="{{$book['cover_image']}}" alt="" class="img-fluid">
+                        </div>
+                        <div class="col-md-6">
+                            <h3>{{$book['title']}}</h3>
+                            <p>{{$book['description']}}</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <style type="text/css">
+                                .center {
+                                    display: block;
+                                    margin-left: auto;
+                                    margin-right: auto;
+                                    width: 50%;
+                                }
+                                .content {
+                                    text-align: justify;
+                                    text-justify: inter-word;
+                                    /* căn đều 2 bên */
+                                    padding-left: 30px;
+                                    padding-right: 30px;
+
+                                }
+                            </style>
+                            <br>
+                            <h3 class="text-center">Start Reading</h3>
+                            <p id="content" class="content">{{$book['content']}}</p>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Bookmarked</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    {{-- <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            var contentElement = document.getElementById("content");
+            var continueButton = document.getElementById("btn-continue");
+            var restartButton = document.getElementById("btn-restart");
+
+            if (contentElement) {
+                var scrollPosition = localStorage.getItem("scrollPosition");
+
+                if (scrollPosition) {
+                    contentElement.scrollTop = parseInt(scrollPosition);
+                }
+
+                contentElement.addEventListener("scroll", function() {
+                    localStorage.setItem("scrollPosition", contentElement.scrollTop);
+                });
+
+                var hasRead = localStorage.getItem("hasRead");
+
+                if (hasRead === "true") {
+                    continueButton.style.display = "inline-block";
+                    restartButton.style.display = "inline-block";
+                } else {
+                    continueButton.style.display = "none";
+                    restartButton.style.display = "none";
+                }
+
+                continueButton.addEventListener("click", function() {
+                    localStorage.setItem("hasRead", "true");
+                    window.location.reload();
+                });
+
+                restartButton.addEventListener("click", function() {
+                    localStorage.removeItem("hasRead");
+                    localStorage.removeItem("scrollPosition");
+                    contentElement.scrollTop = 0; // Scroll to the top
+                    window.location.reload();
+                });
+            }
+        });
+    </script>
+<script>
+    // Lấy phần tử nội dung modal
+    const modalContent = document.getElementById('content');
+
+    // Lấy key lưu trữ trong localStorage dựa trên id của modal
+    const bookmarkKey = `bookmark_${{{$book['id']}}}`;
+
+    // Lấy trạng thái đánh dấu từ localStorage
+    const bookmarkedPosition = localStorage.getItem(bookmarkKey);
+
+    // Kiểm tra và cuộn đến vị trí đã đánh dấu nếu có
+    if (bookmarkedPosition) {
+        modalContent.scrollTop = bookmarkedPosition;
+    }
+
+    // Lưu trạng thái đánh dấu khi nhấn vào nút "Bookmarked"
+    const bookmarkButton = document.querySelector('.modal-footer .btn-primary');
+    bookmarkButton.addEventListener('click', function () {
+        const currentPosition = modalContent.scrollTop;
+        localStorage.setItem(bookmarkKey, currentPosition);
+    });
+
+    // Lấy nút "Đọc tiếp"
+    const continueButton = document.querySelector('.modal-footer .btn-continue');
+    continueButton.addEventListener('click', function () {
+        if (bookmarkedPosition) {
+            modalContent.scrollTop = bookmarkedPosition;
+        }
+    });
+
+    // Lấy nút "Đọc từ đầu"
+    const restartButton = document.querySelector('.modal-footer .btn-restart');
+    restartButton.addEventListener('click', function () {
+        modalContent.scrollTop = 0;
+        localStorage.removeItem(bookmarkKey);
+    });
+</script> --}}
 @endsection

@@ -14,13 +14,13 @@ return new class extends Migration
         Schema::create('tbl_book', function (Blueprint $table) {
             $table->id();
             $table->string('title', 255);
-            $table->string('author_id');
+            $table->string('author', 255);
             $table->string('category_id');
             $table->integer('quantity');
             $table->decimal('price', 8, 2);
             $table->text('description')->nullable();
             $table->string('cover_image')->nullable();
-            $table->text('content');
+            $table->longText('content');
             $table->integer('discount')->nullable();
             $table->boolean('is_featured')->default(0);
             $table->boolean('status')->default(1);

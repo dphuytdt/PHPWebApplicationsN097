@@ -31,7 +31,7 @@ class UserFactory extends Factory
             'remember_token' => Str::random(10),
             'role_id' => rand(0, 1),
             'is_vip' => rand(0, 1),
-            'is_admin' => rand(0, 1),
+            // 'is_admin' => rand(0, 1),
             'wallet' => 0,
             'created_at' => now(),
         ];

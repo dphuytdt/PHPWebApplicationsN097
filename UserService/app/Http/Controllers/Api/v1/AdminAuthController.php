@@ -43,7 +43,7 @@ class AdminAuthController extends Controller
         }
         
         $user = auth()->user();
-        if ($user->is_admin == 0) {
+        if ($user->role_id == 0) {
             return $this->createNewToken($token);
         }
         return response()->json(['error' => 'Unauthorized'], 401);

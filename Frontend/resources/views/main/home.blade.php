@@ -462,8 +462,8 @@
 							<img class="banner-img" src="https://img.freepik.com/premium-vector/online-library-outline-isometric-education-concept-open-book-with-loupe-isolated-white_119523-8406.jpg" alt="">
 						</a>
 						<div class="banner-content">
-							<span class="banner-text-tiny">Car Wheel</span>
-							<h3 class="banner-text-large">30% Off</h3>
+							{{-- <span class="banner-text-tiny">The Best of</span>
+							<h3 class="banner-text-large">30% Off</h3> --}}
 							<a href="product-details-default.html" class="banner-link">Shop Now</a>
 						</div>
 					</div> <!-- End Banner Single -->
@@ -475,8 +475,8 @@
 							<img class="banner-img" src="https://img.freepik.com/premium-vector/collection-cat-with-pile-book-set_77984-276.jpg" alt="">
 						</a>
 						<div class="banner-content">
-							<span class="banner-text-tiny">Car Vails</span>
-							<h3 class="banner-text-large">40% Off</h3>
+							{{-- <span class="banner-text-tiny">Where to</span>
+							<h3 class="banner-text-large">40% Off</h3> --}}
 							<a href="product-details-default.html" class="banner-link">Shop Now</a>
 						</div>
 					</div> <!-- End Banner Single -->
@@ -488,8 +488,8 @@
 							<img class="banner-img" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSbT_Tb79QYgsvr3knZa-cWA-6vxuv3ZFzh0clS46Y2QjPV2VLIRb1VR4-iXRbbwMZiDLM&usqp=CAU" alt="">
 						</a>
 						<div class="banner-content">
-							<span class="banner-text-tiny">Car Vails</span>
-							<h3 class="banner-text-large">50% Off</h3>
+							{{-- <span class="banner-text-tiny">How to</span>
+							<h3 class="banner-text-large">50% Off</h3> --}}
 							<a href="product-details-default.html" class="banner-link">Shop Now</a>
 						</div>
 					</div> <!-- End Banner Single -->
