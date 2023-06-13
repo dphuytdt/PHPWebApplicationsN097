@@ -54,7 +54,7 @@ class BookFactory extends Factory
             'discount' => $this->faker->numberBetween(0, 100),
             'is_featured' => $this->faker->numberBetween(0, 1),
             'status' => $this->faker->numberBetween(1, 10),
-            'created_at' => $this->faker->dateTime(),
+            'created_at' => $this->faker->dateTimeBetween('-30 days', 'now'),
             'updated_at' => $this->faker->dateTime(),
         ];
 

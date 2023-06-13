@@ -59,9 +59,7 @@ class BookController extends Controller
             ->orWhere('quantity', 'like', "%{$keyword}%")
             ->orWhere('status', 'like', "%{$keyword}%")
             ->orWhere('is_featured', 'like', "%{$keyword}%")
-            ->orWhereHas('author', function ($query) use ($keyword) {
-                $query->where('name', 'like', "%{$keyword}%");
-            })
+            ->orWhere('author', 'like', "%{$keyword}%")
             ->orWhereHas('category', function ($query) use ($keyword) {
                 $query->where('name', 'like', "%{$keyword}%");
             })->paginate(8);
@@ -106,6 +104,12 @@ class BookController extends Controller
     public function getFreeBook()
     {
         $books = $this->bookRepository->getFreeBook();
+        return response()->json($books, 200);
+    }
+
+    public function getNewBooks()
+    {
+        $books = $this->bookRepository->getNewBooks();
         return response()->json($books, 200);
     }
 

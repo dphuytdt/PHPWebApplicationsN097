@@ -84,7 +84,7 @@
 				</div>
 				<div class="mobile-menu-customer-support-text">
 					<span>Customer Support</span>
-					<a class="mobile-menu-customer-support-text-phone" href="tel:(08)123456789">(08) 123 456 789</a>
+					<a class="mobile-menu-customer-support-text-phone" href="tel:(03)32420477">(03) 3242 0477</a>
 				</div>
 			</div>
 			<!-- Start Header Action Icon -->
@@ -1559,12 +1559,12 @@
 					<!-- Start Banner Single -->
 					<div class="banner-single">
 						<a href="product-details-default.html" class="banner-img-link">
-							<img class="banner-img banner-img-big" src="assets/images/banner_images/aments_big-banner.jpg" alt="">
+							<img class="banner-img banner-img-big" src="https://img.freepik.com/premium-photo/row-old-books-blue-shelf-horizontal-background-banner_118047-9024.jpg" alt="">
 						</a>
-						<div class="banner-content">
+						{{-- <div class="banner-content">
 							<span class="banner-text-small">2021 Latest Collection</span>
 							<h2 class="banner-text-big"><span class="banner-text-big-highlight">-40%</span> Offer All Car Parts</h2>
-						</div>
+						</div> --}}
 					</div> <!-- End Banner Single -->
 				</div>
 			</div>

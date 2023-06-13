@@ -13,3 +13,8 @@
         $trail->parent('category.index');
         $trail->push('Create Category', route('category.create'));
     });
+
+    Breadcrumbs::for('slides.index', function ($trail) {
+        $trail->parent('home');
+        $trail->push('Slide List', route('slides.index'));
+    });

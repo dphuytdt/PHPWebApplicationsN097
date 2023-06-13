@@ -19,6 +19,7 @@ use App\Http\Controllers\Api\v1\AdminBookController;
 Route::prefix('books')->group(function () {
     Route::get('featured', [BookController::class, 'getFeaturedBooks']);
     Route::get('is_free', [BookController::class, 'getFreeBook']);
+    Route::get('new', [BookController::class, 'getNewBooks']);
     Route::get('read/{id}', [BookController::class, 'readBook']);
     Route::get('/', [BookController::class, 'index']);
     Route::get('/{id}', [BookController::class, 'show']);

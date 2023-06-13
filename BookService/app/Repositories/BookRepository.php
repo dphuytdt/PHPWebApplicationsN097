@@ -34,10 +34,10 @@ class BookRepository implements BookRepositoryInterface
     }
 
     //get book by author
-    public function getBookByAuthor($author_id)
-    {
-        return Book::where('author_id', $author_id)->get();
-    }
+    // public function getBookByAuthor($author_id)
+    // {
+    //     return Book::where('author', $author_id)->get();
+    // }
 
     //get book by category
     public function getBookByCategory($category_id)
@@ -101,5 +101,12 @@ class BookRepository implements BookRepositoryInterface
     public function getFreeBook()
     {
         return Book::where('price', 0)->get();
+    }
+
+    //get new book
+    public function getNewBooks()
+    {
+        //get book have day create or update less than 7 days with time now
+        return Book::where('created_at', '>=', now()->subDays(7))->orWhere('updated_at', '>=', now()->subDays(7))->get();
     }
 }

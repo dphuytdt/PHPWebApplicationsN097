@@ -61,11 +61,13 @@ class BookController extends Controller
                 return view('main.home.search-result', compact('paginator', 'categories'));
             }
             else{
-                return view('main.home.search-result')->with('error', 'No result found')->with('categories', $categories);
+                $paginator = [];
+                return view('main.home.search-result')->with('error', 'No result found')->with('categories', $categories)->with('paginator', $paginator);
             }
         } 
         catch (\Exception $e) {
-            return view('main.home.search-result')->with('error', 'No result found')->with('categories', $categories);
+            $paginator = [];
+            return view('main.home.search-result')->with('error', 'No result found')->with('categories', $categories)->with('paginator', $paginator);
         }
     }
 

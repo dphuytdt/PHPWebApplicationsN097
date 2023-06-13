@@ -18,3 +18,27 @@
         $trail->parent('home');
         $trail->push('404', route('handleError', 404));
     });
+
+    //forgot password
+    Breadcrumbs::for('forgotPassword', function ($trail) {
+        $trail->parent('home');
+        $trail->push('Forgot Password', route('forgotPassword'));
+    });
+
+    //input otp
+    Breadcrumbs::for('inputOtp', function ($trail) {
+        $trail->parent('forgotPassword');
+        $trail->push('Input OTP', route('inputOtp'));
+    });
+
+    //reset password
+    Breadcrumbs::for('resetPassword', function ($trail) {
+        $trail->parent('inputOtp');
+        $trail->push('Reset Password', route('resetPassword'));
+    });
+
+    //profile
+    Breadcrumbs::for('profile', function ($trail) {
+        $trail->parent('home');
+        $trail->push('Profile', route('profile'));
+    });

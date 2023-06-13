@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use GuzzleHttp\Client;
+use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Promise;
 use Illuminate\Support\Facades\Http;
 use App\Services\CategoryService;
@@ -11,6 +12,7 @@ use Illuminate\Support\Facades\Config;
 use React\Http\Browser;
 use GuzzleHttp\Promise\Utils;
 use Illuminate\Pagination\Paginator;
+use App\Services\HttpService;
 
 class HomeController extends Controller
 {
@@ -24,13 +26,14 @@ class HomeController extends Controller
     }
 
     public function index(Request $request){
-        $client = new Client();
         $categories = $this->categoryService->getCategory();
-        $response = $client->get($this->bookService.'books/is_free');
-        $books = json_decode($response->getBody(), true);
-        // $paginatedBooks = new Paginator($books, 5);
-        // $paginatedBooks->withPath('/');
-        return view('main.home.index')->with('books', $books)->with('categories', $categories);
+        $httpService = app(HttpService::class);
+        $client = $httpService->getClient();
+        $response1 = $client->get($this->bookService.'books/is_free');
+        // $response2= $client->get($this->bookService.'books/new');
+        $books = json_decode($response1->getBody(), true);
+        // $data2 = $response2->getBody()->getContents();
+        return view('main.home.index', compact('categories', 'books'));
     }
     
     public function about()

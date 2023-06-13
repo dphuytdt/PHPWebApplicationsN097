@@ -851,6 +851,7 @@
             </div>
         </div>
     </div>
+</div>
     {{-- <script>
         document.addEventListener("DOMContentLoaded", function() {
             var contentElement = document.getElementById("content");

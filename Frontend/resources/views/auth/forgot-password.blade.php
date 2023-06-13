@@ -1,42 +1,57 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Forgot Password | Ebook</title>
-    {{-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous"> --}}
-    <link rel="icon" type="image/png" href="{{ asset('images/logo.png') }}" />
-    <link rel="stylesheet" href="{{asset('css/auth/login.css')}}" type="text/css"/>
-    <style>
-        .login-links{
-            display: flex;
-            justify-content: center;
-        }
-    </style>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js" integrity="sha512-3gJwYpMe3QewGELv8k/BX9vcqhryRdzRMxVfq6ngyWXwo03GFEzjsUm8Q7RZcHPHksttq7/GFoxjCVUjkjvPdw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.5/dist/jquery.validate.js"></script>
-</head>
-<body>
-    <div class="container">
-        <h2 class="login-title">Forgot Password</h2>
-        @if (session('error'))
-            <div class="alert alert-danger">
-                {{ session('error') }}
+@extends('layouts.main')
+@section('content')
+@section('title', 'Forgot Password')
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js" integrity="sha512-3gJwYpMe3QewGELv8k/BX9vcqhryRdzRMxVfq6ngyWXwo03GFEzjsUm8Q7RZcHPHksttq7/GFoxjCVUjkjvPdw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.5/dist/jquery.validate.js"></script>
+<script type="text/javascript" src="{{asset('js/common/errors.js')}}"></script>
+
+    <!-- ...:::: Start Breadcrumb Section:::... -->
+    <div class="breadcrumb-section">
+        <div class="breadcrumb-wrapper">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12 d-flex justify-content-between justify-content-md-between  align-items-center flex-md-row flex-column">
+                        <h3 class="breadcrumb-title">Forgot Password</h3>
+                        {{ Breadcrumbs::render('forgotPassword') }}
+                    </div>
+                </div>
             </div>
-        @endif
-        <form class="login-form" method="POST" action="{{ route('postForgotPassword') }}" enctype="multipart/form-data">
-            @csrf
-            <div>
-                <label for="email">Email </label>
-                <input id="email" type="email" placeholder="Input Email Address" name="email" required/>
+        </div>
+    </div> <!-- ...:::: End Breadcrumb Section:::... -->
+    <!-- ...:::: Start Customer Login Section :::... -->
+    <div class="customer_login">
+        <div class="container">
+            <div class="row">
+                <!--register area start-->
+                {{-- display item center --}}
+                <style>
+                    .account_form.register {
+                        margin: 0 auto;
+                        float: none;
+                    }
+                </style>
+                <div class="col-lg-6 col-md-6">
+                    @if (session('error'))
+                        <div class="alert alert-danger">
+                            {{ session('error') }}
+                        </div>
+                     @endif
+                    <div class="account_form register">
+                        <h3>Forgot Password</h3>
+                        <form method="POST" action="{{ route('postForgotPassword') }}" enctype="multipart/form-data">
+                            @csrf
+                            <div class="default-form-box mb-20">
+                                <label>Email address <span>*</span></label>
+                                <input id="email" type="email" name="email">
+                            </div>
+                            <div class="login_submit">
+                                <button type="submit">Get OTP</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <!--register area end-->
             </div>
-            <button class="btn btn--form" type="submit" value="Get OTP">Get OTP</button>
-        </form>
-        <br>
-        <div class="login-links">
-            <a href="{{ route('login') }}">Back</a>
         </div>
     </div>
-</body>
-</html>
+@endsection

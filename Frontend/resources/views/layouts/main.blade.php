@@ -49,7 +49,7 @@
                         <div class="header-top--right">
                             <!-- Start Header Top Menu -->
                             <ul class="header-user-menu">
-                                <li class="has-user-dropdown">
+                                {{-- <li class="has-user-dropdown">
                                     <a href="">Setting</a>
                                     <!-- Header Top Menu's Dropdown -->
                                     <ul class="user-sub-menu">
@@ -58,7 +58,7 @@
                                         <li><a href="">Shopping Cart</a></li>
                                         <li><a href="">Wishlist</a></li>
                                     </ul>
-                                </li>
+                                </li> --}}
                                 <li class="has-user-dropdown">
                                     <a href="">$ USD</a>
                                     <!-- Header Top Menu's Dropdown -->
@@ -136,10 +136,40 @@
                                     <span class="header-action-icon-item-count">3</span>
                                 </a>
                             </li>
+                            @if(session()->has('user'))
+                            @php 
+                                $user = session()->get('user');
+                                $is_vip = $user['is_vip'];
+                            @endphp
+                            <li class="has-user-dropdown">
+                                <a href="">
+                                    <i class="icon-user has-user-dropdow"></i>
+                                    <ul class="user-sub-menu">
+                                        <style type="text/css">
+                                            /* ajust icon language size */
+                                            .user-sub-menu-in-icon {
+                                                width: 20px;
+                                                height: 20px;
+                                            }
+                                        </style>
+                                        <li><a href="{{route('profile')}}">My Account</a></li>
+                                        <li><a href="">Checkout</a></li>
+                                        <li><a href="">Wishlist</a></li>
+                                        @if($is_vip == 1)
+                                            <li><a href="">VIP Member</a></li>
+                                        @else
+                                            <li><a href="">Become VIP</a></li>
+                                        @endif
+                                        <li><a href="{{route('logout')}}">Logout</a></li>
+                                    </ul>
+                                </a>
+                            </li>
+                            @else 
                             <li>
                                 <a href="{{route('login')}}">
-                                    <i class="icon-user"></i>
+                                    <i class="fa fa-sign-in" aria-hidden="true"></i>
                                 </a>
+                            @endif
                             </li>
                         </ul> <!-- End Header Action Icon -->
                     </div>
@@ -277,7 +307,7 @@
                                     </div>
                                     <div class="customer-support-text">
                                         <span>Customer Support</span>
-                                        <a class="customer-support-text-phone" href="tel:(08)123456789">(08) 123 456 789</a>
+                                        <a class="customer-support-text-phone" href="tel:(03)32420477">(03) 3242 0477</a>
                                     </div>
                                 </div>
                             </div>

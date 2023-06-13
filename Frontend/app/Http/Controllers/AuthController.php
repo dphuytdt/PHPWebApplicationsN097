@@ -8,8 +8,17 @@ use Illuminate\Support\Facades\Http;
 use App\Models\Province;
 use App\Models\District;
 use App\Models\Ward;
+use App\Services\CategoryService;
+
 class AuthController extends Controller
 {
+    protected $categoryService;
+
+    public function __construct(CategoryService $categoryService)
+    {
+        $this->categoryService = $categoryService;
+    }
+
     public function login()
     {
         // Kiểm tra xem người dùng đã đăng nhập hay chưa
@@ -18,8 +27,10 @@ class AuthController extends Controller
             return redirect()->intended('/');
         }
 
+        $categories = $this->categoryService->getCategory();
+
         // Hiển thị trang đăng nhập
-        return view('auth.login');
+        return view('auth.login')->with('categories', $categories);
     }
 
     public function postLogin(Request $request)
@@ -37,11 +48,11 @@ class AuthController extends Controller
             // Kiểm tra kết quả từ UserService
             if (isset($result['access_token'])) {
                 // Lưu token vào session
-                session(['token' => $result['access_token']]);
+                session()->put('token', $result['access_token']);
                 //push user info to session
-                session(['user' => $result['user']]);
+                session()->put('user', $user);
                 //push role info to session
-                session(['role' => $user['role']]);
+                session()->put('role', $user['role']);
 
                 // Đăng nhập thành công, chuyển hướng đến trang home
                 return redirect()->route('home');
@@ -69,29 +80,31 @@ class AuthController extends Controller
 
             // Xóa token khỏi session
             session()->forget('token');
+            session()->forget('user');
+            session()->forget('role');
 
             // Chuyển hướng đến trang đăng nhập
-            return redirect()->route('login')->with('message', 'Logout successful');
+            return redirect()->intended('/')->with('message', 'Logout successful');
         } catch (\Exception $e) {
             // Lỗi xảy ra hoặc logout thất bại
-            return redirect()->route('login')->with('error', 'Logout failed');
+            return redirect()->intended('/')->with('error', 'Logout failed');
         }
     }
 
-    public function register()
-    {
-        // Kiểm tra xem người dùng đã đăng nhập hay chưa
-        if (session()->has('token')) {
-            // Người dùng đã đăng nhập, chuyển hướng đến trang home
-            return redirect()->intended('/');
-        }
+    // public function register()
+    // {
+    //     // Kiểm tra xem người dùng đã đăng nhập hay chưa
+    //     if (session()->has('token')) {
+    //         // Người dùng đã đăng nhập, chuyển hướng đến trang home
+    //         return redirect()->intended('/');
+    //     }
 
-        // Hiển thị trang đăng ký
-        $provicce = new Province();
-        // dd($provicce->getAll());
-        $data['provinces'] = $provicce->getAll();
-        return view('auth.register')->with('data', $data);
-    }
+    //     // Hiển thị trang đăng ký
+    //     $provicce = new Province();
+    //     // dd($provicce->getAll());
+    //     $data['provinces'] = $provicce->getAll();
+    //     return view('auth.register')->with('data', $data);
+    // }
 
     public function postRegister(Request $request)
     {
@@ -109,7 +122,7 @@ class AuthController extends Controller
                 return redirect()->route('login')->with('message', 'Register successful');
             } else {
                 // Đăng ký thất bại, chuyển hướng đến trang đăng ký
-                return redirect()->route('register')->with('error', 'Register failed');
+                return redirect()->route('login')->with('error', 'Register failed');
             }
 
         } catch (\Exception $e) {
@@ -120,6 +133,7 @@ class AuthController extends Controller
 
     public function forgotPassword()
     {
+        $categories = $this->categoryService->getCategory();
         // Kiểm tra xem người dùng đã đăng nhập hay chưa
         if (session()->has('token')) {
             // Người dùng đã đăng nhập, chuyển hướng đến trang home
@@ -127,27 +141,41 @@ class AuthController extends Controller
         }
 
         // Hiển thị trang quên mật khẩu
-        return view('auth.forgot-password');
+        return view('auth.forgot-password')->with('categories', $categories);
     }
 
     public function postForgotPassword(Request $request)
     {
+        $categories = $this->categoryService->getCategory();
         $userService = 'http://userservice.test:8080/api/auth';
         // $mailService = 'http://mailservice.test:8080/api';
         $email = $request->email;
         $client = new Client();
-        $response = $client->post($userService . '/forgot-password', [
-            'json' => $request->only('email'),
-        ]);
-        if ($response->getStatusCode() == 200) {
-            session(['emailForgot' => $email]);
-            return redirect()->route('inputOtp')->with('message', 'Please check your email to get OTP');
+        try{
+            // Gửi yêu cầu quên mật khẩu từ Home service tới UserService
+            $response = $client->post($userService.'/forgot-password', [
+                'json' => $request->all(),
+            ]);
+
+            $result = json_decode($response->getBody(), true);
+            if (isset($result['message'])) {
+                // Đăng ký thành công, chuyển hướng đến trang đăng nhập
+                session()->put('emailForgot', $email);
+                return redirect()->route('inputOtp')->with('message', 'Please check your email');
+            } else {
+                // Đăng ký thất bại, chuyển hướng đến trang đăng ký
+                return redirect()->route('forgotPassword')->with('error', 'Email does not exist');
+            }
+
+        } catch (\Exception $e) {
+            // Lỗi xảy ra hoặc đăng ký thất bại
+            return redirect()->route('forgotPassword')->with('error', 'Email does not exist');
         }
-        return redirect()->back()->with('error', 'Send OTP failed');
     }
 
     public function inputOtp()
     {
+        $categories = $this->categoryService->getCategory();
         // Kiểm tra xem người dùng đã đăng nhập hay chưa
         if (session()->has('token')) {
             // Người dùng đã đăng nhập, chuyển hướng đến trang home
@@ -156,14 +184,15 @@ class AuthController extends Controller
             // Người dùng chưa nhập email, chuyển hướng đến trang quên mật khẩu
             return redirect()->route('forgotPassword')->with('error', 'Please input email first');
         } else {
-            return view('auth.verify-otp');
+            return view('auth.verify-otp')->with('categories', $categories);
         }
     }
 
     public function postInputOtp(Request $request)
     {
         $client = new Client();
-
+        $email = session('emailForgot');
+        $request->merge(['email' => $email]);
         try {
             // Gửi yêu cầu nhập mã OTP từ Home service tới UserService
             $response = $client->post('http://userservice.test:8080/api/auth/verify-otp', [
@@ -173,10 +202,10 @@ class AuthController extends Controller
             $result = json_decode($response->getBody(), true);
             
             //check status code
-            if ($response->getStatusCode() == 200) {
+            if (isset($result['message'])) {
                 // Nhập mã OTP thành công, chuyển hướng đến trang đổi mật khẩu
                 session(['otpForgot' => $request->otp]);
-                return redirect()->route('changePassword')->with('message', 'OTP is correct');
+                return redirect()->route('resetPassword')->with('message', 'OTP is correct');
             } else {
                 // Nhập mã OTP thất bại, chuyển hướng đến trang nhập mã OTP
                 return redirect()->route('inputOtp')->with('error', 'OTP is incorrect');
@@ -206,6 +235,7 @@ class AuthController extends Controller
 
     public function resetPassword()
     {
+        $categories = $this->categoryService->getCategory();
         // Kiểm tra xem người dùng đã đăng nhập hay chưa
         if (session()->has('token')) {
             // Người dùng đã đăng nhập, chuyển hướng đến trang home
@@ -214,7 +244,7 @@ class AuthController extends Controller
             // Người dùng chưa nhập email hoặc nhập mã OTP, chuyển hướng đến trang quên mật khẩu
             return redirect()->route('forgotPassword')->with('error', 'Please input email first');
         } else {
-            return view('auth.reset-password');
+            return view('auth.reset-password')->with('email', session('emailForgot'))->with('categories', $categories);
         }
     }
 }

@@ -11,7 +11,7 @@ class CategoryService
     public function getCategory()
     {
         //3months
-        $minutes = 60 * 24 * 30 * 3;
+        $minutes = 60 * 24 * 30 * 3 * 12;
         return Cache::remember('categories', $minutes, function () {
             $client = new Client();
             try {

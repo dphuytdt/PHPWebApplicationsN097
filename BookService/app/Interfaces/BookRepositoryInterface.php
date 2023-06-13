@@ -17,7 +17,7 @@ interface BookRepositoryInterface
     public function getBookPaid();
 
     //get book by author
-    public function getBookByAuthor($author_id);
+    // public function getBookByAuthor($author_id);
 
     //get book by category
     public function getBookByCategory($category_id);
@@ -48,5 +48,8 @@ interface BookRepositoryInterface
 
     //get free book
     public function getFreeBook();
+
+    //get new book
+    public function getNewBooks();
 
 }

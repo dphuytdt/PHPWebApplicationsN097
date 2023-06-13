@@ -5,6 +5,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\SlideShowController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -39,6 +40,14 @@ Route::group(['middleware' => 'check.auth'] , function(){
         Route::post('update/{id}', [UserController::class, 'update'])->name('users.update');
         Route::get('delete/{id}', [UserController::class, 'delete'])->name('users.delete');
     }); 
+    Route::group(['prefix' => 'slides'], function () {
+        Route::get('/', [SlideShowController::class, 'index'])->name('slides.index');
+        Route::get('create', [SlideShowController::class, 'create'])->name('slides.create');
+        Route::post('store', [SlideShowController::class, 'store'])->name('slides.store');
+        Route::get('edit/{id}', [SlideShowController::class, 'edit'])->name('slides.edit');
+        Route::post('update/{id}', [SlideShowController::class, 'update'])->name('slides.update');
+        Route::get('delete/{id}', [SlideShowController::class, 'delete'])->name('slides.delete');
+    });
     Route::fallback([HomeController::class, 'handleError'])->name('handleError');
 });
 

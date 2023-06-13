@@ -55,7 +55,7 @@ class AuthController extends Controller
     
     public function register(Request $request) {
         $validator = Validator::make($request->all(), [
-            'name' => 'required|string|between:2,100',
+            'fullname' => 'required|string|between:2,100',
             'email' => 'required|string|email|max:100|unique:users',
             'password' => 'required|string|min:6',
         ]);
@@ -69,10 +69,16 @@ class AuthController extends Controller
                     ['password' => bcrypt($request->password)]
                 ));
 
-        return response()->json([
-            'message' => 'User successfully registered',
-            'user' => $user
-        ], 201);
+        if ($user) {
+            return response()->json([
+                'message' => 'User successfully registered',
+                'user' => $user
+            ], 201);
+        } else {
+            return response()->json([
+                'error' => 'User register failed',
+            ], 400);
+        }
     }
 
     public function logout() {
@@ -163,8 +169,13 @@ class AuthController extends Controller
                     'data' => $user,
                 ], 400);
             }
+        } else{
+            return response()->json([
+                'status' => false,
+                'error' => 'Email not exist',
+            ], 400);
         }
-        return response()->json(['error' => 'User not found'], 404);
+
     }
 
     public function verifyOTP(Request $request) {
@@ -193,7 +204,7 @@ class AuthController extends Controller
             }
             return response()->json([
                 'status' => false,
-                'message' => 'OTP not verified',
+                'error' => 'OTP not verified',
                 'user' => $user,
             ], 400);
         }
