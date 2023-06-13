@@ -23,7 +23,7 @@ class BookController extends Controller
         try {
             $response = $client->get($this->bookService.'books/'.$id);
             $book = json_decode($response->getBody(), true);
-            return view('main.book-details', compact('book', 'categories'));
+            return view('main.book.book-details', compact('book', 'categories'));
         } 
         catch (\Exception $e) {
             return redirect()->intended('/')->with('error', 'Login failed');
@@ -58,14 +58,14 @@ class BookController extends Controller
                     $currentPage,     // Trang hiện tại
                     ['path' => $request->url(), 'query' => $request->query()]
                 );
-                return view('main.search-result', compact('paginator', 'categories'));
+                return view('main.home.search-result', compact('paginator', 'categories'));
             }
             else{
-                return view('main.search-result')->with('error', 'No result found')->with('categories', $categories);
+                return view('main.home.search-result')->with('error', 'No result found')->with('categories', $categories);
             }
         } 
         catch (\Exception $e) {
-            return view('main.search-result')->with('error', 'No result found')->with('categories', $categories);
+            return view('main.home.search-result')->with('error', 'No result found')->with('categories', $categories);
         }
     }
 
@@ -86,16 +86,6 @@ class BookController extends Controller
                 'perPage' => $perPage,
             ]
         ]);
-
-        $books = json_decode($response->getBody(), true);
-        $paginator = new \Illuminate\Pagination\LengthAwarePaginator(
-            $books['data'],
-            $books['total'],
-            $perPage,
-            $currentPage,
-            ['path' => url()->current()]
-        );
-
         // return view('main.all-book', compact('paginator'));
     }
 

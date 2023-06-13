@@ -30,19 +30,19 @@ class HomeController extends Controller
         $books = json_decode($response->getBody(), true);
         // $paginatedBooks = new Paginator($books, 5);
         // $paginatedBooks->withPath('/');
-        return view('main.home')->with('books', $books)->with('categories', $categories);
+        return view('main.home.index')->with('books', $books)->with('categories', $categories);
     }
     
     public function about()
     {
         $categories = $this->categoryService->getCategory();
-        return view('main.about')->with('categories', $categories);
+        return view('main.home.about')->with('categories', $categories);
     }
 
     public function contact()
     {
         $categories = $this->categoryService->getCategory();
-        return view('main.contact')->with('categories', $categories);
+        return view('main.home.contact')->with('categories', $categories);
     }
 
     //custom 404 page
