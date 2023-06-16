@@ -68,16 +68,20 @@ class AuthController extends Controller
     public function postRequestResetPassword(Request $request)
     {
         $http = new Client;
-        $response = $http->post($this->userService . 'auth/admin/request-reset-password', [
-            'json' => [
-                'email' => $request->email,
-            ]
-        ]);
-        $data = json_decode((string) $response->getBody(), true);
-        if (isset($data['message'])) {
-            return redirect()->back()->with('message', $data['message']);
-        } else {
-            return redirect()->back()->with('error', $data['error']);
+        try {
+            $response = $http->post($this->userService . 'auth/admin/request-reset-password', [
+                'json' => [
+                    'email' => $request->email,
+                ]
+            ]);
+            $data = json_decode((string) $response->getBody(), true);
+            if (isset($data['message'])) {
+                return redirect()->back()->with('message', $data['message']);
+            } else {
+                return redirect()->back()->with('error', $data['error']);
+            }
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Email does not exist');
         }
     }
 }
