@@ -156,9 +156,9 @@
                                         <li><a href="">Checkout</a></li>
                                         <li><a href="">Wishlist</a></li>
                                         @if($is_vip == 1)
-                                            <li><a href="">VIP Member</a></li>
+                                            <li><a href="{{route('vipBenefits')}}">VIP Member</a></li>
                                         @else
-                                            <li><a href="">Become VIP</a></li>
+                                            <li><a href="{{route('upgrade')}}">Upgrade to VIP</a></li>
                                         @endif
                                         <li><a href="{{route('logout')}}">Logout</a></li>
                                     </ul>
@@ -255,6 +255,7 @@
                                             @foreach ( $categories as $category )
                                                 <li><a href=""> {{$category['name']}} </a></li>
                                             @endforeach
+                                            <li><a>View more</a></li>
                                         </ul>
                                     </li>
                                     {{-- <li class="has-dropdown">

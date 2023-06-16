@@ -1,55 +1,6 @@
 @extends('layouts.main')
 @section('content')
-@section('title', 'Profile')
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js" integrity="sha512-3gJwYpMe3QewGELv8k/BX9vcqhryRdzRMxVfq6ngyWXwo03GFEzjsUm8Q7RZcHPHksttq7/GFoxjCVUjkjvPdw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.5/dist/jquery.validate.js"></script>
-<script type="text/javascript" src="{{asset('js/common/errors.js')}}"></script>
-<style>
-.personal-image {
-  text-align: center;
-}
-.personal-image input[type="file"] {
-  display: none;
-}
-.personal-figure {
-  position: relative;
-  width: 120px;
-  height: 120px;
-}
-.personal-avatar {
-  cursor: pointer;
-  width: 120px;
-  height: 120px;
-  box-sizing: border-box;
-  border-radius: 100%;
-  border: 2px solid transparent;
-  box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.2);
-  transition: all ease-in-out .3s;
-}
-.personal-avatar:hover {
-  box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.5);
-}
-.personal-figcaption {
-  cursor: pointer;
-  position: absolute;
-  top: 0px;
-  width: inherit;
-  height: inherit;
-  border-radius: 100%;
-  opacity: 0;
-  background-color: rgba(0, 0, 0, 0);
-  transition: all ease-in-out .3s;
-}
-.personal-figcaption:hover {
-  opacity: 1;
-  background-color: rgba(0, 0, 0, .5);
-}
-.personal-figcaption > img {
-  margin-top: 32.5px;
-  width: 50px;
-  height: 50px;
-}
-</style>
+@section('title', 'VIP Benefits')
     <!-- ...:::: Start Mobile Header Section:::... -->
     <div class="mobile-header-section d-block d-lg-none">
         <!-- Start Mobile Header Wrapper -->
@@ -415,220 +366,72 @@
             <div class="container">
                 <div class="row">
                     <div class="col-12 d-flex justify-content-between justify-content-md-between  align-items-center flex-md-row flex-column">
-                        <h3 class="breadcrumb-title">My Profile</h3>
-                        {{ Breadcrumbs::render('profile') }}
+                        <h3 class="breadcrumb-title">VIP Benefits</h3>
+                        {{ Breadcrumbs::render('vipBenefits') }}
                     </div>
                 </div>
             </div>
         </div>
     </div> <!-- ...:::: End Breadcrumb Section:::... -->
+        <!-- ...::::Start Privacy Policy  Section:::... -->
+        <div class="privacy-section">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="privacy-policy-wrapper">
+                            <div class="privacy-single-item">
+                                @php 
+                                    $user = session()->get('user');
+                                    $is_vip = $user['is_vip'];
+                                    $vip_experied_date = $user['valid_vip'];
+                                    $today = date("Y-m-d");
+                                    $vip_experied_date = date("d-m-Y", strtotime($vip_experied_date));
+                                    $today = date("d-m-Y", strtotime($today));
+                                @endphp
+                                <h4>Your VIP Available To: <span class="text-danger">{{ $vip_experied_date }}</span></h4>
 
-    <!-- ...:::: Start Account Dashboard Section:::... -->
-    <div class="account_dashboard">
-        <div class="container">
-            <div class="row">
-                <div class="col-sm-12 col-md-3 col-lg-3">
-                    <!-- Nav tabs -->
-                    <div class="dashboard_tab_button">
-                        <ul role="tablist" class="nav flex-column dashboard-list">
-                            <li><a href="#dashboard" data-toggle="tab" class="nav-link active">Dashboard</a></li>
-                            <li><a href="#account-details" data-toggle="tab" class="nav-link ">Account details</a></li>
-                            <li> <a href="#orders" data-toggle="tab" class="nav-link">Orders</a></li>
-                            {{-- <li><a href="#downloads" data-toggle="tab" class="nav-link">Downloads</a></li> --}}
-                            <li><a href="#address" data-toggle="tab" class="nav-link">History</a></li>
-{{-- 
-                            <li><a href="login.html" class="nav-link">logout</a></li> --}}
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-sm-12 col-md-9 col-lg-9">
-                    <!-- Tab panes -->
-                    <div class="tab-content dashboard_content">
-                        <div class="tab-pane fade show active " id="dashboard">
-                            <h4>Dashboard </h4>
-                            <p>From your account dashboard. you can easily check &amp; view your <a href="#">recent orders</a>, manage your <a href="#">shipping and billing addresses</a> and <a href="#">Edit your password and account details.</a></p>
-                        </div>
-                        <div class="tab-pane fade" id="orders">
-                            <h4>Orders</h4>
-                            <div class="table_page table-responsive">
-                                <table>
-                                    <thead>
-                                        <tr>
-                                            <th>Order</th>
-                                            <th>Date</th>
-                                            <th>Status</th>
-                                            <th>Total</th>
-                                            <th>Actions</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>1</td>
-                                            <td>May 10, 2018</td>
-                                            <td><span class="success">Completed</span></td>
-                                            <td>$25.00 for 1 item </td>
-                                            <td><a href="cart.html" class="view">view</a></td>
-                                        </tr>
-                                        <tr>
-                                            <td>2</td>
-                                            <td>May 10, 2018</td>
-                                            <td>Processing</td>
-                                            <td>$17.00 for 1 item </td>
-                                            <td><a href="cart.html" class="view">view</a></td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                        <div class="tab-pane fade" id="downloads">
-                            <h4>Downloads</h4>
-                            <div class="table_page table-responsive">
-                                <table>
-                                    <thead>
-                                        <tr>
-                                            <th>Product</th>
-                                            <th>Downloads</th>
-                                            <th>Expires</th>
-                                            <th>Download</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>Shopnovilla - Free Real Estate PSD Template</td>
-                                            <td>May 10, 2018</td>
-                                            <td><span class="danger">Expired</span></td>
-                                            <td><a href="#" class="view">Click Here To Download Your File</a></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Organic - ecommerce html template</td>
-                                            <td>Sep 11, 2018</td>
-                                            <td>Never</td>
-                                            <td><a href="#" class="view">Click Here To Download Your File</a></td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                        <div class="tab-pane" id="address">
-                            <p>The following addresses will be used on the checkout page by default.</p>
-                            <h5 class="billing-address">Billing address</h5>
-                            <a href="#" class="view">Edit</a>
-                            <p><strong>Bobby Jackson</strong></p>
-                            <address>
-                                House #15<br>
-                                    Road #1<br>
-                                    Block #C <br>
-                                    Banasree <br>
-                                    Dhaka <br>
-                                    1212
-                            </address>
-                            <p>Bangladesh</p>
-                        </div>
-                        <div class="tab-pane fade " id="account-details">
-                            <h3>Account details </h3>
-                            <div class="login">
-                                <div class="login_form_container">
-                                    <div class="account_login_form">
-                                        <form action="{{route('profile.update')}}" method="POST" id="formProfile">
-                                            @csrf
-                                            {{-- <p>Already have an account? <a href="#">Log in instead!</a></p> --}}
-                                            <div class="input-radio">
-                                                <span class="custom-radio"><input type="radio" value="0" name="id_gender" @checked('0' == $userDetails['user_detail']['gender'])> Mr.</span>
-                                                <span class="custom-radio"><input type="radio" value="1" name="id_gender" @checked('1' == $userDetails['user_detail']['gender'])> Mrs.</span>
-                                            </div> <br>                                         
-                                            
-                                            <div class="row">
-                                                {{-- full name and avatar in the same row --}}
-                                                <div class="col-md-6 col-12">
-                                                    <div class="default-form-box mb-20">
-                                                        <label>Full Name</label>
-                                                        <input type="text" name="fullname" value="{{ $user['fullname'] }}" data-label="Full Name" placeholder="Full Name" required>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-6 col-12">
-                                                    <div class="personal-image">
-                                                        <label class="label">
-                                                          <input type="file" accept="image/*"  />
-                                                          <figure class="personal-figure">
-                                                            @if($userDetails['user_detail']['avatar'] == null)
-                                                            <img src="https://static.thenounproject.com/png/5034901-200.png" class="personal-avatar" alt="avatar">
-                                                            @else 
-                                                            <img src="{{ asset('storage/app/public/'.$userDetails['user_detail']['avatar']) }}" class="personal-avatar" alt="avatar">
-                                                            @endif
-                                                            <figcaption class="personal-figcaption">
-                                                              <img src="https://raw.githubusercontent.com/ThiagoLuizNunes/angular-boilerplate/master/src/assets/imgs/camera-white.png" id="imageUpload" alt="camera">
-                                                            </figcaption>
-                                                          </figure>
-                                                        </label>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <script type="text/javascript">
-                                                // Get the file input element
-                                                const fileInput = document.querySelector('input[type="file"]');
-
-                                                // Add an event listener for when a new image is selected
-                                                fileInput.addEventListener('change', function() {
-                                                const file = fileInput.files[0];
-
-                                                // Check if a file is selected
-                                                if (file) {
-                                                    const reader = new FileReader();
-
-                                                    // Read the contents of the file
-                                                    reader.addEventListener('load', function() {
-                                                    const image = document.querySelector('.personal-avatar');
-                                                    
-                                                    // Change the source of the image to the newly uploaded image
-                                                    image.src = reader.result;
-                                                    });
-
-                                                    // Read the file as a data URL
-                                                    reader.readAsDataURL(file);
-                                                }
-                                                });
-
-                                            </script>
-                                            {{-- <div class="default-form-box mb-20">
-                                                <label>Last Name</label>
-                                                <input type="text" name="last-name">
-                                            </div> --}}
-                                            <div class="default-form-box mb-20">
-                                                <label>Email</label>
-                                                <input type="text" name="email-name" value="{{ $user['email'] }}" disabled>
-                                            </div>
-                                            <div class="default-form-box mb-20">
-                                                <label>Birthday</label>
-                                                <input type="date" name="birthday" value="{{ $userDetails['user_detail']['birthday'] }}" data-label="Birthday" required>
-                                            </div>
-                                            <span class="example">
-                                                  (E.g.: 05/31/1970)
-                                                </span>
-                                            <br>
-                                            <div class="default-form-box mb-20">
-                                                <label>Wallet</label>
-                                                <input type="text" name="wallet" value="{{ $userDetails['user_detail']['wallet'] }}" disabled>
-                                            </div>
-                                            <div class="default-form-box mb-20">
-                                                <label>Address</label>
-                                                <input type="text" name="address" value="{{ $userDetails['user_detail']['address'] }}" data-label="Address" required>
-                                            </div>
-                                            <div class="default-form-box mb-20">
-                                                <label>Phone</label>
-                                                <input type="text" name="phone" value="{{ $userDetails['user_detail']['phone'] }}" data-label="Phone" required>
-                                            </div>
-                                            <div class="save_button primary_btn default_button">
-                                                <button type="submit">Save</button>
-                                            </div>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
+                            </div> <!-- 
+                            <!-- Start Privacy Policy Single Item -->
+                            <!-- Start Privacy Policy Single Item -->
+                            <div class="privacy-single-item">
+                                <h4>What is VIP?</h4>
+                              
+                                <p>
+                                    Step into the enchanting world of a VIP at your local bookstore and unlock a treasure trove of exclusive benefits that will elevate your reading experience to new heights. As a distinguished book lover, you deserve nothing short of the finest treatment, and the VIP perks of a bookstore will transport you into a realm of literary luxury.</p>
+                            </div> <!-- Start Privacy Policy Single Item -->
+                            <!-- Start Privacy Policy Single Item -->
+                            <div class="privacy-single-item">
+                                <h4>What are the benefits of VIP?</h4>
+                                <p>First and foremost, as a VIP, you will be greeted with personalized attention and tailored recommendations from knowledgeable staff members. Whether you're seeking the latest bestseller, a hidden gem from a lesser-known author, or a classic masterpiece, the expert book aficionados will guide you through the labyrinthine shelves, ensuring you discover literary treasures perfectly suited to your tastes.</p>
+                            </div> <!-- Start Privacy Policy Single Item -->
+                            <!-- Start Privacy Policy Single Item -->
+                            <div class="privacy-single-item">
+                                <h4>How to become a VIP?</h4>
+                                <p>Moreover, VIP membership grants you coveted access to pre-release books, enabling you to embark on literary adventures before the rest of the world. Imagine the thrill of being among the privileged few who can delve into the pages of eagerly awaited novels, immersing yourself in stories yet untold, and engaging in conversations with fellow VIPs about the latest literary sensations.</p>
+                            </div> <!-- Start Privacy Policy Single Item -->
+                            <!-- Start Privacy Policy Single Item -->
+                            <div class="privacy-single-item">
+                                <h4>How to maintain VIP?</h4>
+                                <p>To further enhance your bookish journey, VIP benefits often extend to exclusive author events and book signings. Prepare to meet the brilliant minds behind your favorite works, as esteemed authors share their inspiration and insights during intimate gatherings reserved solely for VIP members. Immerse yourself in thought-provoking discussions, exchange ideas, and forge connections with fellow literary enthusiasts who share your passion for the written word.</p>
+                            </div> <!-- Start Privacy Policy Single Item -->
+                            <!-- Start Privacy Policy Single Item -->
+                            <div class="privacy-single-item">
+                                <h4>How to use VIP?</h4>
+                                <p>Unleash the power of knowledge with VIP access to special lectures, literary workshops, and book clubs. Expand your horizons through captivating presentations by renowned speakers, engaging in lively debates, and immersing yourself in intellectual dialogue. These unique opportunities foster personal growth, enabling you to delve deeper into the realms of literature, broaden your perspectives, and nurture a lifelong love affair with books.</p>
+                            </div> <!-- Start Privacy Policy Single Item -->
+                            <!-- Start Privacy Policy Single Item -->
+                            <div class="privacy-single-item">
+                                <h4>And some more benefits of VIP?</h4>
+                                <p>The VIP experience extends beyond the bookstore itself, with exclusive discounts and promotions tailored exclusively for members. From special pricing on new releases to limited-edition book sets and collector's items, your VIP status ensures that your literary acquisitions are not only a source of endless enjoyment but also a testament to your refined taste and discerning eye for quality.</p>
+                            </div> <!-- Start Privacy Policy Single Item -->
+                            <!-- Start Privacy Policy Single Item -->
+                            <div class="privacy-single-item">
+                                <h4>Now and future more </h4>
+                                <p>Furthermore, VIP benefits often encompass convenient services, such as reserved seating in cozy reading nooks, priority access to cozy cafes nestled within the bookstore, and complimentary refreshments to savor as you lose yourself in the pages of your latest find. Indulge in moments of solitude or engage in stimulating conversations with like-minded individuals as you bask in the tranquil ambiance of a sanctuary designed to ignite your literary passions.</p>
+                            </div> <!-- Start Privacy Policy Single Item -->
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </div> <!-- ...:::: End Account Dashboard Section:::... -->
-    <script type="text/javascript" src="{{asset('js/auth/profile.js')}}"></script>
+        </div> <!-- ...::::End Privacy Policy Section:::... -->    
 @endsection

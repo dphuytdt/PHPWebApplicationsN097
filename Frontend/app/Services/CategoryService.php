@@ -10,7 +10,6 @@ class CategoryService
     public $bookService = 'http://bookservice.test:8080/api/';
     public function getCategory()
     {
-        //3months
         $minutes = 60 * 24 * 30 * 3 * 12;
         return Cache::remember('categories', $minutes, function () {
             $client = new Client();

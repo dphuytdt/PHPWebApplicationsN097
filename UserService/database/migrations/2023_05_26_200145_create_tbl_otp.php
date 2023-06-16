@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('email');
             $table->string('otp');
+            $table->integer('type')->comment('0: register, 1: forgot password');
             $table->integer('user_id');
             $table->timestamps();
         });

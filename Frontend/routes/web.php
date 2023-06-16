@@ -5,6 +5,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BookController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\PaymentController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -38,10 +39,15 @@ Route::prefix('auth')->group(function () {
     Route::get('logout', [AuthController::class, 'logout'])->name('logout');
     Route::post('register', [AuthController::class, 'postRegister'])->name('postRegister');
 
-    Route::prefix('choose')->group(function () {
-        Route::get('district', [AuthController::class, 'chooseDistrict'])->name('register.choose.district');
-        Route::get('ward', [AuthController::class, 'chooseWard'])->name('register.choose.ward');
+    Route::prefix('verify') -> group(function () {
+        Route::get('/', [AuthController::class, 'verifyGet'])->name('verify.get');
+        Route::get('/', [AuthController::class, 'verifyPost'])->name('verify.get');
     });
+
+    // Route::prefix('choose')->group(function () {
+    //     Route::get('district', [AuthController::class, 'chooseDistrict'])->name('register.choose.district');
+    //     Route::get('ward', [AuthController::class, 'chooseWard'])->name('register.choose.ward');
+    // });
 
     Route::get('forgot-password', [AuthController::class, 'forgotPassword'])->name('forgotPassword');
     Route::post('forgot-password', [AuthController::class, 'postForgotPassword'])->name('postForgotPassword');
@@ -52,7 +58,16 @@ Route::prefix('auth')->group(function () {
     Route::get('reset-password', [AuthController::class, 'resetPassword'])->name('resetPassword');
     Route::post('reset-password', [AuthController::class, 'postResetPassword'])->name('postResetPassword');
 
-    Route::get('profile', [UserController::class, 'profile'])->name('profile');
+    Route::group(['prefix' => 'profile'], function () {
+        Route::get('/', [UserController::class, 'profile'])->name('profile');
+        Route::post('/', [AuthController::class, 'postProfile'])->name('profile.update');
+    });
+    
+    Route::get('upgrade', [UserController::class, 'upgrade'])->name('upgrade');
+
+    Route::post('checkout', [PaymentController::class, 'checkOut'])->name('checkout');
+
+    Route::get('vip-benefits', [UserController::class, 'vipBenefits'])->name('vipBenefits');
 });
 
 //404 page

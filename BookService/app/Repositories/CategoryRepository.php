@@ -12,7 +12,8 @@ class CategoryRepository implements CategoryRepositoryInterface
     //get all category
     public function getAllCategory()
     {
-        $categories = Category::all();
+        //get top 10 category
+        $categories = Category::orderBy('created_at', 'desc')->take(5)->get();
         return $categories;
     }
 

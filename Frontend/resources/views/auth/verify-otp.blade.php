@@ -38,11 +38,11 @@
                      @endif
                     <div class="account_form register">
                         <h3>Forgot Password</h3>
-                        <form method="POST" action="{{ route('postInputOtp') }}">
+                        <form id="verifyOtpForm" method="POST" action="{{ route('postInputOtp') }}">
                             @csrf
                             <div class="default-form-box mb-20">
                                 <label>Your OTP <span>*</span></label>
-                                <input id="otp" type="text" name="otp">
+                                <input id="otp" type="text" name="otp" value="{{ old('otp') }}" data-label="OTP">
                             </div>
                             <div class="login_submit">
                                 <button type="submit">Verify OTP</button>
@@ -54,4 +54,5 @@
             </div>
         </div>
     </div>
+    <script type="text/javascript" src="{{asset('js/auth/verify-otp.js')}}"></script>
 @endsection

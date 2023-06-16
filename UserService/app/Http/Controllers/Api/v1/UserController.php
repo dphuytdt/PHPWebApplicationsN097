@@ -6,26 +6,41 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Interfaces\UserRepositoryInterface;
 use App\Interfaces\OTPRepositoryInterface;
+use Illuminate\Support\Facades\Validator;
+
 class UserController extends Controller
 {
     private UserRepositoryInterface $userRepository;
     private OTPRepositoryInterface $otpRepository;
     public function __construct(UserRepositoryInterface $userRepository, OTPRepositoryInterface $otpRepository) {
-        $this->middleware('auth:api');
+        $this->middleware('auth:api', ['except' => ['userDetail']]);
         $this->userRepository = $userRepository;
         $this->otpRepository = $otpRepository;
     }
 
     public function upgrateUser(Request $request) {
-        $user = auth()->user();
-        $user_id = $user->id;
-        $user = $this->userRepository->getUserById($user_id);
-        if($user->is_vip == 0) {
-            $user->is_vip = 1;
-            $user->save();
-            return response()->json(['message' => 'You are now a VIP member']);
-        } else {
-            return response()->json(['message' => 'You are already a VIP member']);
+        $validator = Validator::make($request->all(), [
+            'email' => 'required|email',
+            'amount' => 'required|numeric'
+        ]);
+        if ($validator->fails()) {
+            return response()->json($validator->errors(), 422);
+        }
+        $email = $request->email;
+        $user = $this->userRepository->getUserByemail($email);
+        if($user) {
+            if($user->is_vip == 1) {
+                return response()->json(['message' => 'User is vip']);
+            } else {
+                $result = $this->userRepository->upgradeUser($user, $request->amount);
+                if($result) {
+                    return response()->json(['message' => 'Upgrade user successfully']);
+                } else {
+                    return response()->json(['message' => 'Upgrade user failed']);
+                }
+            }
+        } else{
+            return response()->json(['message' => 'User not found']);
         }
 
     }
@@ -33,5 +48,14 @@ class UserController extends Controller
     public function getAllUser() {
         $users = $this->userRepository->getAllUser();
         return response()->json(['users' => $users]);
+    }
+
+    public function userDetail(Request $request) {
+        $user_detail = $this->userRepository->getUserDetail($request->user_id);
+        if($user_detail) {
+            return response()->json(['user_detail' => $user_detail]);
+        } else {
+            return response()->json(['message' => 'User not found']);
+        }
     }
 }

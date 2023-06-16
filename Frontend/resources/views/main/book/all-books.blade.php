@@ -1,55 +1,7 @@
 @extends('layouts.main')
 @section('content')
-@section('title', 'Profile')
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js" integrity="sha512-3gJwYpMe3QewGELv8k/BX9vcqhryRdzRMxVfq6ngyWXwo03GFEzjsUm8Q7RZcHPHksttq7/GFoxjCVUjkjvPdw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.5/dist/jquery.validate.js"></script>
-<script type="text/javascript" src="{{asset('js/common/errors.js')}}"></script>
-<style>
-.personal-image {
-  text-align: center;
-}
-.personal-image input[type="file"] {
-  display: none;
-}
-.personal-figure {
-  position: relative;
-  width: 120px;
-  height: 120px;
-}
-.personal-avatar {
-  cursor: pointer;
-  width: 120px;
-  height: 120px;
-  box-sizing: border-box;
-  border-radius: 100%;
-  border: 2px solid transparent;
-  box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.2);
-  transition: all ease-in-out .3s;
-}
-.personal-avatar:hover {
-  box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.5);
-}
-.personal-figcaption {
-  cursor: pointer;
-  position: absolute;
-  top: 0px;
-  width: inherit;
-  height: inherit;
-  border-radius: 100%;
-  opacity: 0;
-  background-color: rgba(0, 0, 0, 0);
-  transition: all ease-in-out .3s;
-}
-.personal-figcaption:hover {
-  opacity: 1;
-  background-color: rgba(0, 0, 0, .5);
-}
-.personal-figcaption > img {
-  margin-top: 32.5px;
-  width: 50px;
-  height: 50px;
-}
-</style>
+@section('title', 'All Books')
+
     <!-- ...:::: Start Mobile Header Section:::... -->
     <div class="mobile-header-section d-block d-lg-none">
         <!-- Start Mobile Header Wrapper -->
@@ -415,220 +367,224 @@
             <div class="container">
                 <div class="row">
                     <div class="col-12 d-flex justify-content-between justify-content-md-between  align-items-center flex-md-row flex-column">
-                        <h3 class="breadcrumb-title">My Profile</h3>
-                        {{ Breadcrumbs::render('profile') }}
+                        <h3 class="breadcrumb-title">Blog Grid Sidebar Left</h3>
+                        <div class="breadcrumb-nav">
+                            <nav aria-label="breadcrumb">
+                                <ul>
+                                    <li><a href="index.html">Home</a></li>
+                                    <li><a href="blog-grid-sidebar-left.html">Blog</a></li>
+                                    <li class="active" aria-current="page">Blog Grid Sidebar Left</li>
+                                </ul>
+                            </nav>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div> <!-- ...:::: End Breadcrumb Section:::... -->
 
-    <!-- ...:::: Start Account Dashboard Section:::... -->
-    <div class="account_dashboard">
+    <!-- ...:::: Start Blog Section:::... -->
+    <div class="blog-section">
         <div class="container">
-            <div class="row">
-                <div class="col-sm-12 col-md-3 col-lg-3">
-                    <!-- Nav tabs -->
-                    <div class="dashboard_tab_button">
-                        <ul role="tablist" class="nav flex-column dashboard-list">
-                            <li><a href="#dashboard" data-toggle="tab" class="nav-link active">Dashboard</a></li>
-                            <li><a href="#account-details" data-toggle="tab" class="nav-link ">Account details</a></li>
-                            <li> <a href="#orders" data-toggle="tab" class="nav-link">Orders</a></li>
-                            {{-- <li><a href="#downloads" data-toggle="tab" class="nav-link">Downloads</a></li> --}}
-                            <li><a href="#address" data-toggle="tab" class="nav-link">History</a></li>
-{{-- 
-                            <li><a href="login.html" class="nav-link">logout</a></li> --}}
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-sm-12 col-md-9 col-lg-9">
-                    <!-- Tab panes -->
-                    <div class="tab-content dashboard_content">
-                        <div class="tab-pane fade show active " id="dashboard">
-                            <h4>Dashboard </h4>
-                            <p>From your account dashboard. you can easily check &amp; view your <a href="#">recent orders</a>, manage your <a href="#">shipping and billing addresses</a> and <a href="#">Edit your password and account details.</a></p>
-                        </div>
-                        <div class="tab-pane fade" id="orders">
-                            <h4>Orders</h4>
-                            <div class="table_page table-responsive">
-                                <table>
-                                    <thead>
-                                        <tr>
-                                            <th>Order</th>
-                                            <th>Date</th>
-                                            <th>Status</th>
-                                            <th>Total</th>
-                                            <th>Actions</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>1</td>
-                                            <td>May 10, 2018</td>
-                                            <td><span class="success">Completed</span></td>
-                                            <td>$25.00 for 1 item </td>
-                                            <td><a href="cart.html" class="view">view</a></td>
-                                        </tr>
-                                        <tr>
-                                            <td>2</td>
-                                            <td>May 10, 2018</td>
-                                            <td>Processing</td>
-                                            <td>$17.00 for 1 item </td>
-                                            <td><a href="cart.html" class="view">view</a></td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                        <div class="tab-pane fade" id="downloads">
-                            <h4>Downloads</h4>
-                            <div class="table_page table-responsive">
-                                <table>
-                                    <thead>
-                                        <tr>
-                                            <th>Product</th>
-                                            <th>Downloads</th>
-                                            <th>Expires</th>
-                                            <th>Download</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>Shopnovilla - Free Real Estate PSD Template</td>
-                                            <td>May 10, 2018</td>
-                                            <td><span class="danger">Expired</span></td>
-                                            <td><a href="#" class="view">Click Here To Download Your File</a></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Organic - ecommerce html template</td>
-                                            <td>Sep 11, 2018</td>
-                                            <td>Never</td>
-                                            <td><a href="#" class="view">Click Here To Download Your File</a></td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                        <div class="tab-pane" id="address">
-                            <p>The following addresses will be used on the checkout page by default.</p>
-                            <h5 class="billing-address">Billing address</h5>
-                            <a href="#" class="view">Edit</a>
-                            <p><strong>Bobby Jackson</strong></p>
-                            <address>
-                                House #15<br>
-                                    Road #1<br>
-                                    Block #C <br>
-                                    Banasree <br>
-                                    Dhaka <br>
-                                    1212
-                            </address>
-                            <p>Bangladesh</p>
-                        </div>
-                        <div class="tab-pane fade " id="account-details">
-                            <h3>Account details </h3>
-                            <div class="login">
-                                <div class="login_form_container">
-                                    <div class="account_login_form">
-                                        <form action="{{route('profile.update')}}" method="POST" id="formProfile">
-                                            @csrf
-                                            {{-- <p>Already have an account? <a href="#">Log in instead!</a></p> --}}
-                                            <div class="input-radio">
-                                                <span class="custom-radio"><input type="radio" value="0" name="id_gender" @checked('0' == $userDetails['user_detail']['gender'])> Mr.</span>
-                                                <span class="custom-radio"><input type="radio" value="1" name="id_gender" @checked('1' == $userDetails['user_detail']['gender'])> Mrs.</span>
-                                            </div> <br>                                         
-                                            
-                                            <div class="row">
-                                                {{-- full name and avatar in the same row --}}
-                                                <div class="col-md-6 col-12">
-                                                    <div class="default-form-box mb-20">
-                                                        <label>Full Name</label>
-                                                        <input type="text" name="fullname" value="{{ $user['fullname'] }}" data-label="Full Name" placeholder="Full Name" required>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-6 col-12">
-                                                    <div class="personal-image">
-                                                        <label class="label">
-                                                          <input type="file" accept="image/*"  />
-                                                          <figure class="personal-figure">
-                                                            @if($userDetails['user_detail']['avatar'] == null)
-                                                            <img src="https://static.thenounproject.com/png/5034901-200.png" class="personal-avatar" alt="avatar">
-                                                            @else 
-                                                            <img src="{{ asset('storage/app/public/'.$userDetails['user_detail']['avatar']) }}" class="personal-avatar" alt="avatar">
-                                                            @endif
-                                                            <figcaption class="personal-figcaption">
-                                                              <img src="https://raw.githubusercontent.com/ThiagoLuizNunes/angular-boilerplate/master/src/assets/imgs/camera-white.png" id="imageUpload" alt="camera">
-                                                            </figcaption>
-                                                          </figure>
-                                                        </label>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <script type="text/javascript">
-                                                // Get the file input element
-                                                const fileInput = document.querySelector('input[type="file"]');
+            <div class="row flex-column-reverse flex-lg-row">
+                <div class="col-lg-3">
+                    <!-- Start Sidebar Area -->
+                    <div class="siderbar-section">
 
-                                                // Add an event listener for when a new image is selected
-                                                fileInput.addEventListener('change', function() {
-                                                const file = fileInput.files[0];
-
-                                                // Check if a file is selected
-                                                if (file) {
-                                                    const reader = new FileReader();
-
-                                                    // Read the contents of the file
-                                                    reader.addEventListener('load', function() {
-                                                    const image = document.querySelector('.personal-avatar');
-                                                    
-                                                    // Change the source of the image to the newly uploaded image
-                                                    image.src = reader.result;
-                                                    });
-
-                                                    // Read the file as a data URL
-                                                    reader.readAsDataURL(file);
-                                                }
-                                                });
-
-                                            </script>
-                                            {{-- <div class="default-form-box mb-20">
-                                                <label>Last Name</label>
-                                                <input type="text" name="last-name">
-                                            </div> --}}
-                                            <div class="default-form-box mb-20">
-                                                <label>Email</label>
-                                                <input type="text" name="email-name" value="{{ $user['email'] }}" disabled>
-                                            </div>
-                                            <div class="default-form-box mb-20">
-                                                <label>Birthday</label>
-                                                <input type="date" name="birthday" value="{{ $userDetails['user_detail']['birthday'] }}" data-label="Birthday" required>
-                                            </div>
-                                            <span class="example">
-                                                  (E.g.: 05/31/1970)
-                                                </span>
-                                            <br>
-                                            <div class="default-form-box mb-20">
-                                                <label>Wallet</label>
-                                                <input type="text" name="wallet" value="{{ $userDetails['user_detail']['wallet'] }}" disabled>
-                                            </div>
-                                            <div class="default-form-box mb-20">
-                                                <label>Address</label>
-                                                <input type="text" name="address" value="{{ $userDetails['user_detail']['address'] }}" data-label="Address" required>
-                                            </div>
-                                            <div class="default-form-box mb-20">
-                                                <label>Phone</label>
-                                                <input type="text" name="phone" value="{{ $userDetails['user_detail']['phone'] }}" data-label="Phone" required>
-                                            </div>
-                                            <div class="save_button primary_btn default_button">
-                                                <button type="submit">Save</button>
-                                            </div>
-                                        </form>
+                        <!-- Start Single Sidebar Widget -->
+                        <div class="sidebar-single-widget">
+                            <h6 class="sidebar-title">Search</h6>
+                            <div class="sidebar-content">
+                                <div class="search-bar">
+                                    <div class="default-search-style d-flex">
+                                        <input class="default-search-style-input-box border-around border-right-none" type="search" placeholder="Search..." required>
+                                        <button class="default-search-style-input-btn" type="submit"><i class="icon-search"></i></button>
                                     </div>
                                 </div>
                             </div>
+                        </div> <!-- End Single Sidebar Widget -->
+
+                        <!-- Start Single Sidebar Widget -->
+                        <div class="sidebar-single-widget">
+                            <h6 class="sidebar-title">Recent Post</h6>
+                            <div class="sidebar-content">
+                                <div class="recent-post">
+                                    <ul>
+                                        <!-- Start Single Recent Post Item -->
+                                        <li class="recent-post-list">
+                                            <a href="blog-single-sidebar-left.html" class="post-image">
+                                                <img src="assets/images/blog_recent_post/blog1.jpg" alt="">
+                                            </a>
+                                            <div class="post-content">
+                                                <a class="post-link" href="blog-single-sidebar-left.html">Blog Image Post</a>
+                                                <span class="post-date">March 16, 2018</span>
+                                            </div>
+                                        </li> <!-- End Single Recent Post Item -->
+                                        <!-- Start Single Recent Post Item -->
+                                        <li class="recent-post-list">
+                                            <a href="blog-single-sidebar-left.html" class="post-image">
+                                                <img src="assets/images/blog_recent_post/blog2.jpg" alt="">
+                                            </a>
+                                            <div class="post-content">
+                                                <a class="post-link" href="blog-single-sidebar-left.html">Blog Image Post</a>
+                                                <span class="post-date">March 16, 2018</span>
+                                            </div>
+                                        </li> <!-- End Single Recent Post Item -->
+                                        <!-- Start Single Recent Post Item -->
+                                        <li class="recent-post-list">
+                                            <a href="blog-single-sidebar-left.html" class="post-image">
+                                                <img src="assets/images/blog_recent_post/blog3.jpg" alt="">
+                                            </a>
+                                            <div class="post-content">
+                                                <a class="post-link" href="blog-single-sidebar-left.html">Blog Image Post</a>
+                                                <span class="post-date">March 16, 2018</span>
+                                            </div>
+                                        </li> <!-- End Single Recent Post Item -->
+                                    </ul>
+                                </div>
+                            </div>
+                        </div> <!-- End Single Sidebar Widget -->
+
+                        <!-- Start Single Sidebar Widget -->
+                        <div class="sidebar-single-widget">
+                            <h6 class="sidebar-title">Tag products</h6>
+                            <div class="sidebar-content">
+                                <div class="tag-link">
+                                    <a href="">asian</a>
+                                    <a href="">brown</a>
+                                    <a href="">euro</a>
+                                    <a href="">fashion</a>
+                                    <a href="">hat</a>
+                                    <a href="">t-shirt</a>
+                                    <a href="">teen</a>
+                                    <a href="">travel</a>
+                                    <a href="">white</a>
+                                </div>
+                            </div>
+                        </div> <!-- End Single Sidebar Widget -->
+
+                    </div> <!-- End Sidebar Area -->
+                </div>
+                <div class="col-lg-9">
+
+                    <div class="blog-grid-wrapper">
+                        <div class="row">
+                            <div class="col-md-6 col-12">
+                                <!-- Start Blog Grid Single -->
+                                <div class="blog-feed-single">
+                                    <a href="blog-single-sidebar-left.html" class="blog-feed-img-link">
+                                        <img src="assets/images/blog_images/aments_blog_01.jpg" alt="" class="blog-feed-img">
+                                    </a>
+                                    <div class="blog-feed-content">
+                                        <div class="blog-feed-post-meta">
+                                            <span>By:</span>
+                                            <a href="" class="blog-feed-post-meta-author">Admin</a> -
+                                            <a href="" class="blog-feed-post-meta-date">Sep 14, 2020</a>
+                                        </div>
+                                        <h5 class="blog-feed-link"><a href="blog-single-sidebar-left.html">Illum animi quo praesentium accusamus debitis</a></h5>
+                                    </div>
+                                </div><!-- End Blog Grid Single -->
+                            </div>
+                            <div class="col-md-6 col-12">
+                                <!-- Start Blog Grid Single -->
+                                <div class="blog-feed-single">
+                                    <div class="blog-image-slider">
+                                        <img src="assets/images/blog_images/blog-grid-img-3.jpg" alt="">
+                                        <img src="assets/images/blog_images/blog-grid-img-2.jpg" alt="">
+                                        <img src="assets/images/blog_images/blog-grid-img-1.jpg" alt="">
+                                        <img src="assets/images/blog_images/blog-grid-img-4.jpg" alt="">
+                                    </div>
+                                    <div class="blog-feed-content">
+                                        <div class="blog-feed-post-meta">
+                                            <span>By:</span>
+                                            <a href="" class="blog-feed-post-meta-author">Admin</a> -
+                                            <a href="" class="blog-feed-post-meta-date">Sep 14, 2020</a>
+                                        </div>
+                                        <h5 class="blog-feed-link"><a href="blog-single-sidebar-left.html">Repellendus repudiandae aliquid dolores unde</a></h5>
+                                    </div>
+                                </div>
+                                <!-- End Blog Grid Single -->
+                            </div>
+                            <div class="col-md-6 col-12">
+                                <!-- Start Blog Grid Single -->
+                                <div class="blog-feed-single">
+                                    <div class="blog-image-video">
+                                        <img src="assets/images/blog_images/blog-grid-img-4.jpg" alt="">
+                                        <a href="https://youtu.be/MKjhBO2xQzg" class="video-play-btn" data-autoplay="true" data-vbtype="video"><i class="fa fa-play"></i></a>
+                                    </div>
+                                    <div class="blog-feed-content">
+                                        <div class="blog-feed-post-meta">
+                                            <span>By:</span>
+                                            <a href="" class="blog-feed-post-meta-author">Admin</a> -
+                                            <a href="" class="blog-feed-post-meta-date">Sep 14, 2020</a>
+                                        </div>
+                                        <h5 class="blog-feed-link"><a href="blog-single-sidebar-left.html">Blanditiis mollitia laboriosam quas pariatur nesciunt.</a></h5>
+                                    </div>
+                                </div> <!-- End Blog Grid Single -->
+                            </div>
+                            <div class="col-md-6 col-12">
+                                <!-- Start Blog Grid Single -->
+                                <div class="blog-feed-single">
+                                    <a href="blog-single-sidebar-left.html" class="blog-feed-img-link">
+                                        <img src="assets/images/blog_images/aments_blog_02.jpg" alt="" class="blog-feed-img">
+                                    </a>
+                                    <div class="blog-feed-content">
+                                        <div class="blog-feed-post-meta">
+                                            <span>By:</span>
+                                            <a href="" class="blog-feed-post-meta-author">Admin</a> -
+                                            <a href="" class="blog-feed-post-meta-date">Sep 14, 2020</a>
+                                        </div>
+                                        <h5 class="blog-feed-link"><a href="blog-single-sidebar-left.html">Molestiae impedit voluptatem accusantium magni veritatis</a></h5>
+                                    </div>
+                                </div><!-- End Blog Grid Single -->
+                            </div>
+                            <div class="col-md-6 col-12">
+                                <!-- Start Blog Grid Single -->
+                                <div class="blog-feed-single">
+                                    <a href="blog-single-sidebar-left.html" class="blog-feed-img-link">
+                                        <img src="assets/images/blog_images/aments_blog_02.jpg" alt="" class="blog-feed-img">
+                                    </a>
+                                    <div class="blog-feed-content">
+                                        <div class="blog-feed-post-meta">
+                                            <span>By:</span>
+                                            <a href="" class="blog-feed-post-meta-author">Admin</a> -
+                                            <a href="" class="blog-feed-post-meta-date">Sep 14, 2020</a>
+                                        </div>
+                                        <h5 class="blog-feed-link"><a href="blog-single-sidebar-left.html">Iusto nostrum ratione quasi omnis harum modi facilis</a></h5>
+                                    </div>
+                                </div><!-- End Blog Grid Single -->
+                            </div>
+                            <div class="col-md-6 col-12">
+                                <!-- Start Blog Grid Single -->
+                                <div class="blog-feed-single">
+                                    <a href="blog-single-sidebar-left.html" class="blog-feed-img-link">
+                                        <img src="assets/images/blog_images/aments_blog_03.jpg" alt="" class="blog-feed-img">
+                                    </a>
+                                    <div class="blog-feed-content">
+                                        <div class="blog-feed-post-meta">
+                                            <span>By:</span>
+                                            <a href="" class="blog-feed-post-meta-author">Admin</a> -
+                                            <a href="" class="blog-feed-post-meta-date">Sep 14, 2020</a>
+                                        </div>
+                                        <h5 class="blog-feed-link"><a href="blog-single-sidebar-left.html">Non recusandae incidunt enim, laboriosam consectetur illum</a></h5>
+                                    </div>
+                                </div><!-- End Blog Grid Single -->
+                            </div>
                         </div>
                     </div>
+
+                    <!-- Start Pagination -->
+                    <div class="page-pagination text-center">
+                        <ul>
+                            <li><a href="#">Previous</a></li>
+                            <li><a class="active" href="#">1</a></li>
+                            <li><a href="#">2</a></li>
+                            <li><a href="#">3</a></li>
+                            <li><a href="#">Next</a></li>
+                        </ul>
+                    </div> <!-- End Pagination -->
                 </div>
             </div>
         </div>
-    </div> <!-- ...:::: End Account Dashboard Section:::... -->
-    <script type="text/javascript" src="{{asset('js/auth/profile.js')}}"></script>
+    </div> <!-- ...:::: End Blog Section:::... -->
 @endsection

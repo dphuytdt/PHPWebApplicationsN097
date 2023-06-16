@@ -32,15 +32,15 @@
                      @endif
                     <div class="account_form register">
                         <h3>Reset Password</h3>
-                        <form method="POST" action="{{route('postResetPassword')}}">
+                        <form id="resetPswForm" method="POST" action="{{route('postResetPassword')}}">
                             @csrf
                             <div class="default-form-box mb-20">
                                 <label>New Password <span>*</span></label>
-                                <input type="password" name="psw" id="psw">
+                                <input type="password" name="password" id="password" data-label="New Password" value="{{old('password')}}">
                             </div>
                             <div class="default-form-box mb-20">
                                 <label>Passwords Confirmation <span>*</span></label>
-                                <input type="password" name="confpsw" id="confpsw">
+                                <input type="password" name="password_confirmation" id="password_confirmation" data-label="Passwords Confirmation" value="{{old('password_confirmation')}}">
                             </div>
                             <div class="login_submit">
                                 <button type="submit">Reset</button>
@@ -52,4 +52,5 @@
             </div>
         </div>
     </div>
+    <script type="text/javascript" src="{{asset('js/auth/reset-password.js')}}"></script>
 @endsection

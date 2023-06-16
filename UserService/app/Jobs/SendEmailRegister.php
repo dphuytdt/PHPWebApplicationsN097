@@ -2,7 +2,7 @@
 
 namespace App\Jobs;
 
-use App\Mail\MailNotify;
+use App\Mail\MailRegister;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -11,7 +11,7 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Mail;
 
-class SendEmail implements ShouldQueue
+class SendEmailRegister implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
@@ -34,6 +34,6 @@ class SendEmail implements ShouldQueue
     public function handle(): void
     {
         $user = $this->user;
-        Mail::to($user['email'])->send(new MailNotify($user));
+        Mail::to($user['email'])->send(new MailRegister($user));
     }
 }

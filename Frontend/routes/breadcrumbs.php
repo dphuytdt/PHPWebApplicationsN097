@@ -42,3 +42,15 @@
         $trail->parent('home');
         $trail->push('Profile', route('profile'));
     });
+
+    //upgrade
+    Breadcrumbs::for('upgrade', function ($trail) {
+        $trail->parent('home');
+        $trail->push('Upgrade', route('upgrade'));
+    });
+
+    //vip benefits
+    Breadcrumbs::for('vipBenefits', function ($trail) {
+        $trail->parent('home');
+        $trail->push('VIP Benefits', route('vipBenefits'));
+    });

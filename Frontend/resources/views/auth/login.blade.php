@@ -40,15 +40,15 @@
                      @endif
                     <div class="account_form">
                         <h3>login</h3>
-                        <form method="POST" action="{{ route('login') }}">
+                        <form id="loginForm" method="POST" action="{{ route('login') }}">
                             @csrf
                             <div class="default-form-box mb-20">
                                 <label>Email <span>*</span></label>
-                                <input type="email" name="email">
+                                <input type="text" name="email" value="{{ old('email') }}" data-label="Email" id="email">
                             </div>
                             <div class="default-form-box mb-20">
                                 <label>Passwords <span>*</span></label>
-                                <input type="password" name="password">
+                                <input type="password" name="password" data-label="Password" id="password" value="{{ old('password') }}">
                                 {{-- <i class="fas fa-eye password-toggle-icon" id="psw-toggle" onclick="togglePasswordVisibility('password')"></i> --}}
                             </div>
                             <div class="login_submit">
@@ -69,23 +69,23 @@
                 <div class="col-lg-6 col-md-6">
                     <div class="account_form register">
                         <h3>Register</h3>
-                        <form action="{{ route('postRegister') }}" method="POST">
+                        <form id="registerForm" action="{{ route('postRegister') }}" method="POST">
                             @csrf
                             <div class="default-form-box mb-20">
                                 <label>Full Name <span>*</span></label>
-                                <input type="text" name="fullname">
+                                <input type="text" name="fullname" id="fullname" data-label="Full Name">
                             </div>
                             <div class="default-form-box mb-20">
                                 <label>Email address <span>*</span></label>
-                                <input type="email" name="email">
+                                <input type="text" name="email" id="email" data-label="Email Address">
                             </div>
                             <div class="default-form-box mb-20">
                                 <label>Passwords <span>*</span></label>
-                                <input type="password" name="password">
+                                <input type="password" name="password" id="password" data-label="Password">
                             </div>
                             <div class="default-form-box mb-20">
                                 <label>Passwords Confirm <span>*</span></label>
-                                <input type="password" name="password_confirmation">
+                                <input type="password" name="password_confirmation" id="password_confirmation" data-label="Password Confirm">
                             </div>
                             <div class="login_submit">
                                 <button type="submit">Register</button>
@@ -98,4 +98,5 @@
         </div>
     </div> <!-- ...:::: End Customer Login Section :::... -->
     <script type="text/javascript" src="{{asset('js/auth/login.js')}}"></script>
+    <script type="text/javascript" src="{{asset('js/auth/register.js')}}"></script>
 @endsection

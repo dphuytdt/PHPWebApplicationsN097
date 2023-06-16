@@ -17,10 +17,10 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->string('wallet')->default(0);
             $table->integer('role_id')->default(1);
             $table->boolean('is_vip')->default(false);
-            // $table->boolean('is_admin')->default(false);
+            $table->dateTime('valid_vip')->nullable();
+            $table->boolean('is_active')->default(false);
             $table->rememberToken();
             $table->dateTime('created_at');
             $table->dateTime('updated_at')->nullable();

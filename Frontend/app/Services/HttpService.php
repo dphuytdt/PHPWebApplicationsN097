@@ -10,7 +10,9 @@ class HttpService
 
     private function __construct()
     {
-        $this->client = new Client();
+        $this->client = new Client([
+            'timeout' => 30,
+        ]);
     }
 
     public static function getInstance()
@@ -25,5 +27,10 @@ class HttpService
     public function getClient()
     {
         return $this->client;
+    }
+
+    public function post($url, $options = [])
+    {
+        return $this->client->post($url, $options);
     }
 }

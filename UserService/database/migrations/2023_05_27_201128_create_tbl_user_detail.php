@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('tbl_user_detail', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
+            $table->string('wallet')->default(0);
             $table->integer('province_id')->nullable();
             $table->integer('district_id')->nullable();
             $table->integer('ward_id')->nullable();

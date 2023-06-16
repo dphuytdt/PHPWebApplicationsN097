@@ -507,11 +507,11 @@
 			<div class="row">
 				<div class="section-content d-flex justify-content-between align-items-md-center align-items-start flex-md-row flex-column">
 					<h3 class="section-title">New Books</h3>
-					{{-- <ul class="tablist nav product-tab-btn">
-						<li><a class="nav-link active" data-toggle="tab" href="#car_and_drive">Car & Drive </a></li>
-						<li><a class="nav-link" data-toggle="tab" href="#motorcycle">Motorcycle</a></li>
-						<li><a class="nav-link" data-toggle="tab" href="#truck_drive">Truck & Drive</a></li>
-					</ul> --}}
+					<ul class="tablist nav product-tab-btn">
+						<li><a class="nav-link active" data-toggle="tab" href="#car_and_drive">View more</a></li>
+						{{-- <li><a class="nav-link" data-toggle="tab" href="#motorcycle">Motorcycle</a></li>
+						<li><a class="nav-link" data-toggle="tab" href="#truck_drive">Truck & Drive</a></li> --}}
+					</ul>
 				</div>
 			</div>
 		</div>
@@ -1030,11 +1030,9 @@
 			<div class="row">
 				<div class="section-content d-flex justify-content-between align-items-md-center align-items-start flex-md-row flex-column">
 					<h3 class="section-title">Free Books</h3>
-					{{-- <ul class="tablist nav product-tab-btn">
-						<li><a class="nav-link active" data-toggle="tab" href="#car_and_drive">Car & Drive </a></li>
-						<li><a class="nav-link" data-toggle="tab" href="#motorcycle">Motorcycle</a></li>
-						<li><a class="nav-link" data-toggle="tab" href="#truck_drive">Truck & Drive</a></li>
-					</ul> --}}
+					<ul class="tablist nav product-tab-btn">
+						<li><a class="nav-link active" data-toggle="tab" href="#car_and_drive">View more</a></li>
+					</ul>
 				</div>
 			</div>
 		</div>
@@ -1580,11 +1578,9 @@
 			<div class="row">
 				<div class="section-content d-flex justify-content-between align-items-md-center align-items-start flex-md-row flex-column">
 					<h3 class="section-title">Hot Deals</h3>
-					{{-- <ul class="tablist nav product-tab-btn">
-						<li><a class="nav-link active" data-toggle="tab" href="#drive_and_car">Drive & Car </a></li>
-						<li><a class="nav-link" data-toggle="tab" href="#bike">Bikes</a></li>
-						<li><a class="nav-link" data-toggle="tab" href="#drive_trucks">Drive & Truck</a></li>
-					</ul> --}}
+					<ul class="tablist nav product-tab-btn">
+						<li><a class="nav-link active" data-toggle="tab" href="#drive_and_car">View more</a></li>
+					</ul>
 				</div>
 			</div>
 		</div>
@@ -2130,14 +2126,17 @@
 <div class="blog-feed-section section-top-gap-100">
 	<!-- Start Section Content -->
 	<div class="section-content-gap">
-		<div class="container">
-			<div class="row">
-				<div class="section-content">
-					<h3 class="section-title">Latest News</h3>
-				</div>
+	<div class="container">
+		<div class="row">
+			<div class="section-content d-flex justify-content-between align-items-md-center align-items-start flex-md-row flex-column">
+				<h3 class="section-title">Latest News</h3>
+				<ul class="tablist nav product-tab-btn">
+					<li><a class="nav-link active" data-toggle="tab" href="#car_and_drive">Read more</a></li>
+				</ul>
 			</div>
 		</div>
-	</div> <!-- End Section Content -->
+	</div>
+</div> <!-- End Section Content -->
 
 	<!-- Start Blog Feed Wrapper -->
 	<div class="blog-feed-wrapper">

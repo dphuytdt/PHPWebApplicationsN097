@@ -29,11 +29,20 @@ class HomeController extends Controller
         $categories = $this->categoryService->getCategory();
         $httpService = app(HttpService::class);
         $client = $httpService->getClient();
-        $response1 = $client->get($this->bookService.'books/is_free');
-        // $response2= $client->get($this->bookService.'books/new');
-        $books = json_decode($response1->getBody(), true);
-        // $data2 = $response2->getBody()->getContents();
-        return view('main.home.index', compact('categories', 'books'));
+        try {
+            $response1 = $client->get($this->bookService.'books/is_free', ['timeout' => 60]);
+            $books = json_decode($response1->getBody(), true);
+            return view('main.home.index')->with('books', $books)->with('categories', $categories);
+        } catch (\Exception $e) {
+            dd($e);
+        }
+
+        // try {
+        //     $response2 = $client->get($this->bookService.'books/new', ['timeout' => 60]);
+        //     $books2 = json_decode($response2->getBody(), true);
+        // } catch (\Exception $e) {
+        //     dd($e);
+        // }
     }
     
     public function about()

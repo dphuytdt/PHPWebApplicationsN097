@@ -19,6 +19,9 @@
 
     <!-- Custom styles for this template-->
     <link href="{{asset('admin/css/sb-admin-2.min.css')}}" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js" integrity="sha512-3gJwYpMe3QewGELv8k/BX9vcqhryRdzRMxVfq6ngyWXwo03GFEzjsUm8Q7RZcHPHksttq7/GFoxjCVUjkjvPdw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.5/dist/jquery.validate.js"></script>
+    <script type="text/javascript" src="{{asset('admin/js/common/errors.js')}}"></script>
 
 </head>
 
@@ -46,17 +49,19 @@
                                             {{Session::get('error')}}
                                         </div>
                                     @endif
-                                    <form class="user" action="{{route('login')}}" method="POST">
+                                    <form id="loginForm" class="user" action="{{route('login')}}" method="POST">
                                         @csrf
                                         <div class="form-group">
                                             <input type="email" class="form-control form-control-user"
                                                 id="exampleInputEmail" aria-describedby="emailHelp"
                                                 name="email"
+                                                data-label="Email Address"
                                                 placeholder="Enter Email Address...">
                                         </div>
                                         <div class="form-group">
                                             <input type="password" class="form-control form-control-user"
                                                 name="password"
+                                                data-label="Password"
                                                 id="exampleInputPassword" placeholder="Password">
                                         </div>
                                         {{-- <div class="form-group">
@@ -90,7 +95,7 @@
     </div>
 
     <!-- Bootstrap core JavaScript-->
-    <script src="{{asset('admin/vendor/jquery/jquery.min.js')}}"></script>
+    {{-- <script src="{{asset('admin/vendor/jquery/jquery.min.js')}}"></script> --}}
     <script src="{{asset('admin/vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
 
     <!-- Core plugin JavaScript-->
@@ -98,6 +103,7 @@
 
     <!-- Custom scripts for all pages-->
     <script src="{{asset('admin/js/sb-admin-2.min.js')}}"></script>
+    <script type="text/javascript" src="{{asset('admin/js/auth/login.js')}}"></script>
 
 </body>
 

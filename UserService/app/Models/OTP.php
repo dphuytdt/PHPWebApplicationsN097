@@ -18,13 +18,8 @@ class OTP extends Model
     protected $fillable = [
         'email',
         'otp',
+        'type',
         'user_id'
     ];
 
-    //delete otp
-    public function deleteOTP($email, $otp, $user_id) 
-    {
-        $this->otp->where('email', $email)->where('otp', $otp)->delete();
-        return true;
-    }
 }

@@ -26,6 +26,10 @@ Route::group(['middleware' => 'api','prefix' => 'auth'], function ($router) {
     Route::get('check-auth', [AuthController::class, 'checkAuth']); 
     Route::post('forgot-password', [AuthController::class, 'forgotPassword']);
     Route::post('verify-otp', [AuthController::class, 'verifyOTP']);
+    Route::post('reset-password', [AuthController::class, 'resetPassword']);
+    Route::post('verify-account', [AuthController::class, 'verifyAccount']);
+    Route::post('resend-otp', [AuthController::class, 'resendOTP']);
+
 
     Route::group(['prefix' => 'admin'], function ($router) {
         Route::post('login', [AdminAuthController::class, 'login']);
@@ -34,4 +38,5 @@ Route::group(['middleware' => 'api','prefix' => 'auth'], function ($router) {
     });
 
     Route::post('upgrate-user', [UserController::class, 'upgrateUser']);
+    Route::post('user-detail', [UserController::class, 'userDetail']);
 });

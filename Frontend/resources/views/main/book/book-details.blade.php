@@ -471,20 +471,80 @@
                             </div> --}}
                             <!-- Product Variable Single Item -->
                             <div class="d-flex align-items-center">
-                                @if ($book['price'] == 0)
-                                    <div class="product-add-to-cart-btn">
-                                        <a href="#" data-toggle="modal" data-target=".bd-example-modal-lg-{{$book['id']}}">Read now</a>
-                                    </div>
+                                @if(session()->has('user'))
+                                    @php 
+                                        $user = session()->get('user');
+                                        $is_vip = $user['is_vip'];
+                                    @endphp
+                                    @if ($is_vip == 1)
+                                        @php 
+                                            $vip_experied_date = $user['valid_vip'];
+                                            $today = date("Y-m-d");
+                                            $vip_experied_date = date("d-m-Y", strtotime($vip_experied_date));
+                                            $today = date("d-m-Y", strtotime($today));
+                                            //use strtotime function to convert date into timestamp then subtract the two dates then use floor function to convert seconds into days
+                                            $diff = floor(strtotime($vip_experied_date) - strtotime($today))/ (60 * 60 * 24);
+                                        @endphp
+                                        @if ($diff < 0)
+                                            <div class="variable-single-item ">
+                                                <span>Quantity Available</span>
+                                                <div class="product-variable-quantity">
+                                                    <input  value="{{$book['quantity']}}" type="text" readonly disabled>
+                                                </div>
+                                            </div>
+                                            <div class="product-add-to-cart-btn">
+                                                <a href="#" data-toggle="modal" data-target="#modalAddcart">Add To Cart</a>
+                                            </div>
+                                        @else 
+                                            @if($book['is_vip_valid'] == 1)
+                                                <div class="product-add-to-cart-btn">
+                                                    <a href="#" data-toggle="modal" data-target=".bd-example-modal-lg-{{$book['id']}}">Read now</a>
+                                                </div>
+                                            @else 
+                                                <div class="variable-single-item ">
+                                                    <span>Quantity Available</span>
+                                                    <div class="product-variable-quantity">
+                                                        <input  value="{{$book['quantity']}}" type="text" readonly disabled>
+                                                    </div>
+                                                </div>
+                                                <div class="product-add-to-cart-btn">
+                                                    <a href="#" data-toggle="modal" data-target="#modalAddcart">Add To Cart</a>
+                                                </div>
+                                            @endif
+                                        @endif
+                                    @else
+                                        @if ($book['price'] == 0)
+                                            <div class="product-add-to-cart-btn">
+                                                <a href="#" data-toggle="modal" data-target=".bd-example-modal-lg-{{$book['id']}}">Read now</a>
+                                            </div>
+                                        @else
+                                            <div class="variable-single-item ">
+                                                <span>Quantity Available</span>
+                                                <div class="product-variable-quantity">
+                                                    <input  value="{{$book['quantity']}}" type="text" readonly disabled>
+                                                </div>
+                                            </div>
+                                            <div class="product-add-to-cart-btn">
+                                                <a href="#" data-toggle="modal" data-target="#modalAddcart">Add To Cart</a>
+                                            </div>
+                                        @endif
+                                    @endif
                                 @else
-                                    <div class="variable-single-item ">
-                                        <span>Quantity Available</span>
-                                        <div class="product-variable-quantity">
-                                            <input  value="{{$book['quantity']}}" type="text" readonly disabled>
+                                    @if ($book['price'] == 0)
+                                        <div class="product-add-to-cart-btn">
+                                            <a href="#" data-toggle="modal" data-target=".bd-example-modal-lg-{{$book['id']}}">Read now</a>
                                         </div>
-                                    </div>
-                                    <div class="product-add-to-cart-btn">
-                                        <a href="#" data-toggle="modal" data-target="#modalAddcart">Add To Cart</a>
-                                    </div>
+                                    @else
+                                        <div class="variable-single-item ">
+                                            <span>Quantity Available</span>
+                                            <div class="product-variable-quantity">
+                                                <input  value="{{$book['quantity']}}" type="text" readonly disabled>
+                                            </div>
+                                        </div>
+                                        <div class="product-add-to-cart-btn">
+                                            <a href="#" data-toggle="modal" data-target="#modalAddcart">Add To Cart</a>
+                                        </div>
+                                    @endif
                                 @endif
                                 <div class="product-add-to-cart-btn">
                                     <button class="btn-continue">Continue</button>
@@ -833,7 +893,7 @@
                             </style>
                             <br>
                             <h3 class="text-center">Start Reading</h3>
-                            @if($book['content_type'] == 'text')
+                            @if($book['content_type'] == '1')
                             <div class="content">
                                 <p>{{$book['content']}}</p>
                             @else

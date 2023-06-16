@@ -45,7 +45,6 @@ class AuthController extends Controller
 
             $result = json_decode($response->getBody(), true);
             $user = $result['user'];
-            // Kiểm tra kết quả từ UserService
             if (isset($result['access_token'])) {
                 // Lưu token vào session
                 session()->put('token', $result['access_token']);
@@ -53,16 +52,18 @@ class AuthController extends Controller
                 session()->put('user', $user);
                 //push role info to session
                 session()->put('role', $user['role']);
-
-                // Đăng nhập thành công, chuyển hướng đến trang home
-                return redirect()->route('home');
+                return redirect()->intended('/');
             } else {
                 // Đăng nhập thất bại, chuyển hướng đến trang đăng nhập
-                return redirect()->route('login')->with('error', 'Invalid credentials');
+                return redirect()->route('login')->with('error', 'Invalid credentials')->withInput();
             }
         } catch (\Exception $e) {
             // Lỗi xảy ra hoặc đăng nhập thất bại
-            return redirect()->route('login')->with('error', 'Login failed');
+            if ($e->getCode() == 400) {
+                return redirect()->route('login')->with('error', 'You must verify email before login')->withInput();
+            } else {
+                return redirect()->route('login')->with('error', 'Wrong email or password')->withInput();
+            }
         }
     }
 
@@ -119,7 +120,8 @@ class AuthController extends Controller
             $result = json_decode($response->getBody(), true);
             if (isset($result['message'])) {
                 // Đăng ký thành công, chuyển hướng đến trang đăng nhập
-                return redirect()->route('login')->with('message', 'Register successful');
+                session()->put('emailRegister', $request->email);
+                return redirect()->route('login')->with('message', 'Register successful. Check your email to verify account');
             } else {
                 // Đăng ký thất bại, chuyển hướng đến trang đăng ký
                 return redirect()->route('login')->with('error', 'Register failed');
@@ -127,7 +129,48 @@ class AuthController extends Controller
 
         } catch (\Exception $e) {
             // Lỗi xảy ra hoặc đăng ký thất bại
-            return redirect()->route('register')->with('error', 'Register failed');
+            return redirect()->route('login')->with('error', 'Register failed')->withInput();
+        }
+    }
+
+    public function verifyGet()
+    {
+        $categories = $this->categoryService->getCategory();
+        if (session()->has('token')) {
+            // Người dùng đã đăng nhập, chuyển hướng đến trang home
+            return redirect()->intended('/');
+        } else if (!session()->has('emailRegister')) {
+            // Người dùng chưa nhập email, chuyển hướng đến trang quên mật khẩu
+            return redirect()->route('login')->with('error', 'You must register first');
+        } else {
+            return view('auth.verify-account')->with('categories', $categories);
+        }
+    }
+
+    public function verifyPost(Request $request)
+    {
+        $client = new Client();
+        $email = session('emailRegister');
+        $request->merge(['email' => $email]);
+        try {
+            // Gửi yêu cầu xác thực tài khoản từ Home service tới UserService
+            $response = $client->post('http://userservice.test:8080/api/auth/verify-account', [
+                'json' => $request->all(),
+            ]);
+
+            $result = json_decode($response->getBody(), true);
+            if (isset($result['message'])) {
+                // Xác thực thành công, chuyển hướng đến trang đăng nhập
+                session()->forget('emailRegister');
+                return redirect()->route('login')->with('message', 'Verify account successful. Login now');
+            } else {
+                // Xác thực thất bại, chuyển hướng đến trang xác thực
+                return redirect()->route('verify-account')->with('error', 'Verify account failed');
+            }
+
+        } catch (\Exception $e) {
+            // Lỗi xảy ra hoặc xác thực thất bại
+            return redirect()->route('verify-account')->with('error', 'Verify account failed')->withInput();
         }
     }
 
@@ -164,7 +207,7 @@ class AuthController extends Controller
                 return redirect()->route('inputOtp')->with('message', 'Please check your email');
             } else {
                 // Đăng ký thất bại, chuyển hướng đến trang đăng ký
-                return redirect()->route('forgotPassword')->with('error', 'Email does not exist');
+                return redirect()->route('forgotPassword')->with('error', 'Email does not exist')->withInput();
             }
 
         } catch (\Exception $e) {
@@ -208,7 +251,7 @@ class AuthController extends Controller
                 return redirect()->route('resetPassword')->with('message', 'OTP is correct');
             } else {
                 // Nhập mã OTP thất bại, chuyển hướng đến trang nhập mã OTP
-                return redirect()->route('inputOtp')->with('error', 'OTP is incorrect');
+                return redirect()->route('inputOtp')->with('error', 'OTP is incorrect')->withInput();
             }
 
         } catch (\Exception $e) {
@@ -217,21 +260,21 @@ class AuthController extends Controller
         }
     }
 
-    public function chooseDistrict(Request $request){
-        $data = $request->all();
-        $district = new District();
-        $data['districts'] = $district->getDistrictByProvinceId($data['province_id']);
-        //delete session
-        //Session::forget('data');
-        return response()->json($data);
-    }
+    // public function chooseDistrict(Request $request){
+    //     $data = $request->all();
+    //     $district = new District();
+    //     $data['districts'] = $district->getDistrictByProvinceId($data['province_id']);
+    //     //delete session
+    //     //Session::forget('data');
+    //     return response()->json($data);
+    // }
 
-    public function chooseWard(Request $request){
-        $data = $request->all();
-        $ward = new Ward();
-        $data['wards'] = $ward->getWardByDistrictId($data['district_id']);
-        return response()->json($data);
-    }
+    // public function chooseWard(Request $request){
+    //     $data = $request->all();
+    //     $ward = new Ward();
+    //     $data['wards'] = $ward->getWardByDistrictId($data['district_id']);
+    //     return response()->json($data);
+    // }
 
     public function resetPassword()
     {
@@ -247,4 +290,37 @@ class AuthController extends Controller
             return view('auth.reset-password')->with('email', session('emailForgot'))->with('categories', $categories);
         }
     }
+
+    public function postResetPassword(Request $request)
+    {
+        $client = new Client();
+        $email = session('emailForgot');
+        $otp = session('otpForgot');
+        $request->merge(['email' => $email]);
+        $request->merge(['otp' => $otp]);
+        try {
+            // Gửi yêu cầu đổi mật khẩu từ Home service tới UserService
+            $response = $client->post('http://userservice.test:8080/api/auth/reset-password', [
+                'json' => $request->all(),
+            ]);
+
+            $result = json_decode($response->getBody(), true);
+            
+            //check status code
+            if (isset($result['message'])) {
+                // Đổi mật khẩu thành công, chuyển hướng đến trang đăng nhập
+                session()->forget('emailForgot');
+                session()->forget('otpForgot');
+                return redirect()->route('login')->with('message', 'Reset password successful');
+            } else {
+                // Đổi mật khẩu thất bại, chuyển hướng đến trang đổi mật khẩu
+                return redirect()->route('resetPassword')->with('error', 'Reset password failed')->withInput();
+            }
+
+        } catch (\Exception $e) {
+            // Lỗi xảy ra hoặc đổi mật khẩu thất bại
+            return redirect()->route('resetPassword')->with('error', 'Reset password failed');
+        }
+    }
+
 }

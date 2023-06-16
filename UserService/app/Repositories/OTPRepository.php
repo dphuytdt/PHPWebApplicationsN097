@@ -19,13 +19,14 @@ class OTPRepository implements OTPRepositoryInterface
         $this->user = $user;
     }
 
-    public function createOTP($email, $otp, $user_id) 
+    public function createOTP($email, $otp, $user_id,$type)
     {
         $user = $this->user->where('id', $user_id)->first();
         if ($user) {
             $this->otp->create([
                 'email' => $email,
                 'otp' => $otp,
+                'type' => $type,
                 'user_id' => $user_id
             ]);
         } else {
@@ -37,33 +38,33 @@ class OTPRepository implements OTPRepositoryInterface
         return true;
     }
 
-    public function checkOTP($email, $otp, $user_id) 
+    public function checkOTP($email, $otp, $user_id,$type)
     {
-        $otp = $this->otp->where('email', $email)->where('otp', $otp)->first();
+        $otp = $this->otp->where('email', $email)->where('otp', $otp)->where('type', $type)->where('user_id', $user_id)->first();
         if ($otp) {
             return true;
         }
         return false;
     }
 
-    public function updateOTP($email, $otp, $user_id) 
+    public function updateOTP($email, $otp, $user_id, $type)
     {
-        return $this->otp->where('email', $email)->where('user_id', $user_id)->update([
+        return $this->otp->where('email', $email)->where('user_id', $user_id)->where('type', $type)->update([
             'otp' => $otp
         ]);
     }
 
-    public function checkUserExistInOTP($email, $user_id) 
+    public function checkUserExistInOTP($email, $user_id,$type)
     {
-        $otp = $this->otp->where('email', $email)->where('user_id', $user_id)->first();
+        $otp = $this->otp->where('email', $email)->where('user_id', $user_id)->where('type', $type)->first();
         if ($otp) {
             return true;
         }
         return false;
     }
 
-    public function deleteOTP($email, $otp, $user_id) 
+    public function deleteOTP($email, $otp, $user_id, $type)
     {
-        return $this->otp->where('email', $email)->where('otp', $otp)->where('user_id', $user_id)->delete();
+        return $this->otp->where('email', $email)->where('otp', $otp)->where('user_id', $user_id)->where('type', $type)->delete();
     }
 }

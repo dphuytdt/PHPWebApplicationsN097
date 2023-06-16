@@ -24,6 +24,7 @@ return new class extends Migration
             $table->longText('content');
             $table->integer('discount')->nullable();
             $table->boolean('is_featured')->default(0);
+            $table->boolean('is_vip_valid')->default(0);
             $table->boolean('status')->default(1);
             $table->dateTime('created_at');
             $table->dateTime('updated_at')->nullable();

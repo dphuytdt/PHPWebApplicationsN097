@@ -41,4 +41,68 @@ class UserRepository implements UserRepositoryInterface
         }
         return $user;
     }
+
+    public function createUser($data) 
+    {
+        $user = $this->user->create($data);
+        //create user detail
+        $user_detail = new UserDetail();
+        $user_detail->user_id = $user->id;
+        $user_detail->save();
+        return $user;
+    }
+
+    public function resetPassword($email, $password, $user_id) 
+    {
+        $user = $this->user->where('email', $email)->first();
+        $user->password = $password;
+        $user->save();
+        return $user;
+    }
+
+    public function deleteUser($email) 
+    {
+        $user = $this->user->where('email', $email)->first();
+        return $user->delete();
+    }
+
+    public function updateUser($email) 
+    {
+        $user = $this->user->where('email', $email)->first();
+        $user->is_active = 1;
+        $user->save();
+        return $user;
+    }
+
+    public function upgradeUser($user, $amount,$numberMonth)
+    {
+        $user_id = $user->id;
+        $user_detail = UserDetail::where('user_id', $user->id)->first();
+        $wallet = $user_detail->wallet;
+        if($wallet <= $amount) {
+            return false;
+        } else {
+            $wallet = $wallet - $amount;
+            $user_detail->wallet = $wallet;
+            $user_detail->save();
+            $user->is_vip = 1;
+            $expired_date = date('Y-m-d H:i:s', strtotime('+'.$numberMonth.' month'));
+            $user->valid_vip = $expired_date;
+            $user->save();
+            return true;
+        }
+        return $user;
+    }
+
+    public function getUserByemail($email) 
+    {
+        $user = $this->user->where('email', $email)->first();
+        return $user;
+    }
+
+    public function getUserDetail($user_id) 
+    {
+        $user_detail = UserDetail::where('user_id', $user_id)->first();
+        return $user_detail;
+    }
 }

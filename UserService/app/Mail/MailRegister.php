@@ -9,7 +9,7 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class MailNotify extends Mailable
+class MailRegister extends Mailable
 {
     use Queueable, SerializesModels;
     public $user;
@@ -22,8 +22,8 @@ class MailNotify extends Mailable
     }
 
     public function build(){
-        return $this->subject('Mail recovery password')
-                    ->view('mail.forgot-password');
+        return $this->subject('Verify Email Address')
+                    ->view('mail.register');
     }
 
 
@@ -33,7 +33,7 @@ class MailNotify extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Mail recovery password',
+            subject: 'Verify Email Address',
         );
     }
 
@@ -43,7 +43,7 @@ class MailNotify extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'mail.forgot-password',
+            view: 'mail.register',
         );
     }
 
