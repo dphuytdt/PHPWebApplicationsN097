@@ -41,5 +41,16 @@ $.validator.setDefaults({
         error.css('font-size', '12px');
         //add error message
         error.insertAfter(element);
+        //keep default element size
+        element.css('width', '100%');
+        //keep default element size
+        // element.css('height', '100%');
+
+        // if(element.attr('name') == 'email') {
+        //     error.appendTo('#emailError');
+        // }
+        // if (element.attr('name') == 'password') {
+        //     error.appendTo('#passwordError');
+        // }
     },
 });

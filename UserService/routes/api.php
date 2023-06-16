@@ -35,6 +35,7 @@ Route::group(['middleware' => 'api','prefix' => 'auth'], function ($router) {
         Route::post('login', [AdminAuthController::class, 'login']);
         Route::post('logout', [AdminAuthController::class, 'logout']);
         Route::get('user', [UserController::class, 'getAllUser']);
+        Route::post('request-reset-password', [AdminAuthController::class, 'requestResetPassword']);
     });
 
     Route::post('upgrate-user', [UserController::class, 'upgrateUser']);

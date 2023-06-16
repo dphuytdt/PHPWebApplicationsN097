@@ -59,4 +59,25 @@ class AuthController extends Controller
             return redirect()->route('login')->with('error', 'Logout failed');
         }
     }
+
+    public function requestResetPassword()
+    {
+        return view('auth.request-reset-password');
+    }
+
+    public function postRequestResetPassword(Request $request)
+    {
+        $http = new Client;
+        $response = $http->post($this->userService . 'auth/admin/request-reset-password', [
+            'json' => [
+                'email' => $request->email,
+            ]
+        ]);
+        $data = json_decode((string) $response->getBody(), true);
+        if (isset($data['message'])) {
+            return redirect()->back()->with('message', $data['message']);
+        } else {
+            return redirect()->back()->with('error', $data['error']);
+        }
+    }
 }

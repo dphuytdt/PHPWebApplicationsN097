@@ -13,7 +13,7 @@ use Tymon\JWTAuth\Facades\JWTAuth;
 class AdminAuthController extends Controller
 {
     public function __construct() {
-        $this->middleware('auth:api', ['except' => ['login']]);
+        $this->middleware('auth:api', ['except' => ['login', 'requestResetPassword']]);
     }
     protected function createNewToken($token){
         return response()->json([
@@ -57,5 +57,23 @@ class AdminAuthController extends Controller
         auth()->logout();
 
         return response()->json(['message' => 'User successfully signed out']);
+    }
+
+    public function requestResetPassword(Request $request) {
+        $validator = Validator::make($request->all(), [
+            'email' => 'required|email'
+        ]);
+        $user = User::where('email', $request->email)->first();
+        if(!$user) {
+            return response()->json(['message' => 'Email not found'], 404);
+        }
+        //check user role
+        if($user->role_id != 0) {
+            return response()->json(['message' => 'Email is not registered'], 404);
+        }
+        // $otp = rand(100000, 999999);
+        // $this->otpRepository->createOTP($user->id, $otp);
+        // $user->notify(new ResetPassword($otp));
+        // return response()->json(['message' => 'Send email successfully']);
     }
 }

@@ -20,7 +20,7 @@
 <div class="container-fluid">
 
     <!-- Page Heading -->
-    <h1 class="h3 mb-2 text-gray-800">{{ Breadcrumbs::render('category.index') }}</h1>
+    <h1 class="h3 mb-2 text-gray-800">{{ Breadcrumbs::render('users.index') }}</h1>
     {{-- <p class="mb-4">List of all categories</p> --}}
 
     <!-- DataTales Example -->
@@ -50,7 +50,7 @@
                                 <tr>
                                     <td>{{$user['fullname']}}</td>
                                     <td>{{$user['email']}}</td>
-                                    <td>{{$user['wallet']}}</td>
+                                    <td>{{$user['user_detail']['wallet']}}</td>
                                     <td>
                                         @if($user['role_id'] == 1)
                                             <span class="badge badge-danger">User</span>

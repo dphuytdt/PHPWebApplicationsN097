@@ -18,3 +18,8 @@
         $trail->parent('home');
         $trail->push('Slide List', route('slides.index'));
     });
+
+    Breadcrumbs::for('users.index', function ($trail) {
+        $trail->parent('home');
+        $trail->push('User List', route('users.index'));
+    });
