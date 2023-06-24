@@ -569,7 +569,8 @@
                     <button type="button" class="btn btn-primary">Bookmarked</button>
                 </div>
             </div>
+                </div>
+            </div>
         </div>
     </div>
-</div>
 @endsection

@@ -6,6 +6,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\SlideShowController;
+use App\Http\Controllers\BookController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -41,7 +42,7 @@ Route::group(['middleware' => 'check.auth'] , function(){
         Route::get('edit/{id}', [UserController::class, 'edit'])->name('users.edit');
         Route::post('update/{id}', [UserController::class, 'update'])->name('users.update');
         Route::get('delete/{id}', [UserController::class, 'delete'])->name('users.delete');
-    }); 
+    });
     Route::group(['prefix' => 'slides'], function () {
         Route::get('/', [SlideShowController::class, 'index'])->name('slides.index');
         Route::get('create', [SlideShowController::class, 'create'])->name('slides.create');
@@ -49,6 +50,14 @@ Route::group(['middleware' => 'check.auth'] , function(){
         Route::get('edit/{id}', [SlideShowController::class, 'edit'])->name('slides.edit');
         Route::post('update/{id}', [SlideShowController::class, 'update'])->name('slides.update');
         Route::get('delete/{id}', [SlideShowController::class, 'delete'])->name('slides.delete');
+    });
+    Route::group(['prefix' => 'books'], function () {
+        Route::get('/', [BookController::class, 'index'])->name('books.index');
+        Route::get('create', [BookController::class, 'create'])->name('books.create');
+        Route::post('store', [BookController::class, 'store'])->name('books.store');
+        Route::get('edit/{id}', [BookController::class, 'edit'])->name('books.edit');
+        Route::post('update/{id}', [BookController::class, 'update'])->name('books.update');
+        Route::get('delete/{id}', [BookController::class, 'delete'])->name('books.delete');
     });
     Route::fallback([HomeController::class, 'handleError'])->name('handleError');
 });

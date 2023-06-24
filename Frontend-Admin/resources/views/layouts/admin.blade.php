@@ -26,7 +26,7 @@
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.css" />
-    
+
     <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.js"></script>
 
 </head>
@@ -77,6 +77,21 @@
                         <h6 class="collapse-header">Action</h6>
                         <a class="collapse-item" href="{{route('users.index')}}">List User</a>
                         <a class="collapse-item" href="">Add User</a>
+                    </div>
+                </div>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseBook"
+                   aria-expanded="true" aria-controls="collapseTwo">
+                    <i class="fa fa-book"></i>
+                    <span>Books Management</span>
+                </a>
+                <div id="collapseBook" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">Action</h6>
+                        <a class="collapse-item" href="{{route('books.index')}}">List Books</a>
+                        <a class="collapse-item" href="">Import Books</a>
                     </div>
                 </div>
             </li>
@@ -343,7 +358,7 @@
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 @if(session('user') != null)
-                                    @php 
+                                    @php
                                         $user = session('user');
                                         $name = $user['fullname']
                                     @endphp
@@ -353,7 +368,7 @@
                                 <span class="mr-2 d-none d-lg-inline text-gray-600 small">
                                 <img class="img-profile rounded-circle" src="{{asset('admin/img/undraw_profile.svg')}}">
                                 @endif
-                                
+
                             </a>
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"

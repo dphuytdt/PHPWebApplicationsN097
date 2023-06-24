@@ -4,10 +4,9 @@ namespace App\Repositories;
 
 use App\Interfaces\BookRepositoryInterface;
 use App\Models\Book;
-use App\Models\Author;
 use App\Models\Category;
 
-class BookRepository implements BookRepositoryInterface 
+class BookRepository implements BookRepositoryInterface
 {
     //get all books
     public function getAllBooks()
@@ -108,5 +107,15 @@ class BookRepository implements BookRepositoryInterface
     {
         //get book have day create or update less than 7 days with time now
         return Book::where('created_at', '>=', now()->subDays(7))->orWhere('updated_at', '>=', now()->subDays(7))->get();
+    }
+
+    //get book for admin
+    public function getAllBooksForAdmin()
+    {
+        $books = Book::all();
+        foreach ($books as $book) {
+            $book->category = Category::find($book->category_id)->name;
+        }
+        return $books;
     }
 }

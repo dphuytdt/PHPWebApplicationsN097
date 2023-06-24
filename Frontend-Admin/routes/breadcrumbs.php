@@ -1,4 +1,4 @@
-<?php 
+<?php
 
     Breadcrumbs::for('home', function ($trail) {
         $trail->push('Home', route('home'));
@@ -22,4 +22,9 @@
     Breadcrumbs::for('users.index', function ($trail) {
         $trail->parent('home');
         $trail->push('User List', route('users.index'));
+    });
+
+    Breadcrumbs::for('books.index', function ($trail) {
+        $trail->parent('home');
+        $trail->push('Book List', route('books.index'));
     });

@@ -18,7 +18,9 @@ class AdminBookController extends Controller
      */
     public function index()
     {
-        $books = $this->bookRepository->getAllBooks();
+        $books = $this->bookRepository->getAllBooksForAdmin();
+        dd($books);
+        //bug here
         return response()->json($books, 200);
     }
 
@@ -61,7 +63,7 @@ class AdminBookController extends Controller
      */
     public function edit(string $id)
     {
-        
+
     }
 
     /**
@@ -81,7 +83,7 @@ class AdminBookController extends Controller
         ]]);
         if ($validator->fails()) {
             return response()->json($validator->errors(), 400);
-        } 
+        }
         $book = $this->bookRepository->updateBook($id, $request->all());
         return response()->json($book, 200);
     }

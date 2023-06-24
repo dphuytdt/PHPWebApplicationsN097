@@ -2,7 +2,7 @@
 
 namespace App\Interfaces;
 
-interface BookRepositoryInterface 
+interface BookRepositoryInterface
 {
     //get all books
     public function getAllBooks();
@@ -51,5 +51,8 @@ interface BookRepositoryInterface
 
     //get new book
     public function getNewBooks();
+
+    //get book for admin
+    public function getAllBooksForAdmin();
 
 }

@@ -66,6 +66,7 @@
                                     @else
                                         <td>{{$category['deleted_at']}}</td>
                                     @endif
+                                    <input type="hidden" name="id" value="{{$category['id']}}">
                                     <td>
                                         <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#exampleModalCenter-{{$category['id']}}">
                                             Edit
@@ -156,7 +157,7 @@
 <script type="text/javascript">
     $(document).ready(function(){
         $('.btn-danger').click(function(){
-            var id = $(this).attr('id');
+            var id = $(this).closest('tr').find('input[name="id"]').val();
             var url = "{{route('category.delete', ['id' => 'id'])}}";
             url = url.replace('id', id);
             swal({
