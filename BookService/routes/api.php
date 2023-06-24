@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\v1\BookController;
 use App\Http\Controllers\Api\v1\AdminBookController;
+use App\Http\Controllers\Api\v1\CategoryController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -27,9 +28,9 @@ Route::prefix('books')->group(function () {
 });
 
 Route::prefix('category')->group(function () {
-    Route::get('/', [BookController::class, 'getCategory']);
-    Route::get('admin', [BookController::class, 'getCategoryForAdmin']);
-    Route::get('selected', [BookController::class, 'getSelectedCategory']);
+    Route::get('/', [CategoryController::class, 'getCategory']);
+    Route::get('admin', [CategoryController::class, 'getAllCategoryForAdmin']);
+    Route::get('selected', [CategoryController::class, 'getSelectedCategory']);
 });
 
 

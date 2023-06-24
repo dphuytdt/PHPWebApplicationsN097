@@ -53,8 +53,7 @@
 {{--                                    <td><img src="{{ asset('storage/'.$book['cover_image']) }}" alt="" width="100px" height="100px"></td>--}}
                                     <td><img src="{{$book['cover_image'] }}" alt="" width="100px" height="100px"></td>
                                     <td>{{ $book['author'] }}</td>
-{{--                                    <td>{{ $book['book']['name'] }}</td>--}}
-                                    <td>book</td>
+                                   <td>{{ $book['category_name'] }}</td>
                                     <td>
                                         <a  class="btn btn-info btn-sm" data-target="#exampleModalCenter-{{$book['id']}}" data-toggle="modal">View</a>
                                     </td>

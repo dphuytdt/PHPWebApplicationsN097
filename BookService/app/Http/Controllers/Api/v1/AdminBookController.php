@@ -19,8 +19,6 @@ class AdminBookController extends Controller
     public function index()
     {
         $books = $this->bookRepository->getAllBooksForAdmin();
-        dd($books);
-        //bug here
         return response()->json($books, 200);
     }
 

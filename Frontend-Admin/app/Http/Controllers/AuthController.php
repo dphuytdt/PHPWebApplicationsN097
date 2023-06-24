@@ -21,21 +21,25 @@ class AuthController extends Controller
     public function postLogin(Request $request)
     {
         $http = new Client;
-        $response = $http->post($this->userService . 'auth/login', [
-            'json' => [
-                'email' => $request->email,
-                'password' => $request->password,
-            ]
-        ]);
-        $data = json_decode((string) $response->getBody(), true);
-        // dd($data);
-        if (isset($data['access_token'])) {
-            $user = $data['user'];
-            session()->put('token', $data['access_token']);
-            session()->put('user', $user);
-            session()->put('role_id', $user['role_id']);
-            return redirect()->intended('/');
-        } else {
+        try {
+            $response = $http->post($this->userService . 'auth/login', [
+                'json' => [
+                    'email' => $request->email,
+                    'password' => $request->password,
+                ]
+            ]);
+            $data = json_decode((string) $response->getBody(), true);
+            // dd($data);
+            if (isset($data['access_token'])) {
+                $user = $data['user'];
+                session()->put('token', $data['access_token']);
+                session()->put('user', $user);
+                session()->put('role_id', $user['role_id']);
+                return redirect()->intended('/');
+            } else {
+                return redirect()->back()->with('error', 'Wrong email or password')->withInput();
+            }
+        } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Wrong email or password')->withInput();
         }
     }

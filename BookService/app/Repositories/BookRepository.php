@@ -114,7 +114,7 @@ class BookRepository implements BookRepositoryInterface
     {
         $books = Book::all();
         foreach ($books as $book) {
-            $book->category = Category::find($book->category_id)->name;
+            $book->category_name = Category::find($book->category_id)->name;
         }
         return $books;
     }

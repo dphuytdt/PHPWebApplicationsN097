@@ -26,7 +26,14 @@ class BookController extends Controller
      */
     public function create()
     {
-        //
+        $client = new Client();
+        try {
+            $response = $client->get($this->bookService.'category/admin');
+            $categories = json_decode($response->getBody(), true);
+            return view('home.book.create', compact('categories'));
+        } catch (\Exception $e) {
+            return view('home.book.create')->withErrors(['errors' => 'Cannot connect to server']);
+        }
     }
 
     /**

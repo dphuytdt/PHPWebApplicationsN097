@@ -81,25 +81,6 @@ class BookController extends Controller
         return response()->json($books, 200);
     }
 
-    public function getCategory()
-    {
-        $categories = $this->categoryRepository->getAllCategory();
-        return response()->json($categories, 200);
-    }
-
-    public function getCategoryForAdmin()
-    {
-        $categories = $this->categoryRepository->getAllCategoryForAdmin();
-        return response()->json($categories, 200);
-    }
-
-    //get category
-    public function getSelectedCategory()
-    {
-        $categories = $this->categoryRepository->getSelectedCategory();
-        return response()->json($categories, 200);
-    }
-
     //read book
     public function readBook(string $id)
     {

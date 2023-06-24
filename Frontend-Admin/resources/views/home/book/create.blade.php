@@ -22,15 +22,15 @@
 <!-- Begin Page Content -->
 <div class="container-fluid">
 
-    <h1 class="h3 mb-4 text-gray-800">{{ Breadcrumbs::render('category.create') }}</h1>
+    <h1 class="h3 mb-4 text-gray-800">{{ Breadcrumbs::render('books.create') }}</h1>
 
 </div>
 <div class="container">
     <form action="process_form.php" method="POST" enctype="multipart/form-data">
         @csrf
         <div class="mb-3">
-            <label for="name" class="form-label">Name:</label>
-            <input type="text" class="form-control" id="name" name="name" required>
+            <label for="name" class="form-label">Title:</label>
+            <input type="text" class="form-control" id="title" name="title">
         </div>
         <div class="mb-3">
             <label for="exampleInputPassword1" class="form-label">Cover Image</label>
@@ -44,23 +44,80 @@
             </div>
         </div>
         <div class="mb-3">
-            <label for="disabledSelect" class="form-label">Disabled select menu</label>
+            <label for="name" class="form-label">Author:</label>
+            <input type="text" class="form-control" id="author" name="author">
+        </div>
+        <div class="mb-3">
+            <label for="disabledSelect" class="form-label">Category menu</label>
             <style type="text/css">
                 .form-select{
                     width: 100%;
                     height: calc(1.5em + 0.75rem + 2px);
                     border: 1px solid #ced4da;
                 }
+                textarea {
+                    resize: none;
+                }
             </style>
             <select id="disabledSelect" class="form-select">
-                <option selected>Select Status</option>
-                <option>Active</option>
-                <option>Deactive</option>
+                <option selected>Select Category</option>
+                @foreach($categories as $category)
+                    <option value="{{$category['id']}}">{{$category['name']}}</option>
+                @endforeach
             </select>
         </div>
+        <div class="mb-3 contentType">
+            <label for="contentType" class="form-label">Content Type</label>
+            <select id="contentType" class="form-select">
+                <option selected>Select Content Type</option>
+                <option value="1">Text</option>
+                <option value="2">Image</option>
+            </select>
+        </div>
+        <div class="mb-3 content">
+        </div>
+        <script type="text/javascript">
+            $(document).ready(function(){
+                $('#contentType').change(function(){
+                    var content_type = $('#contentType').val();
+                    if(content_type == 1){
+                        $('.content').html('<input type="file" accept="application/pdf, application/vnd.openxmlformats-officedocument.wordprocessingml.document">');
+                    }else{
+                        $('.content').html('' +
+                            '<input type="file" accept="image/jpeg, image/png, application/pdf, application/vnd.openxmlformats-officedocument.wordprocessingml.document">');
+                    }
+                });
+            });
+        </script>
         <div class="mb-3">
-            <label for="description" class="form-label">Description:</label>
-            <textarea class="form-control" id="description" name="description" rows="3" required></textarea>
+            <label for="image" class="form-label">Price</label>
+            <input type="number" class="form-control" id="price" name="price">
+        </div>
+        <div class="mb-3 quantiy">
+        </div>
+        <div class="mb-3 discount">
+        </div>
+        <script type="text/javascript">
+            $(document).ready(function(){
+                $('#price').keyup(function(){
+                    var price = $('#price').val();
+                    if(price > 0){
+                        $('.quantiy').html('<label for="image" class="form-label">Quantity</label><input type="text" class="form-control" id="quantity" name="quantity">');
+                        $('.discount').html('<label for="image" class="form-label">Discount</label><input type="text" class="form-control" id="discount" name="discount">');
+                    }else{
+                        $('.quantiy').html('');
+                        $('.discount').html('');
+                    }
+                });
+            });
+        </script>
+        <div class="mb-3 contentType">
+            <label for="contentType" class="form-label">Status</label>
+            <select id="contentType" class="form-select">
+                <option selected>Select Status</option>
+                <option value="1">Active</option>
+                <option value="2">Inactive</option>
+            </select>
         </div>
         <button type="submit" class="btn btn-primary">Create</button>
     </form>
