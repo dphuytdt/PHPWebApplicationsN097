@@ -139,7 +139,7 @@
 
             <!-- Nav Item - Charts -->
             <li class="nav-item">
-                <a class="nav-link" href="charts.html">
+                <a class="nav-link" href="{{ route('comments.index')}}">
                     <i class="fas fa-fw fa-chart-area"></i>
                     <span>Comment</span></a>
             </li>

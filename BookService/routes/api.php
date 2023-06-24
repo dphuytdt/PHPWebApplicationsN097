@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\v1\BookController;
 use App\Http\Controllers\Api\v1\AdminBookController;
 use App\Http\Controllers\Api\v1\CategoryController;
+use App\Http\Controllers\Api\v1\CommentController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -34,10 +35,19 @@ Route::prefix('category')->group(function () {
 });
 
 
-Route::prefix('admin/books')->group(function () {
-    Route::get('/', [AdminBookController::class, 'index']);
-    Route::get('/{id}', [AdminBookController::class, 'show']);
-    Route::post('/', [AdminBookController::class, 'store']);
-    Route::put('/{id}', [AdminBookController::class, 'update']);
-    Route::post('delete/{id}', [AdminBookController::class, 'delete']);
+Route::prefix('admin')->group(function () {
+    Route::prefix('books')->group(function () {
+        Route::get('/', [AdminBookController::class, 'index']);
+        Route::get('/{id}', [AdminBookController::class, 'show']);
+        Route::post('/', [AdminBookController::class, 'store']);
+        Route::put('/{id}', [AdminBookController::class, 'update']);
+        Route::post('delete/{id}', [AdminBookController::class, 'delete']);
+    });
+    Route::prefix('comments')->group(function () {
+        Route::get('/', [CommentController::class, 'getAllComment']);
+        Route::get('/{id}', [CommentController::class, 'getComment']);
+        Route::post('/', [CommentController::class, 'storeComment']);
+        Route::put('/{id}', [CommentController::class, 'updateComment']);
+        Route::post('delete/{id}', [CommentController::class, 'deleteComment']);
+    });
 });

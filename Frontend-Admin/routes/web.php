@@ -7,6 +7,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\SlideShowController;
 use App\Http\Controllers\BookController;
+use App\Http\Controllers\CommentController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -58,6 +59,14 @@ Route::group(['middleware' => 'check.auth'] , function(){
         Route::get('edit/{id}', [BookController::class, 'edit'])->name('books.edit');
         Route::post('update/{id}', [BookController::class, 'update'])->name('books.update');
         Route::get('delete/{id}', [BookController::class, 'delete'])->name('books.delete');
+    });
+    Route::group(['prefix' => 'comments'], function () {
+        Route::get('/', [CommentController::class, 'index'])->name('comments.index');
+        Route::get('create', [CommentController::class, 'create'])->name('comments.create');
+        Route::post('store', [CommentController::class, 'store'])->name('comments.store');
+        Route::get('edit/{id}', [CommentController::class, 'edit'])->name('comments.edit');
+        Route::post('update/{id}', [CommentController::class, 'update'])->name('comments.update');
+        Route::get('delete/{id}', [CommentController::class, 'delete'])->name('comments.delete');
     });
     Route::fallback([HomeController::class, 'handleError'])->name('handleError');
 });

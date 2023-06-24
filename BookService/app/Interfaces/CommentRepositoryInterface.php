@@ -5,4 +5,6 @@ namespace App\Interfaces;
 interface CommentRepositoryInterface 
 {
     public function getCommentByBookId(string $id);
+
+    public function getAllComment();
 }

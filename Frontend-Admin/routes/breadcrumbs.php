@@ -33,3 +33,8 @@
         $trail->parent('home');
         $trail->push('Create Book', route('books.create'));
     });
+
+    Breadcrumbs::for('comments.index', function ($trail) {
+        $trail->parent('home');
+        $trail->push('Comment List', route('comments.index'));
+    });

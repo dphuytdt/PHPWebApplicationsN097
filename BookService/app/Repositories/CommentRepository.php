@@ -15,4 +15,10 @@ class CommentRepository implements CommentRepositoryInterface
         $comments = Comment::where('book_id', $id)->get();
         return $comments;
     }
+
+    public function getAllComment()
+    {
+        $comments = Comment::all();
+        return $comments;
+    }
 }
