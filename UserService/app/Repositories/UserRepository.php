@@ -105,4 +105,13 @@ class UserRepository implements UserRepositoryInterface
         $user_detail = UserDetail::where('user_id', $user_id)->first();
         return $user_detail;
     }
+
+    public function updateAdminPassword($email, $password) 
+    {
+        $user = $this->user->where('email', $email)->first();
+        $user->password = $password;
+        $user->is_active = 1;
+        $user->save();
+        return $user;
+    }
 }

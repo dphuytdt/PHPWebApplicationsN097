@@ -6,6 +6,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BookController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\WishlistController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -31,6 +32,11 @@ Route::get('/contact', [HomeController::class, 'contact'])->name('contact');
 
 //category
 Route::get('/category/{id}', [BookController::class, 'category'])->name('category');
+
+
+Route::group(['prefix' => 'wishlist'], function () {
+    Route::get('/', [WishlistController::class, 'index'])->name('wishlist.index');
+});
 
 //route for Auth
 Route::prefix('auth')->group(function () {
@@ -62,7 +68,7 @@ Route::prefix('auth')->group(function () {
         Route::get('/', [UserController::class, 'profile'])->name('profile');
         Route::post('/', [AuthController::class, 'postProfile'])->name('profile.update');
     });
-    
+
     Route::get('upgrade', [UserController::class, 'upgrade'])->name('upgrade');
 
     Route::post('checkout', [PaymentController::class, 'checkOut'])->name('checkout');

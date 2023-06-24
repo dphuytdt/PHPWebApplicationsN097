@@ -28,4 +28,6 @@ interface UserRepositoryInterface
     public function getUserByemail($email);
 
     public function getUserDetail($user_id);
+
+    public function updateAdminPassword($email, $password);
 }

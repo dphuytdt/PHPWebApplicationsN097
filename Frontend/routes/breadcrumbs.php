@@ -54,3 +54,9 @@
         $trail->parent('home');
         $trail->push('VIP Benefits', route('vipBenefits'));
     });
+
+    //wishlist
+    Breadcrumbs::for('wishlist', function ($trail) {
+        $trail->parent('home');
+        $trail->push('Wishlist', route('wishlist.index'));
+    });

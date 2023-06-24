@@ -127,7 +127,7 @@
                             <li>
                                 <a href="#offcanvas-wishlish" class="offcanvas-toggle">
                                     <i class="icon-heart"></i>
-                                    <span class="header-action-icon-item-count">3</span>
+                                    <span class="header-action-icon-item-count" id="count-wishlist"></span>
                                 </a>
                             </li>
                             <li>
@@ -137,7 +137,7 @@
                                 </a>
                             </li>
                             @if(session()->has('user'))
-                            @php 
+                            @php
                                 $user = session()->get('user');
                                 $is_vip = $user['is_vip'];
                             @endphp
@@ -164,7 +164,7 @@
                                     </ul>
                                 </a>
                             </li>
-                            @else 
+                            @else
                             <li>
                                 <a href="{{route('login')}}">
                                     <i class="fa fa-sign-in" aria-hidden="true"></i>
@@ -189,65 +189,6 @@
                                     <li class="has-dropdown">
                                         <a class="active main-menu-link" href="{{route('home')}}">Home</a>
                                     </li>
-                                    {{-- <li class="has-dropdown has-megaitem">
-                                        <a href="product-details-default.html">Shop <i class="fa fa-angle-down"></i></a>
-                                        <!-- Mega Menu -->
-                                        <div class="mega-menu">
-                                            <ul class="mega-menu-inner">
-                                                <!-- Mega Menu Sub Link -->
-                                                <li class="mega-menu-item">
-                                                    <a href="#" class="mega-menu-item-title">Shop Layouts</a>
-                                                    <ul class="mega-menu-sub">
-                                                        <li><a href="shop-grid-sidebar-left.html">Grid Left Sidebar</a></li>
-                                                        <li><a href="shop-grid-sidebar-right.html">Grid Right Sidebar</a></li>
-                                                        <li><a href="shop-full-width.html">Full Width</a></li>
-                                                        <li><a href="shop-list-sidebar-left.html">List Left Sidebar</a></li>
-                                                        <li><a href="shop-list-sidebar-right.html">List Right Sidebar</a></li>
-                                                    </ul>
-                                                </li>
-                                                <!-- Mega Menu Sub Link -->
-                                                <li class="mega-menu-item">
-                                                    <a href="#" class="mega-menu-item-title">Other Pages</a>
-                                                    <ul class="mega-menu-sub">
-                                                        <li><a href="cart.html">Cart</a></li>
-                                                        <li><a href="wishlist.html">Wishlist</a></li>
-                                                        <li><a href="compare.html">Compare</a></li>
-                                                        <li><a href="checkout.html">Checkout</a></li>
-                                                        <li><a href="login.html">Login</a></li>
-                                                        <li><a href="my-account.html">My Account</a></li>
-                                                    </ul>
-                                                </li>
-                                                <!-- Mega Menu Sub Link -->
-                                                <li class="mega-menu-item">
-                                                    <a href="#" class="mega-menu-item-title">Product Types</a>
-                                                    <ul class="mega-menu-sub">
-                                                        <li><a href="product-details-default.html">Product Default</a></li>
-                                                        <li><a href="product-details-variable.html">Product Variable</a></li>
-                                                        <li><a href="product-details-affiliate.html">Product Referral</a></li>
-                                                        <li><a href="product-details-group.html">Product Group</a></li>
-                                                        <li><a href="product-details-single-slide.html">Product Slider</a></li>
-                                                    </ul>
-                                                </li>
-                                                <!-- Mega Menu Sub Link -->
-                                                <li class="mega-menu-item">
-                                                    <a href="#" class="mega-menu-item-title">Product Types</a>
-                                                    <ul class="mega-menu-sub">
-                                                        <li><a href="product-details-tab-left.html">Product Tab Left</a></li>
-                                                        <li><a href="product-details-tab-right.html">Product Tab Right</a></li>
-                                                        <li><a href="product-details-gallery-left.html">Product Gallery Left</a></li>
-                                                        <li><a href="product-details-gallery-right.html">Product Gallery Right</a></li>
-                                                        <li><a href="product-details-sticky-left.html">Product Sticky Left</a></li>
-                                                        <li><a href="product-details-sticky-right.html">Product Sticky right</a></li>
-                                                    </ul>
-                                                </li>
-                                            </ul>
-                                            <div class="menu-banner">
-                                                <a href="" class="menu-banner-link">
-                                                    <img class="menu-banner-img" src="assets/images/banner/menu-banner.jpg" alt="">
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </li> --}}
                                     <li class="has-dropdown">
                                         <a href="blog-single-sidebar-left.html">Category <i class="fa fa-angle-down"></i></a>
                                         <!-- Sub Menu -->
@@ -258,16 +199,6 @@
                                             <li><a>View more</a></li>
                                         </ul>
                                     </li>
-                                    {{-- <li class="has-dropdown">
-                                        <a href="#">Pages <i class="fa fa-angle-down"></i></a>
-                                        <!-- Sub Menu -->
-                                        <ul class="sub-menu">
-                                            <li><a href="service.html">Service</a></li>
-                                            <li><a href="faq.html">Frequently Questions</a></li>
-                                            <li><a href="privacy-policy.html">Privacy Policy</a></li>
-                                            <li><a href="404.html">404 Page</a></li>
-                                        </ul>
-                                    </li> --}}
                                     <li>
                                         <a href="{{route('about')}}">About Us</a>
                                     </li>
@@ -282,6 +213,313 @@
             </div>
         </div> <!-- End Bottom Area -->
     </header> <!-- ...:::: End Header Section:::... -->
+    <!-- ...:::: Start Mobile Header Section:::... -->
+    <div class="mobile-header-section d-block d-lg-none">
+        <!-- Start Mobile Header Wrapper -->
+        <div class="mobile-header-wrapper">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12 d-flex justify-content-between align-items-center">
+                        <div class="mobile-header--left">
+                            <a href="" class="mobile-logo-link">
+                                <img src="assets/images/logo/logo.png" alt="" class="mobile-logo-img">
+                            </a>
+                        </div>
+                        <div class="mobile-header--right">
+                            <a href="#mobile-menu-offcanvas" class="mobile-menu offcanvas-toggle">
+                                <span class="mobile-menu-dash"></span>
+                                <span class="mobile-menu-dash"></span>
+                                <span class="mobile-menu-dash"></span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div> <!-- End Mobile Header Wrapper -->
+    </div> <!-- ...:::: Start Mobile Header Section:::... -->
+
+    <!-- ...:::: Start Offcanvas Mobile Menu Section:::... -->
+    <div id="mobile-menu-offcanvas" class="offcanvas offcanvas-leftside offcanvas-mobile-menu-section">
+        <!-- Start Offcanvas Header -->
+        <div class="offcanvas-header text-right">
+            <button class="offcanvas-close"><i class="fa fa-times"></i></button>
+        </div> <!-- End Offcanvas Header -->
+        <!-- Start Offcanvas Mobile Menu Wrapper -->
+        <div class="offcanvas-mobile-menu-wrapper">
+            <!-- Start Mobile Menu User Top -->
+            <div class="mobile-menu-top">
+                <span>Welcome to our store!</span>
+                <!-- Start Header Top Menu -->
+                <ul class="mobile-menu-user-menu">
+                    <li><a class="header-user-menu-link" href=""><i class="icon-repeat"></i>Compare (0)</a></li>
+                    <li class="has-mobile-user-dropdown">
+                        <a class="mobile-user-menu-link" href="">Setting</a>
+                        <!-- Header Top Menu's Dropdown -->
+                        <ul class="mobile-user-sub-menu">
+                            <li><a href="">Checkout</a></li>
+                            <li><a href="">My Account</a></li>
+                            <li><a href="">Shopping Cart</a></li>
+                            <li><a href="">Wishlist</a></li>
+                        </ul>
+                    </li>
+                    <li class=" has-mobile-user-dropdown">
+                        <a class="mobile-user-menu-link" href="">$ USD</a>
+                        <!-- Header Top Menu's Dropdown -->
+                        <ul class="mobile-user-sub-menu">
+                            <li><a href="">EUR – Euro</a></li>
+                            <li><a href="">GBP – British Pound</a></li>
+                            <li><a href="">Shopping Cart</a></li>
+                            <li><a href="">INR – India Rupee</a></li>
+                        </ul>
+                    </li>
+                    <li class="has-mobile-user-dropdown">
+                        <a class="mobile-user-menu-link" href="">English</a>
+                        <!-- Header Top Menu's Dropdown -->
+                        <ul class="mobile-user-sub-menu">
+                            <li><a href=""><img class="user-sub-menu-link-icon" src="assets/images/icon/lang-en.png" alt=""> English</a></li>
+                            <li><a href=""><img class="user-sub-menu-link-icon" src="assets/images/icon/lang-gr.png" alt=""> Germany</a></li>
+                        </ul>
+                    </li>
+                </ul> <!-- End Header Top Menu -->
+            </div> <!-- End Mobile Menu User Top -->
+            <!-- Start Mobile Menu User Center -->
+            <div class="mobile-menu-center">
+                <form action="#" method="post">
+                    <div class="header-search-box default-search-style d-flex">
+                        <input class="default-search-style-input-box border-around border-right-none" type="search" placeholder="Search entire store here ..." required>
+                        <button class="default-search-style-input-btn" type="submit"><i class="icon-search"></i></button>
+                    </div>
+                </form>
+                <div class="mobile-menu-customer-support">
+                    <div class="mobile-menu-customer-support-icon">
+                        <img src="assets/images/icon/support-icon.png" alt="">
+                    </div>
+                    <div class="mobile-menu-customer-support-text">
+                        <span>Customer Support</span>
+                        <a class="mobile-menu-customer-support-text-phone" href="tel:(08)123456789">(08) 123 456 789</a>
+                    </div>
+                </div>
+                <!-- Start Header Action Icon -->
+                <ul class="mobile-action-icon">
+                    <li class="mobile-action-icon-item">
+                        <a href="wishlist.html" class="mobile-action-icon-link">
+                            <i class="icon-heart"></i>
+                            <span class="mobile-action-icon-item-count">3</span>
+                        </a>
+                    </li>
+                    <li class="mobile-action-icon-item">
+                        <a href="cart.html" class="mobile-action-icon-link">
+                            <i class="icon-shopping-cart"></i>
+                            <span class="mobile-action-icon-item-count">3</span>
+                        </a>
+                    </li>
+                </ul> <!-- End Header Action Icon -->
+            </div> <!-- End Mobile Menu User Center -->
+            <!-- Start Mobile Menu Bottom -->
+            <div class="mobile-menu-bottom">
+                <!-- Start Mobile Menu Nav -->
+                <div class="offcanvas-menu">
+                    <ul>
+                        <li>
+                            <a href="#"><span>Home</span></a>
+                            <ul class="mobile-sub-menu">
+                                <li><a href="index.html">Home 1</a></li>
+                                <li><a href="index-2.html">Home 2</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="#"><span>Shop</span></a>
+                            <ul class="mobile-sub-menu">
+                                <li>
+                                    <a href="#">Shop Layout</a>
+                                    <ul class="mobile-sub-menu">
+                                        <li><a href="shop-grid-sidebar-left.html">Grid Left Sidebar</a></li>
+                                        <li><a href="shop-grid-sidebar-right.html">Grid Right Sidebar</a></li>
+                                        <li><a href="shop-full-width.html">Full Width</a></li>
+                                        <li><a href="shop-list-sidebar-left.html">List Left Sidebar</a></li>
+                                        <li><a href="shop-list-sidebar-right.html">List Right Sidebar</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                            <ul class="mobile-sub-menu">
+                                <li>
+                                    <a href="#">Shop Pages</a>
+                                    <ul class="mobile-sub-menu">
+                                        <li><a href="cart.html">Cart</a></li>
+                                        <li><a href="wishlist.html">Wishlist</a></li>
+                                        <li><a href="compare.html">Compare</a></li>
+                                        <li><a href="checkout.html">Checkout</a></li>
+                                        <li><a href="login.html">Login</a></li>
+                                        <li><a href="my-account.html">My Account</a></li>
+                                        <li><a href="404.html">Error 404</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                            <ul class="mobile-sub-menu">
+                                <li>
+                                    <a href="#">Product Single</a>
+                                    <ul class="mobile-sub-menu">
+                                        <li><a href="product-details-default.html">Product Default</a></li>
+                                        <li><a href="product-details-variable.html">Product Variable</a></li>
+                                        <li><a href="product-details-affiliate.html">Product Referral</a></li>
+                                        <li><a href="product-details-group.html">Product Group</a></li>
+                                        <li><a href="product-details-single-slide.html">Product Slider</a></li>
+                                        <li><a href="product-details-tab-left.html">Product Tab Left</a></li>
+                                        <li><a href="product-details-tab-right.html">Product Tab Right</a></li>
+                                        <li><a href="product-details-gallery-left.html">Product Gallery Left</a></li>
+                                        <li><a href="product-details-gallery-right.html">Product Gallery Right</a></li>
+                                        <li><a href="product-details-sticky-left.html">Product Sticky Left</a></li>
+                                        <li><a href="product-details-sticky-right.html">Product Sticky right</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="#"><span>Blogs</span></a>
+                            <ul class="mobile-sub-menu">
+                                <li>
+                                    <a href="#">Blog Grid</a>
+                                    <ul class="mobile-sub-menu">
+                                        <li><a href="blog-grid-sidebar-left.html">Blog Grid Sidebar left</a></li>
+                                        <li><a href="blog-grid-sidebar-right.html">Blog Grid Sidebar Right</a></li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="blog-full-width.html">Blog Full Width</a>
+                                </li>
+                                <li>
+                                    <a href="#">Blog Single</a>
+                                    <ul class="mobile-sub-menu">
+                                        <li><a href="blog-single-sidebar-left.html">Blog Single Sidebar left</a></li>
+                                        <li><a href="blog-single-sidebar-right.html">Blog Single Sidebar Right</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="#"><span>Pages</span></a>
+                            <ul class="mobile-sub-menu">
+                                <li><a href="about-us.html">About Us</a></li>
+                                <li><a href="service.html">Service</a></li>
+                                <li><a href="faq.html">Frequently Questions</a></li>
+                                <li><a href="privacy-policy.html">Privacy Policy</a></li>
+                                <li><a href="404.html">404 Page</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="contact-us.html">Contact Us</a></li>
+                    </ul>
+                </div> <!-- End Mobile Menu Nav -->
+
+                <!-- Mobile Manu Mail Address -->
+                <a class="mobile-menu-email icon-text-right" href="mailto:info@yourdomain.com"><i class="fa fa-envelope-o"> info@yourdomain.com</i></a>
+
+                <!-- Mobile Manu Social Link -->
+                <ul class="mobile-menu-social">
+                    <li><a href="" class="facebook"><i class="fa fa-facebook"></i></a></li>
+                    <li><a href="" class="twitter"><i class="fa fa-twitter"></i></a></li>
+                    <li><a href="" class="youtube"><i class="fa fa-youtube"></i></a></li>
+                    <li><a href="" class="pinterest"><i class="fa fa-pinterest"></i></a></li>
+                    <li><a href="" class="instagram"><i class="fa fa-instagram"></i></a></li>
+                </ul>
+            </div> <!-- End Mobile Menu Bottom -->
+        </div> <!-- End Offcanvas Mobile Menu Wrapper -->
+    </div> <!-- ...:::: End Offcanvas Mobile Menu Section:::... -->
+
+    <!-- ...:::: Start Offcanvas Addcart Section :::... -->
+    <div id="offcanvas-add-cart" class="offcanvas offcanvas-rightside offcanvas-add-cart-section">
+        <!-- Start Offcanvas Header -->
+        <div class="offcanvas-header text-right">
+            <button class="offcanvas-close"><i class="fa fa-times"></i></button>
+        </div> <!-- End Offcanvas Header -->
+
+        <!-- Start  Offcanvas Addcart Wrapper -->
+        <div class="offcanvas-add-cart-wrapper">
+            <h4 class="offcanvas-title">Shopping Cart</h4>
+            <ul class="offcanvas-cart">
+                <li class="offcanvas-cart-item-single">
+                    <div class="offcanvas-cart-item-block">
+                        <a href="" class="offcanvas-cart-item-image-link">
+                            <img src="assets/images/products_images/aments_products_image_6.jpg" alt="" class="offcanvas-cart-image">
+                        </a>
+                        <div class="offcanvas-cart-item-content">
+                            <a href="" class="offcanvas-cart-item-link">Car Wheel</a>
+                            <div class="offcanvas-cart-item-details">
+                                <span class="offcanvas-cart-item-details-quantity">1 x </span>
+                                <span class="offcanvas-cart-item-details-price">$49.00</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="offcanvas-cart-item-delete text-right">
+                        <a href="#" class="offcanvas-cart-item-delete"><i class="fa fa-trash-o"></i></a>
+                    </div>
+                </li>
+                <li class="offcanvas-cart-item-single">
+                    <div class="offcanvas-cart-item-block">
+                        <a href="" class="offcanvas-cart-item-image-link">
+                            <img src="assets/images/categories_images/aments_categories_08.jpg" alt="" class="offcanvas-cart-image">
+                        </a>
+                        <div class="offcanvas-cart-item-content">
+                            <a href="" class="offcanvas-cart-item-link">Car Vails</a>
+                            <div class="offcanvas-cart-item-details">
+                                <span class="offcanvas-cart-item-details-quantity">3 x </span>
+                                <span class="offcanvas-cart-item-details-price">$500.00</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="offcanvas-cart-item-delete text-right">
+                        <a href="#" class="offcanvas-cart-item-delete"><i class="fa fa-trash-o"></i></a>
+                    </div>
+                </li>
+                <li class="offcanvas-cart-item-single">
+                    <div class="offcanvas-cart-item-block">
+                        <a href="" class="offcanvas-cart-item-image-link">
+                            <img src="assets/images/products_images/aments_products_image_2.jpg" alt="" class="offcanvas-cart-image">
+                        </a>
+                        <div class="offcanvas-cart-item-content">
+                            <a href="" class="offcanvas-cart-item-link">Shock Absorber</a>
+                            <div class="offcanvas-cart-item-details">
+                                <span class="offcanvas-cart-item-details-quantity">1 x </span>
+                                <span class="offcanvas-cart-item-details-price">$350.00</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="offcanvas-cart-item-delete text-right">
+                        <a href="#" class="offcanvas-cart-item-delete"><i class="fa fa-trash-o"></i></a>
+                    </div>
+                </li>
+            </ul>
+            <div class="offcanvas-cart-total-price">
+                <span class="offcanvas-cart-total-price-text">Subtotal:</span>
+                <span class="offcanvas-cart-total-price-value">$170.00</span>
+            </div>
+            <ul class="offcanvas-cart-action-button">
+                <li class="offcanvas-cart-action-button-list"><a href="" class="offcanvas-cart-action-button-link">View Cart</a></li>
+                <li class="offcanvas-cart-action-button-list"><a href="" class="offcanvas-cart-action-button-link">Checkout</a></li>
+            </ul>
+        </div> <!-- End  Offcanvas Addcart Wrapper -->
+
+    </div> <!-- ...:::: End  Offcanvas Addcart Section :::... -->
+
+    <!-- ...:::: Start Offcanvas Mobile Menu Section:::... -->
+    <div id="offcanvas-wishlish" class="offcanvas offcanvas-rightside offcanvas-add-cart-section">
+        <!-- Start Offcanvas Header -->
+        <div class="offcanvas-header text-right">
+            <button class="offcanvas-close"><i class="fa fa-times"></i></button>
+        </div> <!-- ENd Offcanvas Header -->
+
+        <!-- Start Offcanvas Mobile Menu Wrapper -->
+        <div class="offcanvas-wishlist-wrapper">
+            <h4 class="offcanvas-title">Wishlist</h4>
+            <ul class="offcanvas-wishlist" id="offcanvas-wishlist">
+            </ul>
+            <ul class="offcanvas-wishlist-action-button">
+                <li class="offcanvas-wishlist-action-button-list"><a href="{{route('wishlist.index')}}" class="offcanvas-wishlist-action-button-link">View Wishlist</a></li>
+            </ul>
+        </div> <!-- End Offcanvas Mobile Menu Wrapper -->
+
+    </div> <!-- ...:::: End Offcanvas Mobile Menu Section:::... -->
+
+    <div class="offcanvas-overlay"></div>
     @yield('content')
     <footer class="footer-section section-top-gap-100">
         <!-- Start Footer Top Area -->
@@ -568,12 +806,121 @@
     <script src="{{asset('assets/js/plugins/venobox.min.js')}}"></script>
 
     <!-- Use the minified version files listed below for better performance and remove the files listed above -->
-    <!-- <script src="assets/js/vendor.min.js"></script> 
+    <!-- <script src="assets/js/vendor.min.js"></script>
     <script src="assets/js/plugins.min.js"></script> -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js" integrity="sha512-AA1Bzp5Q0K1KanKKmvN/4d3IRKVlv9PYgwFPvm32nPO6QS8yH1HO7LbgB1pgiOxPtfeg5zEn2ba64MUcqJx6CA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
     <!-- Main JS -->
     <script src="{{asset('assets/js/main.js')}}"></script>
-    
+    <script type="text/javascript">
+        function view(){
+            if (localStorage.getItem('wishlist') != null) {
+                var data = JSON.parse(localStorage.getItem('wishlist'));
+
+                data.reverse();
+
+                for (var i = 0; i < data.length; i++) {
+                    var id = data[i].id;
+                    var name = data[i].name;
+                    var price = data[i].price;
+                    var image = data[i].image;
+                    var url = data[i].url;
+                    $("#offcanvas-wishlist").append('<li class="offcanvas-wishlist-item-single">' +
+                        '<div class="offcanvas-wishlist-item-block">' +
+                        '<a href="' + url + '" class="offcanvas-wishlist-image-link">' +
+                        '<img src="' + image + '" alt="" class="offcanvas-wishlist-image">' +
+                        '</a><div class="offcanvas-wishlist-item-content"><a href="" class="offcanvas-wishlist-item-link">' + name + '</a>' +
+                        '<div class="offcanvas-wishlist-item-details"><span class="offcanvas-wishlist-item-details-quantity">1 x </span>' +
+                        '<span class="offcanvas-wishlist-item-details-price">' + price + '</span></div></div>' +
+                        '<div class="offcanvas-wishlist-item-delete text-right"><a href="#" class="offcanvas-wishlist-item-delete">' +
+                        '<i class="fa fa-trash-o" id="delete-'+id+'" onclick="deleteWishlist('+id+')"></i></a></div></div></li>');
+                }
+            }
+            countWishlist()
+        }
+
+        function countWishlist(){
+            var countWislist =  document.getElementById('count-wishlist');
+            if (localStorage.getItem('wishlist') != null) {
+                var data = JSON.parse(localStorage.getItem('wishlist'));
+                var count = data.length;
+                if (count > 0) {
+                    $("#count-wishlist").html(count);
+                } else {
+                    $("#count-wishlist").html(0);
+                }
+            } else {
+                $("#count-wishlist").html(0);
+            }
+        }
+
+        countWishlist();
+
+        function deleteWishlist(id){
+            var id = id;
+            var data = JSON.parse(localStorage.getItem('wishlist'));
+            var index = data.findIndex(x => x.id == id);
+            data.splice(index, 1);
+            localStorage.setItem('wishlist', JSON.stringify(data));
+            $("#offcanvas-wishlist").empty();
+            view();
+            countWishlist()
+        }
+
+        view();
+
+        function addWishlist(id){
+            var id = id;
+            var name = document.getElementById('name-'+id).value;
+            var price = document.getElementById('price-'+id).value;
+            var image = document.getElementById('image-'+id).src;
+            var url = document.getElementById('url-'+id).href;
+            var newItem = {
+                id: id,
+                name: name,
+                price: price,
+                image: image,
+                url: url,
+            };
+            if (localStorage.getItem('wishlist') == null) {
+                localStorage.setItem('wishlist', '[]');
+            }
+            var oldData = JSON.parse(localStorage.getItem('wishlist'));
+
+            var matches = $.grep(oldData, function(obj) {
+                return obj.id === id;
+            });
+
+            if (matches.length) {
+                swal({
+                    title: "Warning!",
+                    text: "This product already exists in your wishlist!",
+                    icon: "warning",
+                    button: "OK",
+                });
+            } else {
+                oldData.push(newItem);
+                $("#offcanvas-wishlist").append('<li class="offcanvas-wishlist-item-single">' +
+                    '<div class="offcanvas-wishlist-item-block">' +
+                    '<a href="' + url + '" class="offcanvas-wishlist-image-link">' +
+                    '<img src="' + image + '" alt="" class="offcanvas-wishlist-image">' +
+                    '</a><div class="offcanvas-wishlist-item-content"><a href="" class="offcanvas-wishlist-item-link">' + name + '</a>' +
+                    '<div class="offcanvas-wishlist-item-details"><span class="offcanvas-wishlist-item-details-quantity">1 x </span>' +
+                    '<span class="offcanvas-wishlist-item-details-price">' + price + '</span></div></div>' +
+                    '<div class="offcanvas-wishlist-item-delete text-right"><a href="#" class="offcanvas-wishlist-item-delete">' +
+                    '<i class="fa fa-trash-o" id="delete-'+id+'" onclick="deleteWishlist('+id+')"></i></a></div></div></li>');
+
+                swal({
+                    title: "Success!",
+                    text: "This product has been added to your wishlist!",
+                    icon: "success",
+                    button: "OK",
+                });
+            }
+            localStorage.setItem('wishlist', JSON.stringify(oldData));
+            countWishlist()
+        }
+    </script>
 </body>
 
 </html>

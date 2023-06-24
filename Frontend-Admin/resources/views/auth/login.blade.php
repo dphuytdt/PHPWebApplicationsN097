@@ -10,10 +10,11 @@
     <form id="loginForm" class="user" action="{{route('login')}}" method="POST">
         @csrf
         <div class="form-group">
-        <input type="email" class="form-control form-control-user" id="email" aria-describedby="emailHelp" name="email" data-label="Email Address" placeholder="Enter Email Address...">
+            <input type="email" class="form-control form-control-user" id="email" aria-describedby="emailHelp" name="email" data-label="Email Address" placeholder="Enter Email Address..." value="{{old('email')}}">
         </div>
         <div class="form-group">
-        <input type="password" class="form-control form-control-user" name="password" data-label="Password" id="password" placeholder="Password"> </div>
+            <input type="password" class="form-control form-control-user" name="password" data-label="Password" id="password" placeholder="Password" value="{{old('password')}}">
+        </div>
         <button type="submit" class="btn btn-primary btn-user btn-block">Login </button>
         <hr>
     </form>

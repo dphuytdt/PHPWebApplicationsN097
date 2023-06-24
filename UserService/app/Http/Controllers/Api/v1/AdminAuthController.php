@@ -9,12 +9,24 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Tymon\JWTAuth\Exceptions\JWTException;
 use Tymon\JWTAuth\Facades\JWTAuth;
+use Illuminate\Support\Facades\Mail;
+use App\Jobs\SendEmailRequestPassword;
+use Illuminate\Support\Facades\Hash;
+use App\Interfaces\UserRepositoryInterface;
+use App\Interfaces\OTPRepositoryInterface;
 
 class AdminAuthController extends Controller
 {
-    public function __construct() {
+    
+    private UserRepositoryInterface $userRepository;
+    private OTPRepositoryInterface $otpRepository;
+
+    public function __construct(UserRepositoryInterface $userRepository, OTPRepositoryInterface $otpRepository) {
         $this->middleware('auth:api', ['except' => ['login', 'requestResetPassword']]);
+        $this->userRepository = $userRepository;
+        $this->otpRepository = $otpRepository;
     }
+
     protected function createNewToken($token){
         return response()->json([
             'access_token' => $token,
@@ -31,7 +43,7 @@ class AdminAuthController extends Controller
     public function login(Request $request){
         $validator = Validator::make($request->all(), [
             'email' => 'required|email',
-            'password' => 'required|string|min:6',
+            'password' => 'required|string',
         ]);
 
         if ($validator->fails()) {
@@ -63,17 +75,25 @@ class AdminAuthController extends Controller
         $validator = Validator::make($request->all(), [
             'email' => 'required|email'
         ]);
-        $user = User::where('email', $request->email)->first();
+        $user = $this->userRepository->getUserByEmail($request->email);
         if(!$user) {
             return response()->json(['message' => 'Email not found'], 404);
         }
-        //check user role
         if($user->role_id != 0) {
             return response()->json(['message' => 'Email is not registered'], 404);
+        } else {
+            $randomPassword = substr(str_shuffle('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789') , 0 , 10 );
+            $data = [
+                'email' => $user->email,
+                'password' => $randomPassword
+            ];
+            if(SendEmailRequestPassword::dispatch($data)) {
+                $newPassword = Hash::make($randomPassword);
+                $result = $this->userRepository->updateAdminPassword($user->email, $newPassword);
+                return response()->json(['message' => 'Email sent'], 200);
+            } else {
+                return response()->json(['message' => 'Something went wrong'], 500);
+            }
         }
-        // $otp = rand(100000, 999999);
-        // $this->otpRepository->createOTP($user->id, $otp);
-        // $user->notify(new ResetPassword($otp));
-        // return response()->json(['message' => 'Send email successfully']);
     }
 }

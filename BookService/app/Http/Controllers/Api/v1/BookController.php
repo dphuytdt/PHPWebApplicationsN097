@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Interfaces\BookRepositoryInterface;
 use App\Interfaces\CategoryRepositoryInterface;
+use App\Interfaces\CommentRepositoryInterface;
 use App\Models\Book;
 use App\Models\Author;
 use App\Models\Category;
@@ -16,11 +17,12 @@ class BookController extends Controller
 {
     protected BookRepositoryInterface $bookRepository;
     protected CategoryRepositoryInterface $categoryRepository;
-    public function __construct(BookRepositoryInterface $bookRepository, CategoryRepositoryInterface $categoryRepository)
+    protected CommentRepositoryInterface $commentRepository;
+    public function __construct(BookRepositoryInterface $bookRepository, CategoryRepositoryInterface $categoryRepository, CommentRepositoryInterface $commentRepository)
     {
         $this->bookRepository = $bookRepository;
         $this->categoryRepository = $categoryRepository;
-
+        $this->commentRepository = $commentRepository;
     }
 
     /**
@@ -45,7 +47,12 @@ class BookController extends Controller
     public function show(string $id)
     {
         $book = $this->bookRepository->getBookById($id);
-        return response()->json($book, 200);
+        $comments = $this->commentRepository->getCommentByBookId($id);
+        $result = [
+            'book' => $book,
+            'comments' => $comments
+        ];
+        return response()->json($result, 200);
     }
 
     //search book

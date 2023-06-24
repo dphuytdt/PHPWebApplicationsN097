@@ -22,8 +22,9 @@ class BookController extends Controller
         $client = new Client();
         try {
             $response = $client->get($this->bookService.'books/'.$id);
-            $book = json_decode($response->getBody(), true);
-            return view('main.book.book-details', compact('book', 'categories'));
+            $result = json_decode($response->getBody(), true);
+            // dd($result['comments']);
+            return view('main.book.book-details', compact('result', 'categories'));
         } 
         catch (\Exception $e) {
             return redirect()->intended('/')->with('error', 'Login failed');

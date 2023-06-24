@@ -34,10 +34,9 @@ class AuthController extends Controller
             session()->put('token', $data['access_token']);
             session()->put('user', $user);
             session()->put('role_id', $user['role_id']);
-            // dd(session()->get('is_admin'));
             return redirect()->intended('/');
         } else {
-            return redirect()->back()->with('error', 'Wrong email or password');
+            return redirect()->back()->with('error', 'Wrong email or password')->withInput();
         }
     }
 
@@ -78,10 +77,10 @@ class AuthController extends Controller
             if (isset($data['message'])) {
                 return redirect()->back()->with('message', $data['message']);
             } else {
-                return redirect()->back()->with('error', $data['error']);
+                return redirect()->back()->with('error', $data['error'])->withInput();
             }
         } catch (\Exception $e) {
-            return redirect()->back()->with('error', 'Email does not exist');
+            return redirect()->back()->with('error', 'Email does not exist')->withInput();
         }
     }
 }
