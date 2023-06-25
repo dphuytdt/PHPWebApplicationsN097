@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="_token" content="{{ csrf_token() }}">
     <title>@yield('title') | Ebook</title>
 
     <!-- ::::::::::::::Favicon icon::::::::::::::-->
@@ -302,13 +303,13 @@
                 <!-- Start Header Action Icon -->
                 <ul class="mobile-action-icon">
                     <li class="mobile-action-icon-item">
-                        <a href="wishlist.html" class="mobile-action-icon-link">
+                        <a href="{{route('wishlist.index')}}" class="mobile-action-icon-link">
                             <i class="icon-heart"></i>
-                            <span class="mobile-action-icon-item-count">3</span>
+                            <span class="mobile-action-icon-item-count" id="count-wishlist"></span>
                         </a>
                     </li>
                     <li class="mobile-action-icon-item">
-                        <a href="cart.html" class="mobile-action-icon-link">
+                        <a href="{{route('cart.index')}}" class="mobile-action-icon-link">
                             <i class="icon-shopping-cart"></i>
                             <span class="mobile-action-icon-item-count">3</span>
                         </a>
@@ -493,8 +494,8 @@
                 <span class="offcanvas-cart-total-price-value">$170.00</span>
             </div>
             <ul class="offcanvas-cart-action-button">
-                <li class="offcanvas-cart-action-button-list"><a href="" class="offcanvas-cart-action-button-link">View Cart</a></li>
-                <li class="offcanvas-cart-action-button-list"><a href="" class="offcanvas-cart-action-button-link">Checkout</a></li>
+                <li class="offcanvas-cart-action-button-list"><a href="{{route('cart.index')}}" class="offcanvas-cart-action-button-link">View Cart</a></li>
+                <li class="offcanvas-cart-action-button-list"><a href="{{route('cart.checkout')}}" class="offcanvas-cart-action-button-link">Checkout</a></li>
             </ul>
         </div> <!-- End  Offcanvas Addcart Wrapper -->
 

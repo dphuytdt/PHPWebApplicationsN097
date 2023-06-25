@@ -25,9 +25,9 @@ class BookController extends Controller
             $result = json_decode($response->getBody(), true);
             // dd($result['comments']);
             return view('main.book.book-details', compact('result', 'categories'));
-        } 
+        }
         catch (\Exception $e) {
-            return redirect()->intended('/')->with('error', 'Login failed');
+            return view('errors.404')->with('categories', $categories);
         }
     }
 
@@ -65,7 +65,7 @@ class BookController extends Controller
                 $paginator = [];
                 return view('main.home.search-result')->with('error', 'No result found')->with('categories', $categories)->with('paginator', $paginator);
             }
-        } 
+        }
         catch (\Exception $e) {
             $paginator = [];
             return view('main.home.search-result')->with('error', 'No result found')->with('categories', $categories)->with('paginator', $paginator);
@@ -73,7 +73,7 @@ class BookController extends Controller
     }
 
     public function allBook(Request $request){
-       
+
         // return view('main.all-book', compact('paginator'));
     }
 

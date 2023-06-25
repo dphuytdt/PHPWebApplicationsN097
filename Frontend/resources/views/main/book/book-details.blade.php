@@ -19,16 +19,7 @@
                 <div class="row">
                     <div class="col-12 d-flex justify-content-between justify-content-md-between  align-items-center flex-md-row flex-column">
                         <h3 class="breadcrumb-title">Product Details - {{ $result['book']['title'] }}</h3>
-                        {{-- <div class="breadcrumb-nav"> --}}
-                            {{-- <nav aria-label="breadcrumb">
-                                <ul>
-                                    <li><a href="index.html">Home</a></li>
-                                    <li><a href="shop-grid-sidebar-left.html">Shop</a></li>
-                                    <li class="active" aria-current="page">Product Details Default</li>
-                                </ul>
-                            </nav> --}}
-                            {{ Breadcrumbs::render('bookDetails', $result['book']) }}
-                        {{-- </div> --}}
+                        {{ Breadcrumbs::render('bookDetails', $result['book']) }}
                     </div>
                 </div>
             </div>
@@ -128,12 +119,12 @@
                                             $diff = floor(strtotime($vip_experied_date) - strtotime($today))/ (60 * 60 * 24);
                                         @endphp
                                         @if ($diff < 0)
-                                            <div class="variable-single-item ">
-                                                <span>Quantity Available</span>
-                                                <div class="product-variable-quantity">
-                                                    <input  value="{{$result['book']['quantity']}}" type="text" readonly disabled>
-                                                </div>
-                                            </div>
+{{--                                            <div class="variable-single-item ">--}}
+{{--                                                <span>Quantity Available</span>--}}
+{{--                                                <div class="product-variable-quantity">--}}
+{{--                                                    <input  value="{{$result['book']['quantity']}}" type="text" readonly disabled>--}}
+{{--                                                </div>--}}
+{{--                                            </div>--}}
                                             <div class="product-add-to-cart-btn">
                                                 <a href="#" data-toggle="modal" data-target="#modalAddcart">Add To Cart</a>
                                             </div>
@@ -143,12 +134,12 @@
                                                     <a href="#" data-toggle="modal" data-target=".bd-example-modal-lg-{{$result['book']['id']}}">Read now</a>
                                                 </div>
                                             @else
-                                                <div class="variable-single-item ">
-                                                    <span>Quantity Available</span>
-                                                    <div class="product-variable-quantity">
-                                                        <input  value="{{$result['book']['quantity']}}" type="text" readonly disabled>
-                                                    </div>
-                                                </div>
+{{--                                                <div class="variable-single-item ">--}}
+{{--                                                    <span>Quantity Available</span>--}}
+{{--                                                    <div class="product-variable-quantity">--}}
+{{--                                                        <input  value="{{$result['book']['quantity']}}" type="text" readonly disabled>--}}
+{{--                                                    </div>--}}
+{{--                                                </div>--}}
                                                 <div class="product-add-to-cart-btn">
                                                     <a href="#" data-toggle="modal" data-target="#modalAddcart">Add To Cart</a>
                                                 </div>
@@ -160,12 +151,12 @@
                                                 <a href="#" data-toggle="modal" data-target=".bd-example-modal-lg-{{$result['book']['id']}}">Read now</a>
                                             </div>
                                         @else
-                                            <div class="variable-single-item ">
-                                                <span>Quantity Available</span>
-                                                <div class="product-variable-quantity">
-                                                    <input  value="{{$result['book']['quantity']}}" type="text" readonly disabled>
-                                                </div>
-                                            </div>
+{{--                                            <div class="variable-single-item ">--}}
+{{--                                                <span>Quantity Available</span>--}}
+{{--                                                <div class="product-variable-quantity">--}}
+{{--                                                    <input  value="{{$result['book']['quantity']}}" type="text" readonly disabled>--}}
+{{--                                                </div>--}}
+{{--                                            </div>--}}
                                             <div class="product-add-to-cart-btn">
                                                 <a href="#" data-toggle="modal" data-target="#modalAddcart">Add To Cart</a>
                                             </div>
@@ -177,12 +168,12 @@
                                             <a href="#" data-toggle="modal" data-target=".bd-example-modal-lg-{{$result['book']['id']}}">Read now</a>
                                         </div>
                                     @else
-                                        <div class="variable-single-item ">
-                                            <span>Quantity Available</span>
-                                            <div class="product-variable-quantity">
-                                                <input  value="{{$result['book']['quantity']}}" type="text" readonly disabled>
-                                            </div>
-                                        </div>
+{{--                                        <div class="variable-single-item ">--}}
+{{--                                            <span>Quantity Available</span>--}}
+{{--                                            <div class="product-variable-quantity">--}}
+{{--                                                <input  value="{{$result['book']['quantity']}}" type="text" readonly disabled>--}}
+{{--                                            </div>--}}
+{{--                                        </div>--}}
                                         <div class="product-add-to-cart-btn">
                                             <a href="#" data-toggle="modal" data-target="#modalAddcart">Add To Cart</a>
                                         </div>

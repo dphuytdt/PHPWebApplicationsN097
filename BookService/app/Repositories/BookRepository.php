@@ -65,13 +65,6 @@ class BookRepository implements BookRepositoryInterface
         $query->orWhere('content', 'LIKE', '%' . $keyword . '%');
         return $query->get();
     }
-
-    //get book featured
-    public function getFeaturedBooks()
-    {
-        return Book::where('is_featured', 1)->orderBy('updated_at', 'desc')->take(4)->get();
-    }
-
     //insertBook
     public function createBook($data)
     {
@@ -102,12 +95,6 @@ class BookRepository implements BookRepositoryInterface
         return Book::where('price', 0)->get();
     }
 
-    //get new book
-    public function getNewBooks()
-    {
-        //get book have day create or update less than 7 days with time now
-        return Book::where('created_at', '>=', now()->subDays(7))->orWhere('updated_at', '>=', now()->subDays(7))->get();
-    }
 
     //get book for admin
     public function getAllBooksForAdmin()
@@ -115,6 +102,19 @@ class BookRepository implements BookRepositoryInterface
         $books = Book::all();
         foreach ($books as $book) {
             $book->category_name = Category::find($book->category_id)->name;
+        }
+        return $books;
+    }
+
+    //get homepage book
+    public function getHomepageBooks()
+    {
+        $books = [];
+        $books['free'] = Book::where('price', 0)->orderBy('created_at', 'desc')->get();
+        $books['featured'] = Book::where('is_featured', 1)->orderBy('updated_at', 'desc')->get();
+        $books['new'] = Book::where('created_at', '>=', now()->subDays(7))->orWhere('updated_at', '>=', now()->subDays(7))->get();
+        if (count($books['new']) == 0) {
+            $books['new'] = Book::orderBy('updated_at', 'desc')->take(10)->get();
         }
         return $books;
     }

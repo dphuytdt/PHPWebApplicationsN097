@@ -30,21 +30,14 @@ class HomeController extends Controller
         $httpService = app(HttpService::class);
         $client = $httpService->getClient();
         try {
-            $response1 = $client->get($this->bookService.'books/is_free', ['timeout' => 60]);
+            $response1 = $client->get($this->bookService.'books/homepage', ['timeout' => 60]);
             $books = json_decode($response1->getBody(), true);
             return view('main.home.index')->with('books', $books)->with('categories', $categories);
         } catch (\Exception $e) {
-            dd($e);
+            return view('errors.404')->with('categories', $categories);
         }
-
-        // try {
-        //     $response2 = $client->get($this->bookService.'books/new', ['timeout' => 60]);
-        //     $books2 = json_decode($response2->getBody(), true);
-        // } catch (\Exception $e) {
-        //     dd($e);
-        // }
     }
-    
+
     public function about()
     {
         $categories = $this->categoryService->getCategory();
@@ -57,7 +50,6 @@ class HomeController extends Controller
         return view('main.home.contact')->with('categories', $categories);
     }
 
-    //custom 404 page
     public function handleError()
     {
         $categories = $this->categoryService->getCategory();

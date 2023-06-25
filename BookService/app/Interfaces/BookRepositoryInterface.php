@@ -31,9 +31,6 @@ interface BookRepositoryInterface
     //search book
     public function searchBook($keyword);
 
-    //get book featured
-    public function getFeaturedBooks();
-
     //insertBook
     public function createBook($data);
 
@@ -49,10 +46,10 @@ interface BookRepositoryInterface
     //get free book
     public function getFreeBook();
 
-    //get new book
-    public function getNewBooks();
-
     //get book for admin
     public function getAllBooksForAdmin();
+
+    //get homepage book
+    public function getHomepageBooks();
 
 }

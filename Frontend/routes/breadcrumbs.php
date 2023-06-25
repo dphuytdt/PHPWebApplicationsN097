@@ -1,5 +1,7 @@
 <?php
 
+use DaveJamesMiller\Breadcrumbs\Facades\Breadcrumbs;
+
     Breadcrumbs::for('home', function ($trail) {
         $trail->push('Home', route('home'));
     });
@@ -59,4 +61,16 @@
     Breadcrumbs::for('wishlist', function ($trail) {
         $trail->parent('home');
         $trail->push('Wishlist', route('wishlist.index'));
+    });
+
+    //cart
+    Breadcrumbs::for('cart', function ($trail) {
+        $trail->parent('home');
+        $trail->push('Your Cart', route('cart.index'));
+    });
+
+    //checkout
+    Breadcrumbs::for('checkout', function ($trail) {
+        $trail->parent('cart');
+        $trail->push('Checkout', route('cart.checkout'));
     });

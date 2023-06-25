@@ -19,7 +19,7 @@ class Book extends Model
         'title',
         'author',
         'category_id',
-        'quantity',
+        // 'quantity',
         'price',
         'description',
         'cover_image',

@@ -102,10 +102,8 @@
                 $('#price').keyup(function(){
                     var price = $('#price').val();
                     if(price > 0){
-                        $('.quantiy').html('<label for="image" class="form-label">Quantity</label><input type="text" class="form-control" id="quantity" name="quantity">');
                         $('.discount').html('<label for="image" class="form-label">Discount</label><input type="text" class="form-control" id="discount" name="discount">');
                     }else{
-                        $('.quantiy').html('');
                         $('.discount').html('');
                     }
                 });

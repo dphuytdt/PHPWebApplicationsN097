@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->integer('role_id')->default(1);
+            $table->string('role')->default('ROLE_USER');
             $table->boolean('is_vip')->default(false);
             $table->dateTime('valid_vip')->nullable();
             $table->boolean('is_active')->default(false);

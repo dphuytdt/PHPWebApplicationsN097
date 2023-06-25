@@ -29,7 +29,7 @@ class UserFactory extends Factory
             'email_verified_at' => now(),
             'password' => $password, // password
             'remember_token' => Str::random(10),
-            'role_id' => rand(0, 1),
+            // 'role' => $ROLE[rand(0, 1)],
             'is_vip' => rand(0, 1),
             'valid_vip' => now()->addMonths(rand(1, 10)),
             'created_at' => now(),

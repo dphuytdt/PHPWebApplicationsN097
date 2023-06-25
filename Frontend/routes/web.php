@@ -7,6 +7,7 @@ use App\Http\Controllers\BookController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\WishlistController;
+use App\Http\Controllers\CartController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -67,6 +68,12 @@ Route::prefix('auth')->group(function () {
     Route::group(['prefix' => 'profile'], function () {
         Route::get('/', [UserController::class, 'profile'])->name('profile');
         Route::post('/', [AuthController::class, 'postProfile'])->name('profile.update');
+    });
+
+    Route::group(['prefix' => 'cart'], function () {
+        Route::get('/', [CartController::class, 'index'])->name('cart.index');
+        Route::post('/add', [CartController::class, 'addToCart'])->name('cart.add');
+        Route::get('checkout', [CartController::class, 'checkout'])->name('cart.checkout');
     });
 
     Route::get('upgrade', [UserController::class, 'upgrade'])->name('upgrade');

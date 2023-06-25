@@ -63,7 +63,7 @@ class BookController extends Controller
             ->orWhere('content', 'like', "%{$keyword}%")
             ->orWhere('price', 'like', "%{$keyword}%")
             // ->orWhere('discount', 'like', "%{$keyword}%")
-            ->orWhere('quantity', 'like', "%{$keyword}%")
+            // ->orWhere('quantity', 'like', "%{$keyword}%")
             ->orWhere('status', 'like', "%{$keyword}%")
             ->orWhere('is_featured', 'like', "%{$keyword}%")
             ->orWhere('author', 'like', "%{$keyword}%")
@@ -73,13 +73,6 @@ class BookController extends Controller
         return response()->json($books);
     }
 
-    public function getFeaturedBooks()
-    {
-        $books = $this->bookRepository->getFeaturedBooks();
-        // dd($books);
-        // dd('abc');
-        return response()->json($books, 200);
-    }
 
     //read book
     public function readBook(string $id)
@@ -95,9 +88,9 @@ class BookController extends Controller
         return response()->json($books, 200);
     }
 
-    public function getNewBooks()
+    public function getHomepageBooks()
     {
-        $books = $this->bookRepository->getNewBooks();
+        $books = $this->bookRepository->getHomepageBooks();
         return response()->json($books, 200);
     }
 

@@ -45,7 +45,7 @@ class UserController extends Controller
             return view('main.user.profile')->with('categories', $categories)->with('user', $user)
                     ->with('userDetails', $userDetails);
         } catch (\Exception $e) {
-            return redirect()->route('home');
+            return view('errors.404')->with('categories', $categories);
         }
 
     }

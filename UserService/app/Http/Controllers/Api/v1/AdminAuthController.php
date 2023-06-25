@@ -55,7 +55,8 @@ class AdminAuthController extends Controller
         }
         
         $user = auth()->user();
-        if ($user->role_id == 0) {
+        $role = $user->role;
+        if($role === 'ROLE_ADMIN') {
             if ($user->is_active == 0) {
                 return response()->json(['error' => 'Please verify your email'], 401);
             } else {
@@ -79,7 +80,8 @@ class AdminAuthController extends Controller
         if(!$user) {
             return response()->json(['message' => 'Email not found'], 404);
         }
-        if($user->role_id != 0) {
+        $role = $user->role;
+        if($role != 'ROLE_ADMIN') {
             return response()->json(['message' => 'Email is not registered'], 404);
         } else {
             $randomPassword = substr(str_shuffle('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789') , 0 , 10 );

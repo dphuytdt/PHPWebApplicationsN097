@@ -50,6 +50,8 @@ class AuthController extends Controller
                 session()->put('token', $result['access_token']);
                 //push user info to session
                 session()->put('user', $user);
+                //push user id to session
+                session()->put('user_id', $user['id']);
                 //push role info to session
                 session()->put('role', $user['role']);
                 return redirect()->intended('/');
@@ -92,20 +94,6 @@ class AuthController extends Controller
         }
     }
 
-    // public function register()
-    // {
-    //     // Kiểm tra xem người dùng đã đăng nhập hay chưa
-    //     if (session()->has('token')) {
-    //         // Người dùng đã đăng nhập, chuyển hướng đến trang home
-    //         return redirect()->intended('/');
-    //     }
-
-    //     // Hiển thị trang đăng ký
-    //     $provicce = new Province();
-    //     // dd($provicce->getAll());
-    //     $data['provinces'] = $provicce->getAll();
-    //     return view('auth.register')->with('data', $data);
-    // }
 
     public function postRegister(Request $request)
     {
@@ -133,7 +121,7 @@ class AuthController extends Controller
         }
     }
 
-    public function verifyGet()
+    public function verifyGet(): \Illuminate\Contracts\View\View|\Illuminate\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\Contracts\Foundation\Application
     {
         $categories = $this->categoryService->getCategory();
         if (session()->has('token')) {
@@ -243,7 +231,7 @@ class AuthController extends Controller
             ]);
 
             $result = json_decode($response->getBody(), true);
-            
+
             //check status code
             if (isset($result['message'])) {
                 // Nhập mã OTP thành công, chuyển hướng đến trang đổi mật khẩu
@@ -305,7 +293,7 @@ class AuthController extends Controller
             ]);
 
             $result = json_decode($response->getBody(), true);
-            
+
             //check status code
             if (isset($result['message'])) {
                 // Đổi mật khẩu thành công, chuyển hướng đến trang đăng nhập

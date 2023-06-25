@@ -39,7 +39,6 @@
                             <th>Author</th>
                             <th>Category</th>
                             <th>Content</th>
-                            <th>Quantity</th>
                             <th>Price</th>
                             <th>Action</th>
                         </tr>
@@ -57,7 +56,6 @@
                                     <td>
                                         <a  class="btn btn-info btn-sm" data-target="#exampleModalCenter-{{$book['id']}}" data-toggle="modal">View</a>
                                     </td>
-                                    <td >{{ $book['quantity'] }}</td>
                                     @if($book['price'] == null)
                                         <td>Not Updated</td>
                                     @elseif($book['price'] == 0)
