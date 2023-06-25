@@ -735,12 +735,6 @@
                                             </div>
                                             <br>
                                         @else
-{{--                                            <div class="variable-single-item ">--}}
-{{--                                                <span>Quantity Available</span>--}}
-{{--                                                <div class="product-variable-quantity">--}}
-{{--                                                    <input  value="{{$book['quantity']}}" type="text" readonly disabled>--}}
-{{--                                                </div>--}}
-{{--                                            </div>--}}
                                             <div class="product-add-to-cart-btn">
                                                 <a href="#" data-toggle="modal" data-target="#modalAddcart">Add To Cart</a>
                                             </div>
@@ -832,7 +826,7 @@
                 }
             });
             $.ajax({
-                url: "{{route('cart.add')}}",
+                url: "{{ route('cart.add') }}",
                 type: "POST",
                 data: {
                     "userID": userID,

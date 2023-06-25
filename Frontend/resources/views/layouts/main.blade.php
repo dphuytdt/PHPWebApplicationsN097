@@ -134,7 +134,7 @@
                             <li>
                                 <a href="#offcanvas-add-cart" class="offcanvas-toggle">
                                     <i class="icon-shopping-cart"></i>
-                                    <span class="header-action-icon-item-count">3</span>
+                                    <span class="header-action-icon-item-count cart-count"></span>
                                 </a>
                             </li>
                             @if(session()->has('user'))
@@ -309,9 +309,16 @@
                         </a>
                     </li>
                     <li class="mobile-action-icon-item">
-                        <a href="{{route('cart.index')}}" class="mobile-action-icon-link">
+                        @if(session()->has('user'))
+                            @php
+                                $user_id = session()->get('user')['id']
+                            @endphp
+                            <a href="{{route('cart.getUserCart', $user_id)}}" class="mobile-action-icon-link">
+                        @else
+                            <a class="mobile-action-icon-link">
+                        @endif
                             <i class="icon-shopping-cart"></i>
-                            <span class="mobile-action-icon-item-count">3</span>
+                            <span class="mobile-action-icon-item-count cart-count"></span>
                         </a>
                     </li>
                 </ul> <!-- End Header Action Icon -->
@@ -437,64 +444,16 @@
         <div class="offcanvas-add-cart-wrapper">
             <h4 class="offcanvas-title">Shopping Cart</h4>
             <ul class="offcanvas-cart">
-                <li class="offcanvas-cart-item-single">
-                    <div class="offcanvas-cart-item-block">
-                        <a href="" class="offcanvas-cart-item-image-link">
-                            <img src="assets/images/products_images/aments_products_image_6.jpg" alt="" class="offcanvas-cart-image">
-                        </a>
-                        <div class="offcanvas-cart-item-content">
-                            <a href="" class="offcanvas-cart-item-link">Car Wheel</a>
-                            <div class="offcanvas-cart-item-details">
-                                <span class="offcanvas-cart-item-details-quantity">1 x </span>
-                                <span class="offcanvas-cart-item-details-price">$49.00</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="offcanvas-cart-item-delete text-right">
-                        <a href="#" class="offcanvas-cart-item-delete"><i class="fa fa-trash-o"></i></a>
-                    </div>
-                </li>
-                <li class="offcanvas-cart-item-single">
-                    <div class="offcanvas-cart-item-block">
-                        <a href="" class="offcanvas-cart-item-image-link">
-                            <img src="assets/images/categories_images/aments_categories_08.jpg" alt="" class="offcanvas-cart-image">
-                        </a>
-                        <div class="offcanvas-cart-item-content">
-                            <a href="" class="offcanvas-cart-item-link">Car Vails</a>
-                            <div class="offcanvas-cart-item-details">
-                                <span class="offcanvas-cart-item-details-quantity">3 x </span>
-                                <span class="offcanvas-cart-item-details-price">$500.00</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="offcanvas-cart-item-delete text-right">
-                        <a href="#" class="offcanvas-cart-item-delete"><i class="fa fa-trash-o"></i></a>
-                    </div>
-                </li>
-                <li class="offcanvas-cart-item-single">
-                    <div class="offcanvas-cart-item-block">
-                        <a href="" class="offcanvas-cart-item-image-link">
-                            <img src="assets/images/products_images/aments_products_image_2.jpg" alt="" class="offcanvas-cart-image">
-                        </a>
-                        <div class="offcanvas-cart-item-content">
-                            <a href="" class="offcanvas-cart-item-link">Shock Absorber</a>
-                            <div class="offcanvas-cart-item-details">
-                                <span class="offcanvas-cart-item-details-quantity">1 x </span>
-                                <span class="offcanvas-cart-item-details-price">$350.00</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="offcanvas-cart-item-delete text-right">
-                        <a href="#" class="offcanvas-cart-item-delete"><i class="fa fa-trash-o"></i></a>
-                    </div>
-                </li>
             </ul>
             <div class="offcanvas-cart-total-price">
                 <span class="offcanvas-cart-total-price-text">Subtotal:</span>
-                <span class="offcanvas-cart-total-price-value">$170.00</span>
+                <span class="offcanvas-cart-total-price-value"></span>
             </div>
             <ul class="offcanvas-cart-action-button">
-                <li class="offcanvas-cart-action-button-list"><a href="{{route('cart.index')}}" class="offcanvas-cart-action-button-link">View Cart</a></li>
+                @php
+                    $user_id = session()->get('user')['id']
+                @endphp
+                <li class="offcanvas-cart-action-button-list"><a href="{{route('cart.getUserCart',$user_id)}}" class="offcanvas-cart-action-button-link">View Cart</a></li>
                 <li class="offcanvas-cart-action-button-list"><a href="{{route('cart.checkout')}}" class="offcanvas-cart-action-button-link">Checkout</a></li>
             </ul>
         </div> <!-- End  Offcanvas Addcart Wrapper -->
@@ -616,181 +575,6 @@
     <!-- material-scrolltop button -->
     <button class="material-scrolltop" type="button"></button>
 
-    <!-- Start Modal Add cart -->
-    {{-- <div class="modal fade" id="modalAddcart" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog  modal-dialog-centered modal-xl" role="document">
-            <div class="modal-content">
-                <div class="modal-body">
-                    <div class="container-fluid">
-                        <div class="row">
-                            <div class="col text-right">
-                                <button type="button" class="close modal-close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true"> <i class="fa fa-times"></i></span>
-                                </button>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-7">
-                                <div class="row">
-                                    <div class="col-md-4">
-                                        <div class="modal-add-cart-product-img">
-                                            <img class="img-fluid" src="assets/images/products_images/aments_products_image_1.jpg" alt="">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-8">
-                                        <div class="modal-add-cart-info"><i class="fa fa-check-square"></i>Added to cart successfully!</div>
-                                        <div class="modal-add-cart-product-cart-buttons">
-                                            <a href="cart.html">View Cart</a>
-                                            <a href="checkout.html">Checkout</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-5 modal-border">
-                                <ul class="modal-add-cart-product-shipping-info">
-                                    <li> <strong><i class="icon-shopping-cart"></i> There Are 5 Items In Your Cart.</strong></li>
-                                    <li> <strong>TOTAL PRICE: </strong> <span>$187.00</span></li>
-                                    <li class="modal-continue-button"><a href="#" data-dismiss="modal">CONTINUE SHOPPING</a></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div> <!-- End Modal Add cart --> --}}
-
-    <!-- Start Modal Quickview cart -->
-    {{-- <div class="modal fade" id="modalQuickview" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog  modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-body">
-                    <div class="container-fluid">
-                        <div class="row">
-                            <div class="col text-right">
-                                <button type="button" class="close modal-close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true"> <i class="fa fa-times"></i></span>
-                                </button>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="product-details-gallery-area">
-                                    <div class="product-large-image modal-product-image-large">
-                                        <div class="product-image-large-single">
-                                            <img class="img-fluid" src="assets/images/products_images/aments_products_image_1.jpg" alt="">
-                                        </div>
-                                        <div class="product-image-large-single">
-                                            <img class="img-fluid" src="assets/images/products_images/aments_products_image_2.jpg" alt="">
-                                        </div>
-                                        <div class="product-image-large-single">
-                                            <img class="img-fluid" src="assets/images/products_images/aments_products_image_3.jpg" alt="">
-                                        </div>
-                                        <div class="product-image-large-single">
-                                            <img class="img-fluid" src="assets/images/products_images/aments_products_image_4.jpg" alt="">
-                                        </div>
-                                        <div class="product-image-large-single">
-                                            <img class="img-fluid" src="assets/images/products_images/aments_products_image_5.jpg" alt="">
-                                        </div>
-                                        <div class="product-image-large-single">
-                                            <img class="img-fluid" src="assets/images/products_images/aments_products_image_6.jpg" alt="">
-                                        </div>
-                                    </div>
-                                    <div class="product-image-thumb modal-product-image-thumb">
-                                        <div class="zoom-active product-image-thumb-single">
-                                            <img class="img-fluid" src="assets/images/products_images/aments_products_image_1.jpg" alt="">
-                                        </div>
-                                        <div class="product-image-thumb-single">
-                                            <img class="img-fluid" src="assets/images/products_images/aments_products_image_2.jpg" alt="">
-                                        </div>
-                                        <div class="product-image-thumb-single">
-                                            <img class="img-fluid" src="assets/images/products_images/aments_products_image_3.jpg" alt="">
-                                        </div>
-                                        <div class="product-image-thumb-single">
-                                            <img class="img-fluid" src="assets/images/products_images/aments_products_image_4.jpg" alt="">
-                                        </div>
-                                        <div class="product-image-thumb-single">
-                                            <img class="img-fluid" src="assets/images/products_images/aments_products_image_5.jpg" alt="">
-                                        </div>
-                                        <div class="product-image-thumb-single">
-                                            <img class="img-fluid" src="assets/images/products_images/aments_products_image_6.jpg" alt="">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="product-details-content-area">
-                                    <!-- Start  Product Details Text Area-->
-                                    <div class="product-details-text">
-                                        <h4 class="title">Nonstick Dishwasher PFOA</h4>
-                                        <div class="price"><del>$70.00</del>$80.00</div>
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia iste laborum ad impedit pariatur esse optio tempora sint ullam autem deleniti nam in quos qui nemo ipsum numquam, reiciendis maiores quidem aperiam, rerum vel recusandae</p>
-                                    </div> <!-- End  Product Details Text Area-->
-                                    <!-- Start Product Variable Area -->
-                                    <div class="product-details-variable">
-                                        <!-- Product Variable Single Item -->
-                                        <div class="variable-single-item">
-                                            <span>Color</span>
-                                            <div class="product-variable-color">
-                                                <label for="modal-product-color-red">
-                                                    <input name="modal-product-color" id="modal-product-color-red" class="color-select" type="radio" checked>
-                                                    <span class="product-color-red"></span>
-                                                </label>
-                                                <label for="modal-product-color-tomato">
-                                                    <input name="modal-product-color" id="modal-product-color-tomato" class="color-select" type="radio">
-                                                    <span class="product-color-tomato"></span>
-                                                </label>
-                                                <label for="modal-product-color-green">
-                                                    <input name="modal-product-color" id="modal-product-color-green" class="color-select" type="radio">
-                                                    <span class="product-color-green"></span>
-                                                </label>
-                                                <label for="modal-product-color-light-green">
-                                                    <input name="modal-product-color" id="modal-product-color-light-green" class="color-select" type="radio">
-                                                    <span class="product-color-light-green"></span>
-                                                </label>
-                                                <label for="modal-product-color-blue">
-                                                    <input name="modal-product-color" id="modal-product-color-blue" class="color-select" type="radio">
-                                                    <span class="product-color-blue"></span>
-                                                </label>
-                                                <label for="modal-product-color-light-blue">
-                                                    <input name="modal-product-color" id="modal-product-color-light-blue" class="color-select" type="radio">
-                                                    <span class="product-color-light-blue"></span>
-                                                </label>
-                                            </div>
-                                        </div>
-                                        <!-- Product Variable Single Item -->
-                                        <div class="variable-single-item ">
-                                            <span>Quantity</span>
-                                            <div class="product-variable-quantity">
-                                                <input min="1" max="100" value="1" type="number">
-                                            </div>
-                                        </div>
-                                    </div> <!-- End Product Variable Area -->
-                                    <!-- Start  Product Details Meta Area-->
-                                    <div class="product-details-meta mb-20">
-                                        <ul>
-                                            <li><a href=""><i class="icon-heart"></i>Add to wishlist</a></li>
-                                            <li><a href=""><i class="icon-repeat"></i>Compare</a></li>
-                                            <li><a href="#" data-toggle="modal" data-target="#modalQuickview"><i class="icon-shopping-cart"></i>Add To Cart</a></li>
-                                        </ul>
-                                    </div> <!-- End  Product Details Meta Area-->
-                                    <!-- Start  Product Details Social Area-->
-                                    <ul class="modal-product-details-social">
-                                        <li><a href="#" class="facebook"><i class="fa fa-facebook"></i></a></li>
-                                        <li><a href="#" class="twitter"><i class="fa fa-twitter"></i></a></li>
-                                        <li><a href="#" class="pinterest"><i class="fa fa-pinterest"></i></a></li>
-                                        <li><a href="#" class="google-plus"><i class="fa fa-google-plus"></i></a></li>
-                                        <li><a href="#" class="linkedin"><i class="fa fa-linkedin"></i></a></li>
-                                    </ul> <!-- End  Product Details Social Area-->
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div> <!-- End Modal Quickview cart --> --}}
-
     <!-- ::::::::::::::All JS Files here :::::::::::::: -->
     <!-- Global Vendor, plugins JS -->
     <script src="{{asset('assets/js/vendor/modernizr-3.11.2.min.js')}}"></script>
@@ -813,6 +597,62 @@
 
     <!-- Main JS -->
     <script src="{{asset('assets/js/main.js')}}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script type="text/javascript">
+        var userID = @json(session('user_id', ['id' => 'id']));
+        const url = "http://paymentservice.test:8080/api/cart/get/" + userID;
+
+        axios.get(url)
+            .then(response => {
+                const cartItems = Object.values(response.data); // Assuming the cart items are stored as values in the response object
+                // console.log(cartItems[0]);
+                // Select the <ul> element with the class "offcanvas-cart"
+                const offcanvasCart = document.querySelector('.offcanvas-cart');
+                let totalPrice = 0;
+                // Loop through the cart items and generate the <li> elements
+                cartItems[0].forEach(item => {
+                    // Create the <li> element
+                    const li = document.createElement('li');
+                    li.classList.add('offcanvas-cart-item-single');
+                    // Create the inner HTML for the <li> element
+                    console.log(item);
+                    li.innerHTML = `
+                        <div class="offcanvas-cart-item-block">
+                          <a href="" class="offcanvas-cart-item-image-link">
+                            <img src="${item.cover_image}" alt="" class="offcanvas-cart-image">
+                          </a>
+                          <div class="offcanvas-cart-item-content">
+                            <a href="" class="offcanvas-cart-item-link">${item.title}</a>
+                            <div class="offcanvas-cart-item-details">
+                              <span class="offcanvas-cart-item-details-price">$${item.price}</span>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="offcanvas-cart-item-delete text-right">
+                          <a href="#" class="offcanvas-cart-item-delete" id="delete-${item.id}"><i class="fa fa-trash-o"></i></a>
+                        </div>
+                      `;
+                    // Append the <li> element to the <ul> element
+                    totalPrice += parseFloat(item.price);
+                    offcanvasCart.appendChild(li);
+                });
+
+                // Select the <span> element with the class "offcanvas-cart-total-price-value"
+                const totalPriceElement = document.querySelector('.offcanvas-cart-total-price-value');
+
+                // Set the total price value in the HTML
+                totalPriceElement.textContent = totalPrice.toFixed(2) + '$';// Assuming you want to display the total with 2 decimal places
+
+                const itemCountElement = document.querySelector('.cart-count');
+
+                itemCountElement.textContent = cartItems[0].length; // Assuming cartItems[0] is an array of items
+
+            })
+            .catch(error => {
+                console.error(error);
+            });
+
+    </script>
     <script type="text/javascript">
         function view(){
             if (localStorage.getItem('wishlist') != null) {

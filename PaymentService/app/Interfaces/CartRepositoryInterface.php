@@ -7,4 +7,6 @@ interface CartRepositoryInterface
 {
     public function add(Request $request);
 
+    public function getCart($userID);
+
 }

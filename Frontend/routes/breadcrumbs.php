@@ -66,7 +66,7 @@ use DaveJamesMiller\Breadcrumbs\Facades\Breadcrumbs;
     //cart
     Breadcrumbs::for('cart', function ($trail) {
         $trail->parent('home');
-        $trail->push('Your Cart', route('cart.index'));
+        $trail->push('Your Cart', route('cart.getUserCart', session()->get('user')['id']));
     });
 
     //checkout

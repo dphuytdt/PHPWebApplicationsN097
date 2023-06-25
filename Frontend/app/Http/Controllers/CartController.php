@@ -21,10 +21,24 @@ class CartController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function getUserCart($id)
     {
+        if (!session()->has('token')) {
+            // Người dùng chưa đăng nhập, chuyển hướng đến trang login
+            return redirect()->route('login');
+        }
         $categories = $this->categoryService->getCategory();
-        return view('main.cart.index', compact('categories'));
+        $client = new Client();
+        try {
+            $response = $client->get($this->paymentService.'cart/get/'.$id);
+            $response = json_decode($response->getBody()->getContents());
+            $cart = $response->result;
+            return view('main.cart.index', compact('categories', 'cart'));
+        } catch (\Exception $e) {
+            return response()->json($e->getMessage());
+        } catch (GuzzleException $e) {
+            return response()->json($e->getMessage());
+        }
     }
 
     public function addToCart(Request $request)

@@ -31,4 +31,18 @@ class CartController extends Controller
             ], 400);
          }
     }
+
+    public function getCart($userID)
+    {
+        $result = $this->cartRepository->getCart($userID);
+        if($result){
+            return response()->json([
+                'result' => $result
+            ], 200);
+          }else{
+             return response()->json([
+                 'status' => 'error',
+             ], 400);
+          }
+    }
 }

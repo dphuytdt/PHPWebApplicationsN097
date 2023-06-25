@@ -71,8 +71,8 @@ Route::prefix('auth')->group(function () {
     });
 
     Route::group(['prefix' => 'cart'], function () {
-        Route::get('/', [CartController::class, 'index'])->name('cart.index');
-        Route::post('/add', [CartController::class, 'addToCart'])->name('cart.add');
+        Route::post('add', [CartController::class, 'addToCart'])->name('cart.add');
+        Route::get('{id}', [CartController::class, 'getUserCart'])->name('cart.getUserCart');
         Route::get('checkout', [CartController::class, 'checkout'])->name('cart.checkout');
     });
 

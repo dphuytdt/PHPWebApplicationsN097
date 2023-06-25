@@ -15,8 +15,19 @@ class CartRepository implements CartRepositoryInterface
         $cart->title = $request->bookTitle;
         $cart->cover_image = $request->bookImage;
         $cart->price = $request->bookPrice;
-        $cart->created_at = $request->created_at;
+        $cart->created_at = now();
         $cart->save();
+        if($cart){
+            return $cart;
+        }else{
+            return false;
+        }
+    }
+
+    //get user cart
+    public function getCart($userID)
+    {
+        $cart = Cart::where('user_id', $userID)->get();
         if($cart){
             return $cart;
         }else{
