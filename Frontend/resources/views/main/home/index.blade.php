@@ -182,11 +182,11 @@
                                                     <input type="hidden" id="bookTitle" value="{{$news['title']}}">
                                                     <input type="hidden" id="bookImage" value="{{$news['cover_image']}}">
                                                     <input type="hidden" id="bookPrice" value="{{$news['price']}}">
-                                                    <li><a id="{{$news['id']}}"onclick="addWishlist(this.id);"><i class="icon-heart"></i></a></li>
+                                                    <li><a id="addWishlist-{{$news['id']}}"><i class="icon-heart"></i></a></li>
                                                     <li><a href="compare.html"><i class="icon-repeat"></i></a></li>
                                                     <li><a href="#" data-toggle="modal" data-target="#modalQuickviewNewBook-{{$news['id']}}"><i class="icon-eye"></i></a></li>
                                                     @if($news['price'] != 0)
-                                                        <li><a id="addCart" href="" data-toggle="modal" data-target="#modalAddcartNewBook-{{$news['id']}}"><i class="icon-shopping-cart"></i></a></li>
+                                                        <li><a id="addCart-{{$news['id']}}" href="" data-toggle="modal" data-target="#modalAddcartNewBook-{{$news['id']}}"><i class="icon-shopping-cart"></i></a></li>
                                                     @endif
                                                 </ul>
                                             </div>
@@ -247,7 +247,7 @@
                                             </a>
                                             <div class="product-action-icon-link">
                                                 <ul>
-                                                    <li><a id="{{$book['id']}}"onclick="addWishlist(this.id);"><i class="icon-heart"></i></a></li>
+                                                    <li><a id="addWishlist-{{$book['id']}}"><i class="icon-heart"></i></a></li>
                                                     <li><a href="compare.html"><i class="icon-repeat"></i></a></li>
                                                     <li><a href="#" data-toggle="modal" data-target="#modalQuickview-{{$book['id']}}"><i class="icon-eye"></i></a></li>
 
@@ -328,7 +328,7 @@
                                             </a>
                                             <div class="product-action-icon-link">
                                                 <ul>
-                                                    <li><a id="{{$feature['id']}}"onclick="addWishlist(this.id);"><i class="icon-heart"></i></a></li>
+                                                    <li><a id="addWishlist-{{$feature['id']}}" ><i class="icon-heart"></i></a></li>
                                                     <li><a href="compare.html"><i class="icon-repeat"></i></a></li>
                                                     <li><a href="#" data-toggle="modal" data-target="#modalQuickviewFeaturedBook-{{$feature['id']}}"><i class="icon-eye"></i></a></li>
                                                     @if($feature['price'] != 0)
@@ -504,7 +504,7 @@
                                     <!-- Start  Product Details Meta Area-->
                                     <div class="product-details-meta mb-20">
                                         <ul>
-                                            <li><button id="{{$book['id']}}" ><i class="icon-heart"></i>Add to wishlist</button></li>
+                                            <li><button id="addWishlist-{{$book['id']}}" ><i class="icon-heart"></i>Add to wishlist</button></li>
                                             <li><a href=""><i class="icon-repeat"></i>Compare</a></li>
                                             <li><a href="#" data-toggle="modal" data-target="#modalQuickview-{{$book['id']}}"><i class="icon-eye"></i>Quick view</a></li>
                                         </ul>
@@ -583,7 +583,7 @@
                                             <br>
                                         @else
                                             <div class="product-add-to-cart-btn">
-                                                <a id="addCart" data-toggle="modal" data-target="#modalAddcartNewBook-{{$book['id']}}">Add To Cart</a>
+                                                <a id="addCart-{{$book['id']}}" data-toggle="modal" data-target="#modalAddcartNewBook-{{$book['id']}}">Add To Cart</a>
                                             </div>
                                             <br>
                                         @endif
@@ -591,7 +591,7 @@
                                     <!-- Start  Product Details Meta Area-->
                                     <div class="product-details-meta mb-20">
                                         <ul>
-                                            <li><button id="{{$book['id']}}" ><i class="icon-heart"></i>Add to wishlist</button></li>
+                                            <li><button id="addWishlist-{{$book['id']}}" ><i class="icon-heart"></i>Add to wishlist</button></li>
                                             <li><a href=""><i class="icon-repeat"></i>Compare</a></li>
                                             <li><a href="#" data-toggle="modal" data-target="#modalQuickview-{{$book['id']}}"><i class="icon-eye"></i>Quick view</a></li>
                                         </ul>
@@ -744,7 +744,7 @@
                                     <!-- Start  Product Details Meta Area-->
                                     <div class="product-details-meta mb-20">
                                         <ul>
-                                            <li><button id="{{$book['id']}}" ><i class="icon-heart"></i>Add to wishlist</button></li>
+                                            <li><button id="addWishlist-{{$book['id']}}"><i class="icon-heart"></i>Add to wishlist</button></li>
                                             <li><a href=""><i class="icon-repeat"></i>Compare</a></li>
                                             <li><a href="#" data-toggle="modal" data-target="#modalQuickview-{{$book['id']}}"><i class="icon-eye"></i>Quick view</a></li>
                                         </ul>
@@ -810,38 +810,128 @@
     </div> <!-- End Modal Add cart -->
 @endforeach
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js" integrity="sha512-3gJwYpMe3QewGELv8k/BX9vcqhryRdzRMxVfq6ngyWXwo03GFEzjsUm8Q7RZcHPHksttq7/GFoxjCVUjkjvPdw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js" integrity="sha512-AA1Bzp5Q0K1KanKKmvN/4d3IRKVlv9PYgwFPvm32nPO6QS8yH1HO7LbgB1pgiOxPtfeg5zEn2ba64MUcqJx6CA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script type="text/javascript">
-    $(document).ready(function() {
-
-        $('#addCart').click(function (e) {
-            event.preventDefault();
+    document.querySelectorAll('[id^="addCart-"]').forEach(function(button) {
+        button.addEventListener('click', function() {
             var userID = @json(session('user_id'));
-            var bookID = document.getElementById('bookID').value;
-            var bookTitle = document.getElementById('bookTitle').value;
-            var bookPrice = document.getElementById('bookPrice').value;
-            var bookImage = document.getElementById('bookImage').value;
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+            if(userID == null){
+                console.log("Please login first");
+            }else{
+                var bookId = this.id.split('-')[1]; // Extract the book ID from the button's ID
+                var bookTitle = document.getElementById('name-' + bookId).value;
+                var bookPrice = document.getElementById('price-' + bookId).value;
+                var bookImage = document.getElementById('image-' + bookId).src;
+                console.log(bookId + " " + bookTitle + " " + bookPrice + " " + bookImage);
+                //Create AJAX request
+                var xhr = new XMLHttpRequest();
+                var url = 'http://paymentservice.test:8080/api/cart/add';
+                xhr.open('POST', url, true);
+                xhr.setRequestHeader('Content-Type', 'application/json');
+                //check bookPrice  !number
+                if (isNaN(bookPrice)) {
+                    bookPrice = 0;
                 }
-            });
-            $.ajax({
-                url: "{{ route('cart.add') }}",
-                type: "POST",
-                data: {
-                    "userID": userID,
-                    "bookID": bookID,
-                    "bookTitle": bookTitle,
-                    "bookPrice": bookPrice,
-                    "bookImage": bookImage,
-                },
-                success: function (response) {
-                    console.log(response);
-                },
-                error: function (response) {
-                    console.log(response);
+                // Create request body
+                var requestBody = {
+                    userID: userID,
+                    bookID: bookId,
+                    bookTitle: bookTitle,
+                    bookPrice: bookPrice,
+                    bookImage: bookImage,
+                    bookPrice: bookPrice,
+                };
+
+                // Send AJAX request
+                xhr.send(JSON.stringify(requestBody));
+
+                // Handle the response
+                xhr.onreadystatechange = function() {
+                    if (xhr.readyState === XMLHttpRequest.DONE) {
+                        if (xhr.status === 200) {
+                            // Wishlist addition successful
+                            // swal({
+                            //     title: "Success!",
+                            //     text: "Book added to wishlist!",
+                            //     icon: "success",
+                            //     button: "OK",
+                            // });
+                        } else {
+                            // Wishlist addition failed
+                            // swal({
+                            //     title: "Error!",
+                            //     text: "Book already in wishlist!",
+                            //     icon: "error",
+                            //     button: "OK",
+                            // });
+                        }
+                    }
+                };
+            }
+        });
+    });
+</script>
+<script type="text/javascript">
+    document.querySelectorAll('[id^="addWishlist-"]').forEach(function(button) {
+        button.addEventListener('click', function() {
+            var userID = @json(session('user_id'));
+            if(userID == null){
+                swal({
+                    title: "Please login to add to wishlist!",
+                    icon: "warning",
+                    button: "OK",
+                });
+            }else{
+                var bookId = this.id.split('-')[1]; // Extract the book ID from the button's ID
+                var bookTitle = document.getElementById('name-' + bookId).value;
+                var bookPrice = document.getElementById('price-' + bookId).value;
+                var bookImage = document.getElementById('image-' + bookId).src;
+                console.log(bookId + " " + bookTitle + " " + bookPrice + " " + bookImage);
+                // Create AJAX request
+                var xhr = new XMLHttpRequest();
+                var url = 'http://paymentservice.test:8080/api/wishlist/add';
+                xhr.open('POST', url, true);
+                xhr.setRequestHeader('Content-Type', 'application/json');
+                //check bookPrice  !number
+                if (isNaN(bookPrice)) {
+                    bookPrice = 0;
                 }
-            });
+                // Create request body
+                var requestBody = {
+                    userID: userID,
+                    bookID: bookId,
+                    bookTitle: bookTitle,
+                    bookPrice: bookPrice,
+                    bookImage: bookImage,
+                    bookPrice: bookPrice,
+                };
+
+                // Send AJAX request
+                xhr.send(JSON.stringify(requestBody));
+
+                // Handle the response
+                xhr.onreadystatechange = function() {
+                    if (xhr.readyState === XMLHttpRequest.DONE) {
+                        if (xhr.status === 200) {
+                            // Wishlist addition successful
+                            swal({
+                                title: "Success!",
+                                text: "Book added to wishlist!",
+                                icon: "success",
+                                button: "OK",
+                            });
+                        } else {
+                            // Wishlist addition failed
+                            swal({
+                                title: "Error!",
+                                text: "Book already in wishlist!",
+                                icon: "error",
+                                button: "OK",
+                            });
+                        }
+                    }
+                };
+            }
         });
     });
 </script>

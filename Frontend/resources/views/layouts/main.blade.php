@@ -74,7 +74,6 @@
                                     <!-- Header Top Menu's Dropdown -->
                                     <ul class="user-sub-menu">
                                         <style type="text/css">
-                                            /* ajust icon language size */
                                             .user-sub-menu-in-icon {
                                                 width: 20px;
                                                 height: 20px;
@@ -83,6 +82,8 @@
                                         <li><a href=""><img class="user-sub-menu-in-icon" src="assets/images/icon/united-kingdom.png" alt=""> English</a></li>
                                         <li><a href=""><img class="user-sub-menu-in-icon" src="assets/images/icon/vietnam.png" alt=""> VietNam</a></li>
                                         <li><a href=""><img class="user-sub-menu-in-icon" src="assets/images/icon/japan.png" alt=""> Japan</a></li>
+                                        <li><a href=""><img class="user-sub-menu-in-icon" src="assets/images/icon/korea.png" alt=""> Korea</a></li>
+
                                     </ul>
                                 </li>
                                 <li><a href=""><i class="icon-repeat"></i> Compare (0)</a></li>
@@ -128,7 +129,7 @@
                             <li>
                                 <a href="#offcanvas-wishlish" class="offcanvas-toggle">
                                     <i class="icon-heart"></i>
-                                    <span class="header-action-icon-item-count" id="count-wishlist"></span>
+                                    <span class="header-action-icon-item-count count-wishlist" id="count-wishlist"></span>
                                 </a>
                             </li>
                             <li>
@@ -305,7 +306,7 @@
                     <li class="mobile-action-icon-item">
                         <a href="{{route('wishlist.index')}}" class="mobile-action-icon-link">
                             <i class="icon-heart"></i>
-                            <span class="mobile-action-icon-item-count" id="count-wishlist"></span>
+                            <span class="mobile-action-icon-item-count count-wishlist" id="count-wishlist"></span>
                         </a>
                     </li>
                     <li class="mobile-action-icon-item">
@@ -317,9 +318,9 @@
                         @else
                             <a class="mobile-action-icon-link">
                         @endif
-                            <i class="icon-shopping-cart"></i>
-                            <span class="mobile-action-icon-item-count cart-count"></span>
-                        </a>
+                                <i class="icon-shopping-cart"></i>
+                                <span class="mobile-action-icon-item-count cart-count"></span>
+                            </a>
                     </li>
                 </ul> <!-- End Header Action Icon -->
             </div> <!-- End Mobile Menu User Center -->
@@ -450,11 +451,16 @@
                 <span class="offcanvas-cart-total-price-value"></span>
             </div>
             <ul class="offcanvas-cart-action-button">
-                @php
-                    $user_id = session()->get('user')['id']
-                @endphp
-                <li class="offcanvas-cart-action-button-list"><a href="{{route('cart.getUserCart',$user_id)}}" class="offcanvas-cart-action-button-link">View Cart</a></li>
-                <li class="offcanvas-cart-action-button-list"><a href="{{route('cart.checkout')}}" class="offcanvas-cart-action-button-link">Checkout</a></li>
+                @if(session()->has('user'))
+                    @php
+                        $user_id = session()->get('user')['id']
+                    @endphp
+                    <li class="offcanvas-cart-action-button-list"><a href="{{route('cart.getUserCart',$user_id)}}" class="offcanvas-cart-action-button-link">View Cart</a></li>
+                    <li class="offcanvas-cart-action-button-list"><a href="{{route('cart.checkout')}}" class="offcanvas-cart-action-button-link">Checkout</a></li>
+                @else
+                <li class="offcanvas-cart-action-button-list"><a class="offcanvas-cart-action-button-link">View Cart</a></li>
+                <li class="offcanvas-cart-action-button-list"><a  class="offcanvas-cart-action-button-link">Checkout</a></li>
+                @endif
             </ul>
         </div> <!-- End  Offcanvas Addcart Wrapper -->
 
@@ -615,7 +621,7 @@
                     const li = document.createElement('li');
                     li.classList.add('offcanvas-cart-item-single');
                     // Create the inner HTML for the <li> element
-                    console.log(item);
+                    //console.log(item);
                     li.innerHTML = `
                         <div class="offcanvas-cart-item-block">
                           <a href="" class="offcanvas-cart-item-image-link">
@@ -629,7 +635,7 @@
                           </div>
                         </div>
                         <div class="offcanvas-cart-item-delete text-right">
-                          <a href="#" class="offcanvas-cart-item-delete" id="delete-${item.id}"><i class="fa fa-trash-o"></i></a>
+                          <a  class="offcanvas-cart-item-delete" id="deleteCart-${item.id}"><i class="fa fa-trash-o"></i></a>
                         </div>
                       `;
                     // Append the <li> element to the <ul> element
@@ -651,116 +657,43 @@
             .catch(error => {
                 console.error(error);
             });
-
     </script>
+
     <script type="text/javascript">
-        function view(){
-            if (localStorage.getItem('wishlist') != null) {
-                var data = JSON.parse(localStorage.getItem('wishlist'));
+        var userID = @json(session('user_id', ['id' => 'id']));
+        const urlWishlist = "http://paymentservice.test:8080/api/wishlist/get/" + userID;
+        axios.get(urlWishlist)
+            .then(response => {
+                const wishlistItems = Object.values(response.data);
 
-                data.reverse();
-
-                for (var i = 0; i < data.length; i++) {
-                    var id = data[i].id;
-                    var name = data[i].name;
-                    var price = data[i].price;
-                    var image = data[i].image;
-                    var url = data[i].url;
-                    $("#offcanvas-wishlist").append('<li class="offcanvas-wishlist-item-single">' +
-                        '<div class="offcanvas-wishlist-item-block">' +
-                        '<a href="' + url + '" class="offcanvas-wishlist-image-link">' +
-                        '<img src="' + image + '" alt="" class="offcanvas-wishlist-image">' +
-                        '</a><div class="offcanvas-wishlist-item-content"><a href="" class="offcanvas-wishlist-item-link">' + name + '</a>' +
-                        '<div class="offcanvas-wishlist-item-details"><span class="offcanvas-wishlist-item-details-quantity">1 x </span>' +
-                        '<span class="offcanvas-wishlist-item-details-price">' + price + '</span></div></div>' +
-                        '<div class="offcanvas-wishlist-item-delete text-right"><a href="#" class="offcanvas-wishlist-item-delete">' +
-                        '<i class="fa fa-trash-o" id="delete-'+id+'" onclick="deleteWishlist('+id+')"></i></a></div></div></li>');
-                }
-            }
-            countWishlist()
-        }
-
-        function countWishlist(){
-            var countWislist =  document.getElementById('count-wishlist');
-            if (localStorage.getItem('wishlist') != null) {
-                var data = JSON.parse(localStorage.getItem('wishlist'));
-                var count = data.length;
-                if (count > 0) {
-                    $("#count-wishlist").html(count);
-                } else {
-                    $("#count-wishlist").html(0);
-                }
-            } else {
-                $("#count-wishlist").html(0);
-            }
-        }
-
-        countWishlist();
-
-        function deleteWishlist(id){
-            var id = id;
-            var data = JSON.parse(localStorage.getItem('wishlist'));
-            var index = data.findIndex(x => x.id == id);
-            data.splice(index, 1);
-            localStorage.setItem('wishlist', JSON.stringify(data));
-            $("#offcanvas-wishlist").empty();
-            view();
-            countWishlist()
-        }
-
-        view();
-
-        function addWishlist(id){
-            var id = id;
-            var name = document.getElementById('name-'+id).value;
-            var price = document.getElementById('price-'+id).value;
-            var image = document.getElementById('image-'+id).src;
-            var url = document.getElementById('url-'+id).href;
-            var newItem = {
-                id: id,
-                name: name,
-                price: price,
-                image: image,
-                url: url,
-            };
-            if (localStorage.getItem('wishlist') == null) {
-                localStorage.setItem('wishlist', '[]');
-            }
-            var oldData = JSON.parse(localStorage.getItem('wishlist'));
-
-            var matches = $.grep(oldData, function(obj) {
-                return obj.id === id;
+                const offcanvasWishlist = document.querySelector('.offcanvas-wishlist');
+                wishlistItems[0].forEach(item => {
+                    const li = document.createElement('li');
+                    li.classList.add('offcanvas-wishlist-item-single');
+                    li.innerHTML = `
+                    <div class="offcanvas-wishlist-item-block">
+                        <a href="" class="offcanvas-wishlist-item-image-link">
+                            <img src="${item.cover_image}" alt="" class="offcanvas-cart-image">
+                        </a>
+                        <div class="offcanvas-wishlist-item-content">
+                            <a href="" class="offcanvas-wishlist-item-link">${item.title}</a>
+                            <div class="offcanvas-wishlist-item-details">
+                                <span class="offcanvas-wishlist-item-details-price">$${item.price}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="offcanvas-wishlist-item-delete text-right">
+                        <a class="offcanvas-wishlist-item-delete" id="deleteWishlist-${item.id}"><i class="fa fa-trash-o"></i></a>
+                    </div>
+                      `;
+                    offcanvasWishlist.appendChild(li);
+                });
+                const wishlistCount = document.querySelector('.count-wishlist');
+                wishlistCount.textContent = wishlistItems[0].length;
+            })
+            .catch(error => {
+                console.error(error);
             });
-
-            if (matches.length) {
-                swal({
-                    title: "Warning!",
-                    text: "This product already exists in your wishlist!",
-                    icon: "warning",
-                    button: "OK",
-                });
-            } else {
-                oldData.push(newItem);
-                $("#offcanvas-wishlist").append('<li class="offcanvas-wishlist-item-single">' +
-                    '<div class="offcanvas-wishlist-item-block">' +
-                    '<a href="' + url + '" class="offcanvas-wishlist-image-link">' +
-                    '<img src="' + image + '" alt="" class="offcanvas-wishlist-image">' +
-                    '</a><div class="offcanvas-wishlist-item-content"><a href="" class="offcanvas-wishlist-item-link">' + name + '</a>' +
-                    '<div class="offcanvas-wishlist-item-details"><span class="offcanvas-wishlist-item-details-quantity">1 x </span>' +
-                    '<span class="offcanvas-wishlist-item-details-price">' + price + '</span></div></div>' +
-                    '<div class="offcanvas-wishlist-item-delete text-right"><a href="#" class="offcanvas-wishlist-item-delete">' +
-                    '<i class="fa fa-trash-o" id="delete-'+id+'" onclick="deleteWishlist('+id+')"></i></a></div></div></li>');
-
-                swal({
-                    title: "Success!",
-                    text: "This product has been added to your wishlist!",
-                    icon: "success",
-                    button: "OK",
-                });
-            }
-            localStorage.setItem('wishlist', JSON.stringify(oldData));
-            countWishlist()
-        }
     </script>
 </body>
 

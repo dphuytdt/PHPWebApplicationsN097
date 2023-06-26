@@ -34,4 +34,27 @@ class CartRepository implements CartRepositoryInterface
             return false;
         }
     }
+
+    //get user cart book
+    public function getCartBook($userID, $bookID)
+    {
+        $cart = Cart::where('user_id', $userID)->where('book_id', $bookID)->first();
+        if($cart){
+            return $cart;
+        }else{
+            return false;
+        }
+    }
+
+    //delete cart
+    public function deleteCart($request)
+    {
+        $cart = Cart::where('user_id', $request->userID)->where('book_id', $request->bookID)->first();
+        if($cart){
+            $cart->delete();
+            return true;
+        }else{
+            return false;
+        }
+    }
 }

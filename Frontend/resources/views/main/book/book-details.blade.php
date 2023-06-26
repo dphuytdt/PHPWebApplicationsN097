@@ -547,7 +547,27 @@
                             @if($result['book']['content_type'] == '1')
                             <div class="content">
                                 <p>{{$result['book']['content']}}</p>
-                            @else
+
+{{--                                <embed id="pdfEmbed" src="https://www.buds.com.ua/images/Lorem_ipsum.pdf#toolbar=0&navpanes=0&scrollbar=0" type="application/pdf" width="100%" height="600px" />--}}
+{{--                                <script>--}}
+{{--                                    const embedElement = document.getElementById('pdfEmbed');--}}
+{{--                                    embedElement.addEventListener('contextmenu', function (event) {--}}
+{{--                                        if (event.ctrlKey || event.metaKey) {--}}
+{{--                                            // Allow right-click with Ctrl (Windows) or Command (Mac) for other purposes--}}
+{{--                                            return false;--}}
+{{--                                        }--}}
+
+{{--                                        event.preventDefault();--}}
+{{--                                    });--}}
+
+{{--                                    embedElement.addEventListener('mousedown', function (event) {--}}
+{{--                                        if (event.button === 2) {--}}
+{{--                                            // Prevent right-click from triggering the default browser context menu--}}
+{{--                                            event.preventDefault();--}}
+{{--                                        }--}}
+{{--                                    });--}}
+{{--                                </script>--}}
+                                @else
                             <div class="content">
                                 <img src="{{$result['book']['content']}}" alt="" class="center">
                             @endif
@@ -564,4 +584,30 @@
             </div>
         </div>
     </div>
+    {{-- <script src="{{ asset('node_modules/pdfjs-dist/build/pdf.js') }}"></script>
+    <script>
+        // Retrieve the URL of the PDF file
+        const pdfUrl = "{{ asset('path/to/your-pdf-file.pdf') }}";
+
+        // Asynchronous loading of the PDF document
+        pdfjsLib.getDocument(pdfUrl).promise.then(pdf => {
+            // Fetch the first page of the PDF
+            pdf.getPage(1).then(page => {
+                const canvas = document.createElement('canvas');
+                const context = canvas.getContext('2d');
+                canvas.width = 800; // Adjust the width as needed
+                canvas.height = 1000; // Adjust the height as needed
+
+                // Render the PDF page on the canvas
+                const renderContext = {
+                    canvasContext: context,
+                    viewport: page.getViewport({ scale: 1 })
+                };
+                page.render(renderContext).promise.then(() => {
+                    // Append the canvas to the PDF viewer container
+                    document.getElementById('pdf-viewer').appendChild(canvas);
+                });
+            });
+        });
+    </script> --}}
 @endsection

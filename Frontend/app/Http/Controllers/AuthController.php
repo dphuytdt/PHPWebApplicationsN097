@@ -9,6 +9,8 @@ use App\Models\Province;
 use App\Models\District;
 use App\Models\Ward;
 use App\Services\CategoryService;
+use Illuminate\Support\Facades\Session;
+
 
 class AuthController extends Controller
 {
@@ -85,6 +87,10 @@ class AuthController extends Controller
             session()->forget('token');
             session()->forget('user');
             session()->forget('role');
+            session()->forget('user_id');
+
+            //clear local storage
+            Session::forget('wishlist');
 
             // Chuyển hướng đến trang đăng nhập
             return redirect()->intended('/')->with('message', 'Logout successful');

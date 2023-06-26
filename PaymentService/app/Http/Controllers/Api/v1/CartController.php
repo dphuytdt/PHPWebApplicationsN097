@@ -16,20 +16,28 @@ class CartController extends Controller
 
     public function add(Request $request)
     {
-       $result = $this->cartRepository->add($request);
-       if($result){
-           return response()->json([
-               'status' => 'success',
-               'message' => 'Book added to cart successfully',
-               'data' => $result
-           ], 200);
-         }else{
+        $cart = $this->cartRepository->getCartBook($request->userID, $request->bookID);
+        if($cart){
             return response()->json([
                 'status' => 'error',
-                'message' => 'Book not added to cart',
-                'data' => null
+                'message' => 'Book already in cart'
             ], 400);
-         }
+        }else{
+            $result = $this->cartRepository->add($request);
+            if($result){
+                return response()->json([
+                    'status' => 'success',
+                    'message' => 'Book added to cart successfully',
+                    'data' => $result
+                ], 200);
+            }else{
+                return response()->json([
+                    'status' => 'error',
+                    'message' => 'Book not added to cart',
+                    'data' => null
+                ], 400);
+            }
+        }
     }
 
     public function getCart($userID)
@@ -44,5 +52,23 @@ class CartController extends Controller
                  'status' => 'error',
              ], 400);
           }
+    }
+
+    public function deleteCart(Request $request)
+    {
+        $result = $this->cartRepository->deleteCart($request);
+        if($result){
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Book deleted from cart successfully',
+                'data' => $result
+            ], 200);
+        }else{
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Book not deleted from cart',
+                'data' => null
+            ], 400);
+        }
     }
 }

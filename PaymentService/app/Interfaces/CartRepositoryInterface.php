@@ -9,4 +9,8 @@ interface CartRepositoryInterface
 
     public function getCart($userID);
 
+    public function getCartBook($userID, $bookID);
+
+    public function deleteCart(Request $request);
+
 }

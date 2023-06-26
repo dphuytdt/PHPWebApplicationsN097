@@ -23,16 +23,16 @@ use App\Http\Controllers\CartController;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
-Route::get('/book-details/{id}' , [BookController::class, 'bookDetails'])->name('bookDetails');
+Route::get('book-details/{id}' , [BookController::class, 'bookDetails'])->name('bookDetails');
 //search book
-Route::get('/search/{page?}', [BookController::class, 'search'])->name('search');
+Route::get('search/{page?}', [BookController::class, 'search'])->name('search');
 
-Route::get('/about', [HomeController::class, 'about'])->name('about');
+Route::get('about', [HomeController::class, 'about'])->name('about');
 
-Route::get('/contact', [HomeController::class, 'contact'])->name('contact');
+Route::get('contact', [HomeController::class, 'contact'])->name('contact');
 
 //category
-Route::get('/category/{id}', [BookController::class, 'category'])->name('category');
+Route::get('category/{id}', [BookController::class, 'category'])->name('category');
 
 
 Route::group(['prefix' => 'wishlist'], function () {
