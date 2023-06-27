@@ -721,27 +721,26 @@
                     li.classList.add('offcanvas-wishlist-item-single');
 
                     li.innerHTML = `
-          <div class="offcanvas-wishlist-item-block">
-            <a href="" class="offcanvas-wishlist-item-image-link">
-              <img src="${item.cover_image}" alt="" class="offcanvas-cart-image">
-            </a>
-            <div class="offcanvas-wishlist-item-content">
-              <a href="" class="offcanvas-wishlist-item-link">${item.title}</a>
-              <div class="offcanvas-wishlist-item-details">
-                <span class="offcanvas-wishlist-item-details-price">$${item.price}</span>
-              </div>
-            </div>
-          </div>
-          <div class="offcanvas-wishlist-item-delete text-right">
-            <a class="offcanvas-wishlist-item-delete" id="deleteWishlist-${item.book_id}" onclick="deleteWishlistItem(${item.book_id})"><i class="fa fa-trash-o"></i></a>
-          </div>
-        `;
+                          <div class="offcanvas-wishlist-item-block">
+                            <a href="" class="offcanvas-wishlist-item-image-link">
+                              <img src="${item.cover_image}" alt="" class="offcanvas-cart-image">
+                            </a>
+                            <div class="offcanvas-wishlist-item-content">
+                              <a href="" class="offcanvas-wishlist-item-link">${item.title}</a>
+                              <div class="offcanvas-wishlist-item-details">
+                                <span class="offcanvas-wishlist-item-details-price">$${item.price}</span>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="offcanvas-wishlist-item-delete text-right">
+                            <a class="offcanvas-wishlist-item-delete" id="deleteWishlist-${item.book_id}" onclick="deleteWishlistItem(${item.book_id})"><i class="fa fa-trash-o"></i></a>
+                          </div>
+                        `;
 
                     offcanvasWishlist.appendChild(li);
                 });
 
-                const wishlistCount = document.querySelector('.count-wishlist');
-                wishlistCount.textContent = wishlistItems[0].length;
+                updateWishlistCount(); // Update the wishlist count initially
             })
             .catch(error => {
                 console.error(error);
@@ -749,7 +748,6 @@
 
         function deleteWishlistItem(itemId) {
             const deleteUrl = "http://paymentservice.test:8080/api/wishlist/delete";
-            var userID = @json(session('user_id', ['id' => 'id']));
             const requestData = {
                 bookID: itemId,
                 userID: userID
@@ -762,8 +760,7 @@
                     const wishlistItem = document.querySelector(`#deleteWishlist-${itemId}`).closest('.offcanvas-wishlist-item-single');
                     wishlistItem.remove();
 
-                    // Update the wishlist count
-                    updateWishlistCount();
+                    updateWishlistCount(); // Update the wishlist count after item deletion
                 })
                 .catch(error => {
                     console.error(error);
@@ -776,6 +773,7 @@
             wishlistCount.textContent = wishlistItems.length;
         }
     </script>
+
 
 </body>
 
