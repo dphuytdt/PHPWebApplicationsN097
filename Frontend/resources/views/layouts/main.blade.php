@@ -631,11 +631,12 @@
                             <a href="" class="offcanvas-cart-item-link">${item.title}</a>
                             <div class="offcanvas-cart-item-details">
                               <span class="offcanvas-cart-item-details-price">$${item.price}</span>
+
                             </div>
                           </div>
                         </div>
                         <div class="offcanvas-cart-item-delete text-right">
-                          <a  class="offcanvas-cart-item-delete" id="deleteCart-${item.id}"><i class="fa fa-trash-o"></i></a>
+                          <a  class="offcanvas-cart-item-delete" id="deleteCart-${item.book_id}" onclick="deleteCartItem(${item.book_id})"><i class="fa fa-trash-o"></i></a>
                         </div>
                       `;
                     // Append the <li> element to the <ul> element
@@ -657,44 +658,125 @@
             .catch(error => {
                 console.error(error);
             });
+
+
+
+        function deleteCartItem(itemId) {
+            var userID = @json(session('user_id', ['id' => 'id']));
+            const deleteUrl = "http://paymentservice.test:8080/api/cart/delete";
+            const requestData = {
+                bookID: itemId,
+                userID: userID
+            };
+            // console.log(requestData);
+
+            axios.post(deleteUrl, requestData)
+                .then(response => {
+                    // Item deleted successfully from the database
+                    // Remove the item from the UI
+                    const cartItem = document.querySelector(`#deleteCart-${itemId}`).closest('.offcanvas-cart-item-single');
+                    cartItem.remove();
+
+                    // Update the total price and item count
+                    updateTotalPrice();
+                    updateItemCount();
+                })
+                .catch(error => {
+                    console.error(error);
+                });
+        }
+
+        function updateTotalPrice() {
+            const items = document.querySelectorAll('.offcanvas-cart-item-details-price');
+            let totalPrice = 0;
+
+            items.forEach(item => {
+                const price = parseFloat(item.textContent.replace('$', ''));
+                totalPrice += price;
+            });
+
+            const totalPriceElement = document.querySelector('.offcanvas-cart-total-price-value');
+            totalPriceElement.textContent = totalPrice.toFixed(2) + '$';
+        }
+
+        function updateItemCount() {
+            const itemCountElement = document.querySelector('.cart-count');
+            const items = document.querySelectorAll('.offcanvas-cart-item-single');
+            itemCountElement.textContent = items.length;
+        }
     </script>
 
     <script type="text/javascript">
         var userID = @json(session('user_id', ['id' => 'id']));
         const urlWishlist = "http://paymentservice.test:8080/api/wishlist/get/" + userID;
+
         axios.get(urlWishlist)
             .then(response => {
                 const wishlistItems = Object.values(response.data);
 
                 const offcanvasWishlist = document.querySelector('.offcanvas-wishlist');
+
                 wishlistItems[0].forEach(item => {
                     const li = document.createElement('li');
                     li.classList.add('offcanvas-wishlist-item-single');
+
                     li.innerHTML = `
-                    <div class="offcanvas-wishlist-item-block">
-                        <a href="" class="offcanvas-wishlist-item-image-link">
-                            <img src="${item.cover_image}" alt="" class="offcanvas-cart-image">
-                        </a>
-                        <div class="offcanvas-wishlist-item-content">
-                            <a href="" class="offcanvas-wishlist-item-link">${item.title}</a>
-                            <div class="offcanvas-wishlist-item-details">
-                                <span class="offcanvas-wishlist-item-details-price">$${item.price}</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="offcanvas-wishlist-item-delete text-right">
-                        <a class="offcanvas-wishlist-item-delete" id="deleteWishlist-${item.id}"><i class="fa fa-trash-o"></i></a>
-                    </div>
-                      `;
+          <div class="offcanvas-wishlist-item-block">
+            <a href="" class="offcanvas-wishlist-item-image-link">
+              <img src="${item.cover_image}" alt="" class="offcanvas-cart-image">
+            </a>
+            <div class="offcanvas-wishlist-item-content">
+              <a href="" class="offcanvas-wishlist-item-link">${item.title}</a>
+              <div class="offcanvas-wishlist-item-details">
+                <span class="offcanvas-wishlist-item-details-price">$${item.price}</span>
+              </div>
+            </div>
+          </div>
+          <div class="offcanvas-wishlist-item-delete text-right">
+            <a class="offcanvas-wishlist-item-delete" id="deleteWishlist-${item.book_id}" onclick="deleteWishlistItem(${item.book_id})"><i class="fa fa-trash-o"></i></a>
+          </div>
+        `;
+
                     offcanvasWishlist.appendChild(li);
                 });
+
                 const wishlistCount = document.querySelector('.count-wishlist');
                 wishlistCount.textContent = wishlistItems[0].length;
             })
             .catch(error => {
                 console.error(error);
             });
+
+        function deleteWishlistItem(itemId) {
+            const deleteUrl = "http://paymentservice.test:8080/api/wishlist/delete";
+            var userID = @json(session('user_id', ['id' => 'id']));
+            const requestData = {
+                bookID: itemId,
+                userID: userID
+            };
+
+            axios.post(deleteUrl, requestData)
+                .then(response => {
+                    // Item deleted successfully from the database
+                    // Remove the item from the UI
+                    const wishlistItem = document.querySelector(`#deleteWishlist-${itemId}`).closest('.offcanvas-wishlist-item-single');
+                    wishlistItem.remove();
+
+                    // Update the wishlist count
+                    updateWishlistCount();
+                })
+                .catch(error => {
+                    console.error(error);
+                });
+        }
+
+        function updateWishlistCount() {
+            const wishlistCount = document.querySelector('.count-wishlist');
+            const wishlistItems = document.querySelectorAll('.offcanvas-wishlist-item-single');
+            wishlistCount.textContent = wishlistItems.length;
+        }
     </script>
+
 </body>
 
 </html>
