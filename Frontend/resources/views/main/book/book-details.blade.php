@@ -9,6 +9,9 @@
     .btn-restart {
         display: none;
     }
+    .disable-print .toolbarButton.print {
+        display: none !important;
+    }
 </style>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
@@ -505,7 +508,7 @@
     <!-- Large modal -->
 
     <div class="modal fade bd-example-modal-lg-{{$result['book']['id']}}" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">>
-        <div class="modal-dialog modal-lg">
+        <div class="modal-dialog modal-fullscreen">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">{{$result['book']['title']}}</h5>
@@ -513,66 +516,9 @@
                       <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
+
                 <div class="modal-body">
-                    {{-- display content here with scroll bar --}}
-                    <div class="row">
-                        <div class="col-md-6">
-                            <img src="{{$result['book']['cover_image']}}" alt="" class="img-fluid">
-                        </div>
-                        <div class="col-md-6">
-                            <h3>{{$result['book']['title']}}</h3>
-                            <p>{{$result['book']['description']}}</p>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-12">
-                            <style type="text/css">
-                                .center {
-                                    display: block;
-                                    margin-left: auto;
-                                    margin-right: auto;
-                                    width: 50%;
-                                }
-                                .content {
-                                    text-align: justify;
-                                    text-justify: inter-word;
-                                    /* căn đều 2 bên */
-                                    padding-left: 30px;
-                                    padding-right: 30px;
-
-                                }
-                            </style>
-                            <br>
-                            <h3 class="text-center">Start Reading</h3>
-                            @if($result['book']['content_type'] == '1')
-                            <div class="content">
-                                <p>{{$result['book']['content']}}</p>
-
-{{--                                <embed id="pdfEmbed" src="https://www.buds.com.ua/images/Lorem_ipsum.pdf#toolbar=0&navpanes=0&scrollbar=0" type="application/pdf" width="100%" height="600px" />--}}
-{{--                                <script>--}}
-{{--                                    const embedElement = document.getElementById('pdfEmbed');--}}
-{{--                                    embedElement.addEventListener('contextmenu', function (event) {--}}
-{{--                                        if (event.ctrlKey || event.metaKey) {--}}
-{{--                                            // Allow right-click with Ctrl (Windows) or Command (Mac) for other purposes--}}
-{{--                                            return false;--}}
-{{--                                        }--}}
-
-{{--                                        event.preventDefault();--}}
-{{--                                    });--}}
-
-{{--                                    embedElement.addEventListener('mousedown', function (event) {--}}
-{{--                                        if (event.button === 2) {--}}
-{{--                                            // Prevent right-click from triggering the default browser context menu--}}
-{{--                                            event.preventDefault();--}}
-{{--                                        }--}}
-{{--                                    });--}}
-{{--                                </script>--}}
-                                @else
-                            <div class="content">
-                                <img src="{{$result['book']['content']}}" alt="" class="center">
-                            @endif
-                        </div>
-                    </div>
+                        <iframe src="https://www.soundczech.cz/temp/lorem-ipsum.pdf" width="100%" height="100%"  class="disable-print"></iframe>
 
                 </div>
                 <div class="modal-footer">
@@ -580,34 +526,16 @@
                     <button type="button" class="btn btn-primary">Bookmarked</button>
                 </div>
             </div>
-                </div>
-            </div>
         </div>
     </div>
-    {{-- <script src="{{ asset('node_modules/pdfjs-dist/build/pdf.js') }}"></script>
-    <script>
-        // Retrieve the URL of the PDF file
-        const pdfUrl = "{{ asset('path/to/your-pdf-file.pdf') }}";
-
-        // Asynchronous loading of the PDF document
-        pdfjsLib.getDocument(pdfUrl).promise.then(pdf => {
-            // Fetch the first page of the PDF
-            pdf.getPage(1).then(page => {
-                const canvas = document.createElement('canvas');
-                const context = canvas.getContext('2d');
-                canvas.width = 800; // Adjust the width as needed
-                canvas.height = 1000; // Adjust the height as needed
-
-                // Render the PDF page on the canvas
-                const renderContext = {
-                    canvasContext: context,
-                    viewport: page.getViewport({ scale: 1 })
-                };
-                page.render(renderContext).promise.then(() => {
-                    // Append the canvas to the PDF viewer container
-                    document.getElementById('pdf-viewer').appendChild(canvas);
-                });
-            });
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        var iframe = document.querySelector(".disable-print");
+        iframe.contentWindow.document.addEventListener("contextmenu", function(event) {
+            event.preventDefault();
         });
-    </script> --}}
+    });
+</script>
+
+
 @endsection

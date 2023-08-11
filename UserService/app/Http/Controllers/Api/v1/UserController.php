@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Interfaces\UserRepositoryInterface;
 use App\Interfaces\OTPRepositoryInterface;
 use Illuminate\Support\Facades\Validator;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Imports\UsersImport;
 
 class UserController extends Controller
 {
@@ -56,6 +58,22 @@ class UserController extends Controller
             return response()->json(['user_detail' => $user_detail]);
         } else {
             return response()->json(['message' => 'User not found']);
+        }
+    }
+
+    public function importUser(Request $request) {
+        $validator = Validator::make($request->all(), [
+            'file' => 'required|mimes:xlsx,xls,csv'
+        ]);
+        if ($validator->fails()) {
+            return response()->json($validator->errors(), 422);
+        }
+        $file = $request->file('file');
+        try {
+            Excel::import(new UsersImport, $file);
+            return response()->json(['message' => 'Import user successfully']);
+        } catch (\Exception|\Error $e) {
+            return response()->json(['message' => $e->getMessage()]);
         }
     }
 }

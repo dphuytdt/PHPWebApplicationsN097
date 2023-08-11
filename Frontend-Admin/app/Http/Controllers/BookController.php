@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
+use Spatie\PdfToText\Pdf;
 
 class BookController extends Controller
 {
@@ -41,7 +42,34 @@ class BookController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $client = new Client();
+        //bug: cannot upload file
+        //convert pdf to to base64
+        print_r($request->all());
+        $pdf = new Pdf($request->file('file'));
+        try{
+            // dd($request->all());
+            $response = $client->post($this->bookService.'admin/books', [
+                'json' => $request->all()
+            ]);
+        } catch (\Exception $e) {
+            print_r($e);
+        } catch (GuzzleException $e) {
+            print_r($e);
+        }
+        
+        // $result = json_decode($response->getBody(), true);
+        // dd($result);
+        // try{
+            
+        //     if ($result['status'] == 201) {
+        //         return redirect()->route('books.index')->with('success', 'Create book successfully');
+        //     } else {
+        //         return redirect()->route('books.index')->withErrors(['errors' => 'Cannot create book']);
+        //     }
+        // } catch (\Exception $e) {
+        //     return redirect()->route('books.index')->withErrors(['errors' => 'Cannot connect to server']);
+        // }
     }
 
     /**

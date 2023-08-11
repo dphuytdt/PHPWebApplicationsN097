@@ -51,11 +51,6 @@ Route::prefix('auth')->group(function () {
         Route::get('/', [AuthController::class, 'verifyPost'])->name('verify.get');
     });
 
-    // Route::prefix('choose')->group(function () {
-    //     Route::get('district', [AuthController::class, 'chooseDistrict'])->name('register.choose.district');
-    //     Route::get('ward', [AuthController::class, 'chooseWard'])->name('register.choose.ward');
-    // });
-
     Route::get('forgot-password', [AuthController::class, 'forgotPassword'])->name('forgotPassword');
     Route::post('forgot-password', [AuthController::class, 'postForgotPassword'])->name('postForgotPassword');
 
@@ -70,17 +65,18 @@ Route::prefix('auth')->group(function () {
         Route::post('/', [AuthController::class, 'postProfile'])->name('profile.update');
     });
 
-    Route::group(['prefix' => 'cart'], function () {
-        Route::post('add', [CartController::class, 'addToCart'])->name('cart.add');
-        Route::get('{id}', [CartController::class, 'getUserCart'])->name('cart.getUserCart');
-        Route::get('checkout', [CartController::class, 'checkout'])->name('cart.checkout');
-    });
-
     Route::get('upgrade', [UserController::class, 'upgrade'])->name('upgrade');
 
     Route::post('checkout', [PaymentController::class, 'checkOut'])->name('checkout');
 
     Route::get('vip-benefits', [UserController::class, 'vipBenefits'])->name('vipBenefits');
+});
+
+Route::group(['prefix' => 'cart'], function () {
+    Route::post('add', [CartController::class, 'addToCart'])->name('cart.add');
+    Route::post('payment', [CartController::class, 'payment'])->name('cart.payment');
+    Route::get('checkout/{id}', [CartController::class, 'checkOut'])->name('cart.checkOut');
+    Route::get('{id}', [CartController::class, 'getUserCart'])->name('cart.getUserCart');
 });
 
 //404 page

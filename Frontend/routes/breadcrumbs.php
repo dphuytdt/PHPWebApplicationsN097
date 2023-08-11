@@ -70,7 +70,7 @@ use DaveJamesMiller\Breadcrumbs\Facades\Breadcrumbs;
     });
 
     //checkout
-    Breadcrumbs::for('checkout', function ($trail) {
+    Breadcrumbs::for('checkOut', function ($trail) {
         $trail->parent('cart');
-        $trail->push('Checkout', route('cart.checkout'));
+        $trail->push('Checkout', route('cart.checkOut', session()->get('user')['id']));
     });

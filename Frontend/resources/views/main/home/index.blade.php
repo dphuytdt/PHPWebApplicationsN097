@@ -182,11 +182,11 @@
                                                     <input type="hidden" id="bookTitle" value="{{$news['title']}}">
                                                     <input type="hidden" id="bookImage" value="{{$news['cover_image']}}">
                                                     <input type="hidden" id="bookPrice" value="{{$news['price']}}">
-                                                    <li><a id="addWishlist-{{$news['id']}}"><i class="icon-heart"></i></a></li>
+                                                    <li><a id="addWishlist-{{$news['id']}}"  > <i class="icon-heart"></i></a></li>
                                                     <li><a href="compare.html"><i class="icon-repeat"></i></a></li>
                                                     <li><a href="#" data-toggle="modal" data-target="#modalQuickviewNewBook-{{$news['id']}}"><i class="icon-eye"></i></a></li>
                                                     @if($news['price'] != 0)
-                                                        <li><a id="addCart-{{$news['id']}}" href="" data-toggle="modal" data-target="#modalAddcartNewBook-{{$news['id']}}"><i class="icon-shopping-cart"></i></a></li>
+                                                        <li><a id="addCart-{{$news['id']}}"  data-toggle="modal" data-target="#modalAddcartNewBook-{{$news['id']}}"><i class="icon-shopping-cart"></i></a></li>
                                                     @endif
                                                 </ul>
                                             </div>

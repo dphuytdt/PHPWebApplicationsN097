@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\NewsController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\AuthController;
@@ -67,6 +68,11 @@ Route::group(['middleware' => 'check.auth'] , function(){
         Route::get('edit/{id}', [CommentController::class, 'edit'])->name('comments.edit');
         Route::post('update/{id}', [CommentController::class, 'update'])->name('comments.update');
         Route::get('delete/{id}', [CommentController::class, 'delete'])->name('comments.delete');
+    });
+    Route::group(['prefix' => 'news'], function () {
+        Route::get('/', [NewsController::class, 'index'])->name('news.index');
+        Route::get('create', [NewsController::class, 'create'])->name('news.create');
+        Route::post('store', [NewsController::class, 'store'])->name('news.store');
     });
     Route::fallback([HomeController::class, 'handleError'])->name('handleError');
 });

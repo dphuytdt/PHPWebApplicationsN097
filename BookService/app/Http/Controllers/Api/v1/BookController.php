@@ -47,6 +47,7 @@ class BookController extends Controller
     public function show(string $id)
     {
         $book = $this->bookRepository->getBookById($id);
+        $book['content'] = base64_decode($book['content']);
         $comments = $this->commentRepository->getCommentByBookId($id);
         $result = [
             'book' => $book,

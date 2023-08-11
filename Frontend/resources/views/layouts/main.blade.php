@@ -456,7 +456,7 @@
                     $user_id = session()->get('user')['id']
                 @endphp
                 <li class="offcanvas-cart-action-button-list"><a href="{{route('cart.getUserCart',$user_id)}}" class="offcanvas-cart-action-button-link">View Cart</a></li>
-                <li class="offcanvas-cart-action-button-list"><a href="{{route('cart.checkout')}}" class="offcanvas-cart-action-button-link">Checkout</a></li>
+                <li class="offcanvas-cart-action-button-list"><a href="{{route('cart.checkOut',$user_id)}}" class="offcanvas-cart-action-button-link">Checkout</a></li>
             @else
                 <li class="offcanvas-cart-action-button-list"><a class="offcanvas-cart-action-button-link">View Cart</a></li>
                 <li class="offcanvas-cart-action-button-list"><a  class="offcanvas-cart-action-button-link">Checkout</a></li>
@@ -605,24 +605,26 @@
 <script src="{{asset('assets/js/main.js')}}"></script>
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <script type="text/javascript">
-    var userID = @json(session('user_id', ['id' => 'id']));
-    const url = "http://paymentservice.test:8080/api/cart/get/" + userID;
+    function addCart(){
+        var userID = @json(session('user_id', ['id' => 'id']));
+        const url = "http://paymentservice.test:8080/api/cart/get/" + userID;
 
-    axios.get(url)
-        .then(response => {
-            const cartItems = Object.values(response.data); // Assuming the cart items are stored as values in the response object
-            // console.log(cartItems[0]);
-            // Select the <ul> element with the class "offcanvas-cart"
-            const offcanvasCart = document.querySelector('.offcanvas-cart');
-            let totalPrice = 0;
-            // Loop through the cart items and generate the <li> elements
-            cartItems[0].forEach(item => {
-                // Create the <li> element
-                const li = document.createElement('li');
-                li.classList.add('offcanvas-cart-item-single');
-                // Create the inner HTML for the <li> element
-                //console.log(item);
-                li.innerHTML = `
+        axios.get(url)
+            .then(response => {
+                // console.log('abc'  );
+                const cartItems = Object.values(response.data); // Assuming the cart items are stored as values in the response object
+                // console.log(cartItems[0]);
+                // Select the <ul> element with the class "offcanvas-cart"
+                const offcanvasCart = document.querySelector('.offcanvas-cart');
+                let totalPrice = 0;
+                // Loop through the cart items and generate the <li> elements
+                cartItems[0].forEach(item => {
+                    // Create the <li> element
+                    const li = document.createElement('li');
+                    li.classList.add('offcanvas-cart-item-single');
+                    // Create the inner HTML for the <li> element
+                    //console.log(item);
+                    li.innerHTML = `
                         <div class="offcanvas-cart-item-block">
                           <a href="" class="offcanvas-cart-item-image-link">
                             <img src="${item.cover_image}" alt="" class="offcanvas-cart-image">
@@ -639,30 +641,30 @@
                           <a  class="offcanvas-cart-item-delete" id="deleteCart-${item.book_id}" onclick="deleteCartItem(${item.book_id})"><i class="fa fa-trash-o"></i></a>
                         </div>
                       `;
-                // Append the <li> element to the <ul> element
-                totalPrice += parseFloat(item.price);
-                offcanvasCart.appendChild(li);
+                    // Append the <li> element to the <ul> element
+                    totalPrice += parseFloat(item.price);
+                    offcanvasCart.appendChild(li);
+                    console.log(totalPrice);
+                });
+
+                // Select the <span> element with the class "offcanvas-cart-total-price-value"
+                const totalPriceElement = document.querySelector('.offcanvas-cart-total-price-value');
+
+                // Set the total price value in the HTML
+                totalPriceElement.textContent = totalPrice.toFixed(2) + '$';// Assuming you want to display the total with 2 decimal places
+
+                const itemCountElement = document.querySelector('.cart-count');
+
+                itemCountElement.textContent = cartItems[0].length;
+
+                updateTotalPrice();
+
+                updateItemCount();
+            })
+            .catch(error => {
+                console.error(error);
             });
-
-            // Select the <span> element with the class "offcanvas-cart-total-price-value"
-            const totalPriceElement = document.querySelector('.offcanvas-cart-total-price-value');
-
-            // Set the total price value in the HTML
-            totalPriceElement.textContent = totalPrice.toFixed(2) + '$';// Assuming you want to display the total with 2 decimal places
-
-            const itemCountElement = document.querySelector('.cart-count');
-
-            itemCountElement.textContent = cartItems[0].length;
-
-            updateTotalPrice();
-
-            updateItemCount();
-        })
-        .catch(error => {
-            console.error(error);
-        });
-
-
+    }
 
     function deleteCartItem(itemId) {
         var userID = @json(session('user_id', ['id' => 'id']));
@@ -704,48 +706,54 @@
 
     function updateItemCount() {
 
+        const items = document.querySelectorAll('.offcanvas-cart-item-single');
+        const itemCountElement = document.querySelector('.cart-count');
+        itemCountElement.textContent = items.length;
+
     }
 </script>
 
 <script type="text/javascript">
-    var userID = @json(session('user_id', ['id' => 'id']));
-    const urlWishlist = "http://paymentservice.test:8080/api/wishlist/get/" + userID;
+    // function addWishlist(){
+        var userID = @json(session('user_id', ['id' => 'id']));
+        const urlWishlist = "http://paymentservice.test:8080/api/wishlist/get/" + userID;
 
-    axios.get(urlWishlist)
-        .then(response => {
-            const wishlistItems = Object.values(response.data);
+        axios.get(urlWishlist)
+            .then(response => {
+                const wishlistItems = Object.values(response.data);
 
-            const offcanvasWishlist = document.querySelector('.offcanvas-wishlist');
+                const offcanvasWishlist = document.querySelector('.offcanvas-wishlist');
 
-            wishlistItems[0].forEach(item => {
-                const li = document.createElement('li');
-                li.classList.add('offcanvas-wishlist-item-single');
+                wishlistItems[0].forEach(item => {
+                    const li = document.createElement('li');
+                    li.classList.add('offcanvas-wishlist-item-single');
 
-                li.innerHTML = `
-                          <div class="offcanvas-wishlist-item-block">
-                            <a href="" class="offcanvas-wishlist-item-image-link">
-                              <img src="${item.cover_image}" alt="" class="offcanvas-cart-image">
-                            </a>
-                            <div class="offcanvas-wishlist-item-content">
-                              <a href="" class="offcanvas-wishlist-item-link">${item.title}</a>
-                              <div class="offcanvas-wishlist-item-details">
-                                <span class="offcanvas-wishlist-item-details-price">$${item.price}</span>
+                    li.innerHTML = `
+                              <div class="offcanvas-wishlist-item-block">
+                                <a href="" class="offcanvas-wishlist-item-image-link">
+                                  <img src="${item.cover_image}" alt="" class="offcanvas-cart-image">
+                                </a>
+                                <div class="offcanvas-wishlist-item-content">
+                                  <a href="" class="offcanvas-wishlist-item-link">${item.title}</a>
+                                  <div class="offcanvas-wishlist-item-details">
+                                    <span class="offcanvas-wishlist-item-details-price">$${item.price}</span>
+                                  </div>
+                                </div>
                               </div>
-                            </div>
-                          </div>
-                          <div class="offcanvas-wishlist-item-delete text-right">
-                            <a class="offcanvas-wishlist-item-delete" id="deleteWishlist-${item.book_id}" onclick="deleteWishlistItem(${item.book_id})"><i class="fa fa-trash-o"></i></a>
-                          </div>
-                        `;
+                              <div class="offcanvas-wishlist-item-delete text-right">
+                                <a class="offcanvas-wishlist-item-delete" id="deleteWishlist-${item.book_id}" onclick="deleteWishlistItem(${item.book_id})"><i class="fa fa-trash-o"></i></a>
+                              </div>
+                            `;
 
-                offcanvasWishlist.appendChild(li);
+                    offcanvasWishlist.appendChild(li);
+                });
+
+                updateWishlistCount(); // Update the wishlist count initially
+            })
+            .catch(error => {
+                console.error(error);
             });
-
-            updateWishlistCount(); // Update the wishlist count initially
-        })
-        .catch(error => {
-            console.error(error);
-        });
+    // }
 
     function deleteWishlistItem(itemId) {
         const deleteUrl = "http://paymentservice.test:8080/api/wishlist/delete";

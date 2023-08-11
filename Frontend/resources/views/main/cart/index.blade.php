@@ -8,7 +8,7 @@
             <div class="row">
                 <div class="col-12 d-flex justify-content-between justify-content-md-between  align-items-center flex-md-row flex-column">
                     <h3 class="breadcrumb-title">Cart</h3>
-                    {{ Breadcrumbs::render('checkout') }}
+                    {{ Breadcrumbs::render('cart') }}
                 </div>
             </div>
         </div>
@@ -57,9 +57,6 @@
                                 </tbody>
                             </table>
                         </div>
-                        <div class="cart_submit">
-                            <button type="submit">update cart</button>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -85,21 +82,15 @@
                         <h3>Cart Totals</h3>
                         <div class="coupon_inner">
                             <div class="cart_subtotal">
-                                <p>Subtotal</p>
+                                <p>Total</p>
                                 <p class="cart_amount">${{$subtotal}}</p>
                             </div>
-                            <div class="cart_subtotal ">
-                                <p>Shipping</p>
-                                <p class="cart_amount"><span>Flat Rate:</span> $255.00</p>
-                            </div>
-                            <a href="#">Calculate shipping</a>
 
-                            <div class="cart_subtotal">
-                                <p>Total</p>
-                                <p class="cart_amount">$215.00</p>
-                            </div>
                             <div class="checkout_btn">
-                                <a href="#">Proceed to Checkout</a>
+                                @php
+                                    $user_id = session()->get('user')['id']
+                                @endphp
+                                <a href="{{route('cart.checkOut', $user_id)}}">Proceed to Checkout</a>
                             </div>
                         </div>
                     </div>

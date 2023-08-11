@@ -71,4 +71,26 @@ class CartController extends Controller
             ], 400);
         }
     }
+
+    public function checkout(Request $request)
+    {   
+        $bookId = $request['bookId'];
+        $userId = $request['userID'];
+
+        $result = $this->cartRepository->checkout($userId, $bookId);
+        
+        if($result){
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Checkout successfully',
+                'data' => $result
+            ], 200);
+        }else{
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Checkout failed',
+                'data' => null
+            ], 400);
+        }
+    }
 }

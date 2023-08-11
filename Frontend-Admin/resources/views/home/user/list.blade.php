@@ -52,7 +52,7 @@
                                     <td>{{$user['email']}}</td>
                                     <td>{{$user['user_detail']['wallet']}}</td>
                                     <td>
-                                        @if($user['role_id'] == 1)
+                                        @if($user['role'] == "ROLE_USER")
                                             <span class="badge badge-danger">User</span>
                                         @else
                                             <span class="badge badge-success">Admin</span>

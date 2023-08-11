@@ -8,7 +8,7 @@
                 <div class="row">
                     <div class="col-12 d-flex justify-content-between justify-content-md-between  align-items-center flex-md-row flex-column">
                         <h3 class="breadcrumb-title">Checkout</h3>
-                        {{ Breadcrumbs::render('checkout') }}
+                        {{ Breadcrumbs::render('checkOut') }}
                     </div>
                 </div>
             </div>
@@ -21,36 +21,6 @@
             <div class="row">
                 <!-- User Quick Action Form -->
                 <div class="col-12">
-                    <div class="user-actions accordion">
-                        <h3>
-                            <i class="fa fa-file-o" aria-hidden="true"></i>
-                            Returning customer?
-                            <a class="Returning" href="#" data-toggle="collapse" data-target="#checkout_login" aria-expanded="true">Click here to login</a>
-                        </h3>
-                        <div id="checkout_login" class="collapse" data-parent="#checkout_login">
-                            <div class="checkout_info">
-                                <p>If you have shopped with us before, please enter your details in the boxes below. If you are a new customer please proceed to the Billing &amp; Shipping section.</p>
-                                <form action="#">
-                                    <div class="form_group default-form-box">
-                                        <label>Username or email <span>*</span></label>
-                                        <input type="text">
-                                    </div>
-                                    <div class="form_group default-form-box">
-                                        <label>Password <span>*</span></label>
-                                        <input type="password">
-                                    </div>
-                                    <div class="form_group group_3 default-form-box">
-                                        <button type="submit">Login</button>
-                                        <label class="checkbox-default">
-                                            <input type="checkbox">
-                                            <span>Remember me</span>
-                                        </label>
-                                    </div>
-                                    <a href="#">Lost your password?</a>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
                     <div class="user-actions accordion">
                         <h3>
                             <i class="fa fa-file-o" aria-hidden="true"></i>
@@ -77,177 +47,36 @@
                         <form action="#">
                             <h3>Billing Details</h3>
                             <div class="row">
-                                <div class="col-lg-6 mb-20">
+                                <div class="col-12 mb-20">
                                     <div class="default-form-box">
-                                        <label>First Name <span>*</span></label>
+                                        <label>Card ID <span>*</span></label>
+                                        <input type="text">
+                                    </div>
+                                </div>
+                                <div class="col-12 mb-20">
+                                    <div class="default-form-box">
+                                        <label>Card Number <span>*</span></label>
                                         <input type="text">
                                     </div>
                                 </div>
                                 <div class="col-lg-6 mb-20">
                                     <div class="default-form-box">
-                                        <label>Last Name <span>*</span></label>
-                                        <input type="text">
-                                    </div>
-                                </div>
-                                <div class="col-12 mb-20">
-                                    <div class="default-form-box">
-                                        <label>Company Name</label>
-                                        <input type="text">
-                                    </div>
-                                </div>
-                                <div class="col-12 mb-20">
-                                    <div class="default-form-box">
-                                        <label for="country">country <span>*</span></label>
-                                        <select class="country_option nice-select wide" name="country" id="country">
-                                            <option value="2">Bangladesh</option>
-                                            <option value="3">Algeria</option>
-                                            <option value="4">Afghanistan</option>
-                                            <option value="5">Ghana</option>
-                                            <option value="6">Albania</option>
-                                            <option value="7">Bahrain</option>
-                                            <option value="8">Colombia</option>
-                                            <option value="9">Dominican Republic</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-12 mb-20">
-                                    <div class="default-form-box">
-                                        <label>Street address <span>*</span></label>
-                                        <input placeholder="House number and street name" type="text">
-                                    </div>
-                                </div>
-                                <div class="col-12 mb-20">
-                                    <div class="default-form-box">
-                                        <input placeholder="Apartment, suite, unit etc. (optional)" type="text">
-                                    </div>
-                                </div>
-                                <div class="col-12 mb-20">
-                                    <div class="default-form-box">
-                                        <label>Town / City <span>*</span></label>
-                                        <input type="text">
-                                    </div>
-                                </div>
-                                <div class="col-12 mb-20">
-                                    <div class="default-form-box">
-                                        <label>State / County <span>*</span></label>
+                                        <label>Date Expire<span>*</span></label>
                                         <input type="text">
                                     </div>
                                 </div>
                                 <div class="col-lg-6 mb-20">
                                     <div class="default-form-box">
-                                        <label>Phone<span>*</span></label>
-                                        <input type="text">
-                                    </div>
-                                </div>
-                                <div class="col-lg-6 mb-20">
-                                    <div class="default-form-box">
-                                        <label> Email Address <span>*</span></label>
-                                        <input type="text">
-                                    </div>
-                                </div>
-                                <div class="col-12">
-                                    <label class="checkbox-default" for="newAccount" data-toggle="collapse" data-target="#newAccountPassword">
-                                        <input type="checkbox" id="newAccount">
-                                        <span>Create an account?</span>
-                                    </label>
-                                    <div id="newAccountPassword" class="collapse" data-parent="#newAccountPassword">
-                                        <div class="card-body1 default-form-box">
-                                            <label> Account password <span>*</span></label>
-                                            <input placeholder="password" type="password">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-12 mb-20">
-                                    <label class="checkbox-default" for="newShipping" data-toggle="collapse" data-target="#anotherShipping">
-                                        <input type="checkbox" id="newShipping">
-                                        <span>Ship to a different address?</span>
-                                    </label>
-
-                                    <div id="anotherShipping" class="collapse" data-parent="#anotherShipping">
-                                        <div class="row">
-                                            <div class="col-lg-6 mb-20">
-                                                <div class="default-form-box">
-                                                    <label>First Name <span>*</span></label>
-                                                    <input type="text">
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-6 mb-20">
-                                                <div class="default-form-box">
-                                                    <label>Last Name <span>*</span></label>
-                                                    <input type="text">
-                                                </div>
-                                            </div>
-                                            <div class="col-12 mb-20">
-                                                <div class="default-form-box">
-                                                    <label>Company Name</label>
-                                                    <input type="text">
-                                                </div>
-                                            </div>
-                                            <div class="col-12 mb-20">
-                                                <div class="select_form_select default-form-box">
-                                                    <label for="countru_name">country <span>*</span></label>
-                                                    <select class="niceselect_option wide" name="cuntry" id="countru_name">
-                                                        <option value="2">Bangladesh</option>
-                                                        <option value="3">Algeria</option>
-                                                        <option value="4">Afghanistan</option>
-                                                        <option value="5">Ghana</option>
-                                                        <option value="6">Albania</option>
-                                                        <option value="7">Bahrain</option>
-                                                        <option value="8">Colombia</option>
-                                                        <option value="9">Dominican Republic</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-
-                                            <div class="col-12 mb-20">
-                                                <div class="default-form-box">
-                                                    <label>Street address <span>*</span></label>
-                                                    <input placeholder="House number and street name" type="text">
-                                                </div>
-                                            </div>
-                                            <div class="col-12 mb-20">
-                                                <div class="default-form-box">
-                                                    <input placeholder="Apartment, suite, unit etc. (optional)" type="text">
-                                                </div>
-                                            </div>
-                                            <div class="col-12 mb-20">
-                                                <div class="default-form-box">
-                                                    <label>Town / City <span>*</span></label>
-                                                    <input type="text">
-                                                </div>
-                                            </div>
-                                            <div class="col-12 mb-20">
-                                                <div class="default-form-box">
-                                                    <label>State / County <span>*</span></label>
-                                                    <input type="text">
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-6 mb-20">
-                                                <div class="default-form-box">
-                                                    <label>Phone<span>*</span></label>
-                                                    <input type="text">
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-6">
-                                                <div class="default-form-box">
-                                                    <label> Email Address <span>*</span></label>
-                                                    <input type="text">
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-12">
-                                    <div class="order-notes">
-                                        <label for="order_note">Order Notes</label>
-                                        <textarea id="order_note" placeholder="Notes about your order, e.g. special notes for delivery."></textarea>
+                                        <label>CVV<span>*</span></label>
+                                        <input type="number">
                                     </div>
                                 </div>
                             </div>
                         </form>
                     </div>
                     <div class="col-lg-6 col-md-6">
-                        <form action="#">
+                        <form method="post" action="{{route('cart.payment')}}">
+                            @csrf
                             <h3>Your order</h3>
                             <div class="order_table table-responsive">
                                 <table>
@@ -258,65 +87,31 @@
                                         </tr>
                                     </thead>
                                     <tbody>
+                                    @php
+                                        $total = 0;
+                                    @endphp
+                                    @foreach($cart as $item)
+                                        @php
+                                            $total += $item->price;
+                                        @endphp
                                         <tr>
-                                            <td> Handbag fringilla <strong> × 2</strong></td>
-                                            <td> $165.00</td>
+                                            <td> {{$item->title}}</td>
+                                            <td> {{$item->price}}</td>
                                         </tr>
-                                        <tr>
-                                            <td> Handbag justo <strong> × 2</strong></td>
-                                            <td> $50.00</td>
-                                        </tr>
-                                        <tr>
-                                            <td> Handbag elit <strong> × 2</strong></td>
-                                            <td> $50.00</td>
-                                        </tr>
-                                        <tr>
-                                            <td> Handbag Rutrum <strong> × 1</strong></td>
-                                            <td> $50.00</td>
-                                        </tr>
+                                        <input type="hidden" name="bookiD[]" value="{{$item->book_id}}">
+                                    @endforeach
                                     </tbody>
                                     <tfoot>
-                                        <tr>
-                                            <th>Cart Subtotal</th>
-                                            <td>$215.00</td>
-                                        </tr>
-                                        <tr>
-                                            <th>Shipping</th>
-                                            <td><strong>$5.00</strong></td>
-                                        </tr>
                                         <tr class="order_total">
                                             <th>Order Total</th>
-                                            <td><strong>$220.00</strong></td>
+                                            <td><strong> {{$total}}</strong></td>
                                         </tr>
                                     </tfoot>
                                 </table>
                             </div>
                             <div class="payment_method">
-                                <div class="panel-default">
-                                    <label class="checkbox-default" for="currencyCod" data-toggle="collapse" data-target="#methodCod">
-                                        <input type="checkbox" id="currencyCod">
-                                        <span>Cash on Delivery</span>
-                                    </label>
-
-                                    <div id="methodCod" class="collapse" data-parent="#methodCod">
-                                        <div class="card-body1">
-                                            <p>Please send a check to Store Name, Store Street, Store Town, Store State / County, Store Postcode.</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="panel-default">
-                                    <label class="checkbox-default" for="currencyPaypal" data-toggle="collapse" data-target="#methodPaypal">
-                                        <input type="checkbox" id="currencyPaypal">
-                                        <span>PayPal</span>
-                                    </label>
-                                    <div id="methodPaypal" class="collapse " data-parent="#methodPaypal">
-                                        <div class="card-body1">
-                                            <p>Pay via PayPal; you can pay with your credit card if you don’t have a PayPal account.</p>
-                                        </div>
-                                    </div>
-                                </div>
                                 <div class="order_button pt-15">
-                                    <button type="submit">Proceed to PayPal</button>
+                                    <button id="proceedToPayBtn" name="redirect" type="submit">Proceed to Pay</button>
                                 </div>
                             </div>
                         </form>
@@ -325,4 +120,32 @@
             </div> <!-- Start User Details Checkout Form -->
         </div>
     </div><!-- ...:::: End Checkout Section:::... -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+{{--<script>--}}
+{{--    $(document).ready(function() {--}}
+{{--        // function to handle the button click--}}
+{{--        $("#proceedToPayBtn").click(function(e) {--}}
+{{--            e.preventDefault();--}}
+{{--            var bookId = $("input[name='bookiD[]']").map(function(){return $(this).val();}).get();--}}
+{{--            var userID = @json(session('user_id', ['id' => 'id']));--}}
+{{--            var url = "http://paymentservice.test:8080/api/cart/checkout";--}}
+{{--            var __token = $('meta[name="csrf-token"]').attr('content');--}}
+{{--            // make the AJAX request--}}
+{{--            $.ajax({--}}
+{{--                type: "POST",--}}
+{{--                url: url,--}}
+{{--                data: { bookId: bookId , userID: userID, __token: __token},--}}
+{{--                success: function(data) {--}}
+{{--                    // handle success response--}}
+{{--                    console.log("Payment successful");--}}
+{{--                },--}}
+{{--                error: function(xhr, status, error) {--}}
+{{--                    // handle error response--}}
+{{--                    console.log("Error making payment: " + error);--}}
+{{--                }--}}
+{{--            });--}}
+{{--        });--}}
+{{--    });--}}
+{{--</script>--}}
 @endsection

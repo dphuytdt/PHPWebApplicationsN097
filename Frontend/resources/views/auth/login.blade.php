@@ -48,7 +48,7 @@
                             </div>
                             <div class="default-form-box mb-20">
                                 <label>Passwords <span>*</span></label>
-                                <input type="password" name="password" data-label="Password" id="password" value="{{ old('password') }}">
+                                <label for="password"></label><input type="password" name="password" data-label="Password" id="password" value="{{ old('password') }}">
                                 {{-- <i class="fas fa-eye password-toggle-icon" id="psw-toggle" onclick="togglePasswordVisibility('password')"></i> --}}
                             </div>
                             <div class="login_submit">
@@ -73,19 +73,19 @@
                             @csrf
                             <div class="default-form-box mb-20">
                                 <label>Full Name <span>*</span></label>
-                                <input type="text" name="fullname" id="fullname" data-label="Full Name">
+                                <label for="fullname"></label><input type="text" name="fullname" id="fullname" data-label="Full Name">
                             </div>
                             <div class="default-form-box mb-20">
                                 <label>Email address <span>*</span></label>
-                                <input type="text" name="email" id="email" data-label="Email Address">
+                                <label for="email"></label><input type="text" name="email" id="email" data-label="Email Address">
                             </div>
                             <div class="default-form-box mb-20">
                                 <label>Passwords <span>*</span></label>
-                                <input type="password" name="password" id="password" data-label="Password">
+                                <label for="passwordRe"></label><input type="password" name="passwordRe" id="passwordRe" data-label="Password">
                             </div>
                             <div class="default-form-box mb-20">
                                 <label>Passwords Confirm <span>*</span></label>
-                                <input type="password" name="password_confirmation" id="password_confirmation" data-label="Password Confirm">
+                                <label for="password_confirmation"></label><input type="password" name="password_confirmation" id="password_confirmation" data-label="Password Confirm">
                             </div>
                             <div class="login_submit">
                                 <button type="submit">Register</button>

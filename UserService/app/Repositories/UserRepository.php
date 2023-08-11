@@ -45,7 +45,6 @@ class UserRepository implements UserRepositoryInterface
     public function createUser($data) 
     {
         $user = $this->user->create($data);
-        //create user detail
         $user_detail = new UserDetail();
         $user_detail->user_id = $user->id;
         $user_detail->save();

@@ -136,6 +136,21 @@
                     </div>
                 </div>
             </li>
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePagesNews"
+                   aria-expanded="true" aria-controls="collapsePages">
+                    <i class="fas fa-newspaper"></i>
+                    <span>News Managements</span>
+                </a>
+                <div id="collapsePagesNews" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">Slide</h6>
+                        <a class="collapse-item" href="{{ route('news.index') }}">List News</a>
+                        <a class="collapse-item" href="{{ route('news.create') }}">Create News</a>
+                    </div>
+                </div>
+            </li>
+
 
             <!-- Nav Item - Charts -->
             <li class="nav-item">

@@ -23,6 +23,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::prefix('cart')->group(function () {
     Route::post('add', [CartController::class, 'add']);
     Route::post('delete', [CartController::class, 'deleteCart']);
+    Route::post('checkout', [CartController::class, 'checkout']);
     Route::get('get/{userID}', [CartController::class, 'getCart']);
 });
 

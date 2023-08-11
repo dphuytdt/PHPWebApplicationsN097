@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Interfaces\BookRepositoryInterface;
 use Illuminate\Support\Facades\Validator;
+use Spatie\PdfToText\Pdf;
+use Illuminate\Support\Facades\Storage;
 class AdminBookController extends Controller
 {
     protected BookRepositoryInterface $bookRepository;
@@ -27,21 +29,7 @@ class AdminBookController extends Controller
      */
     public function store(Request $request)
     {
-        $validator = Validator::make($request->all(), [
-            'title' => 'required|string',
-            'description' => 'required|string',
-            'author_id' => 'required|integer',
-            'category_id' => 'required|integer',
-            'price' => 'required|integer',
-            'is_free' => 'required|boolean',
-            'cover' => 'required|string',
-            'file' => 'required|string',
-        ]);
-        if ($validator->fails()) {
-            return response()->json($validator->errors(), 400);
-        }
-        $book = $this->bookRepository->createBook($request->all());
-        return response()->json($book, 201);
+        dd($request->all());
     }
 
     /**
@@ -69,20 +57,6 @@ class AdminBookController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $validator = Validator::make($request->all(), [$request->all(), [
-            'title' => 'required|string',
-            'description' => 'required|string',
-            'author_id' => 'required|integer',
-            'category_id' => 'required|integer',
-            'price' => 'required|integer',
-            'is_free' => 'required|boolean',
-            'cover' => 'required|string',
-            'file' => 'required|string',
-        ]]);
-        if ($validator->fails()) {
-            return response()->json($validator->errors(), 400);
-        }
-        $book = $this->bookRepository->updateBook($id, $request->all());
         return response()->json($book, 200);
     }
 
@@ -99,5 +73,15 @@ class AdminBookController extends Controller
         //delete book
         $this->bookRepository->deleteBookById($id);
         return response()->json(null, 204);
+    }
+
+    private function saveBase64File($data, $folder)
+    {
+        $data = base64_decode($data);
+        $filename = uniqid() . '.jpg'; // You can adjust the extension based on the actual image type
+        $path = storage_path('app/public/' . $folder . '/' . $filename);
+        File::put($path, $data);
+
+        return $path;
     }
 }

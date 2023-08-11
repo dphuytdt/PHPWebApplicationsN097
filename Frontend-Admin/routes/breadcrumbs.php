@@ -1,5 +1,7 @@
 <?php
 
+use DaveJamesMiller\Breadcrumbs\Facades\Breadcrumbs;
+
     Breadcrumbs::for('home', function ($trail) {
         $trail->push('Home', route('home'));
     });
@@ -37,4 +39,14 @@
     Breadcrumbs::for('comments.index', function ($trail) {
         $trail->parent('home');
         $trail->push('Comment List', route('comments.index'));
+    });
+
+    Breadcrumbs::for('news.index', function ($trail) {
+        $trail->parent('home');
+        $trail->push('News List', route('news.index'));
+    });
+
+    Breadcrumbs::for('news.create', function ($trail) {
+        $trail->parent('home');
+        $trail->push('Create News', route('news.create'));
     });

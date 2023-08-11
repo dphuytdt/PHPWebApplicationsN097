@@ -13,4 +13,6 @@ interface CartRepositoryInterface
 
     public function deleteCart(Request $request);
 
+    public function checkout($userId, $bookId);
+
 }

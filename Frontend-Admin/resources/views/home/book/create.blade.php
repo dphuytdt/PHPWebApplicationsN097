@@ -33,6 +33,10 @@
             <input type="text" class="form-control" id="title" name="title">
         </div>
         <div class="mb-3">
+            <label for="name" class="form-label">Description:</label>
+            <textarea class="form-control" id="description" name="description"></textarea>
+        </div>
+        <div class="mb-3">
             <label for="exampleInputPassword1" class="form-label">Cover Image</label>
             <div class="row">
                 <div class="col-md-7">
@@ -59,7 +63,7 @@
                     resize: none;
                 }
             </style>
-            <select id="disabledSelect" class="form-select">
+            <select id="disabledSelect" class="form-select" name="category_id">
                 <option selected>Select Category</option>
                 @foreach($categories as $category)
                     <option value="{{$category['id']}}">{{$category['name']}}</option>
@@ -68,7 +72,7 @@
         </div>
         <div class="mb-3 contentType">
             <label for="contentType" class="form-label">Content Type</label>
-            <select id="contentType" class="form-select">
+            <select id="contentType" class="form-select" name="content_type">
                 <option selected>Select Content Type</option>
                 <option value="1">Text</option>
                 <option value="2">Image</option>
@@ -81,10 +85,9 @@
                 $('#contentType').change(function(){
                     var content_type = $('#contentType').val();
                     if(content_type == 1){
-                        $('.content').html('<input type="file" accept="application/pdf, application/vnd.openxmlformats-officedocument.wordprocessingml.document">');
+                        $('.content').html('<input type="file" name="content" accept="application/pdf, application/vnd.openxmlformats-officedocument.wordprocessingml.document">');
                     }else{
-                        $('.content').html('' +
-                            '<input type="file" accept="image/jpeg, image/png, application/pdf, application/vnd.openxmlformats-officedocument.wordprocessingml.document">');
+                        $('.content').html('<input type="file"  name="content" accept="application/pdf, application/vnd.openxmlformats-officedocument.wordprocessingml.document">');
                     }
                 });
             });
@@ -102,7 +105,7 @@
                 $('#price').keyup(function(){
                     var price = $('#price').val();
                     if(price > 0){
-                        $('.discount').html('<label for="image" class="form-label">Discount</label><input type="text" class="form-control" id="discount" name="discount">');
+                        $('.discount').html('<label for="image" class="form-label">Discount</label><input type="number" name="discount" class="form-control" id="discount" name="discount">');
                     }else{
                         $('.discount').html('');
                     }
@@ -111,7 +114,7 @@
         </script>
         <div class="mb-3 contentType">
             <label for="contentType" class="form-label">Status</label>
-            <select id="contentType" class="form-select">
+            <select id="contentType" class="form-select" name="status">
                 <option selected>Select Status</option>
                 <option value="1">Active</option>
                 <option value="2">Inactive</option>

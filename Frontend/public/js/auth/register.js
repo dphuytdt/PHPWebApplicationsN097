@@ -10,7 +10,7 @@ $("#registerForm").validate({
             email: true,
             maxlength: 75
         },
-        password: {
+        passwordRe: {
             required: true,
             minlength: 8,
             regExpression: true,
@@ -26,7 +26,6 @@ $("#registerForm").validate({
         form.submit();
         $('button[type="submit"]').prop('disabled', true);
     }
-
 });
 
 

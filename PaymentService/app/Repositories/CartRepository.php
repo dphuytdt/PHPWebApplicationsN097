@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use App\Interfaces\CartRepositoryInterface;
 use App\Models\Cart;
+use App\Models\UserBooks;
 
 class CartRepository implements CartRepositoryInterface 
 {
@@ -56,5 +57,21 @@ class CartRepository implements CartRepositoryInterface
         }else{
             return false;
         }
+    }
+
+    public function checkout($userId, $bookId)
+    {
+        foreach($bookId as $book){
+            $cart = Cart::where('user_id', $userId)->where('book_id', $book)->first();
+            $cart->delete();
+        }
+
+        $userCart = new UserBooks;
+        $userCart->user_id = $userId;
+        $userCart->book_id = $bookId;
+
+        $userCart->save();
+
+        return true;
     }
 }
