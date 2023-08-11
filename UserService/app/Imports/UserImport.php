@@ -19,7 +19,7 @@ class UserImport implements WithCalculatedFormulas, WithValidation, ToModel, Wit
     * @return \Illuminate\Database\Eloquent\Model|null
     */
 
-    public function model(array $row)
+    public function model(array $row): \Illuminate\Database\Eloquent\Model|User|null
     {
         $date = date('Y-m-d H:i:s');
         if($row['id'] != NULL) {
@@ -66,7 +66,7 @@ class UserImport implements WithCalculatedFormulas, WithValidation, ToModel, Wit
             ]);
         }
     }
-        
+
     public function rules(): array
     {
         return [
@@ -80,7 +80,7 @@ class UserImport implements WithCalculatedFormulas, WithValidation, ToModel, Wit
             'is_vip' => 'required|integer'
         ];
     }
-    public function customValidationAttributes()
+    public function customValidationAttributes(): array
     {
         return [
             'id' => 'id',

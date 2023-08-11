@@ -3,12 +3,12 @@
 namespace App\Http\Controllers\Api\v1;
 
 use App\Http\Controllers\Controller;
+use App\Imports\UserImport;
 use Illuminate\Http\Request;
 use App\Interfaces\UserRepositoryInterface;
 use App\Interfaces\OTPRepositoryInterface;
 use Illuminate\Support\Facades\Validator;
 use Maatwebsite\Excel\Facades\Excel;
-use App\Imports\UsersImport;
 
 class UserController extends Controller
 {
@@ -70,7 +70,7 @@ class UserController extends Controller
         }
         $file = $request->file('file');
         try {
-            Excel::import(new UsersImport, $file);
+            Excel::import(new UserImport, $file);
             return response()->json(['message' => 'Import user successfully']);
         } catch (\Exception|\Error $e) {
             return response()->json(['message' => $e->getMessage()]);
