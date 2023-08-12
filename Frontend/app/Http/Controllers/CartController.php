@@ -58,7 +58,7 @@ class CartController extends Controller
                 ]
             ]);
             $response = json_decode($response->getBody()->getContents());
-            return response()->json($response);
+            return redirect()->route('cart.getUserCart', ['id' => $request->userID]);
         } catch (\Exception $e) {
             return response()->json($e->getMessage());
         } catch (GuzzleException $e) {
@@ -118,14 +118,16 @@ class CartController extends Controller
         date_default_timezone_set('Asia/Ho_Chi_Minh');
 
         $vnp_Url = "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html";
-        $vnp_Returnurl = "http://frontend.test:8080/cart/1";
+        $vnp_Returnurl = "http://frontend.test:8080/cart/useId";
+        //replace useId with real id
+        $vnp_Returnurl = str_replace("useId", $request->useId, $vnp_Returnurl);
         $vnp_TmnCode = "1ACLHH74";//Mã website tại VNPAY
         $vnp_HashSecret = "TMEVRTPDXCOKQKXQLZFNKDROUCTMWXHS"; //Chuỗi bí mật
 
         $vnp_TxnRef = $request->id;
-        $vnp_OrderInfo = "Test payment";
+        $vnp_OrderInfo = "User Name: ".$request->userName . " - Payment for order: " . $request->id;
         $vnp_OrderType = 'billpayment';
-        $vnp_Amount = $request->price * self::DOLLAR_RATE * 100;
+        $vnp_Amount = $request->total * self::DOLLAR_RATE * 100;
         $vnp_Locale = 'vn';
         $vnp_BankCode = 'NCB';
         $vnp_IpAddr = $_SERVER['REMOTE_ADDR'];
@@ -171,8 +173,6 @@ class CartController extends Controller
             $vnp_Url .= 'vnp_SecureHash=' . $vnpSecureHash;
         }
 
-        $this->paymentSuccess($request);
-
         $returnData = array('code' => '00'
         , 'message' => 'success'
         , 'data' => $vnp_Url);
@@ -194,7 +194,7 @@ class CartController extends Controller
                 'form_params' => [
                     "bookId" => $data->bookId,
                     "userID" => $data->userID,
-                    "price" => $data->price,
+                    "price" => $data->total,
                 ]
             ]);
             $response = json_decode($response->getBody()->getContents());

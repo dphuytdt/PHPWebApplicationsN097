@@ -618,6 +618,8 @@
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <script type="text/javascript">
     // function addCart(){
+    //reload page
+    // location.reload();
         var userID = @json(session('user_id', ['id' => 'id']));
         const url = "http://paymentservice.test:8080/api/cart/get/" + userID;
 

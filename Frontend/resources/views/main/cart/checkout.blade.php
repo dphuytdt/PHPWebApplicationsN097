@@ -60,6 +60,13 @@
                                     @php
                                         $total = 0;
                                     @endphp
+                                    @if(session()->has('user'))
+                                        @php
+                                            $user = session()->get('user');
+                                        @endphp
+                                        <input type="hidden" name="userName" value="{{$user['fullname']}}">
+                                        <input type="hidden" name="useId" value="{{$user['id']}}">
+                                    @endif
                                     @foreach($cart as $item)
                                         @php
                                             $total += $item->price;
@@ -78,6 +85,7 @@
                                         <tr class="order_total">
                                             <th>Order Total</th>
                                             <td><strong> {{$total}}</strong></td>
+                                            <input type="hidden" name="total" value="{{$total}}">
                                         </tr>
                                     </tfoot>
                                 </table>

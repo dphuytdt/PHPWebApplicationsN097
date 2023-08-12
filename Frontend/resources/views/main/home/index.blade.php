@@ -372,7 +372,7 @@
                     <div class="container-fluid">
                         <div class="row">
                             <div class="col text-right">
-                                <button type="button" class="close modal-close" data-dismiss="modal" aria-label="Close">
+                                <button type="button" class="close modal-close" id="closeModal-close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true"> <i class="fa fa-times"></i></span>
                                 </button>
                             </div>
@@ -465,7 +465,7 @@
                     <div class="container-fluid">
                         <div class="row">
                             <div class="col text-right">
-                                <button type="button" class="close modal-close" data-dismiss="modal" aria-label="Close">
+                                <button type="button" class="close modal-close" id="closeModal-close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true"> <i class="fa fa-times"></i></span>
                                 </button>
                             </div>
@@ -550,7 +550,7 @@
                     <div class="container-fluid">
                         <div class="row">
                             <div class="col text-right">
-                                <button type="button" class="close modal-close" data-dismiss="modal" aria-label="Close">
+                                <button type="button" class="close modal-close" id="closeModal-close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true"> <i class="fa fa-times"></i></span>
                                 </button>
                             </div>
@@ -621,7 +621,7 @@
                     <div class="container-fluid">
                         <div class="row">
                             <div class="col text-right">
-                                <button type="button" class="close modal-close" data-dismiss="modal" aria-label="Close">
+                                <button type="button" class="close modal-close" id="closeModal-close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true"> <i class="fa fa-times"></i></span>
                                 </button>
                             </div>
@@ -706,7 +706,7 @@
                     <div class="container-fluid">
                         <div class="row">
                             <div class="col text-right">
-                                <button type="button" class="close modal-close" data-dismiss="modal" aria-label="Close">
+                                <button type="button" class="close modal-close" id="closeModal-close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true"> <i class="fa fa-times"></i></span>
                                 </button>
                             </div>
@@ -782,21 +782,13 @@
                 xhr.onreadystatechange = function() {
                     if (xhr.readyState === XMLHttpRequest.DONE) {
                         if (xhr.status === 200) {
-                            // Wishlist addition successful
-                            // swal({
-                            //     title: "Success!",
-                            //     text: "Book added to wishlist!",
-                            //     icon: "success",
-                            //     button: "OK",
-                            // });
+                            setTimeout(function() {
+                                location.reload();
+                            }, 1000);
                         } else {
-                            // Wishlist addition failed
-                            // swal({
-                            //     title: "Error!",
-                            //     text: "Book already in wishlist!",
-                            //     icon: "error",
-                            //     button: "OK",
-                            // });
+                            setTimeout(function() {
+                                location.reload();
+                            }, 1000);
                         }
                     }
                 };
@@ -853,6 +845,8 @@
                                 text: "Book added to wishlist!",
                                 icon: "success",
                                 button: "OK",
+                            }).then(function() {
+                                location.reload();
                             });
                         } else {
                             // Wishlist addition failed
@@ -861,11 +855,21 @@
                                 text: "Book already in wishlist!",
                                 icon: "error",
                                 button: "OK",
+                            }).then(function() {
+                                location.reload();
                             });
                         }
                     }
                 };
             }
+        });
+    });
+</script>
+
+<script>
+    $(document).ready(function(){
+        $('#closeModal-close').click(function(){
+            location.reload();
         });
     });
 </script>

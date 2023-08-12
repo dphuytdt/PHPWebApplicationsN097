@@ -46,12 +46,10 @@
                                     $subtotal += $item->price;
                                 @endphp
                                 <tr>
-                                    <td class="product_remove"><a href="#" id="delete-{{$item->id}}"><i class="fa fa-trash-o"></i></a></td>
+                                    <td class="product_remove"><a id="deleteCart-{{$item->book_id}}" onclick=" return deleteCartItem{{$item->book_id}}"><i class="fa fa-trash-o"></i></a></td>
                                     <td class="product_thumb"><a href="product-details-default.html"><img src="{{$item->cover_image}}" alt=""></a></td>
                                     <td class="product_name"><a href="product-details-default.html">{{$item->title}}</a></td>
                                     <td class="product-price">£ {{$item->price}}</td>
-{{--                                    <td class="product_quantity"><label>Quantity</label> <input min="1" max="100" value="1" type="number"></td>--}}
-{{--                                    <td class="product_total">£ {{$item->price}}</td>--}}
                                 </tr> <!-- End Cart Single Item-->
                                 @endforeach
                                 </tbody>
@@ -84,6 +82,7 @@
                             <div class="cart_subtotal">
                                 <p>Total</p>
                                 <p class="cart_amount">${{$subtotal}}</p>
+                                <input type="hidden" id="subtotal" name="subtotal" value="{{$subtotal}}">
                             </div>
 
                             <div class="checkout_btn">
