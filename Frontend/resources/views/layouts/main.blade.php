@@ -129,13 +129,13 @@
                         <li>
                             <a href="#offcanvas-wishlish" class="offcanvas-toggle">
                                 <i class="icon-heart"></i>
-{{--                                <span class="header-action-icon-item-count count-wishlist" id="count-wishlist"></span>--}}
+                                <span class="header-action-icon-item-count count-wishlist" id="count-wishlist"></span>
                             </a>
                         </li>
                         <li>
                             <a href="#offcanvas-add-cart" class="offcanvas-toggle">
                                 <i class="icon-shopping-cart"></i>
-{{--                                <span class="header-action-icon-item-count cart-count"></span>--}}
+                                <span class="header-action-icon-item-count cart-count"></span>
                             </a>
                         </li>
                         @if(session()->has('user'))
@@ -327,7 +327,7 @@
                         <a class="mobile-action-icon-link">
                     @endif
                         <i class="icon-shopping-cart"></i>
-{{--                        <span class="mobile-action-icon-item-count cart-count"></span>--}}
+                        <span class="mobile-action-icon-item-count cart-count"></span>
                     </a>
                 </li>
             </ul> <!-- End Header Action Icon -->
@@ -617,7 +617,7 @@
 <script src="{{asset('assets/js/main.js')}}"></script>
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <script type="text/javascript">
-    function addCart(){
+    // function addCart(){
         var userID = @json(session('user_id', ['id' => 'id']));
         const url = "http://paymentservice.test:8080/api/cart/get/" + userID;
 
@@ -656,7 +656,7 @@
                     // Append the <li> element to the <ul> element
                     totalPrice += parseFloat(item.price);
                     offcanvasCart.appendChild(li);
-                    console.log(totalPrice);
+                    // console.log(totalPrice);
                 });
 
                 // Select the <span> element with the class "offcanvas-cart-total-price-value"
@@ -676,7 +676,7 @@
             .catch(error => {
                 console.error(error);
             });
-    }
+    // }
 
     function deleteCartItem(itemId) {
         var userID = @json(session('user_id', ['id' => 'id']));
@@ -735,8 +735,10 @@
                 const wishlistItems = Object.values(response.data);
 
                 const offcanvasWishlist = document.querySelector('.offcanvas-wishlist');
+                //
+                // console.log(wishlistItems);
 
-                wishlistItems[0].forEach(item => {
+                wishlistItems.forEach(item => {
                     const li = document.createElement('li');
                     li.classList.add('offcanvas-wishlist-item-single');
 
