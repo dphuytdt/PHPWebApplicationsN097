@@ -129,13 +129,13 @@
                         <li>
                             <a href="#offcanvas-wishlish" class="offcanvas-toggle">
                                 <i class="icon-heart"></i>
-                                <span class="header-action-icon-item-count count-wishlist" id="count-wishlist"></span>
+{{--                                <span class="header-action-icon-item-count count-wishlist" id="count-wishlist"></span>--}}
                             </a>
                         </li>
                         <li>
                             <a href="#offcanvas-add-cart" class="offcanvas-toggle">
                                 <i class="icon-shopping-cart"></i>
-                                <span class="header-action-icon-item-count cart-count"></span>
+{{--                                <span class="header-action-icon-item-count cart-count"></span>--}}
                             </a>
                         </li>
                         @if(session()->has('user'))
@@ -155,8 +155,13 @@
                                             }
                                         </style>
                                         <li><a href="{{route('profile')}}">My Account</a></li>
-                                        <li><a href="">Checkout</a></li>
-                                        <li><a href="">Wishlist</a></li>
+                                        <li><a href="">My Collection</a></li>
+                                        @php
+                                            $user_id = session()->get('user')['id'];
+                                        @endphp
+                                        <li><a href="{{route('cart.checkOut',$user_id)}}">Checkout</a></li>
+                                        <li><a href="">History Payment</a></li>
+                                        <li><a href="{{route('wishlist.index', $user_id)}}">Wishlist</a></li>
                                         @if($is_vip == 1)
                                             <li><a href="{{route('vipBenefits')}}">VIP Member</a></li>
                                         @else
@@ -200,6 +205,9 @@
                                         @endforeach
                                         <li><a>View more</a></li>
                                     </ul>
+                                </li>
+                                <li>
+                                    <a href="{{route('news')}}">News</a>
                                 </li>
                                 <li>
                                     <a href="{{route('about')}}">About Us</a>
@@ -304,7 +312,7 @@
             <!-- Start Header Action Icon -->
             <ul class="mobile-action-icon">
                 <li class="mobile-action-icon-item">
-                    <a href="{{route('wishlist.index')}}" class="mobile-action-icon-link">
+                    <a href="{{route('wishlist.index', $user_id)}}" class="mobile-action-icon-link">
                         <i class="icon-heart"></i>
                         <span class="mobile-action-icon-item-count count-wishlist" id="count-wishlist"></span>
                     </a>
@@ -315,12 +323,12 @@
                             $user_id = session()->get('user')['id']
                         @endphp
                         <a href="{{route('cart.getUserCart', $user_id)}}" class="mobile-action-icon-link">
-                            @else
-                                <a class="mobile-action-icon-link">
-                                    @endif
-                                    <i class="icon-shopping-cart"></i>
-                                    <span class="mobile-action-icon-item-count cart-count"></span>
-                                </a>
+                    @else
+                        <a class="mobile-action-icon-link">
+                    @endif
+                        <i class="icon-shopping-cart"></i>
+{{--                        <span class="mobile-action-icon-item-count cart-count"></span>--}}
+                    </a>
                 </li>
             </ul> <!-- End Header Action Icon -->
         </div> <!-- End Mobile Menu User Center -->
@@ -354,13 +362,13 @@
                             <li>
                                 <a href="#">Shop Pages</a>
                                 <ul class="mobile-sub-menu">
-                                    <li><a href="cart.html">Cart</a></li>
-                                    <li><a href="wishlist.html">Wishlist</a></li>
-                                    <li><a href="compare.html">Compare</a></li>
-                                    <li><a href="checkout.html">Checkout</a></li>
-                                    <li><a href="login.html">Login</a></li>
-                                    <li><a href="my-account.html">My Account</a></li>
-                                    <li><a href="404.html">Error 404</a></li>
+                                    <li><a href="#">Cart</a></li>
+                                    <li><a href="#">Wishlist</a></li>
+                                    <li><a href="#">Compare</a></li>
+                                    <li><a href="#">Checkout</a></li>
+                                    <li><a href="#">Login</a></li>
+                                    <li><a href="#">My Account</a></li>
+                                    <li><a href="#">Error 404</a></li>
                                 </ul>
                             </li>
                         </ul>
@@ -446,20 +454,20 @@
         <h4 class="offcanvas-title">Shopping Cart</h4>
         <ul class="offcanvas-cart">
         </ul>
+        @if(session()->has('user'))
         <div class="offcanvas-cart-total-price">
             <span class="offcanvas-cart-total-price-text">Subtotal:</span>
             <span class="offcanvas-cart-total-price-value total_price" id="total_price"></span>
         </div>
         <ul class="offcanvas-cart-action-button">
-            @if(session()->has('user'))
+
                 @php
                     $user_id = session()->get('user')['id']
                 @endphp
                 <li class="offcanvas-cart-action-button-list"><a href="{{route('cart.getUserCart',$user_id)}}" class="offcanvas-cart-action-button-link">View Cart</a></li>
                 <li class="offcanvas-cart-action-button-list"><a href="{{route('cart.checkOut',$user_id)}}" class="offcanvas-cart-action-button-link">Checkout</a></li>
             @else
-                <li class="offcanvas-cart-action-button-list"><a class="offcanvas-cart-action-button-link">View Cart</a></li>
-                <li class="offcanvas-cart-action-button-list"><a  class="offcanvas-cart-action-button-link">Checkout</a></li>
+                <li class="offcanvas-cart-action-button-list"><a href="{{route('login')}}" class="offcanvas-cart-action-button-link">Please login or register to view cart!</a></li>
             @endif
         </ul>
     </div> <!-- End  Offcanvas Addcart Wrapper -->
@@ -479,7 +487,11 @@
         <ul class="offcanvas-wishlist" id="offcanvas-wishlist">
         </ul>
         <ul class="offcanvas-wishlist-action-button">
-            <li class="offcanvas-wishlist-action-button-list"><a href="{{route('wishlist.index')}}" class="offcanvas-wishlist-action-button-link">View Wishlist</a></li>
+            @if(session()->has('user'))
+            <li class="offcanvas-wishlist-action-button-list"><a href="{{route('wishlist.index', $user_id )}}" class="offcanvas-wishlist-action-button-link">View Wishlist</a></li>
+            @else
+            <li class="offcanvas-wishlist-action-button-list"><a href="{{route('login')}}" class="offcanvas-wishlist-action-button-link">Please login or register to view wishlist!</a></li>
+            @endif
         </ul>
     </div> <!-- End Offcanvas Mobile Menu Wrapper -->
 
@@ -551,7 +563,7 @@
                                 <li><a href="">Legal Notice</a></li>
                                 <li><a href="">Secure payment</a></li>
                                 <li><a href="">Sitemap</a></li>
-                                <li><a href="my-account.html">My Account</a></li>
+                                <li><a href="#">My Account</a></li>
                             </ul>
                         </div>
                     </div>

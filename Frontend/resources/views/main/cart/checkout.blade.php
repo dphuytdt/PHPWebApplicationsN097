@@ -43,46 +43,16 @@
             <!-- Start User Details Checkout Form -->
             <div class="checkout_form">
                 <div class="row">
-                    <div class="col-lg-6 col-md-6">
-                        <form action="#">
-                            <h3>Billing Details</h3>
-                            <div class="row">
-                                <div class="col-12 mb-20">
-                                    <div class="default-form-box">
-                                        <label>Card ID <span>*</span></label>
-                                        <input type="text">
-                                    </div>
-                                </div>
-                                <div class="col-12 mb-20">
-                                    <div class="default-form-box">
-                                        <label>Card Number <span>*</span></label>
-                                        <input type="text">
-                                    </div>
-                                </div>
-                                <div class="col-lg-6 mb-20">
-                                    <div class="default-form-box">
-                                        <label>Date Expire<span>*</span></label>
-                                        <input type="text">
-                                    </div>
-                                </div>
-                                <div class="col-lg-6 mb-20">
-                                    <div class="default-form-box">
-                                        <label>CVV<span>*</span></label>
-                                        <input type="number">
-                                    </div>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                    <div class="col-lg-6 col-md-6">
+                    <div class="col-lg-12 col-md-12">
                         <form method="post" action="{{route('cart.payment')}}">
                             @csrf
                             <h3>Your order</h3>
-                            <div class="order_table table-responsive">
+                            <div class="order_table">
                                 <table>
                                     <thead>
                                         <tr>
                                             <th>Product</th>
+                                            <th>Image</th>
                                             <th>Total</th>
                                         </tr>
                                     </thead>
@@ -96,9 +66,12 @@
                                         @endphp
                                         <tr>
                                             <td> {{$item->title}}</td>
+                                            <td><img src="{{$item->cover_image}}" alt="{{$item->title}}" width="50px" height="50px"></td>
                                             <td> {{$item->price}}</td>
                                         </tr>
+                                        <input type="hidden" name="id" value="{{$item->id}}">
                                         <input type="hidden" name="bookiD[]" value="{{$item->book_id}}">
+                                        <input type="hidden" name="price" value="{{$item->price}}">
                                     @endforeach
                                     </tbody>
                                     <tfoot>
@@ -121,31 +94,4 @@
         </div>
     </div><!-- ...:::: End Checkout Section:::... -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
-{{--<script>--}}
-{{--    $(document).ready(function() {--}}
-{{--        // function to handle the button click--}}
-{{--        $("#proceedToPayBtn").click(function(e) {--}}
-{{--            e.preventDefault();--}}
-{{--            var bookId = $("input[name='bookiD[]']").map(function(){return $(this).val();}).get();--}}
-{{--            var userID = @json(session('user_id', ['id' => 'id']));--}}
-{{--            var url = "http://paymentservice.test:8080/api/cart/checkout";--}}
-{{--            var __token = $('meta[name="csrf-token"]').attr('content');--}}
-{{--            // make the AJAX request--}}
-{{--            $.ajax({--}}
-{{--                type: "POST",--}}
-{{--                url: url,--}}
-{{--                data: { bookId: bookId , userID: userID, __token: __token},--}}
-{{--                success: function(data) {--}}
-{{--                    // handle success response--}}
-{{--                    console.log("Payment successful");--}}
-{{--                },--}}
-{{--                error: function(xhr, status, error) {--}}
-{{--                    // handle error response--}}
-{{--                    console.log("Error making payment: " + error);--}}
-{{--                }--}}
-{{--            });--}}
-{{--        });--}}
-{{--    });--}}
-{{--</script>--}}
 @endsection

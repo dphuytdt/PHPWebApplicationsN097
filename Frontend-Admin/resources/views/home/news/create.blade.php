@@ -8,10 +8,10 @@
 
     <script>
         $(document).ready(function() {
-            $("#exampleInputPassword1").on("change", function() {
-                var input = this;
+            $("#image").on("change", function() {
+                const input = this;
                 if (input.files && input.files[0]) {
-                    var reader = new FileReader();
+                    const reader = new FileReader();
                     reader.onload = function(e) {
                         $('#uploadedImage').attr('src', e.target.result);
                     }
@@ -22,31 +22,61 @@
     </script>
     <!-- Begin Page Content -->
     <div class="container-fluid">
-
-        <h1 class="h3 mb-4 text-gray-800">{{ Breadcrumbs::render('news.create') }}</h1>
-
+        <div class="row text-gray-800">
+            <div class="col-md-12">
+                <h1 class="h3 mb-4 ">{{ Breadcrumbs::render('news.create') }}</h1>
+            </div>
+        </div>
     </div>
+
     <div class="container">
-        <form action="" method="POST" enctype="multipart/form-data">
+        <a href="" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm" data-toggle="modal" data-target="#importNewsModal">
+            <i class="fas fa-download fa-sm text-white-50"></i> Import News
+        </a>
+
+        <div class="modal fade" id="importNewsModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <form action="{{route('news.import')}}" method="POST" enctype="multipart/form-data">
+                @csrf
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Import News From CSV File</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <input name="file" type="file" id="file" class="form-control" required>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">Import</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <br><br>
+        <form action="{{route('news.store')}}" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="mb-3">
-                <label for="title" class="form-label">Title:</label>
+                <label for="title" class="form-label">Title: <color style="color: red;">*</color></label>
                 <input type="text" class="form-control" id="title" name="title" required>
             </div>
             <div class="mb-3">
-                <label for="slug" class="form-label">Slug:</label>
+                <label for="slug" class="form-label">Slug: (Optional)</label>
                 <input type="text" class="form-control" id="slug" name="slug" required>
             </div>
             <div class="mb-3">
-                <label for="description" class="form-label">Description:</label>
+                <label for="description" class="form-label">Description: (Optional)</label>
                 <textarea class="form-control" id="description" name="description" rows="3" required></textarea>
             </div>
             <div class="mb-3">
-                <label for="content" class="form-label">Content:</label>
+                <label for="content" class="form-label">Content: <color style="color: red;">*</color></label>
                 <textarea class="form-control" id="content" name="content" rows="3" required></textarea>
             </div>
             <div class="mb-3">
-                <label for="exampleInputPassword1" class="form-label">Image</label>
+                <label for="exampleInputPassword1" class="form-label">Image <color style="color: red;">*</color></label>
                 <div class="row">
                     <div class="col-md-7">
                         <input type="file" class="form-control" id="image" name="image" accept="image/*">
@@ -57,7 +87,7 @@
                 </div>
             </div>
             <div class="mb-3">
-                <label for="disabledSelect" class="form-label">Disabled select menu</label>
+                <label for="is_active" class="form-label">Status<color style="color: red">*</color></label>
                 <style type="text/css">
                     .form-select{
                         width: 100%;
@@ -65,10 +95,10 @@
                         border: 1px solid #ced4da;
                     }
                 </style>
-                <select id="disabledSelect" class="form-select">
+                <select id="is_active" name="is_active" class="form-select">
                     <option selected>Select Status</option>
-                    <option>Active</option>
-                    <option>Deactivate</option>
+                    <option value="1">Active</option>
+                    <option value="0">Inactive</option>
                 </select>
             </div>
             <button type="submit" class="btn btn-primary">Create</button>

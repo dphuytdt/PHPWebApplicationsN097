@@ -18,6 +18,9 @@ class HomeController extends Controller
 {
     // //CALL TO ENVIRONMENT VARIABLE TO GET BOOK SERVICE URL
     public $bookService = 'http://bookservice.test:8080/api/';
+
+    private $contentManagementService = 'http://contentmanagementservice.test:8080/api/';
+
     protected $categoryService;
 
     public function __construct(CategoryService $categoryService)
@@ -54,6 +57,19 @@ class HomeController extends Controller
     {
         $categories = $this->categoryService->getCategory();
         return view('errors.404')->with('categories', $categories);
+    }
+
+    private function getLatestNews()
+    {
+        $httpService = app(HttpService::class);
+        $client = $httpService->getClient();
+        try {
+            $response = $client->get($this->contentManagementService.'news/latest', ['timeout' => 60]);
+
+            return json_decode($response->getBody(), true);
+        } catch (\Exception $e) {
+            return null;
+        }
     }
 
 

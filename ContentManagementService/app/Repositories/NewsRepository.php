@@ -2,12 +2,10 @@
 
 namespace App\Repositories;
 
-use App\Http\Requests\StorePostRequest;
-use App\Http\Requests\UpdatePostRequest;
-use App\Interfaces\SlideShowRepositoryInterfaces;
+use App\Interfaces\NewsRepositoryInterfaces;
 use App\Models\News;
 
-class NewsRepository implements NewsRepositoryInterfaces 
+class NewsRepository implements NewsRepositoryInterfaces
 {
     private News $news;
 
@@ -16,10 +14,19 @@ class NewsRepository implements NewsRepositoryInterfaces
         $this->news = $news;
     }
 
-    public function store(Request $request)
+    public function store($request)
     {
-        $news = $this->news->create($request->all());
-        return response()->json($news);
+        $news = new News();
+
+        $news->title = $request['title'];
+        $news->slug = $request['slug'];
+        $news->description = $request['description'];
+        $news->content = $request['content'];
+        $news->image = $request['image'];
+        $news->is_active = $request['is_active'];
+        $news->created_at = $request['created_at'];
+
+        return $news->save();
     }
 
     public function destroy($id)
@@ -33,7 +40,7 @@ class NewsRepository implements NewsRepositoryInterfaces
         }
     }
 
-    public function update(Request $request, $id)
+    public function update($request, $id)
     {
         $news = $this->news->find($id);
         try {
@@ -52,7 +59,24 @@ class NewsRepository implements NewsRepositoryInterfaces
 
     public function index()
     {
-        $news = $this->news->all();
+        return $this->news->all();
+    }
+
+    public function latest()
+    {
+        $news = $this->news->orderBy('created_at', 'desc')->take(3)->get();
+        return response()->json($news);
+    }
+
+    public function userIndex()
+    {
+        $news = $this->news->orderBy('created_at', 'desc')->paginate(6);
+        return response()->json($news);
+    }
+
+    public function newRecent()
+    {
+        $news = $this->news->orderBy('created_at', 'desc')->take(3)->get();
         return response()->json($news);
     }
 }

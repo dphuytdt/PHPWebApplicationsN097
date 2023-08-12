@@ -4,9 +4,10 @@ namespace App\Repositories;
 
 use App\Interfaces\CartRepositoryInterface;
 use App\Models\Cart;
+use App\Models\HistoryPayment;
 use App\Models\UserBooks;
 
-class CartRepository implements CartRepositoryInterface 
+class CartRepository implements CartRepositoryInterface
 {
     public function add($request)
     {
@@ -15,7 +16,7 @@ class CartRepository implements CartRepositoryInterface
         $cart->book_id = $request->bookID;
         $cart->title = $request->bookTitle;
         $cart->cover_image = $request->bookImage;
-        $cart->price = $request->bookPrice;
+        $cart->price = floatval($request->bookPrice);
         $cart->created_at = now();
         $cart->save();
         if($cart){
@@ -59,7 +60,7 @@ class CartRepository implements CartRepositoryInterface
         }
     }
 
-    public function checkout($userId, $bookId)
+    public function checkout($userId, $bookId, $totalPrice)
     {
         foreach($bookId as $book){
             $cart = Cart::where('user_id', $userId)->where('book_id', $book)->first();
@@ -70,6 +71,12 @@ class CartRepository implements CartRepositoryInterface
         $userCart->user_id = $userId;
         $userCart->book_id = $bookId;
 
+        $paymentHistory = new HistoryPayment();
+        $paymentHistory->user_id = $userId;
+        $paymentHistory->book_id = $bookId;
+        $paymentHistory->total_price = $totalPrice;
+        $paymentHistory->created_at = now();
+        $paymentHistory->save();
         $userCart->save();
 
         return true;

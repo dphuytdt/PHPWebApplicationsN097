@@ -14,10 +14,10 @@ return new class extends Migration
         Schema::create('news', function (Blueprint $table) {
             $table->id();
             $table->string('title', 255);
-            $table->string('slug', 255);
-            $table->string('description', 255);
-            $table->string('content', 255);
-            $table->string('image', 255);
+            $table->string('slug', 255)->nullable(true);
+            $table->string('description', 255)->nullable(true);
+            $table->text('content');
+            $table->text('image');
             $table->boolean('is_active');
             $table->integer('view')->nullable(true);
             $table->integer('like')->nullable(true);

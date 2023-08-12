@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\NewsController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\AuthController;
@@ -36,10 +37,10 @@ Route::get('category/{id}', [BookController::class, 'category'])->name('category
 
 
 Route::group(['prefix' => 'wishlist'], function () {
-    Route::get('/', [WishlistController::class, 'index'])->name('wishlist.index');
+    Route::post('add', [CartController::class, 'addToCartFromWishlist'])->name('wishlist.add');
+    Route::get('/{id}', [WishlistController::class, 'index'])->name('wishlist.index');
 });
 
-//route for Auth
 Route::prefix('auth')->group(function () {
     Route::get('login', [AuthController::class, 'login'])->name('login');
     Route::post('login', [AuthController::class, 'postLogin'])->name('postLogin');
@@ -77,6 +78,11 @@ Route::group(['prefix' => 'cart'], function () {
     Route::post('payment', [CartController::class, 'payment'])->name('cart.payment');
     Route::get('checkout/{id}', [CartController::class, 'checkOut'])->name('cart.checkOut');
     Route::get('{id}', [CartController::class, 'getUserCart'])->name('cart.getUserCart');
+});
+
+Route::group(['prefix' => 'news'], function () {
+    Route::get('/', [NewsController::class, 'index'])->name('news');
+    Route::get('/{id}', [NewsController::class, 'newsDetail'])->name('newsDetail');
 });
 
 //404 page

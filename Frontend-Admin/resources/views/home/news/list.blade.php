@@ -46,7 +46,7 @@
                         </thead>
                         <tbody>
                         @if(isset($news))
-                            @foreach($news as $news)
+                            @foreach($news as $new)
                                 <tr>
                                     <td>{{$new['id']}}</td>
                                     <td>{{$new['title']}}</td>
@@ -62,13 +62,9 @@
                                     </td>
                                     <td>{{$new['created_at']}}</td>
                                     <td>{{$new['updated_at']}}</td>
-                                    <td>{{$new['deleted_at']}}</td>
                                     <td>
                                         <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#exampleModalCenter-{{$new['id']}}">
                                             Edit
-                                        </button>
-                                        <button type="button" class="btn btn-danger btn-sm">
-                                            Delete
                                         </button>
                                     </td>
                                 </tr>
@@ -93,52 +89,59 @@
         </div>
 
     </div>
-
-    {{-- @if(isset($news))
+    @if(isset($news))
         @foreach($news as $new)
-        <form class="form-edit-category" method="POST" action="{{route('users.update', $new['id'])}}" enctype="multipart/form-data">
+        <form class="form-edit-category" method="POST" action="{{route('news.update', $new['id'])}}" enctype="multipart/form-data">
             @csrf
-            <div class="modal fade" id="exampleModalCenter-{{$new['id']}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle-{{$category['id']}}" aria-hidden="true">
+            <div class="modal fade" id="exampleModalCenter-{{$new['id']}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle-{{$new['id']}}" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLongTitle">Edit Category [ {{$category['name']}} ]</h5>
+                    <h5 class="modal-title" id="exampleModalLongTitle">Edit Category [ {{$new['title']}} ]</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
                         <div class="mb-3">
-                            <label for="exampleInputEmail1" class="form-label">Name Category</label>
-                            <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="name" value="{{$category['name']}}">
+                            <label for="exampleInputEmail1" class="form-label">New Title *</label>
+                            <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="title" value="{{$new['title']}}">
                         </div>
                         <div class="mb-3">
-                            <label for="exampleInputPassword1" class="form-label">Cover Image</label>
+                            <label for="exampleInputEmail1" class="form-label">New Slug (Optional)</label>
+                            <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="slug" value="{{$new['title']}}">
+                        </div>
+                        <div class="mb-3">
+                            <label for="exampleFormControlTextarea1" class="form-label">Description (Optional)</label>
+                            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="description" >{{$new['description']}}</textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="exampleFormControlTextarea1" class="form-label">Content *</label>
+                            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="content" >{{$new['content']}}</textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="exampleInputPassword1" class="form-label">Cover Image *</label>
                             <div class="row">
                                 <div class="col-md-9">
                                   <input type="file" class="form-control" id="exampleInputPassword1" name="image" accept="image/*">
                                 </div>
                                 <div class="col-md-3">
-                                  <img src="{{$category['image']}}" alt="{{$category['name']}}" width="100px" height="100px" class="img-thumbnail" id="uploadedImage">
+                                  <img src="{{$new['image']}}" alt="{{$new['title']}}" width="100px" height="100px" class="img-thumbnail" id="uploadedImage">
                                 </div>
                               </div>
                         </div>
                         <div class="">
-                            <label class="form-check-label" for="exampleCheck1">Status</label>
+                            <label class="form-check-label" for="inputState">Status *</label>
                             <select id="inputState" class="form-control" name="status">
-                                @if($category['status'] == 1)
+                                @if($new['is_active'] == 1)
                                     <option value="1" selected>Active</option>
-                                    <option value="0">Deactive</option>
+                                    <option value="0">Deactivate</option>
                                 @else
                                     <option value="1">Active</option>
-                                    <option value="0" selected>Deactive</option>
+                                    <option value="0" selected>Deactivate</option>
                                 @endif
                             </select>
                           </div>
-                          <div class="mb-3">
-                            <label for="exampleInputPassword1" class="form-label">Description</label>
-                            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="description" >{{$category['description']}}</textarea>
-                        </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -149,42 +152,7 @@
             </div>
         </form>
         @endforeach
-    @endif --}}
-    <script type="text/javascript">
-        $(document).ready(function(){
-            $('.btn-danger').click(function(){
-                var id = $(this).attr('id');
-                var url = "{{route('category.delete', ['id' => 'id'])}}";
-                url = url.replace('id', id);
-                swal({
-                    title: "Are you sure?",
-                    text: "Once deleted, user's data will be lost forever!",
-                    icon: "warning",
-                    buttons: true,
-                    dangerMode: true,
-                })
-                    .then((willDelete) => {
-                        if (willDelete) {
-                            $.ajax({
-                                url: url,
-                                data: {id: id},
-                                success: function(data){
-                                    swal("Poof! Action success!", {
-                                        icon: "success",
-                                    });
-                                    location.reload();
-                                }
-                            });
-                        } else {
-                            swal("Action canceled!", {
-                                icon: "success",
-                            });
-                        }
-                    });
-
-            });
-        });
-    </script>
+    @endif
 
     <script>
         $(document).ready(function() {

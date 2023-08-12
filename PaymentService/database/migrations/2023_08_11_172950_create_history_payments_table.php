@@ -14,8 +14,9 @@ return new class extends Migration
         Schema::create('history_payments', function (Blueprint $table) {
             $table->id();
             $table->string('user_id');
-            $table->money_format('total_price', 8, 2);
-            $table->string('payment_method')->nullable();
+            $table->json('book_id');
+            $table->float('total_price', 8, 2);
+            $table->string('payment_method')->default('banking');
             $table->dateTime('created_at');
             $table->dateTime('updated_at')->nullable();
             $table->dateTime('deleted_at')->nullable();

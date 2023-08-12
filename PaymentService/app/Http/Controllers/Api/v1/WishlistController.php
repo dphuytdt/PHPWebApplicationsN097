@@ -37,7 +37,7 @@ class WishlistController extends Controller
                     'message' => 'Book not added to wishlist',
                     'data' => null
                 ], 400);
-            }             
+            }
         }
     }
 
@@ -45,9 +45,7 @@ class WishlistController extends Controller
     {
         $result = $this->wishlistRepository->getWishlist($userID);
         if($result){
-            return response()->json([
-                'result' => $result
-            ], 200);
+            return response()->json($result, 200);
         }else{
             return response()->json([
                 'status' => 'error',

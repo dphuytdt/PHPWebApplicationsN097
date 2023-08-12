@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('title', 255);
             $table->integer('quantity')->default(1);
             $table->string('cover_image')->nullable();
-            $table->decimal('price', 8, 2);
+            $table->float('price', 8, 2);
             $table->dateTime('created_at');
             $table->dateTime('updated_at')->nullable();
             $table->dateTime('deleted_at')->nullable();

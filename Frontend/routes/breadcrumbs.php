@@ -60,7 +60,7 @@ use DaveJamesMiller\Breadcrumbs\Facades\Breadcrumbs;
     //wishlist
     Breadcrumbs::for('wishlist', function ($trail) {
         $trail->parent('home');
-        $trail->push('Wishlist', route('wishlist.index'));
+        $trail->push('Wishlist', route('wishlist.index', session()->get('user')['id']));
     });
 
     //cart

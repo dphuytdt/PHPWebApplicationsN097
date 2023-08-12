@@ -18,9 +18,18 @@ use Illuminate\Support\Facades\Route;
 Route::prefix('admin')->group(function () {
     Route::prefix('news')->group(function () {
         Route::get('/', [NewsController::class, 'index']);
-        Route::get('/{id}', [NewsController::class, 'show']);
         Route::post('/', [NewsController::class, 'store']);
+        Route::get('latest', [NewsController::class, 'latest']);
+        Route::get('{id}', [NewsController::class, 'show']);
         Route::post('/{id}', [NewsController::class, 'update']);
         Route::post('delete/{id}', [NewsController::class, 'delete']);
+    });
+});
+
+Route::prefix('user')->group(function () {
+    Route::prefix('news')->group(function () {
+        Route::get('/', [NewsController::class, 'userIndex']);
+        Route::get('/latest', [NewsController::class, 'userLatest']);
+        Route::get('/{id}', [NewsController::class, 'userShow']);
     });
 });

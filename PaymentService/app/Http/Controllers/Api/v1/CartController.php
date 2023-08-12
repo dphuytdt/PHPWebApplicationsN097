@@ -24,6 +24,7 @@ class CartController extends Controller
             ], 400);
         }else{
             $result = $this->cartRepository->add($request);
+
             if($result){
                 return response()->json([
                     'status' => 'success',
@@ -73,12 +74,13 @@ class CartController extends Controller
     }
 
     public function checkout(Request $request)
-    {   
+    {
         $bookId = $request['bookId'];
         $userId = $request['userID'];
+        $totalPrice = $request['price'];
 
-        $result = $this->cartRepository->checkout($userId, $bookId);
-        
+        $result = $this->cartRepository->checkout($userId, $bookId, $totalPrice);
+
         if($result){
             return response()->json([
                 'status' => 'success',

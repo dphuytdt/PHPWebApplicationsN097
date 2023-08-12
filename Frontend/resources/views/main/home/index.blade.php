@@ -152,9 +152,7 @@
 				<div class="section-content d-flex justify-content-between align-items-md-center align-items-start flex-md-row flex-column">
 					<h3 class="section-title">New Books</h3>
 					<ul class="tablist nav product-tab-btn">
-						<li><a class="nav-link active" data-toggle="tab" href="#car_and_drive">View more</a></li>
-						{{-- <li><a class="nav-link" data-toggle="tab" href="#motorcycle">Motorcycle</a></li>
-						<li><a class="nav-link" data-toggle="tab" href="#truck_drive">Truck & Drive</a></li> --}}
+						<li><a class="nav-link active" data-toggle="tab" href="">View more</a></li>
 					</ul>
 				</div>
 			</div>
@@ -183,7 +181,6 @@
                                                     <input type="hidden" id="bookImage" value="{{$news['cover_image']}}">
                                                     <input type="hidden" id="bookPrice" value="{{$news['price']}}">
                                                     <li><a id="addWishlist-{{$news['id']}}"  > <i class="icon-heart"></i></a></li>
-                                                    <li><a href="compare.html"><i class="icon-repeat"></i></a></li>
                                                     <li><a href="#" data-toggle="modal" data-target="#modalQuickviewNewBook-{{$news['id']}}"><i class="icon-eye"></i></a></li>
                                                     @if($news['price'] != 0)
                                                         <li><a id="addCart-{{$news['id']}}"  data-toggle="modal" data-target="#modalAddcartNewBook-{{$news['id']}}"><i class="icon-shopping-cart"></i></a></li>
@@ -295,145 +292,78 @@
 	</div> <!-- End Banner Wrapper -->
 </div> <!-- ...:::: End Product Catagory Section:::... -->
 
-<!-- ...:::: Start Product Tab Section:::... -->
-<div class="product-tab-section section-top-gap-100">
-	<!-- Start Section Content -->
-	<div class="section-content-gap">
-		<div class="container">
-			<div class="row">
-				<div class="section-content d-flex justify-content-between align-items-md-center align-items-start flex-md-row flex-column">
-					<h3 class="section-title">Featured Books</h3>
-					<ul class="tablist nav product-tab-btn">
-						<li><a class="nav-link active" data-toggle="tab" href="#drive_and_car">View more</a></li>
-					</ul>
-				</div>
-			</div>
-		</div>
-	</div> <!-- End Section Content -->
 
-	<!-- Start Tab Wrapper -->
-	<div class="product-tab-wrapper">
-		<div class="container">
-			<div class="row">
-				<div class="col-12">
-					<div class="tab-content tab-animate-zoom">
-						<div class="tab-pane" id="drive_and_car">
-							<div class="product-default-slider product-default-slider-4grids-1row">
-								<!-- Start Product Defautlt Single -->
-                                @foreach($featured as $feature)
+<div class="product-tab-section section-top-gap-100">
+    <!-- Start Section Content -->
+    <div class="section-content-gap">
+        <div class="container">
+            <div class="row">
+                <div class="section-content d-flex justify-content-between align-items-md-center align-items-start flex-md-row flex-column">
+                    <h3 class="section-title">Featured Books</h3>
+                    <ul class="tablist nav product-tab-btn">
+                        <li><a class="nav-link active" data-toggle="tab" href="">View more</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div> <!-- End Section Content -->
+
+    <!-- Start Tab Wrapper -->
+    <div class="product-tab-wrapper">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="tab-content tab-animate-zoom">
+                        <div class="tab-pane show active" id="car_and_drive">
+                            <div class="product-default-slider product-default-slider-4grids-1row">
+                                <!-- Start Product Defautlt Single -->
+                                @foreach($featured as $news)
                                     <div class="product-default-single border-around">
                                         <div class="product-img-warp">
-                                            <a id="url-{{$feature['id']}}" href="{{URL::to('/book-details/'.$feature['id'])}}" class="product-default-img-link">
-                                                <img src="{{$feature['cover_image']}}" id="image-{{$feature['id']}}" alt="" class="product-default-img img-fluid">
+                                            <a id="url-{{$news['id']}}" href="{{URL::to('/book-details/'.$news['id'])}}" class="product-default-img-link">
+                                                <img src="{{$news['cover_image']}}" id="image-{{$news['id']}}" alt="" class="product-default-img img-fluid">
                                             </a>
                                             <div class="product-action-icon-link">
                                                 <ul>
-                                                    <li><a id="addWishlist-{{$feature['id']}}" ><i class="icon-heart"></i></a></li>
+                                                    <input type="hidden" id="bookID" value="{{$news['id']}}">
+                                                    <input type="hidden" id="bookTitle" value="{{$news['title']}}">
+                                                    <input type="hidden" id="bookImage" value="{{$news['cover_image']}}">
+                                                    <input type="hidden" id="bookPrice" value="{{$news['price']}}">
+                                                    <li><a id="addWishlist-{{$news['id']}}"  > <i class="icon-heart"></i></a></li>
                                                     <li><a href="compare.html"><i class="icon-repeat"></i></a></li>
-                                                    <li><a href="#" data-toggle="modal" data-target="#modalQuickviewFeaturedBook-{{$feature['id']}}"><i class="icon-eye"></i></a></li>
-                                                    @if($feature['price'] != 0)
-                                                        <li><a href="#" data-toggle="modal" data-target="#modalAddcartFeaturedBook--{{$feature['id']}}"><i class="icon-shopping-cart"></i></a></li>
+                                                    <li><a href="#" data-toggle="modal" data-target="#modalQuickviewNewBook-{{$news['id']}}"><i class="icon-eye"></i></a></li>
+                                                    @if($news['price'] != 0)
+                                                        <li><a id="addCart-{{$news['id']}}"  data-toggle="modal" data-target="#modalAddcartNewBook-{{$news['id']}}"><i class="icon-shopping-cart"></i></a></li>
                                                     @endif
                                                 </ul>
                                             </div>
                                         </div>
                                         <div class="product-default-content">
-                                            <h6 class="product-default-link"><a href="{{URL::to('/book-details/'.$feature['id'])}}" >{{$feature['title']}}</a></h6>
-                                            <input type="text" disabled hidden value="{{$feature['title']}}" id="name-{{$feature['id']}}">
+                                            <h6 class="product-default-link"><a href="{{URL::to('/book-details/'.$news['id'])}}" >{{$news['title']}}</a></h6>
+                                            <input type="text" disabled hidden value="{{$news['title']}}" id="name-{{$news['id']}}">
                                             @if($news['price'] != 0)
                                                 <span class="product-default-price">{{number_format($news['price'])}} $</span>
                                                 <input type="text" disabled hidden value="{{number_format($news['price'])}}" id="price-{{$news['id']}}">
                                             @else
                                                 <span class="product-default-price" >Free for now</span>
                                             @endif
-                                            <input type="text" disabled hidden value="Free for now" id="price-{{$feature['id']}}">
+                                            <input type="text" disabled hidden value="Free for now" id="price-{{$news['id']}}">
                                         </div>
                                     </div> <!-- End Product Defautlt Single -->
                                 @endforeach
                             </div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div> <!-- End Catagory Wrapper -->
-</div> <!-- ...:::: End Product Tab Section:::... -->
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> <!-- End Catagory Wrapper -->
+
+</div> <!-- ...:::: Start Product Tab Section:::... -->
+<!-- ...:::: Start Product Tab Section:::... -->
 
 <!-- ...:::: Start Blog Feed Section:::... -->
-<div class="blog-feed-section section-top-gap-100">
-	<!-- Start Section Content -->
-	<div class="section-content-gap">
-	<div class="container">
-		<div class="row">
-			<div class="section-content d-flex justify-content-between align-items-md-center align-items-start flex-md-row flex-column">
-				<h3 class="section-title">Latest News</h3>
-				<ul class="tablist nav product-tab-btn">
-					<li><a class="nav-link active" data-toggle="tab" href="#car_and_drive">Read more</a></li>
-				</ul>
-			</div>
-		</div>
-	</div>
-</div> <!-- End Section Content -->
-
-	<!-- Start Blog Feed Wrapper -->
-	<div class="blog-feed-wrapper">
-		<div class="container">
-			<div class="row">
-				<div class="col-lg-4 col-md-6 col-12">
-					<!-- Start Blog Feed Single -->
-					<div class="blog-feed-single">
-						<a href="blog-single-sidebar-left.html" class="blog-feed-img-link">
-							<img src="assets/images/blog_images/aments_blog_01.jpg" alt="" class="blog-feed-img">
-						</a>
-						<div class="blog-feed-content">
-							<div class="blog-feed-post-meta">
-								<span>By:</span>
-								<a href="" class="blog-feed-post-meta-author">Admin</a> -
-								<a href="" class="blog-feed-post-meta-date">Sep 14, 2020</a>
-							</div>
-							<h5 class="blog-feed-link"><a href="blog-single-sidebar-left.html">Lorem ipsum dolor amet cons adipisicing elit</a></h5>
-						</div>
-					</div><!-- End Blog Feed Single -->
-				</div>
-				<div class="col-lg-4 col-md-6 col-12">
-					<!-- Start Blog Feed Single -->
-					<div class="blog-feed-single">
-						<a href="blog-single-sidebar-left.html" class="blog-feed-img-link">
-							<img src="assets/images/blog_images/aments_blog_02.jpg" alt="" class="blog-feed-img">
-						</a>
-						<div class="blog-feed-content">
-							<div class="blog-feed-post-meta">
-								<span>By:</span>
-								<a href="" class="blog-feed-post-meta-author">Admin</a> -
-								<a href="" class="blog-feed-post-meta-date">Sep 14, 2020</a>
-							</div>
-							<h5 class="blog-feed-link"><a href="blog-single-sidebar-left.html">Lorem ipsum dolor amet cons adipisicing elit</a></h5>
-						</div>
-					</div><!-- End Blog Feed Single -->
-				</div>
-				<div class="col-lg-4 col-md-6 col-12">
-					<!-- Start Blog Feed Single -->
-					<div class="blog-feed-single">
-						<a href="blog-single-sidebar-left.html" class="blog-feed-img-link">
-							<img src="assets/images/blog_images/aments_blog_03.jpg" alt="" class="blog-feed-img">
-						</a>
-						<div class="blog-feed-content">
-							<div class="blog-feed-post-meta">
-								<span>By:</span>
-								<a href="" class="blog-feed-post-meta-author">Admin</a> -
-								<a href="" class="blog-feed-post-meta-date">Sep 14, 2020</a>
-							</div>
-							<h5 class="blog-feed-link"><a href="blog-single-sidebar-left.html">Lorem ipsum dolor amet cons adipisicing elit</a></h5>
-						</div>
-					</div><!-- End Blog Feed Single -->
-				</div>
-			</div>
-		</div>
-	</div> <!-- End Blog Feed Wrapper -->
-
-
-</div> <!-- ...:::: End Blog Feed Section:::... -->
-
 @foreach($free as $book)
     <div class="modal fade" id="modalQuickview-{{$book['id']}}" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog  modal-dialog-centered" role="document">
@@ -627,7 +557,10 @@
                         </div>
                         <div class="row">
                             @if(session()->has('user'))
-                                <input type="hidden" id="user_id" value="{{session()->get('user')['id']}}">
+                                @php
+                                    $user_id = session()->get('user')['id'];
+                                @endphp
+                                <input type="hidden" id="user_id" value="{{$user_id}}">
                             <div class="col-md-7">
                                 <div class="row">
                                     <div class="col-md-4">
@@ -638,8 +571,8 @@
                                     <div class="col-md-8">
                                         <div class="modal-add-cart-info"><i class="fa fa-check-square"></i>Added to cart successfully!</div>
                                         <div class="modal-add-cart-product-cart-buttons">
-                                            <a href="cart.html">View Cart</a>
-                                            <a href="checkout.html">Checkout</a>
+                                            <a href="{{route('cart.getUserCart',$user_id)}}">View Cart</a>
+                                            <a href="{{route('cart.checkOut',$user_id)}}">Checkout</a>
                                         </div>
                                     </div>
                                 </div>
@@ -821,8 +754,8 @@
                 var bookId = this.id.split('-')[1]; // Extract the book ID from the button's ID
                 var bookTitle = document.getElementById('name-' + bookId).value;
                 var bookPrice = document.getElementById('price-' + bookId).value;
+                bookPrice = parseFloat(bookPrice);
                 var bookImage = document.getElementById('image-' + bookId).src;
-                console.log(bookId + " " + bookTitle + " " + bookPrice + " " + bookImage);
                 //Create AJAX request
                 var xhr = new XMLHttpRequest();
                 var url = 'http://paymentservice.test:8080/api/cart/add';
@@ -885,6 +818,7 @@
                 var bookId = this.id.split('-')[1]; // Extract the book ID from the button's ID
                 var bookTitle = document.getElementById('name-' + bookId).value;
                 var bookPrice = document.getElementById('price-' + bookId).value;
+                bookPrice = parseFloat(bookPrice);
                 var bookImage = document.getElementById('image-' + bookId).src;
                 console.log(bookId + " " + bookTitle + " " + bookPrice + " " + bookImage);
                 // Create AJAX request

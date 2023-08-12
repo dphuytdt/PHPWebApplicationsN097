@@ -3,15 +3,14 @@
 namespace App\Http\Controllers\Api\v1;
 
 use App\Http\Controllers\Controller;
-use App\Models\News;
 use Illuminate\Http\Request;
-use App\Interfaces\NewsRepositoryInterface;
+use App\Interfaces\NewsRepositoryInterfaces;
 
 class NewsController extends Controller
 {
-    protected NewsRepositoryInterface $newsRepository;
+    protected NewsRepositoryInterfaces $newsRepository;
 
-    public function __construct(NewsRepositoryInterface $newsRepository)
+    public function __construct(NewsRepositoryInterfaces $newsRepository)
     {
         $this->newsRepository = $newsRepository;
     }
@@ -22,6 +21,7 @@ class NewsController extends Controller
         return response()->json($news);
     }
 
+
     public function show($id)
     {
         $news = $this->newsRepository->show($id);
@@ -30,12 +30,9 @@ class NewsController extends Controller
 
     public function store(Request $request)
     {
-        try {
-            $news = $this->newsRepository->store($request);
-            return response()->json($news, 201);
-        } catch (\Exception $e) {
-            return response()->json($e->getMessage(), 500);
-        }
+        $news = $this->newsRepository->store($request);
+
+        return response()->json($news, 201);
     }
 
     public function delete($id)
@@ -56,5 +53,24 @@ class NewsController extends Controller
         } catch (\Exception $e) {
             return response()->json($e->getMessage(), 500);
         }
+    }
+
+    public function latest()
+    {
+        $news = $this->newsRepository->latest();
+        return response()->json($news);
+    }
+
+
+    public function userIndex()
+    {
+        $news = $this->newsRepository->userIndex();
+        $newRecent = $this->newsRepository->newRecent();
+
+        $new= [
+            'news' => $news,
+            'newRecent' => $newRecent
+        ];
+        return response()->json($new);
     }
 }

@@ -7,31 +7,31 @@ use App\Http\Requests\UpdatePostRequest;
 use App\Interfaces\UserRepositoryInterface;
 use App\Models\User;
 use App\Models\UserDetail;
-class UserRepository implements UserRepositoryInterface 
+class UserRepository implements UserRepositoryInterface
 {
     private User $user;
-    public function __construct(User $user) 
+    public function __construct(User $user)
     {
         $this->user = $user;
     }
 
-    public function checkEmail($email) 
+    public function checkEmail($email)
     {
         return $this->user->where('email', $email)->first();
     }
 
-    public function getUserById($id) 
+    public function getUserById($id)
     {
         return $this->user->where('id', $id)->first();
     }
 
-    public function checkUserExist($email) 
+    public function checkUserExist($email)
     {
         $user = $this->user->where('email', $email)->first();
         return $user;
     }
 
-    public function getAllUser() 
+    public function getAllUser()
     {
         $user = $this->user->all();
         //get user detail for each user
@@ -42,7 +42,7 @@ class UserRepository implements UserRepositoryInterface
         return $user;
     }
 
-    public function createUser($data) 
+    public function createUser($data)
     {
         $user = $this->user->create($data);
         $user_detail = new UserDetail();
@@ -51,7 +51,7 @@ class UserRepository implements UserRepositoryInterface
         return $user;
     }
 
-    public function resetPassword($email, $password, $user_id) 
+    public function resetPassword($email, $password, $user_id)
     {
         $user = $this->user->where('email', $email)->first();
         $user->password = $password;
@@ -59,13 +59,13 @@ class UserRepository implements UserRepositoryInterface
         return $user;
     }
 
-    public function deleteUser($email) 
+    public function deleteUser($email)
     {
         $user = $this->user->where('email', $email)->first();
         return $user->delete();
     }
 
-    public function updateUser($email) 
+    public function updateUser($email)
     {
         $user = $this->user->where('email', $email)->first();
         $user->is_active = 1;
@@ -73,10 +73,10 @@ class UserRepository implements UserRepositoryInterface
         return $user;
     }
 
-    public function upgradeUser($user, $amount,$numberMonth)
+    public function upgradeUser($email, $amount, $numberMonth)
     {
-        $user_id = $user->id;
-        $user_detail = UserDetail::where('user_id', $user->id)->first();
+        $user_id = $email->id;
+        $user_detail = UserDetail::where('user_id', $email->id)->first();
         $wallet = $user_detail->wallet;
         if($wallet <= $amount) {
             return false;
@@ -84,28 +84,28 @@ class UserRepository implements UserRepositoryInterface
             $wallet = $wallet - $amount;
             $user_detail->wallet = $wallet;
             $user_detail->save();
-            $user->is_vip = 1;
+            $email->is_vip = 1;
             $expired_date = date('Y-m-d H:i:s', strtotime('+'.$numberMonth.' month'));
-            $user->valid_vip = $expired_date;
-            $user->save();
+            $email->valid_vip = $expired_date;
+            $email->save();
             return true;
         }
-        return $user;
+        return $email;
     }
 
-    public function getUserByemail($email) 
+    public function getUserByemail($email)
     {
         $user = $this->user->where('email', $email)->first();
         return $user;
     }
 
-    public function getUserDetail($user_id) 
+    public function getUserDetail($user_id)
     {
         $user_detail = UserDetail::where('user_id', $user_id)->first();
         return $user_detail;
     }
 
-    public function updateAdminPassword($email, $password) 
+    public function updateAdminPassword($email, $password)
     {
         $user = $this->user->where('email', $email)->first();
         $user->password = $password;

@@ -22,8 +22,8 @@ Route::group(['middleware' => 'api','prefix' => 'auth'], function ($router) {
     Route::post('logout', [AuthController::class, 'logout']);
     Route::post('refresh', [AuthController::class, 'refresh']);
     Route::get('user-profile', [AuthController::class, 'userProfile']);
-    Route::post('change-pass', [AuthController::class, 'changePassWord']);   
-    Route::get('check-auth', [AuthController::class, 'checkAuth']); 
+    Route::post('change-pass', [AuthController::class, 'changePassWord']);
+    Route::get('check-auth', [AuthController::class, 'checkAuth']);
     Route::post('forgot-password', [AuthController::class, 'forgotPassword']);
     Route::post('verify-otp', [AuthController::class, 'verifyOTP']);
     Route::post('reset-password', [AuthController::class, 'resetPassword']);
@@ -35,6 +35,10 @@ Route::group(['middleware' => 'api','prefix' => 'auth'], function ($router) {
         Route::post('login', [AdminAuthController::class, 'login']);
         Route::post('logout', [AdminAuthController::class, 'logout']);
         Route::get('user', [UserController::class, 'getAllUser']);
+        Route::post('user', [UserController::class, 'store']);
+        Route::get('user/{id}', [UserController::class, 'show']);
+        Route::post('user/{id}', [UserController::class, 'update']);
+        Route::post('user/in-active/{id}', [UserController::class, 'destroy']);
         Route::post('request-reset-password', [AdminAuthController::class, 'requestResetPassword']);
     });
 
