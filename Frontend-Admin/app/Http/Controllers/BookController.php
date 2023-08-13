@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use GuzzleHttp\Client;
+use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Http\Request;
 use Spatie\PdfToText\Pdf;
 
@@ -42,31 +43,26 @@ class BookController extends Controller
      */
     public function store(Request $request)
     {
-        dd($request->all());
         $client = new Client();
+
         try{
-            // dd($request->all());
             $response = $client->post($this->bookService.'admin/books', [
-                'json' => $request->all()
+                'json' => [
+                    'title' => $request->title,
+                    'description' => $request->description,
+                    'author' => $request->author,
+                    'category_id' => $request->category_id,
+                    'price' => $request->price,
+                    'discount' => $request->discount,
+                    'content' => $request->file('content'),
+                    'status' => $request->status,
+                    'image' => $request->file('image')
+                ]
             ]);
-        } catch (\Exception $e) {
-            print_r($e);
-        } catch (GuzzleException $e) {
+            return redirect()->route('books.index')->with('success', 'Create book successfully');
+        } catch (\Exception|GuzzleException $e) {
             print_r($e);
         }
-
-        // $result = json_decode($response->getBody(), true);
-        // dd($result);
-        // try{
-
-        //     if ($result['status'] == 201) {
-        //         return redirect()->route('books.index')->with('success', 'Create book successfully');
-        //     } else {
-        //         return redirect()->route('books.index')->withErrors(['errors' => 'Cannot create book']);
-        //     }
-        // } catch (\Exception $e) {
-        //     return redirect()->route('books.index')->withErrors(['errors' => 'Cannot connect to server']);
-        // }
     }
 
     /**

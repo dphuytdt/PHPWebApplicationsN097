@@ -75,7 +75,8 @@ Route::prefix('auth')->group(function () {
 
 Route::group(['prefix' => 'cart'], function () {
     Route::post('add', [CartController::class, 'addToCart'])->name('cart.add');
-    Route::post('payment', [CartController::class, 'payment'])->name('cart.payment');
+    Route::post('payment-vnPay', [CartController::class, 'payment'])->name('cart.payment.vnPay');
+    Route::post('payment-moMo', [CartController::class, 'paymentMomo'])->name('cart.payment.moMo');
     Route::get('checkout/{id}', [CartController::class, 'checkOut'])->name('cart.checkOut');
     Route::get('{id}', [CartController::class, 'getUserCart'])->name('cart.getUserCart');
 });

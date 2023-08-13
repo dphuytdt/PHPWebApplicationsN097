@@ -44,8 +44,6 @@
             <div class="checkout_form">
                 <div class="row">
                     <div class="col-lg-12 col-md-12">
-                        <form method="post" action="{{route('cart.payment')}}">
-                            @csrf
                             <h3>Your order</h3>
                             <div class="order_table">
                                 <table>
@@ -90,9 +88,31 @@
                                     </tfoot>
                                 </table>
                             </div>
+                        <form method="post" action="{{route('cart.payment.vnPay')}}">
+                            @csrf
+                            <input type="hidden" name="id" value="{{$item->id}}">
+                            <input type="hidden" name="bookiD[]" value="{{$item->book_id}}">
+                            <input type="hidden" name="price" value="{{$item->price}}">
+                            <input type="hidden" name="userName" value="{{$user['fullname']}}">
+                            <input type="hidden" name="useId" value="{{$user['id']}}">
+                            <input type="hidden" name="total" value="{{$total}}">
                             <div class="payment_method">
                                 <div class="order_button pt-15">
-                                    <button id="proceedToPayBtn" name="redirect" type="submit">Proceed to Pay</button>
+                                    <button id="proceedToPayBtn" name="redirect" type="submit">Purchase with VNPay</button>
+                                </div>
+                            </div>
+                        </form>
+                        <form method="post" action="{{route('cart.payment.moMo')}}">
+                            @csrf
+                            <input type="hidden" name="id" value="{{$item->id}}">
+                            <input type="hidden" name="bookiD[]" value="{{$item->book_id}}">
+                            <input type="hidden" name="price" value="{{$item->price}}">
+                            <input type="hidden" name="userName" value="{{$user['fullname']}}">
+                            <input type="hidden" name="useId" value="{{$user['id']}}">
+                            <input type="hidden" name="total" value="{{$total}}">
+                            <div class="payment_method">
+                                <div class="order_button pt-15">
+                                    <button  name="payUrl" type="submit">Purchase with Momo</button>
                                 </div>
                             </div>
                         </form>
