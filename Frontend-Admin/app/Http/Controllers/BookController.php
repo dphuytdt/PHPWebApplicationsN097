@@ -42,11 +42,8 @@ class BookController extends Controller
      */
     public function store(Request $request)
     {
+        dd($request->all());
         $client = new Client();
-        //bug: cannot upload file
-        //convert pdf to to base64
-        print_r($request->all());
-        $pdf = new Pdf($request->file('file'));
         try{
             // dd($request->all());
             $response = $client->post($this->bookService.'admin/books', [
@@ -57,11 +54,11 @@ class BookController extends Controller
         } catch (GuzzleException $e) {
             print_r($e);
         }
-        
+
         // $result = json_decode($response->getBody(), true);
         // dd($result);
         // try{
-            
+
         //     if ($result['status'] == 201) {
         //         return redirect()->route('books.index')->with('success', 'Create book successfully');
         //     } else {
@@ -85,7 +82,16 @@ class BookController extends Controller
      */
     public function edit(string $id)
     {
-        return view('home.book.edit');
+        $client = new Client();
+        try {
+            $response = $client->get($this->bookService.'admin/books/'.$id);
+            $res= json_decode($response->getBody(), true);
+            $book = $res['book'];
+            $categories = $res['categories'];
+            return view('home.book.edit', compact('book', 'categories'));
+        } catch (\Exception $e) {
+            return view('home.book.edit')->withErrors(['errors' => 'Cannot connect to server']);
+        }
     }
 
     /**

@@ -8,12 +8,12 @@ use App\Interfaces\OTPRepositoryInterface;
 use App\Models\User;
 use App\Models\OTP;
 
-class OTPRepository implements OTPRepositoryInterface 
+class OTPRepository implements OTPRepositoryInterface
 {
     private OTP $otp;
     private User $user;
 
-    public function __construct(OTP $otp, User $user) 
+    public function __construct(OTP $otp, User $user)
     {
         $this->otp = $otp;
         $this->user = $user;
@@ -66,5 +66,23 @@ class OTPRepository implements OTPRepositoryInterface
     public function deleteOTP($email, $otp, $user_id, $type)
     {
         return $this->otp->where('email', $email)->where('otp', $otp)->where('user_id', $user_id)->where('type', $type)->delete();
+    }
+
+    public function generatePassword($length = 8)
+    {
+        $chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+        $count = mb_strlen($chars);
+
+        for ($i = 0, $result = ''; $i < $length; $i++) {
+            $index = rand(0, $count - 1);
+            $result .= mb_substr($chars, $index, 1);
+        }
+
+        return $result;
+    }
+
+    public function sendEmail($email, $password)
+    {
+
     }
 }

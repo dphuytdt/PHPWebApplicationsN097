@@ -38,6 +38,7 @@
                             <th>Wallet</th>
                             <th>Role</th>
                             <th>Vip Member</th>
+                            <th>Status</th>
                             <th>Created Date</th>
                             <th>Update Date</th>
                             <th>Delete Date</th>
@@ -65,15 +66,19 @@
                                             <span class="badge badge-success">Yes</span>
                                         @endif
                                     </td>
+                                    <td>
+                                        @if($user['is_active'] == 1)
+                                            <span class="badge badge-success">Active</span>
+                                        @else
+                                            <span class="badge badge-danger">Inactive</span>
+                                        @endif
+                                    </td>
                                     <td>{{$user['created_at']}}</td>
-                                    <td>{{$user['updated_at']}}</td>
-                                    <td>{{$user['deleted_at']}}</td>
+                                    <td>{{$user['updated_at'] ?? 'N/A'}}</td>
+                                    <td>{{$user['deleted_at'] ?? 'N/A'}}</td>
                                     <td>
                                         <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#exampleModalCenter-{{$user['id']}}">
                                             Edit
-                                        </button>
-                                        <button type="button" class="btn btn-danger btn-sm">
-                                            Delete
                                         </button>
                                     </td>
                                 </tr>
@@ -99,39 +104,44 @@
 
 </div>
 
-{{-- @if(isset($users))
-    @foreach($users as $user)
+@if(isset($users))
+    @foreach($user_infor as $user)
     <form class="form-edit-category" method="POST" action="{{route('users.update', $user['id'])}}" enctype="multipart/form-data">
         @csrf
-        <div class="modal fade" id="exampleModalCenter-{{$user['id']}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle-{{$category['id']}}" aria-hidden="true">
+        <div class="modal fade" id="exampleModalCenter-{{$user['id']}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle-{{$user['id']}}" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLongTitle">Edit Category [ {{$category['name']}} ]</h5>
+                <h5 class="modal-title" id="exampleModalLongTitle">Edit User [ {{$user['fullname']}} ]</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
                     <div class="mb-3">
-                        <label for="exampleInputEmail1" class="form-label">Name Category</label>
-                        <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="name" value="{{$category['name']}}">
+                        <label for="exampleInputEmail1" class="form-label">Full Name</label>
+                        <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="fullname" value="{{$user['fullname']}}">
                     </div>
                     <div class="mb-3">
-                        <label for="exampleInputPassword1" class="form-label">Cover Image</label>
-                        <div class="row">
-                            <div class="col-md-9">
-                              <input type="file" class="form-control" id="exampleInputPassword1" name="image" accept="image/*">
-                            </div>
-                            <div class="col-md-3">
-                              <img src="{{$category['image']}}" alt="{{$category['name']}}" width="100px" height="100px" class="img-thumbnail" id="uploadedImage">
-                            </div>
-                          </div>
+                        <label for="exampleInputEmail1" class="form-label">Email</label>
+                        <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="email" value="{{$user['email']}}" disabled>
                     </div>
-                    <div class="">
-                        <label class="form-check-label" for="exampleCheck1">Status</label>
-                        <select id="inputState" class="form-control" name="status">
-                            @if($category['status'] == 1)
+                    <div class="mb-3">
+                        <label class="form-check-label" for="role">Role</label>
+                        <select id="inputState" class="form-control" name="role">
+                            @if($user['role'] == "ROLE_USER")
+                                <option value="ROLE_USER" selected>User</option>
+                                <option value="ROLE_ADMIN">Admin</option>
+                            @else
+                                <option value="ROLE_USER">User</option>
+                                <option value="ROLE_ADMIN" selected>Admin</option>
+                            @endif
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-check-label" for="is_active">Status</label>
+                        <select id="is_active" class="form-control" name="is_active">
+                            @if($user['is_active'] == 1)
                                 <option value="1" selected>Active</option>
                                 <option value="0">Deactive</option>
                             @else
@@ -139,11 +149,7 @@
                                 <option value="0" selected>Deactive</option>
                             @endif
                         </select>
-                      </div>
-                      <div class="mb-3">
-                        <label for="exampleInputPassword1" class="form-label">Description</label>
-                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="description" >{{$category['description']}}</textarea>
-                    </div>
+                  </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -154,42 +160,7 @@
         </div>
     </form>
     @endforeach
-@endif --}}
-<script type="text/javascript">
-    $(document).ready(function(){
-        $('.btn-danger').click(function(){
-            var id = $(this).attr('id');
-            var url = "{{route('category.delete', ['id' => 'id'])}}";
-            url = url.replace('id', id);
-            swal({
-                title: "Are you sure?",
-                text: "Once deleted, user's data will be lost forever!",
-                icon: "warning",
-                buttons: true,
-                dangerMode: true,
-                })
-                .then((willDelete) => {
-                if (willDelete) {
-                    $.ajax({
-                        url: url,
-                        data: {id: id},
-                        success: function(data){
-                            swal("Poof! Action success!", {
-                                icon: "success",
-                            });
-                            location.reload();
-                        }
-                    });
-                } else {
-                    swal("Action canceled!", {
-                        icon: "success",
-                    });
-                }
-            });
-
-        });
-    });
-</script>
+@endif
 
 <script>
     $(document).ready(function() {

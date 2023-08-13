@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Http\Request;
 use GuzzleHttp\Client;
 use App\Services\CategoryService;
@@ -75,6 +76,39 @@ class BookController extends Controller
     public function allBook(Request $request){
 
         // return view('main.all-book', compact('paginator'));
+    }
+
+    public function viewMore(string $dataType, Request $request)
+    {
+        $categories = $this->categoryService->getCategory();
+        $client = new Client();
+
+        try {
+            $response = $client->get($this->bookService.'books/view-more/'.$dataType);
+            $responseData = json_decode($response->getBody(), true);
+            if($responseData) {
+                $books = json_decode($response->getBody(), true);
+                // Số lượng sách hiển thị trên mỗi trang
+                $perPage = 8;
+
+                // Số trang hiện tại, lấy từ query string hoặc mặc định là 1
+                $currentPage = $request->query('page', 1);
+
+                // Tạo một LengthAwarePaginator từ kết quả sách và các thông số phân trang
+                $paginator = new LengthAwarePaginator(
+                    $books['data'],   // Dữ liệu sách
+                    $books['total'],  // Tổng số sách
+                    $perPage,         // Số lượng sách trên mỗi trang
+                    $currentPage,     // Trang hiện tại
+                    ['path' => $request->url(), 'query' => $request->query()]
+                );
+            } else {
+                $paginator = [];
+            }
+            return view('main.book.all-books', compact('paginator', 'categories'));
+        } catch (\Exception|GuzzleException $e) {
+            return view('errors.404')->with('categories', $categories);
+        }
     }
 
 }

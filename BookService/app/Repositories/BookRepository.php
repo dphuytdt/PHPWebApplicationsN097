@@ -118,4 +118,30 @@ class BookRepository implements BookRepositoryInterface
         }
         return $books;
     }
+
+    public function getAllCategories()
+    {
+        return Category::all();
+    }
+
+    public function viewMore($dataType)
+    {
+        $dataType = strtolower($dataType);
+
+        if ($dataType == 'free') {
+            return Book::where('price', 0)->orderBy('created_at', 'desc')->paginate(8);
+        } else if ($dataType == 'featured') {
+            return Book::where('is_featured', 1)->orderBy('updated_at', 'desc')->paginate(8);
+        } else if ($dataType == 'new') {
+            $news = Book::where('created_at', '>=', now()->subDays(7))
+                ->orWhere('updated_at', '>=', now()->subDays(7))
+                ->get();
+            if (count($news) == 0) {
+                return Book::orderBy('updated_at', 'desc')->paginate(8);
+            }
+            return $news;
+        } else {
+            return Book::orderBy('updated_at', 'desc')->paginate(8);
+        }
+    }
 }

@@ -38,10 +38,14 @@ class AdminBookController extends Controller
     public function show(string $id)
     {
         $book = $this->bookRepository->getBookById($id);
+        $categories = $this->bookRepository->getAllCategories();
         if (is_null($book)) {
             return response()->json(['message' => 'Book not found'], 404);
         }
-        return response()->json($book, 200);
+        return response()->json([
+            'book' => $book,
+            'categories' => $categories
+        ], 200);
     }
 
     /**

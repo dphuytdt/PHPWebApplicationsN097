@@ -41,12 +41,6 @@
                             </div>
 
                         </div>
-                        <div class="product-image-thumb product-image-thumb-horizontal pos-relative">
-                            <div class="zoom-active product-image-thumb-single">
-                                <img class="img-fluid" src="{{asset('assets/images/products_images/aments_products_image_1.jpg')}}" alt="">
-                            </div>
-
-                        </div>
                     </div>
                 </div>
                 <div class="col-md-6">
@@ -76,36 +70,6 @@
                         <div class="product-details-variable">
                             <h4 class="title">Available Options</h4>
                             <!-- Product Variable Single Item -->
-                            {{-- <div class="variable-single-item">
-                                <span>Color</span>
-                                <div class="product-variable-color">
-                                    <label for="product-color-red">
-                                        <input name="product-color" id="product-color-red" class="color-select" type="radio" checked>
-                                        <span class="product-color-red"></span>
-                                    </label>
-                                    <label for="product-color-tomato">
-                                        <input name="product-color" id="product-color-tomato" class="color-select" type="radio">
-                                        <span class="product-color-tomato"></span>
-                                    </label>
-                                    <label for="product-color-green">
-                                        <input name="product-color" id="product-color-green" class="color-select" type="radio">
-                                        <span class="product-color-green"></span>
-                                    </label>
-                                    <label for="product-color-light-green">
-                                        <input name="product-color" id="product-color-light-green" class="color-select" type="radio">
-                                        <span class="product-color-light-green"></span>
-                                    </label>
-                                    <label for="product-color-blue">
-                                        <input name="product-color" id="product-color-blue" class="color-select" type="radio">
-                                        <span class="product-color-blue"></span>
-                                    </label>
-                                    <label for="product-color-light-blue">
-                                        <input name="product-color" id="product-color-light-blue" class="color-select" type="radio">
-                                        <span class="product-color-light-blue"></span>
-                                    </label>
-                                </div>
-                            </div> --}}
-                            <!-- Product Variable Single Item -->
                             <div class="d-flex align-items-center">
                                 @if(session()->has('user'))
                                     @php
@@ -122,14 +86,8 @@
                                             $diff = floor(strtotime($vip_experied_date) - strtotime($today))/ (60 * 60 * 24);
                                         @endphp
                                         @if ($diff < 0)
-{{--                                            <div class="variable-single-item ">--}}
-{{--                                                <span>Quantity Available</span>--}}
-{{--                                                <div class="product-variable-quantity">--}}
-{{--                                                    <input  value="{{$result['book']['quantity']}}" type="text" readonly disabled>--}}
-{{--                                                </div>--}}
-{{--                                            </div>--}}
                                             <div class="product-add-to-cart-btn">
-                                                <a href="#" data-toggle="modal" data-target="#modalAddcart">Add To Cart</a>
+                                                <a  id="addCartDetails" href="{{route('cart.add')}}" data-toggle="modal" data-target="#modalAddcart">Add To Cart</a>
                                             </div>
                                         @else
                                             @if($result['book']['is_vip_valid'] == 1)
@@ -137,14 +95,8 @@
                                                     <a href="#" data-toggle="modal" data-target=".bd-example-modal-lg-{{$result['book']['id']}}">Read now</a>
                                                 </div>
                                             @else
-{{--                                                <div class="variable-single-item ">--}}
-{{--                                                    <span>Quantity Available</span>--}}
-{{--                                                    <div class="product-variable-quantity">--}}
-{{--                                                        <input  value="{{$result['book']['quantity']}}" type="text" readonly disabled>--}}
-{{--                                                    </div>--}}
-{{--                                                </div>--}}
                                                 <div class="product-add-to-cart-btn">
-                                                    <a href="#" data-toggle="modal" data-target="#modalAddcart">Add To Cart</a>
+                                                    <a  id="addCartDetails" href="#" data-toggle="modal" data-target="#modalAddcart">Add To Cart</a>
                                                 </div>
                                             @endif
                                         @endif
@@ -154,33 +106,15 @@
                                                 <a href="#" data-toggle="modal" data-target=".bd-example-modal-lg-{{$result['book']['id']}}">Read now</a>
                                             </div>
                                         @else
-{{--                                            <div class="variable-single-item ">--}}
-{{--                                                <span>Quantity Available</span>--}}
-{{--                                                <div class="product-variable-quantity">--}}
-{{--                                                    <input  value="{{$result['book']['quantity']}}" type="text" readonly disabled>--}}
-{{--                                                </div>--}}
-{{--                                            </div>--}}
                                             <div class="product-add-to-cart-btn">
-                                                <a href="#" data-toggle="modal" data-target="#modalAddcart">Add To Cart</a>
+                                                <a  id="addCartDetails" href="" data-toggle="modal" data-target="#modalAddcart">Add To Cart</a>
                                             </div>
                                         @endif
                                     @endif
                                 @else
-                                    @if ($result['book']['price'] == 0)
-                                        <div class="product-add-to-cart-btn">
-                                            <a href="#" data-toggle="modal" data-target=".bd-example-modal-lg-{{$result['book']['id']}}">Read now</a>
-                                        </div>
-                                    @else
-{{--                                        <div class="variable-single-item ">--}}
-{{--                                            <span>Quantity Available</span>--}}
-{{--                                            <div class="product-variable-quantity">--}}
-{{--                                                <input  value="{{$result['book']['quantity']}}" type="text" readonly disabled>--}}
-{{--                                            </div>--}}
-{{--                                        </div>--}}
-                                        <div class="product-add-to-cart-btn">
-                                            <a href="#" data-toggle="modal" data-target="#modalAddcart">Add To Cart</a>
-                                        </div>
-                                    @endif
+                                    <div class="product-add-to-cart-btn">
+                                        <a  href="{{route('login')}}">Please login for details</a>
+                                    </div>
                                 @endif
                                 <div class="product-add-to-cart-btn">
                                     <button class="btn-continue">Continue</button>
@@ -188,26 +122,69 @@
                                 <div class="product-add-to-cart-btn">
                                     <button class="btn-restart">Restart</button>
                                 </div>
+                                <input type="hidden" name="_token" value="{{csrf_token()}}">
                             </div>
+                            @if(session()->has('user'))
+                            <script type="text/javascript">
+                                    //write axios to add to cart
+                                    $(document).ready(function(){
+                                        $('#addCartDetails').click(function(e){
+                                            e.preventDefault();
+                                            var userID = {{session()->get('user')['id']}};
+                                            var bookID = {{$result['book']['id']}};
+                                            var bookTitle = "{{$result['book']['title']}}";
+                                            var bookPrice = {{$result['book']['price']}};
+                                            var bookImage = "{{$result['book']['cover_image']}}";
+                                            var _token = $('input[name="_token"]').val();
+                                            $.ajax({
+                                                url: "{{route('cart.add')}}",
+                                                type: "POST",
+                                                data: {
+                                                    userID: userID,
+                                                    bookID: bookID,
+                                                    bookTitle: bookTitle,
+                                                    bookPrice: bookPrice,
+                                                    bookImage: bookImage,
+                                                    _token: _token
+                                                },
+                                                success: function(response){
+                                                    if(response){
+                                                        swal({
+                                                            title: "Success!",
+                                                            text: "Add to cart successfully!",
+                                                            icon: "success",
+                                                            button: "OK",
+                                                        }).then((value) => {
+                                                            location.reload();
+                                                        });
+                                                    } else {
+                                                        swal({
+                                                            title: "Error!",
+                                                            text: "Add to cart failed!",
+                                                            icon: "error",
+                                                            button: "OK",
+                                                        }).then((value) => {
+                                                            location.reload();
+                                                        });
+                                                    }
+                                                }
+                                            });
+                                        });
+                                    });
+                            </script>
+                            @endif
                         </div> <!-- End Product Variable Area -->
                         <!-- Start  Product Details Meta Area-->
                         <br>
                         <div class="product-details-meta mb-20">
                             <ul>
-                                <li><a href=""><i class="icon-heart"></i>Add to wishlist</a></li>
-                                <li><a href=""><i class="icon-repeat"></i>Compare</a></li>
+                                @if(session()->has('user'))
+                                    <li><a href="" id="addToWishlistDetails"><i class="icon-heart"></i>Add to wishlist</a></li>
+                                    <li><a href=""><i class="icon-repeat"></i>Compare</a></li>
+                                @endif
                             </ul>
                         </div> <!-- End  Product Details Meta Area-->
                         <!-- Start  Product Details Social Area-->
-                        {{-- <div class="product-details-social">
-                            <ul>
-                                <li><a href="#" class="facebook"><i class="fa fa-facebook"></i>Like</a></li>
-                                <li><a href="#" class="twitter"><i class="fa fa-twitter"></i>Tweet</a></li>
-                                <li><a href="#" class="pinterest"><i class="fa fa-pinterest"></i>Save</a></li>
-                                <li><a href="#" class="google-plus"><i class="fa fa-google-plus"></i>Save</a></li>
-                                <li><a href="#" class="linkedin"><i class="fa fa-linkedin"></i>Linked</a></li>
-                            </ul>
-                        </div> <!-- End  Product Details Social Area--> --}}
                     </div>
                 </div>
             </div>
@@ -413,100 +390,6 @@
         </div>
     </div> <!-- End Product Content Tab Section -->
 
-    <!-- ...:::: Start Product  Section:::... -->
-    <div class="product-section section-top-gap-100">
-        <!-- Start Section Content -->
-        <div class="section-content-gap">
-            <div class="container">
-                <div class="row">
-                    <div class="section-content">
-                        <h3 class="section-title">Related Products</h3>
-                    </div>
-                </div>
-            </div>
-        </div> <!-- End Section Content -->
-
-        <!-- Start Product Wrapper -->
-        <div class="product-wrapper">
-            <div class="container">
-                <div class="row">
-                    <div class="col-12">
-                        <div class="product-default-slider product-default-slider-4grids-1row">
-                            <!-- Start Product Defautlt Single -->
-                            <div class="product-default-single border-around">
-                                <div class="product-img-warp">
-                                    <a href="product-details-default.html" class="product-default-img-link">
-                                        <img src="assets/images/products_images/aments_products_image_1.jpg" alt="" class="product-default-img img-fluid">
-                                    </a>
-                                    <div class="product-action-icon-link">
-                                        <ul>
-                                            <li><a href="wishlist.html"><i class="icon-heart"></i></a></li>
-                                            <li><a href="compare.html"><i class="icon-repeat"></i></a></li>
-                                            <li><a href="#" data-toggle="modal" data-target="#modalQuickview"><i class="icon-eye"></i></a></li>
-                                            <li><a href="#" data-toggle="modal" data-target="#modalAddcart"><i class="icon-shopping-cart"></i></a></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <div class="product-default-content">
-                                    <h6 class="product-default-link"><a href="product-details-default.html">New Balance Fresh Foam Kaymin Car Purts</a></h6>
-                                    <span class="product-default-price"><del class="product-default-price-off">$30.12</del> $25.12</span>
-                                </div>
-                            </div> <!-- End Product Defautlt Single -->
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div> <!-- End Product Wrapper -->
-    </div> <!-- ...:::: End Product Section:::... -->
-
-    <!-- ...:::: Start Product Section:::... -->
-    <div class="product-section section-top-gap-100">
-        <!-- Start Section Content -->
-        <div class="section-content-gap">
-            <div class="container">
-                <div class="row">
-                    <div class="section-content">
-                        <h3 class="section-title">Upsell Products</h3>
-                    </div>
-                </div>
-            </div>
-        </div> <!-- End Section Content -->
-
-        <!-- Start Product Wrapper -->
-        <div class="product-wrapper">
-            <div class="container">
-                <div class="row">
-                    <div class="col-12">
-                        <div class="product-default-slider product-default-slider-4grids-1row">
-                            <!-- Start Product Defautlt Single -->
-                            <div class="product-default-single border-around">
-                                <div class="product-img-warp">
-                                    <a href="product-details-default.html" class="product-default-img-link">
-                                        <img src="assets/images/products_images/aments_products_image_1.jpg" alt="" class="product-default-img img-fluid">
-                                    </a>
-                                    <div class="product-action-icon-link">
-                                        <ul>
-                                            <li><a href="wishlist.html"><i class="icon-heart"></i></a></li>
-                                            <li><a href="compare.html"><i class="icon-repeat"></i></a></li>
-                                            <li><a href="#" data-toggle="modal" data-target="#modalQuickview"><i class="icon-eye"></i></a></li>
-                                            <li><a href="#" data-toggle="modal" data-target="#modalAddcart"><i class="icon-shopping-cart"></i></a></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <div class="product-default-content">
-                                    <h6 class="product-default-link"><a href="product-details-default.html">New Balance Fresh Foam Kaymin Car Purts</a></h6>
-                                    <span class="product-default-price"><del class="product-default-price-off">$30.12</del> $25.12</span>
-                                </div>
-                            </div> <!-- End Product Defautlt Single -->
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div> <!-- End product Wrapper -->
-    </div> <!-- ...:::: End Product Section:::... -->
-
-    <!-- Large modal -->
-
     <div class="modal fade bd-example-modal-lg-{{$result['book']['id']}}" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">>
         <div class="modal-dialog modal-fullscreen">
             <div class="modal-content">
@@ -518,7 +401,7 @@
                 </div>
 
                 <div class="modal-body">
-                        <iframe src="https://www.soundczech.cz/temp/lorem-ipsum.pdf" width="100%" height="100%"  class="disable-print"></iframe>
+                        <iframe oncontextmenu="return true;" id="context" src="https://www.soundczech.cz/temp/lorem-ipsum.pdf#toolbar=0" width="100%" height="100%"  class="disable-print"></iframe>
 
                 </div>
                 <div class="modal-footer">
@@ -528,14 +411,64 @@
             </div>
         </div>
     </div>
-<script>
-    document.addEventListener("DOMContentLoaded", function() {
-        var iframe = document.querySelector(".disable-print");
-        iframe.contentWindow.document.addEventListener("contextmenu", function(event) {
-            event.preventDefault();
+<script type="text/javascript">
+    $(document).ready(function(){
+        $(document).bind("keydown", function(e){
+            if(e.ctrlKey && e.which === 80){
+                e.preventDefault();
+                return false;
+            }
         });
     });
 </script>
-
-
+@if(session()->has('user'))
+<script type="text/javascript">
+    //write axios to add to wishlist
+    $(document).ready(function(){
+        $('#addToWishlistDetails').click(function(e){
+            e.preventDefault();
+            var userID = {{session()->get('user')['id']}};
+            var bookID = {{$result['book']['id']}};
+            var bookTitle = "{{$result['book']['title']}}";
+            var bookPrice = {{$result['book']['price']}};
+            var bookImage = "{{$result['book']['cover_image']}}";
+            var _token = $('input[name="_token"]').val();
+            const urlParams = 'http://paymentservice.test:8080/api/wishlist/add';
+            $.ajax({
+                url: urlParams,
+                type: "POST",
+                data: {
+                    userID: userID,
+                    bookID: bookID,
+                    bookTitle: bookTitle,
+                    bookPrice: bookPrice,
+                    bookImage: bookImage,
+                    _token: _token
+                },
+                success: function(response){
+                    if(response){
+                        swal({
+                            title: "Success!",
+                            text: "Add to wishlist successfully!",
+                            icon: "success",
+                            button: "OK",
+                        }).then((value) => {
+                            location.reload();
+                        });
+                    } else {
+                        swal({
+                            title: "Error!",
+                            text: "Add to wishlist failed!",
+                            icon: "error",
+                            button: "OK",
+                        }).then((value) => {
+                            location.reload();
+                        });
+                    }
+                }
+            });
+        });
+    });
+</script>
+@endif
 @endsection

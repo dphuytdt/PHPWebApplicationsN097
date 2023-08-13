@@ -35,9 +35,9 @@ class BookController extends Controller
         Paginator::currentPageResolver(function () use ($currentPage) {
             return $currentPage;
         });
-        
+
         $books = Book::paginate($perPage);
-        
+
         return response()->json($books);
     }
 
@@ -92,6 +92,12 @@ class BookController extends Controller
     public function getHomepageBooks()
     {
         $books = $this->bookRepository->getHomepageBooks();
+        return response()->json($books, 200);
+    }
+
+    public function viewMore(string $dataType)
+    {
+        $books = $this->bookRepository->viewMore($dataType);
         return response()->json($books, 200);
     }
 

@@ -22,7 +22,7 @@ class AuthController extends Controller
     {
         $http = new Client;
         try {
-            $response = $http->post($this->userService . 'auth/login', [
+            $response = $http->post($this->userService . 'auth/admin/login', [
                 'json' => [
                     'email' => $request->email,
                     'password' => $request->password,

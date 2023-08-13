@@ -5,7 +5,7 @@ namespace App\Interfaces;
 use App\Http\Requests\StorePostRequest;
 use App\Http\Requests\UpdatePostRequest;
 
-interface OTPRepositoryInterface 
+interface OTPRepositoryInterface
 {
     public function createOTP($email, $otp, $user_id, $type);
 
@@ -16,4 +16,8 @@ interface OTPRepositoryInterface
     public function checkUserExistInOTP($email, $user_id, $type);
 
     public function deleteOTP($email, $otp, $user_id, $type);
+
+    public function generatePassword($length = 8);
+
+
 }

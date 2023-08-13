@@ -5,7 +5,7 @@ namespace App\Interfaces;
 use App\Http\Requests\StorePostRequest;
 use App\Http\Requests\UpdatePostRequest;
 
-interface UserRepositoryInterface 
+interface UserRepositoryInterface
 {
     public function checkEmail($email);
 
@@ -30,4 +30,6 @@ interface UserRepositoryInterface
     public function getUserDetail($user_id);
 
     public function updateAdminPassword($email, $password);
+
+    public function adminUpdateUser($data, $id);
 }

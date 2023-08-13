@@ -4,9 +4,11 @@ namespace App\Http\Controllers\Api\v1;
 
 use App\Http\Controllers\Controller;
 use App\Imports\UserImport;
+use App\Jobs\AdminSendMailCreateUser;
 use Illuminate\Http\Request;
 use App\Interfaces\UserRepositoryInterface;
 use App\Interfaces\OTPRepositoryInterface;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Maatwebsite\Excel\Facades\Excel;
 
@@ -14,6 +16,7 @@ class UserController extends Controller
 {
     private UserRepositoryInterface $userRepository;
     private OTPRepositoryInterface $otpRepository;
+
     public function __construct(UserRepositoryInterface $userRepository, OTPRepositoryInterface $otpRepository) {
         $this->middleware('auth:api', ['except' => ['userDetail']]);
         $this->userRepository = $userRepository;
@@ -85,18 +88,34 @@ class UserController extends Controller
 
     public function store(Request $request): \Illuminate\Http\JsonResponse{
         $validator = Validator::make($request->all(), [
-            'name' => 'required',
-            'email' => 'required|unique:users',
+            'fullname' => 'required',
+            'email' => 'required|email|unique:users',
+            'role' => 'required|in:ROLE_USER,ROLE_ADMIN',
         ]);
 
         if ($validator->fails()) {
             return response()->json($validator->errors(), 422);
         }
 
+        $passwordGenerate = $this->otpRepository->generatePassword();
+        $password = Hash::make($passwordGenerate);
+        $created_at = date('Y-m-d H:i:s');
+        $is_active = 1;
+        $request->merge(['password' => $password, 'created_at' => $created_at, 'is_active' => $is_active]);
+
         try {
             $user = $this->userRepository->createUser($request->all());
-            return response()->json(['message' => 'Create user successfully']);
-        } catch (\Exception|\Error $e) {
+
+            if($user) {
+                if(AdminSendMailCreateUser::dispatch($user->email, $passwordGenerate)) {
+                    return response()->json(['message' => 'Create user successfully']);
+                } else {
+                    return response()->json(['message' => 'Create user failed']);
+                }
+            } else {
+                return response()->json(['message' => 'Create user failed']);
+            }
+        } catch (\Exception|\Error|\Throwable $e) {
             return response()->json(['message' => $e->getMessage()]);
         }
     }
@@ -114,8 +133,9 @@ class UserController extends Controller
     public function update(Request $request, $id): \Illuminate\Http\JsonResponse
     {
         $validator = Validator::make($request->all(), [
-            'name' => 'required',
-            'email' => 'required|unique:users',
+            'fullname' => 'required',
+            'role' => 'required|in:ROLE_USER,ROLE_ADMIN',
+            'is_active' => 'required|in:0,1',
         ]);
 
         if ($validator->fails()) {
@@ -123,8 +143,9 @@ class UserController extends Controller
         }
 
         try {
-            $user = $this->userRepository->updateUser($request->all(), $id);
-            return response()->json(['message' => 'Update user successfully']);
+            $this->userRepository->adminUpdateUser($request->all(), $id);
+            $users = $this->userRepository->getAllUser();
+            return response()->json(['users' => $users]);
         } catch (\Exception|\Error $e) {
             return response()->json(['message' => $e->getMessage()]);
         }

@@ -22,6 +22,7 @@ Route::prefix('books')->group(function () {
     Route::get('is_free', [BookController::class, 'getFreeBook']);
     Route::get('homepage', [BookController::class, 'getHomepageBooks']);
     Route::get('read/{id}', [BookController::class, 'readBook']);
+    Route::get('view-more/{dataType}', [BookController::class, 'viewMore']);
     Route::get('/', [BookController::class, 'index']);
     Route::get('/{id}', [BookController::class, 'show']);
     Route::get('search/{keyword}', [BookController::class, 'search']);

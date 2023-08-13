@@ -21,7 +21,7 @@
 							<h5>The Quality of Our Products is Unmatched</h5>
 							<h2>Book Store</h2>
 							<p>Books with a variety of genres and the best quality</p>
-							<a href="product-details-default.html" class="hero-button">Shopping Now</a>
+							<a href="{{route('view.more' , ['dataType' => 'all'])}}" class="hero-button">Shopping Now</a>
 						</div>
 					</div>
 				</div>
@@ -39,7 +39,7 @@
 							<h5>World Best Book</h5>
 							<h2>New Book</h2>
 							<p>With the help of consectetur adipisicing elit sed do eiu</p>
-							<a href="product-details-default.html" class="hero-button">Shopping Now</a>
+							<a href="{{route('view.more' , ['dataType' => 'all'])}}" class="hero-button">Shopping Now</a>
 						</div>
 					</div>
 				</div>
@@ -68,7 +68,7 @@
 				@php
 					foreach ($categories as $key => $value) {
 						$category_selected[] = $value;
-						if ($key == 7) {
+						if ($key == 10) {
 							break;
 						}
 					}
@@ -83,7 +83,7 @@
 							</div>
 							<div class="product-catagory-content">
 								<h5 class="product-catagory-title">{{ $category['name'] }}</h5>
-								<span class="product-catagory-items">(20 Items)</span>
+{{--								<span class="product-catagory-items">(20 Items)</span>--}}
 							</div>
 						</a> <!-- End Product Catagory Single -->
 					</div>
@@ -152,7 +152,7 @@
 				<div class="section-content d-flex justify-content-between align-items-md-center align-items-start flex-md-row flex-column">
 					<h3 class="section-title">New Books</h3>
 					<ul class="tablist nav product-tab-btn">
-						<li><a class="nav-link active" data-toggle="tab" href="">View more</a></li>
+						<li><a class="nav-link active"  href="{{route('view.more' , ['dataType' => 'new'])}}">View more</a></li>
 					</ul>
 				</div>
 			</div>
@@ -220,7 +220,7 @@
 				<div class="section-content d-flex justify-content-between align-items-md-center align-items-start flex-md-row flex-column">
 					<h3 class="section-title">Free Books</h3>
 					<ul class="tablist nav product-tab-btn">
-						<li><a class="nav-link active" data-toggle="tab" href="#car_and_drive">View more</a></li>
+						<li><a class="nav-link active" href="{{route('view.more' , ['dataType' => 'free'])}}">View more</a></li>
 					</ul>
 				</div>
 			</div>
@@ -301,7 +301,7 @@
                 <div class="section-content d-flex justify-content-between align-items-md-center align-items-start flex-md-row flex-column">
                     <h3 class="section-title">Featured Books</h3>
                     <ul class="tablist nav product-tab-btn">
-                        <li><a class="nav-link active" data-toggle="tab" href="">View more</a></li>
+                        <li><a class="nav-link active" href="{{route('view.more' , ['dataType' => 'featured'])}}">View more</a></li>
                     </ul>
                 </div>
             </div>
@@ -829,7 +829,6 @@
                     bookTitle: bookTitle,
                     bookPrice: bookPrice,
                     bookImage: bookImage,
-                    bookPrice: bookPrice,
                 };
 
                 // Send AJAX request

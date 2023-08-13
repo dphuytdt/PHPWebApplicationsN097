@@ -41,9 +41,10 @@ Route::group(['middleware' => 'check.auth'] , function(){
         Route::get('/', [UserController::class, 'index'])->name('users.index');
         Route::get('create', [UserController::class, 'create'])->name('users.create');
         Route::post('store', [UserController::class, 'store'])->name('users.store');
+        Route::post('import', [UserController::class, 'import'])->name('users.import');
         Route::get('edit/{id}', [UserController::class, 'edit'])->name('users.edit');
         Route::post('update/{id}', [UserController::class, 'update'])->name('users.update');
-        Route::get('delete/{id}', [UserController::class, 'delete'])->name('users.delete');
+        Route::get('delete/{id}', [UserController::class, 'deleteUser'])->name('users.delete');
     });
     Route::group(['prefix' => 'slides'], function () {
         Route::get('/', [SlideShowController::class, 'index'])->name('slides.index');
@@ -57,6 +58,7 @@ Route::group(['middleware' => 'check.auth'] , function(){
         Route::get('/', [BookController::class, 'index'])->name('books.index');
         Route::get('create', [BookController::class, 'create'])->name('books.create');
         Route::post('store', [BookController::class, 'store'])->name('books.store');
+        Route::post('import', [BookController::class, 'import'])->name('books.import');
         Route::get('edit/{id}', [BookController::class, 'edit'])->name('books.edit');
         Route::post('update/{id}', [BookController::class, 'update'])->name('books.update');
         Route::get('delete/{id}', [BookController::class, 'delete'])->name('books.delete');

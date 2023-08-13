@@ -52,4 +52,7 @@ interface BookRepositoryInterface
     //get homepage book
     public function getHomepageBooks();
 
+    public function getAllCategories();
+
+    public function viewMore($dataType);
 }

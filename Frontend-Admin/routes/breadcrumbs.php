@@ -26,6 +26,11 @@ use DaveJamesMiller\Breadcrumbs\Facades\Breadcrumbs;
         $trail->push('User List', route('users.index'));
     });
 
+    Breadcrumbs::for('users.create', function ($trail) {
+        $trail->parent('home');
+        $trail->push('Create User', route('users.create'));
+    });
+
     Breadcrumbs::for('books.index', function ($trail) {
         $trail->parent('home');
         $trail->push('Book List', route('books.index'));

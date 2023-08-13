@@ -60,7 +60,7 @@ class AuthController extends Controller
 
         return $this->createNewToken($token);
     }
-    
+
     public function register(Request $request) {
         $validator = Validator::make($request->all(), [
             'fullname' => 'required|string|between:2,100',
@@ -107,10 +107,6 @@ class AuthController extends Controller
                 ], 400);
 
             }
-            return response()->json([
-                'message' => 'User successfully registered',
-                'user' => $user
-            ], 201);
         } else {
             return response()->json([
                 'error' => 'User register failed',

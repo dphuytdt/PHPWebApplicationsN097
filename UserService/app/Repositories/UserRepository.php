@@ -62,7 +62,9 @@ class UserRepository implements UserRepositoryInterface
     public function deleteUser($email)
     {
         $user = $this->user->where('email', $email)->first();
-        return $user->delete();
+
+        $user->is_active = 0;
+        return $user->save();
     }
 
     public function updateUser($email)
@@ -112,5 +114,17 @@ class UserRepository implements UserRepositoryInterface
         $user->is_active = 1;
         $user->save();
         return $user;
+    }
+
+    public function adminUpdateUser($data, $id)
+    {
+        $user = $this->user->where('id', $id)->first();
+        $user->fullname = $data['fullname'];
+        $user->is_active = $data['is_active'];
+        if( $data['is_active'] == 0){
+            $user->deleted_at = date('Y-m-d H:i:s');
+        }
+        $user->role = $data['role'];
+        return $user->save();
     }
 }

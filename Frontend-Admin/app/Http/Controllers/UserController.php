@@ -56,17 +56,12 @@ class UserController extends Controller
                     "Accept"=>"application/json"
                 ],
                 'json' => [
-                    'name' => $data['name'],
+                    'fullname' => $data['fullname'],
                     'email' => $data['email'],
-                    'password' => $data['password'],
                     'role' => $data['role'],
-                    'is_vip' => $data['is_vip'],
-                    'is_active' => $data['is_active'],
                 ]
             ]);
-            $users = json_decode($response->getBody(), true);
-            $user_infor = $users['users'];
-            return view('home.user.list', compact('users', 'user_infor'));
+            return view('home.user.create');
         } catch (\Exception $e) {
             dd($e);
             // return view('home.user.list')->withErrors(['errors' => 'Cannot connect to server']);
@@ -110,17 +105,15 @@ class UserController extends Controller
                     "Accept"=>"application/json"
                 ],
                 'json' => [
-                    'name' => $data['name'],
-                    'email' => $data['email'],
-                    'password' => $data['password'],
+                    'fullname' => $data['fullname'],
                     'role' => $data['role'],
-                    'is_vip' => $data['is_vip'],
                     'is_active' => $data['is_active'],
                 ]
             ]);
 
-            $res = json_decode($req->getBody(), true);
-            return view('home.user.list', compact('res'));
+            $users = json_decode($req->getBody(), true);
+            $user_infor = $users['users'];
+            return view('home.user.list', compact('users', 'user_infor'));
         } catch (\Exception|GuzzleException $e) {
             return view('home.user.list')->withErrors(['errors' => 'Cannot connect to server']);
         }
@@ -129,7 +122,7 @@ class UserController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function deleteUser(string $id)
     {
         $client = new Client();
 

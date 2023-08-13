@@ -85,5 +85,7 @@ Route::group(['prefix' => 'news'], function () {
     Route::get('/{id}', [NewsController::class, 'newsDetail'])->name('newsDetail');
 });
 
+Route::get('view-more/{dataType}', [BookController::class, 'viewMore'])->name('view.more');
+
 //404 page
 Route::fallback([HomeController::class, 'handleError'])->name('handleError');

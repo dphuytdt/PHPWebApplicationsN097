@@ -135,7 +135,7 @@
                         <li>
                             <a href="#offcanvas-add-cart" class="offcanvas-toggle">
                                 <i class="icon-shopping-cart"></i>
-                                <span class="header-action-icon-item-count cart-count"></span>
+                                <span class="header-action-icon-item-count cart-count">0</span>
                             </a>
                         </li>
                         @if(session()->has('user'))
@@ -312,10 +312,17 @@
             <!-- Start Header Action Icon -->
             <ul class="mobile-action-icon">
                 <li class="mobile-action-icon-item">
-                    <a href="{{route('wishlist.index', $user_id)}}" class="mobile-action-icon-link">
-                        <i class="icon-heart"></i>
-                        <span class="mobile-action-icon-item-count count-wishlist" id="count-wishlist"></span>
-                    </a>
+                    @if(session()->has('user'))
+                        <a href="{{route('wishlist.index', $user_id)}}" class="mobile-action-icon-link">
+                            <i class="icon-heart"></i>
+                            <span class="mobile-action-icon-item-count count-wishlist" id="count-wishlist"></span>
+                        </a>
+                    @else
+                        <a class="mobile-action-icon-link">
+                            <i class="icon-heart"></i>
+                            <span class="mobile-action-icon-item-count count-wishlist" id="count-wishlist"></span>
+                        </a>
+                    @endif
                 </li>
                 <li class="mobile-action-icon-item">
                     @if(session()->has('user'))
@@ -327,7 +334,7 @@
                         <a class="mobile-action-icon-link">
                     @endif
                         <i class="icon-shopping-cart"></i>
-                        <span class="mobile-action-icon-item-count cart-count"></span>
+                        <span class="mobile-action-icon-item-count cart-count">0</span>
                     </a>
                 </li>
             </ul> <!-- End Header Action Icon -->

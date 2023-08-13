@@ -74,7 +74,7 @@
                                         <tr>
                                             <td> {{$item->title}}</td>
                                             <td><img src="{{$item->cover_image}}" alt="{{$item->title}}" width="50px" height="50px"></td>
-                                            <td> {{$item->price}}</td>
+                                            <td> {{$item->price}} $</td>
                                         </tr>
                                         <input type="hidden" name="id" value="{{$item->id}}">
                                         <input type="hidden" name="bookiD[]" value="{{$item->book_id}}">
@@ -84,7 +84,7 @@
                                     <tfoot>
                                         <tr class="order_total">
                                             <th>Order Total</th>
-                                            <td><strong> {{$total}}</strong></td>
+                                            <td><strong> {{$total}} $</strong></td>
                                             <input type="hidden" name="total" value="{{$total}}">
                                         </tr>
                                     </tfoot>
