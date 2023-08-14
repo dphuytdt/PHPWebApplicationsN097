@@ -74,3 +74,15 @@ use DaveJamesMiller\Breadcrumbs\Facades\Breadcrumbs;
         $trail->parent('cart');
         $trail->push('Checkout', route('cart.checkOut', session()->get('user')['id']));
     });
+
+    //thanksyou
+    Breadcrumbs::for('thankYou', function ($trail) {
+        $trail->parent('home');
+        $trail->push('Thanks You', route('thankYou'));
+    });
+
+    //view-more
+    Breadcrumbs::for('viewMore', function ($trail, $dataType) {
+        $trail->parent('home');
+        $trail->push($dataType, route('view.more', $dataType));
+    });

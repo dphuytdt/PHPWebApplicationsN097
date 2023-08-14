@@ -24,10 +24,11 @@ class BookController extends Controller
         try {
             $response = $client->get($this->bookService.'books/'.$id);
             $result = json_decode($response->getBody(), true);
-            // dd($result['comments']);
+
             return view('main.book.book-details', compact('result', 'categories'));
         }
         catch (\Exception $e) {
+            dd($e);
             return view('errors.404')->with('categories', $categories);
         }
     }
@@ -39,25 +40,21 @@ class BookController extends Controller
         $page = $request->input('page', 1);
         $perPage = $request->input('perPage', 2);
         $categories = $this->categoryService->getCategory();
-        // //call to book service to get book by id
+
         try {
             $response = $client->get($this->bookService.'books/search/'.$keyword.'?page='.$page);
             $responseData  = json_decode($response->getBody(), true);
-            //paginate books
+
             if($responseData){
                 $books = json_decode($response->getBody(), true);
-               // Số lượng sách hiển thị trên mỗi trang
                 $perPage = 8;
-
-                // Số trang hiện tại, lấy từ query string hoặc mặc định là 1
                 $currentPage = $request->query('page', 1);
 
-                // Tạo một LengthAwarePaginator từ kết quả sách và các thông số phân trang
                 $paginator = new LengthAwarePaginator(
-                    $books['data'],   // Dữ liệu sách
-                    $books['total'],  // Tổng số sách
-                    $perPage,         // Số lượng sách trên mỗi trang
-                    $currentPage,     // Trang hiện tại
+                    $books['data'],
+                    $books['total'],
+                    $perPage,
+                    $currentPage,
                     ['path' => $request->url(), 'query' => $request->query()]
                 );
                 return view('main.home.search-result', compact('paginator', 'categories'));
@@ -88,24 +85,62 @@ class BookController extends Controller
             $responseData = json_decode($response->getBody(), true);
             if($responseData) {
                 $books = json_decode($response->getBody(), true);
-                // Số lượng sách hiển thị trên mỗi trang
                 $perPage = 8;
 
-                // Số trang hiện tại, lấy từ query string hoặc mặc định là 1
                 $currentPage = $request->query('page', 1);
 
-                // Tạo một LengthAwarePaginator từ kết quả sách và các thông số phân trang
                 $paginator = new LengthAwarePaginator(
-                    $books['data'],   // Dữ liệu sách
-                    $books['total'],  // Tổng số sách
-                    $perPage,         // Số lượng sách trên mỗi trang
-                    $currentPage,     // Trang hiện tại
+                    $books['data'],
+                    $books['total'],
+                    $perPage,
+                    $currentPage,
                     ['path' => $request->url(), 'query' => $request->query()]
                 );
             } else {
                 $paginator = [];
             }
-            return view('main.book.all-books', compact('paginator', 'categories'));
+            return view('main.book.all-books', compact('paginator', 'categories', 'dataType'));
+        } catch (\Exception|GuzzleException $e) {
+            return view('errors.404')->with('categories', $categories);
+        }
+    }
+
+    public function getBookByCategory($id, Request $request)
+    {
+        $categories = $this->categoryService->getCategory();
+
+        $name = '';
+        //
+        foreach($categories as $category){
+            if($category['id'] == $id){
+                $name = $category['name'];
+            }
+        }
+        $dataType = $name;
+        $client = new Client();
+        try {
+            $response = $client->get($this->bookService.'books/category/'.$id);
+            $responseData = json_decode($response->getBody(), true);
+
+            if($responseData) {
+                $books = json_decode($response->getBody(), true);
+
+                $perPage = 8;
+
+                $currentPage = $request->query('page', 1);
+
+                $paginator = new LengthAwarePaginator(
+                    $books['data'],
+                    $books['total'],
+                    $perPage,
+                    $currentPage,
+                    ['path' => $request->url(), 'query' => $request->query()]
+                );
+            } else {
+                $paginator = [];
+            }
+
+            return view('main.book.all-books', compact('paginator', 'categories', 'dataType'));
         } catch (\Exception|GuzzleException $e) {
             return view('errors.404')->with('categories', $categories);
         }

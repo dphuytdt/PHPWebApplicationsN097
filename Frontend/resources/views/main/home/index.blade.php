@@ -67,23 +67,21 @@
 			<div class="row">
 				@php
 					foreach ($categories as $key => $value) {
-						$category_selected[] = $value;
-						if ($key == 10) {
+						if ($key == 4) {
 							break;
 						}
+                        $category_selected[] = $value;
 					}
 				@endphp
 
 				@foreach ( $category_selected as $category )
 					<div class="col-lg-3 col-md-4 col-sm-6 col-12">
-						<!-- Start Product Catagory Single -->
-						<a href="product-details-default.html" class="product-catagory-single">
+						<a href="{{route('getBookByCategory', ['id' => $category['id']])}}" class="product-catagory-single">
 							<div class="product-catagory-img">
-								<img src="{{ asset($category['image']) }}" alt="">
+								<img src="data:image/png;base64,{{ $category['image'] }}" alt="">
 							</div>
 							<div class="product-catagory-content">
 								<h5 class="product-catagory-title">{{ $category['name'] }}</h5>
-{{--								<span class="product-catagory-items">(20 Items)</span>--}}
 							</div>
 						</a> <!-- End Product Catagory Single -->
 					</div>
@@ -172,7 +170,8 @@
                                     <div class="product-default-single border-around">
                                         <div class="product-img-warp">
                                             <a id="url-{{$news['id']}}" href="{{URL::to('/book-details/'.$news['id'])}}" class="product-default-img-link">
-                                                <img src="{{$news['cover_image']}}" id="image-{{$news['id']}}" alt="" class="product-default-img img-fluid">
+
+                                                <img src="data:image/png;base64,{{ $news['cover_image'] }}" id="image-{{$news['id']}}" alt="" class="product-default-img img-fluid">
                                             </a>
                                             <div class="product-action-icon-link">
                                                 <ul>
@@ -240,12 +239,13 @@
                                     <div class="product-default-single border-around">
                                         <div class="product-img-warp">
                                             <a id="url-{{$book['id']}}" href="{{URL::to('/book-details/'.$book['id'])}}" class="product-default-img-link">
-                                                <img src="{{$book['cover_image']}}" id="image-{{$book['id']}}" alt="" class="product-default-img img-fluid">
+
+                                                <img src="data:image/png;base64,{{ $book['cover_image'] }}" id="image-{{$book['id']}}" alt="" class="product-default-img img-fluid">
                                             </a>
                                             <div class="product-action-icon-link">
                                                 <ul>
                                                     <li><a id="addWishlist-{{$book['id']}}"><i class="icon-heart"></i></a></li>
-                                                    <li><a href="compare.html"><i class="icon-repeat"></i></a></li>
+                                                    <li><a href="#"><i class="icon-repeat"></i></a></li>
                                                     <li><a href="#" data-toggle="modal" data-target="#modalQuickview-{{$book['id']}}"><i class="icon-eye"></i></a></li>
 
                                                 </ul>
@@ -321,7 +321,8 @@
                                     <div class="product-default-single border-around">
                                         <div class="product-img-warp">
                                             <a id="url-{{$news['id']}}" href="{{URL::to('/book-details/'.$news['id'])}}" class="product-default-img-link">
-                                                <img src="{{$news['cover_image']}}" id="image-{{$news['id']}}" alt="" class="product-default-img img-fluid">
+                                                <img src="data:image/png;base64,{{ $news['cover_image'] }}" id="image-{{$news['id']}}" alt="" class="product-default-img img-fluid">
+
                                             </a>
                                             <div class="product-action-icon-link">
                                                 <ul>
@@ -382,7 +383,7 @@
                                 <div class="product-details-gallery-area">
                                     <div class="product-large-image modal-product-image-large">
                                         <div class="product-image-large-single">
-                                            <img class="img-fluid" src="{{$book['cover_image']}}" alt="">
+                                            <img class="img-fluid" src="data:image/png;base64,{{ $book['cover_image'] }}" alt="">
                                         </div>
                                         <div class="product-image-large-single">
                                             <img class="img-fluid" src="assets/images/products_images/aments_products_image_2.jpg" alt="">
@@ -475,15 +476,7 @@
                                 <div class="product-details-gallery-area">
                                     <div class="product-large-image modal-product-image-large">
                                         <div class="product-image-large-single">
-                                            <img class="img-fluid" src="{{$book['cover_image']}}" alt="">
-                                        </div>
-                                        <div class="product-image-large-single">
-                                            <img class="img-fluid" src="assets/images/products_images/aments_products_image_2.jpg" alt="">
-                                        </div>
-                                    </div>
-                                    <div class="product-image-thumb modal-product-image-thumb">
-                                        <div class="zoom-active product-image-thumb-single">
-                                            <img class="img-fluid" src="assets/images/products_images/aments_products_image_1.jpg" alt="">
+                                            <img class="img-fluid" src="data:image/png;base64,{{ $book['cover_image'] }}" alt="">
                                         </div>
                                     </div>
                                 </div>
@@ -565,7 +558,7 @@
                                 <div class="row">
                                     <div class="col-md-4">
                                         <div class="modal-add-cart-product-img">
-                                            <img class="img-fluid" src="{{$book['cover_image']}}" alt="">
+                                            <img class="img-fluid" src="data:image/png;base64,{{ $book['cover_image'] }}" alt="">
                                         </div>
                                     </div>
                                     <div class="col-md-8">
@@ -631,17 +624,11 @@
                                 <div class="product-details-gallery-area">
                                     <div class="product-large-image modal-product-image-large">
                                         <div class="product-image-large-single">
-                                            <img class="img-fluid" src="{{$book['cover_image']}}" alt="">
+                                            <img class="img-fluid" src="data:image/png;base64,{{ $book['cover_image'] }}" alt="">
                                         </div>
-                                        <div class="product-image-large-single">
-                                            <img class="img-fluid" src="assets/images/products_images/aments_products_image_2.jpg" alt="">
-                                        </div>
+
                                     </div>
-                                    <div class="product-image-thumb modal-product-image-thumb">
-                                        <div class="zoom-active product-image-thumb-single">
-                                            <img class="img-fluid" src="assets/images/products_images/aments_products_image_1.jpg" alt="">
-                                        </div>
-                                    </div>
+
                                 </div>
                             </div>
                             <div class="col-md-6">
@@ -716,7 +703,7 @@
                                 <div class="row">
                                     <div class="col-md-4">
                                         <div class="modal-add-cart-product-img">
-                                            <img class="img-fluid" src="{{$book['cover_image']}}" alt="">
+                                            <img class="img-fluid" src="data:image/png;base64,{{ $book['cover_image'] }}" alt="">
                                         </div>
                                     </div>
                                     <div class="col-md-8">
@@ -748,37 +735,35 @@
     document.querySelectorAll('[id^="addCart-"]').forEach(function(button) {
         button.addEventListener('click', function() {
             var userID = @json(session('user_id'));
-            if(userID == null){
+
+            if(null == userID){
                 console.log("Please login first");
             }else{
-                var bookId = this.id.split('-')[1]; // Extract the book ID from the button's ID
+                var bookId = this.id.split('-')[1];
                 var bookTitle = document.getElementById('name-' + bookId).value;
                 var bookPrice = document.getElementById('price-' + bookId).value;
                 bookPrice = parseFloat(bookPrice);
                 var bookImage = document.getElementById('image-' + bookId).src;
-                //Create AJAX request
+                bookImage = bookImage.substring(22);
                 var xhr = new XMLHttpRequest();
                 var url = 'http://paymentservice.test:8080/api/cart/add';
                 xhr.open('POST', url, true);
                 xhr.setRequestHeader('Content-Type', 'application/json');
-                //check bookPrice  !number
+
                 if (isNaN(bookPrice)) {
                     bookPrice = 0;
                 }
-                // Create request body
+
                 var requestBody = {
                     userID: userID,
                     bookID: bookId,
                     bookTitle: bookTitle,
                     bookPrice: bookPrice,
                     bookImage: bookImage,
-                    bookPrice: bookPrice,
                 };
 
-                // Send AJAX request
                 xhr.send(JSON.stringify(requestBody));
 
-                // Handle the response
                 xhr.onreadystatechange = function() {
                     if (xhr.readyState === XMLHttpRequest.DONE) {
                         if (xhr.status === 200) {
@@ -800,29 +785,33 @@
     document.querySelectorAll('[id^="addWishlist-"]').forEach(function(button) {
         button.addEventListener('click', function() {
             var userID = @json(session('user_id'));
-            if(userID == null){
+
+            if(null == userID){
                 swal({
                     title: "Please login to add to wishlist!",
                     icon: "warning",
                     button: "OK",
                 });
             }else{
-                var bookId = this.id.split('-')[1]; // Extract the book ID from the button's ID
+                var bookId = this.id.split('-')[1];
                 var bookTitle = document.getElementById('name-' + bookId).value;
                 var bookPrice = document.getElementById('price-' + bookId).value;
-                bookPrice = parseFloat(bookPrice);
                 var bookImage = document.getElementById('image-' + bookId).src;
-                console.log(bookId + " " + bookTitle + " " + bookPrice + " " + bookImage);
-                // Create AJAX request
+                //remove '"data:image/png;base64,' from the image
+                bookImage = bookImage.substring(22);
+                console.log(bookImage);
                 var xhr = new XMLHttpRequest();
                 var url = 'http://paymentservice.test:8080/api/wishlist/add';
+
+                bookPrice = parseFloat(bookPrice);
+
                 xhr.open('POST', url, true);
                 xhr.setRequestHeader('Content-Type', 'application/json');
-                //check bookPrice  !number
+
                 if (isNaN(bookPrice)) {
                     bookPrice = 0;
                 }
-                // Create request body
+
                 var requestBody = {
                     userID: userID,
                     bookID: bookId,
@@ -831,14 +820,11 @@
                     bookImage: bookImage,
                 };
 
-                // Send AJAX request
                 xhr.send(JSON.stringify(requestBody));
 
-                // Handle the response
                 xhr.onreadystatechange = function() {
                     if (xhr.readyState === XMLHttpRequest.DONE) {
                         if (xhr.status === 200) {
-                            // Wishlist addition successful
                             swal({
                                 title: "Success!",
                                 text: "Book added to wishlist!",
@@ -848,7 +834,6 @@
                                 location.reload();
                             });
                         } else {
-                            // Wishlist addition failed
                             swal({
                                 title: "Error!",
                                 text: "Book already in wishlist!",

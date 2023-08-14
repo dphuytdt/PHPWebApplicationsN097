@@ -50,9 +50,9 @@ class UserController extends Controller
         $client = new Client();
 
         try {
-            $response = $client->post($this->userService.'admin/user', [
+            $client->post($this->userService.'admin/user', [
                 'headers' => [
-                    'Authorization' => 'Bearer ' . session('token'), // Truyền token từ session
+                    'Authorization' => 'Bearer ' . session('token'),
                     "Accept"=>"application/json"
                 ],
                 'json' => [
@@ -63,8 +63,7 @@ class UserController extends Controller
             ]);
             return view('home.user.create');
         } catch (\Exception $e) {
-            dd($e);
-            // return view('home.user.list')->withErrors(['errors' => 'Cannot connect to server']);
+            return view('home.user.list')->withErrors(['errors' => 'Cannot connect to server']);
         }
     }
 

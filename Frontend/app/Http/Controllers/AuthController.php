@@ -16,6 +16,8 @@ class AuthController extends Controller
 {
     protected $categoryService;
 
+    private const USER_SERVICE = 'http://userservice.test:8080/api/';
+
     public function __construct(CategoryService $categoryService)
     {
         $this->categoryService = $categoryService;
@@ -106,23 +108,19 @@ class AuthController extends Controller
         $client = new Client();
 
         try {
-            // Gửi yêu cầu đăng ký từ Home service tới UserService
             $response = $client->post('http://userservice.test:8080/api/auth/register', [
                 'json' => $request->all(),
             ]);
 
             $result = json_decode($response->getBody(), true);
             if (isset($result['message'])) {
-                // Đăng ký thành công, chuyển hướng đến trang đăng nhập
                 session()->put('emailRegister', $request->email);
                 return redirect()->route('login')->with('message', 'Register successful. Check your email to verify account');
             } else {
-                // Đăng ký thất bại, chuyển hướng đến trang đăng ký
                 return redirect()->route('login')->with('error', 'Register failed');
             }
 
         } catch (\Exception $e) {
-            // Lỗi xảy ra hoặc đăng ký thất bại
             return redirect()->route('login')->with('error', 'Register failed')->withInput();
         }
     }
@@ -147,23 +145,19 @@ class AuthController extends Controller
         $email = session('emailRegister');
         $request->merge(['email' => $email]);
         try {
-            // Gửi yêu cầu xác thực tài khoản từ Home service tới UserService
             $response = $client->post('http://userservice.test:8080/api/auth/verify-account', [
                 'json' => $request->all(),
             ]);
 
             $result = json_decode($response->getBody(), true);
             if (isset($result['message'])) {
-                // Xác thực thành công, chuyển hướng đến trang đăng nhập
                 session()->forget('emailRegister');
                 return redirect()->route('login')->with('message', 'Verify account successful. Login now');
             } else {
-                // Xác thực thất bại, chuyển hướng đến trang xác thực
                 return redirect()->route('verify-account')->with('error', 'Verify account failed');
             }
 
         } catch (\Exception $e) {
-            // Lỗi xảy ra hoặc xác thực thất bại
             return redirect()->route('verify-account')->with('error', 'Verify account failed')->withInput();
         }
     }

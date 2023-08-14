@@ -12,8 +12,22 @@
     .disable-print .toolbarButton.print {
         display: none !important;
     }
+    .no-scroll {
+        overflow: hidden;
+    }
+
+    #pdf-wrapper {
+        height: 100%;
+    }
+
+    #pdf-iframe {
+        width: 100%;
+        height: 100%;
+        border: none;
+    }
 </style>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.8.335/pdf.min.js"></script>
 
     <!-- ...:::: Start Breadcrumb Section:::... -->
     <div class="breadcrumb-section">
@@ -37,7 +51,7 @@
                     <div class="product-details-gallery-area">
                         <div class="product-large-image product-large-image-horaizontal">
                             <div class="product-image-large-single zoom-image-hover">
-                                <img src="{{$result['book']['cover_image']}}" alt="">
+                                <img src="data:image/png;base64,{{ $result['book']['cover_image'] }}" alt="">
                             </div>
 
                         </div>
@@ -390,27 +404,36 @@
         </div>
     </div> <!-- End Product Content Tab Section -->
 
-    <div class="modal fade bd-example-modal-lg-{{$result['book']['id']}}" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">>
-        <div class="modal-dialog modal-fullscreen">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">{{$result['book']['title']}}</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                      <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
+<div class="modal fade bd-example-modal-lg-{{$result['book']['id']}}">
+    <div class="modal-dialog modal-fullscreen no-scroll">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">{{$result['book']['title']}}</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
 
-                <div class="modal-body">
-                        <iframe oncontextmenu="return true;" id="context" src="https://www.soundczech.cz/temp/lorem-ipsum.pdf#toolbar=0" width="100%" height="100%"  class="disable-print"></iframe>
-
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Bookmarked</button>
+            <div class="modal-body">
+                <div id="pdf-wrapper">
+                    <iframe src="data:application/pdf;base64,{{ $result['book']['content'] }}#toolbar=0" width="100%" height="100%" frameborder="0">
+                    </iframe>
                 </div>
             </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" id="bookmarked" class="btn btn-primary">Bookmarked</button>
+            </div>
+            <input type="hidden" id="bookId" value="{{$result['book']['id']}}">
         </div>
     </div>
+</div>
+<!-- PDF.js library -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.11.338/pdf.min.js"></script>
+
+<script src="{{ asset('js/bookmark.js') }}"></script>
+
+
 <script type="text/javascript">
     $(document).ready(function(){
         $(document).bind("keydown", function(e){
@@ -432,6 +455,7 @@
             var bookTitle = "{{$result['book']['title']}}";
             var bookPrice = {{$result['book']['price']}};
             var bookImage = "{{$result['book']['cover_image']}}";
+            bookImage = bookImage.substring(22);
             var _token = $('input[name="_token"]').val();
             const urlParams = 'http://paymentservice.test:8080/api/wishlist/add';
             $.ajax({

@@ -43,25 +43,61 @@ class BookController extends Controller
      */
     public function store(Request $request)
     {
+        if ($request->hasFile('image')) {
+            try{
+                $imageFile = $request->file('image');
+                $imageContents = file_get_contents($imageFile->getPathname());
+                $base64Image = base64_encode($imageContents);
+            } catch (\Exception $e) {
+                return redirect()->route('books.index')->withErrors(['errors' => 'Cannot read file']);
+            }
+        }
+
+        if ($request->hasFile('content')) {
+            try{
+                $contentFile = $request->file('content');
+                $contentContents = file_get_contents($contentFile->getPathname());
+                $base64Content = base64_encode($contentContents);
+            } catch (\Exception $e) {
+                return redirect()->route('books.index')->withErrors(['errors' => 'Cannot read file']);
+            }
+
+        }
+
+
+
+        $data = [
+            'title' => $request->title,
+            'description' => $request->description,
+            'author' => $request->author,
+            'category_id' => $request->category_id,
+            'price' => $request->price,
+            'discount' => $request->discount,
+            'content' => $base64Content ?? '',
+            'status' => $request->status,
+            'image' => $base64Image ?? '',
+        ];
+
         $client = new Client();
 
         try{
-            $response = $client->post($this->bookService.'admin/books', [
-                'json' => [
-                    'title' => $request->title,
-                    'description' => $request->description,
-                    'author' => $request->author,
-                    'category_id' => $request->category_id,
-                    'price' => $request->price,
-                    'discount' => $request->discount,
-                    'content' => $request->file('content'),
-                    'status' => $request->status,
-                    'image' => $request->file('image')
+            $client->post($this->bookService.'admin/books', [
+                'form_params' => [
+                    'title' => $data['title'],
+                    'description' => $data['description'],
+                    'author' => $data['author'],
+                    'category_id' => $data['category_id'],
+                    'price' => $data['price'],
+                    'discount' => $data['discount'],
+                    'contentPdf' => $data['content'],
+                    'status' => $data['status'],
+                    'image' => $data['image'],
                 ]
             ]);
+
             return redirect()->route('books.index')->with('success', 'Create book successfully');
         } catch (\Exception|GuzzleException $e) {
-            print_r($e);
+            return redirect()->route('books.index')->withErrors(['errors' => 'Cannot connect to server']);
         }
     }
 

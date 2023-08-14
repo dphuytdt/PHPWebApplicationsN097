@@ -93,7 +93,7 @@
                                                 <div class="product-default-single border-around">
                                                     <div class="product-img-warp">
                                                         <a href="{{URL::to('/book-details/'.$book['id'])}}" class="product-default-img-link">
-                                                            <img src="{{$book['cover_image']}}" alt="" class="product-default-img img-fluid">
+                                                            <img src="data:image/png;base64,{{ $book['cover_image'] }}" alt="" class="product-default-img img-fluid">
                                                         </a>
                                                         <div class="product-action-icon-link">
                                                             <ul>
@@ -125,8 +125,8 @@
                                             <div class="col-12">
                                                 <!-- Start Product Defautlt Single -->
                                                 <div class="product-list-single border-around">
-                                                    <a href="{{URL::to('/book-details/'.$book['id'])}}"" class="product-list-img-link">
-                                                        <img src="{{$book['cover_image']}}" alt="" class="img-fluid">
+                                                    <a href="{{URL::to('/book-details/'.$book['id'])}}" class="product-list-img-link">
+                                                        <img src="data:image/png;base64,{{ $book['cover_image'] }}" alt="" class="img-fluid">
                                                     </a>
                                                     <div class="product-list-content">
                                                         <h5 class="product-list-link"><a href="{{URL::to('/book-details/'.$book['id'])}}">{{$book['title']}}</a></h5>
@@ -242,7 +242,7 @@
                                 <div class="product-details-gallery-area">
                                     <div class="product-large-image modal-product-image-large">
                                         <div class="product-image-large-single">
-                                            <img class="img-fluid" src="{{$book['cover_image']}}" alt="">
+                                            <img class="img-fluid" src="data:image/png;base64,{{ $book['cover_image'] }}" alt="">
                                         </div>
                                         <div class="product-image-large-single">
                                             <img class="img-fluid" src="assets/images/products_images/aments_products_image_2.jpg" alt="">
@@ -333,7 +333,7 @@
                                 <div class="row">
                                     <div class="col-md-4">
                                         <div class="modal-add-cart-product-img">
-                                            <img class="img-fluid" src="{{$book['cover_image']}}" alt="">
+                                            <img class="img-fluid" src="data:image/png;base64,{{ $book['cover_image'] }}" alt="">
                                         </div>
                                     </div>
                                     <div class="col-md-8">

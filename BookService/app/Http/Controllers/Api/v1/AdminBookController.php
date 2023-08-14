@@ -15,6 +15,7 @@ class AdminBookController extends Controller
     {
         $this->bookRepository = $bookRepository;
     }
+
     /**
      * Display a listing of the resource.
      */
@@ -29,7 +30,26 @@ class AdminBookController extends Controller
      */
     public function store(Request $request)
     {
-        dd($request->all());
+        $created_at = now();
+
+        $data = [
+            'title' => $request->title,
+            'description' => $request->description ?? '',
+            'author' => $request->author,
+            'category_id' => $request->category_id,
+            'price' => $request->price,
+            'discount' => $request->discount,
+            'cover_image' => $request->image,
+            'content' => $request->contentPdf,
+            'created_at' => $created_at
+        ];
+
+        try{
+            $book = $this->bookRepository->createBook($data);
+            return response()->json($book, 200);
+        } catch (\Exception $e) {
+            return response()->json($e->getMessage(), 500);
+        }
     }
 
     /**
@@ -61,7 +81,7 @@ class AdminBookController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        return response()->json($book, 200);
+//        return response()->json($book, 200);
     }
 
     /**
@@ -77,15 +97,5 @@ class AdminBookController extends Controller
         //delete book
         $this->bookRepository->deleteBookById($id);
         return response()->json(null, 204);
-    }
-
-    private function saveBase64File($data, $folder)
-    {
-        $data = base64_decode($data);
-        $filename = uniqid() . '.jpg'; // You can adjust the extension based on the actual image type
-        $path = storage_path('app/public/' . $folder . '/' . $filename);
-        File::put($path, $data);
-
-        return $path;
     }
 }

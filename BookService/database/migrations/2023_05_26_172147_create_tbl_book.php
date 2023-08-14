@@ -16,10 +16,9 @@ return new class extends Migration
             $table->string('title', 255);
             $table->string('author', 255);
             $table->string('category_id');
-            // $table->integer('quantity');
             $table->decimal('price', 8, 2);
-            $table->text('description')->nullable();
-            $table->string('cover_image')->nullable();
+            $table->longText('description')->nullable();
+            $table->longText('cover_image')->nullable();
             $table->integer('content_type')->comment('1: text, 2: pdf, 3: video')->default(1);
             $table->longText('content');
             $table->integer('discount')->nullable();

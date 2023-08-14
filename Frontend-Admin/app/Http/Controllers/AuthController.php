@@ -29,7 +29,7 @@ class AuthController extends Controller
                 ]
             ]);
             $data = json_decode((string) $response->getBody(), true);
-            // dd($data);
+
             if (isset($data['access_token'])) {
                 $user = $data['user'];
                 session()->put('token', $data['access_token']);

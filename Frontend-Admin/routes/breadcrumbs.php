@@ -41,6 +41,11 @@ use DaveJamesMiller\Breadcrumbs\Facades\Breadcrumbs;
         $trail->push('Create Book', route('books.create'));
     });
 
+    Breadcrumbs::for('books.edit', function ($trail, $id) {
+        $trail->parent('home');
+        $trail->push('Edit Book', route('books.edit', $id));
+    });
+
     Breadcrumbs::for('comments.index', function ($trail) {
         $trail->parent('home');
         $trail->push('Comment List', route('comments.index'));

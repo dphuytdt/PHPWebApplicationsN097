@@ -9,31 +9,18 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\WishlistController;
 use App\Http\Controllers\CartController;
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "web" middleware group. Make something great!
-|
-*/
-
-
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
 Route::get('book-details/{id}' , [BookController::class, 'bookDetails'])->name('bookDetails');
-//search book
+
 Route::get('search/{page?}', [BookController::class, 'search'])->name('search');
+
+Route::get('category/{id}', [BookController::class, 'getBookByCategory'])->name('getBookByCategory');
 
 Route::get('about', [HomeController::class, 'about'])->name('about');
 
 Route::get('contact', [HomeController::class, 'contact'])->name('contact');
-
-//category
-Route::get('category/{id}', [BookController::class, 'category'])->name('category');
 
 
 Route::group(['prefix' => 'wishlist'], function () {
@@ -68,7 +55,9 @@ Route::prefix('auth')->group(function () {
 
     Route::get('upgrade', [UserController::class, 'upgrade'])->name('upgrade');
 
-    Route::post('checkout', [PaymentController::class, 'checkOut'])->name('checkout');
+    Route::post('checkout-VNPay', [PaymentController::class, 'payment'])->name('checkout.VNPay');
+
+    Route::post('checkout-Momo', [PaymentController::class, 'paymentMomo'])->name('checkout.Momo');
 
     Route::get('vip-benefits', [UserController::class, 'vipBenefits'])->name('vipBenefits');
 });
@@ -88,5 +77,6 @@ Route::group(['prefix' => 'news'], function () {
 
 Route::get('view-more/{dataType}', [BookController::class, 'viewMore'])->name('view.more');
 
-//404 page
 Route::fallback([HomeController::class, 'handleError'])->name('handleError');
+
+Route::get('thankYou', [HomeController::class, 'thankYou'])->name('thankYou');

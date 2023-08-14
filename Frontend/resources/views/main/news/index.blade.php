@@ -120,15 +120,6 @@
                 </div>
 
                 <!-- Start Pagination -->
-                <div class="page-pagination text-center">
-                    <ul>
-                        <li><a href="#">Previous</a></li>
-                        <li><a class="active" href="#">1</a></li>
-                        <li><a href="#">2</a></li>
-                        <li><a href="#">3</a></li>
-                        <li><a href="#">Next</a></li>
-                    </ul>
-                </div> <!-- End Pagination -->
             </div>
         </div>
     </div>

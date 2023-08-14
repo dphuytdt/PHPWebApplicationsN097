@@ -72,5 +72,10 @@ class HomeController extends Controller
         }
     }
 
+    public function thankYou()
+    {
+        $categories = $this->categoryService->getCategory();
+        return view('main.cart.thankYou')->with('categories', $categories);
+    }
 
 }

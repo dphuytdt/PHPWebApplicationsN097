@@ -32,8 +32,6 @@
                                     <th class="product_thumb">Image</th>
                                     <th class="product_name">Product</th>
                                     <th class="product-price">Price</th>
-{{--                                    <th class="product_quantity">Quantity</th>--}}
-{{--                                    <th class="product_total">Total</th>--}}
                                 </tr>
                                 </thead> <!-- End Cart Table Head -->
                                 <tbody>
@@ -47,8 +45,8 @@
                                 @endphp
                                 <tr>
                                     <td class="product_remove"><a id="deleteCart-{{$item->book_id}}" onclick=" return deleteCartItem{{$item->book_id}}"><i class="fa fa-trash-o"></i></a></td>
-                                    <td class="product_thumb"><a href="product-details-default.html"><img src="{{$item->cover_image}}" alt=""></a></td>
-                                    <td class="product_name"><a href="product-details-default.html">{{$item->title}}</a></td>
+                                    <td class="product_thumb"><a href="#"><img src="data:image/png;base64,{{ $item->cover_image }}" alt=""></a></td>
+                                    <td class="product_name"><a href="#">{{$item->title}}</a></td>
                                     <td class="product-price">£ {{$item->price}}</td>
                                 </tr> <!-- End Cart Single Item-->
                                 @endforeach

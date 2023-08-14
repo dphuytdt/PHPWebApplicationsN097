@@ -11,7 +11,9 @@ use GuzzleHttp\Client;
 class CartController extends Controller
 {
     public $bookService = 'http://bookservice.test:8080/api/';
+
     public $paymentService = 'http://paymentservice.test:8080/api/';
+
     protected $categoryService;
 
     private const DOLLAR_RATE = 23000;
@@ -48,7 +50,7 @@ class CartController extends Controller
         $client = new Client();
 
         try {
-            $response = $client->post($this->paymentService.'cart/add', [
+            $client->post($this->paymentService.'cart/add', [
                 'form_params' => [
                     "userID" => $request->userID,
                     "bookID" => $request->bookID,
@@ -57,11 +59,9 @@ class CartController extends Controller
                     "bookImage" => $request->bookImage
                 ]
             ]);
-            $response = json_decode($response->getBody()->getContents());
+
             return redirect()->route('cart.getUserCart', ['id' => $request->userID]);
-        } catch (\Exception $e) {
-            return response()->json($e->getMessage());
-        } catch (GuzzleException $e) {
+        } catch (\Exception|GuzzleException $e) {
             return response()->json($e->getMessage());
         }
     }
@@ -94,19 +94,19 @@ class CartController extends Controller
     public function checkout($id)
     {
         if (!session()->has('token')) {
-            // Người dùng chưa đăng nhập, chuyển hướng đến trang login
             return redirect()->route('login');
         }
+
         $categories = $this->categoryService->getCategory();
         $client = new Client();
+
         try {
             $response = $client->get($this->paymentService.'cart/get/'.$id);
             $response = json_decode($response->getBody()->getContents());
             $cart = $response->result;
+
             return view('main.cart.checkout', compact('categories', 'cart'));
-        } catch (\Exception $e) {
-            return response()->json($e->getMessage());
-        } catch (GuzzleException $e) {
+        } catch (\Exception|GuzzleException $e) {
             return response()->json($e->getMessage());
         }
     }
@@ -118,9 +118,7 @@ class CartController extends Controller
         date_default_timezone_set('Asia/Ho_Chi_Minh');
 
         $vnp_Url = "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html";
-        $vnp_Returnurl = "http://frontend.test:8080/cart/useId";
-        //replace useId with real id
-        $vnp_Returnurl = str_replace("useId", $request->useId, $vnp_Returnurl);
+        $vnp_Returnurl = "http://frontend.test:8080/thankYou";
         $vnp_TmnCode = "1ACLHH74";//Mã website tại VNPAY
         $vnp_HashSecret = "TMEVRTPDXCOKQKXQLZFNKDROUCTMWXHS"; //Chuỗi bí mật
 
@@ -217,9 +215,7 @@ class CartController extends Controller
         $orderInfo = "Thanh toán qua MoMo";
         $amount = $request->total * self::DOLLAR_RATE;
         $orderId = $request->id . time();
-        $redirectUrl = "http://frontend.test:8080/cart/useId";
-        //replace useId with real id
-        $redirectUrl = str_replace("useId", $request->useId, $redirectUrl);
+        $redirectUrl = "http://frontend.test:8080/thankYou";
         $ipnUrl = $redirectUrl;
         $extraData = "";
 

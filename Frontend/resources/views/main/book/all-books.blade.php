@@ -1,6 +1,11 @@
 @extends('layouts.main')
 @section('content')
-    @section('title', 'All Books')
+@section('title',
+    $dataType == 'new' ? 'New Books' :
+    ($dataType == 'free' ? 'Free Books' :
+    ($dataType == 'featured' ? 'Featured Books' :
+    ($dataType))))
+)
 
 
     <!-- ...:::: Start Breadcrumb Section:::... -->
@@ -9,8 +14,18 @@
             <div class="container">
                 <div class="row">
                     <div class="col-12 d-flex justify-content-between justify-content-md-between  align-items-center flex-md-row flex-column">
-                        <h3 class="breadcrumb-title">All Books</h3>
-{{--                        {{ Breadcrumbs::render('search') }}--}}
+                        <h3 class="breadcrumb-title">
+                            @if($dataType == 'new')
+                                New Books
+                            @elseif($dataType == 'free')
+                                Free Books
+                            @elseif($dataType == 'featured')
+                                Featured Books
+                            @else
+                                Category [{{ $dataType}}]
+                            @endif
+                        </h3>
+                        {{ Breadcrumbs::render('viewMore', $dataType) }}
                     </div>
                 </div>
             </div>
@@ -80,7 +95,7 @@
                                                             <div class="product-default-single border-around">
                                                                 <div class="product-img-warp">
                                                                     <a href="{{URL::to('/book-details/'.$book['id'])}}" class="product-default-img-link">
-                                                                        <img src="{{$book['cover_image']}}" alt="" class="product-default-img img-fluid">
+                                                                        <img src="data:image/png;base64,{{ $book['cover_image'] }}" alt="" class="product-default-img img-fluid">
                                                                     </a>
                                                                     <div class="product-action-icon-link">
                                                                         <ul>
@@ -113,7 +128,7 @@
                                                             <!-- Start Product Defautlt Single -->
                                                             <div class="product-list-single border-around">
                                                                 <a href="{{URL::to('/book-details/'.$book['id'])}}"" class="product-list-img-link">
-                                                                <img src="{{$book['cover_image']}}" alt="" class="img-fluid">
+                                                                <img src="data:image/png;base64,{{ $book['cover_image'] }}" alt="" class="img-fluid">
                                                                 </a>
                                                                 <div class="product-list-content">
                                                                     <h5 class="product-list-link"><a href="{{URL::to('/book-details/'.$book['id'])}}">{{$book['title']}}</a></h5>
@@ -229,17 +244,17 @@
                                         <div class="product-details-gallery-area">
                                             <div class="product-large-image modal-product-image-large">
                                                 <div class="product-image-large-single">
-                                                    <img class="img-fluid" src="{{$book['cover_image']}}" alt="">
+                                                    <img class="img-fluid" src="data:image/png;base64,{{ $book['cover_image'] }}" alt="">
                                                 </div>
-                                                <div class="product-image-large-single">
-                                                    <img class="img-fluid" src="assets/images/products_images/aments_products_image_2.jpg" alt="">
-                                                </div>
+{{--                                                <div class="product-image-large-single">--}}
+{{--                                                    <img class="img-fluid" src="assets/images/products_images/aments_products_image_2.jpg" alt="">--}}
+{{--                                                </div>--}}
                                             </div>
-                                            <div class="product-image-thumb modal-product-image-thumb">
-                                                <div class="zoom-active product-image-thumb-single">
-                                                    <img class="img-fluid" src="assets/images/products_images/aments_products_image_1.jpg" alt="">
-                                                </div>
-                                            </div>
+{{--                                            <div class="product-image-thumb modal-product-image-thumb">--}}
+{{--                                                <div class="zoom-active product-image-thumb-single">--}}
+{{--                                                    <img class="img-fluid" src="assets/images/products_images/aments_products_image_1.jpg" alt="">--}}
+{{--                                                </div>--}}
+{{--                                            </div>--}}
                                         </div>
                                     </div>
                                     <div class="col-md-6">
@@ -320,7 +335,7 @@
                                         <div class="row">
                                             <div class="col-md-4">
                                                 <div class="modal-add-cart-product-img">
-                                                    <img class="img-fluid" src="{{$book['cover_image']}}" alt="">
+                                                    <img class="img-fluid" src="data:image/png;base64,{{ $book['cover_image'] }}" alt="">
                                                 </div>
                                             </div>
                                             <div class="col-md-8">

@@ -50,7 +50,7 @@
                                     <td>{{ ++$key }}</td>
                                     <td>{{ $book['title'] }}</td>
 {{--                                    <td><img src="{{ asset('storage/'.$book['cover_image']) }}" alt="" width="100px" height="100px"></td>--}}
-                                    <td><img src="{{$book['cover_image'] }}" alt="" width="100px" height="100px"></td>
+                                    <td><img src="data:image/png;base64,{{ $book['cover_image'] }}" alt="" width="100px" height="100px"></td>
                                     <td>{{ $book['author'] }}</td>
                                    <td>{{ $book['category_name'] }}</td>
                                     <td>

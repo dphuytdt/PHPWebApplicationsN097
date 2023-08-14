@@ -22,12 +22,6 @@
                 <!-- User Quick Action Form -->
                 <div class="col-12">
                     <div class="user-actions accordion">
-                        <h3>
-                            <i class="fa fa-file-o" aria-hidden="true"></i>
-                            Returning customer?
-                            <a class="Returning" href="#" data-toggle="collapse" data-target="#checkout_coupon" aria-expanded="true">Click here to enter your code</a>
-
-                        </h3>
                         <div id="checkout_coupon" class="collapse" data-parent="#checkout_coupon">
                             <div class="checkout_info">
                                 <form action="#">
@@ -71,7 +65,9 @@
                                         @endphp
                                         <tr>
                                             <td> {{$item->title}}</td>
-                                            <td><img src="{{$item->cover_image}}" alt="{{$item->title}}" width="50px" height="50px"></td>
+                                            <td>
+                                                <img src="data:image/png;base64,{{ $item->cover_image }}" alt="{{$item->title}}" width="50px" height="50px">
+                                            </td>
                                             <td> {{$item->price}} $</td>
                                         </tr>
                                         <input type="hidden" name="id" value="{{$item->id}}">

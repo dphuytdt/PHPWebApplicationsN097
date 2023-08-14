@@ -117,6 +117,7 @@
                         <form action="{{route('search')}}" method="GET">
                             {{-- @csrf --}}
                             <div class="header-search-box default-search-style d-flex">
+{{--                                <i class="icon-edit"></i>--}}
                                 <input name="keyword" class="default-search-style-input-box border-around border-right-none" type="search" placeholder="Type any Keyword and press Enter ..." required>
                                 <button class="default-search-style-input-btn" type="submit"><i class="icon-search"></i></button>
                             </div>
@@ -155,13 +156,9 @@
                                             }
                                         </style>
                                         <li><a href="{{route('profile')}}">My Account</a></li>
-                                        <li><a href="">My Collection</a></li>
                                         @php
                                             $user_id = session()->get('user')['id'];
                                         @endphp
-                                        <li><a href="{{route('cart.checkOut',$user_id)}}">Checkout</a></li>
-                                        <li><a href="">History Payment</a></li>
-                                        <li><a href="{{route('wishlist.index', $user_id)}}">Wishlist</a></li>
                                         @if($is_vip == 1)
                                             <li><a href="{{route('vipBenefits')}}">VIP Member</a></li>
                                         @else
@@ -201,7 +198,7 @@
                                     <!-- Sub Menu -->
                                     <ul class="sub-menu">
                                         @foreach ( $categories as $category )
-                                            <li><a href=""> {{$category['name']}} </a></li>
+                                            <li><a  href="{{route('getBookByCategory', ['id' => $category['id']])}}"> {{$category['name']}} </a></li>
                                         @endforeach
                                         <li><a>View more</a></li>
                                     </ul>
@@ -296,6 +293,7 @@
         <div class="mobile-menu-center">
             <form action="#" method="post">
                 <div class="header-search-box default-search-style d-flex">
+                    <i class="fa-solid fa-filter"></i>
                     <input class="default-search-style-input-box border-around border-right-none" type="search" placeholder="Search entire store here ..." required>
                     <button class="default-search-style-input-btn" type="submit"><i class="icon-search"></i></button>
                 </div>
@@ -467,7 +465,6 @@
             <span class="offcanvas-cart-total-price-value total_price" id="total_price"></span>
         </div>
         <ul class="offcanvas-cart-action-button">
-
                 @php
                     $user_id = session()->get('user')['id']
                 @endphp
@@ -648,7 +645,7 @@
                     li.innerHTML = `
                         <div class="offcanvas-cart-item-block">
                           <a href="" class="offcanvas-cart-item-image-link">
-                            <img src="${item.cover_image}" alt="" class="offcanvas-cart-image">
+                            <img src="data:image/png;base64,${item.cover_image}" alt="" class="offcanvas-cart-image">
                           </a>
                           <div class="offcanvas-cart-item-content">
                             <a href="" class="offcanvas-cart-item-link">${item.title}</a>
@@ -754,7 +751,7 @@
                     li.innerHTML = `
                               <div class="offcanvas-wishlist-item-block">
                                 <a href="" class="offcanvas-wishlist-item-image-link">
-                                  <img src="${item.cover_image}" alt="" class="offcanvas-cart-image">
+                                  <img src="data:image/png;base64,${item.cover_image}" alt="" class="offcanvas-cart-image">
                                 </a>
                                 <div class="offcanvas-wishlist-item-content">
                                   <a href="" class="offcanvas-wishlist-item-link">${item.title}</a>

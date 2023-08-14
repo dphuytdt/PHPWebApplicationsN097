@@ -4,10 +4,9 @@ namespace App\Repositories;
 
 use App\Interfaces\CategoryRepositoryInterface;
 use App\Models\Book;
-use App\Models\Author;
 use App\Models\Category;
 
-class CategoryRepository implements CategoryRepositoryInterface 
+class CategoryRepository implements CategoryRepositoryInterface
 {
     //get all category
     public function getAllCategory()
@@ -29,5 +28,58 @@ class CategoryRepository implements CategoryRepositoryInterface
     {
         $categories = Category::orderBy('name', 'asc')->get();
         return $categories;
+    }
+
+    //create category
+    public function createCategory(array $data)
+    {
+        $category = Category::create($data);
+        return $category;
+    }
+
+    //get category by id
+    public function getCategoryById(string $id)
+    {
+        $category = Category::find($id);
+        return $category;
+    }
+
+    public function deleteCategory(string $id)
+    {
+        $category = Category::find($id);
+
+        if (is_null($category)) {
+            return false;
+        }
+
+        $category->status = 0;
+        $category->deleted_at = date('Y-m-d H:i:s');
+
+        return $category->save();
+    }
+
+    public function updateCategory(array $data, string $id)
+    {
+        $category = Category::find($id);
+
+        if (is_null($category)) {
+            return false;
+        }
+
+        if (isset($data['name'])) {
+            $category->name = $data['name'];
+        }
+
+        if (isset($data['description'])) {
+            $category->description = $data['description'];
+        }
+
+        if (isset($data['image'])) {
+            $category->image = $data['image'];
+        }
+
+        $category->updated_at = $data['updated_at'];
+
+        return $category->save();
     }
 }

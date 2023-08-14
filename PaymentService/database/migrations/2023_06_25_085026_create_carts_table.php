@@ -17,7 +17,7 @@ return new class extends Migration
             $table->unsignedBigInteger('book_id');
             $table->string('title', 255);
             $table->integer('quantity')->default(1);
-            $table->string('cover_image')->nullable();
+            $table->longText('cover_image')->nullable();
             $table->float('price', 8, 2);
             $table->dateTime('created_at');
             $table->dateTime('updated_at')->nullable();

@@ -48,7 +48,8 @@
                             @foreach($paginator as $category)
                                 <tr>
                                     <td>{{$category['name']}}</td>
-                                    <td><img src="{{$category['image']}}" alt="{{$category['name']}}" width="100px" height="100px"></td>
+                                    <td>
+                                        <img src="data:image/png;base64,{{ $category['image'] }}" alt="Image">                                    </td>
                                     @if($category['status'] == 1)
                                         <td>Active</td>
                                     @else
@@ -123,25 +124,25 @@
                               <input type="file" class="form-control" id="exampleInputPassword1" name="image" accept="image/*">
                             </div>
                             <div class="col-md-3">
-                              <img src="{{$category['image']}}" alt="{{$category['name']}}" width="100px" height="100px" class="img-thumbnail" id="uploadedImage">
+                              <img src="data:image/png;base64,{{ $category['image'] }}" alt="{{$category['name']}}" width="100px" height="100px" name="image" class="img-thumbnail" id="uploadedImage">
                             </div>
                           </div>
                     </div>
                     <div class="">
-                        <label class="form-check-label" for="exampleCheck1">Status</label>
+                        <label class="form-check-label" for="inputState">Status</label>
                         <select id="inputState" class="form-control" name="status">
                             @if($category['status'] == 1)
                                 <option value="1" selected>Active</option>
-                                <option value="0">Deactive</option>
+                                <option value="0">Deactivate</option>
                             @else
                                 <option value="1">Active</option>
-                                <option value="0" selected>Deactive</option>
+                                <option value="0" selected>Deactivate</option>
                             @endif
                         </select>
                       </div>
                       <div class="mb-3">
-                        <label for="exampleInputPassword1" class="form-label">Description</label>
-                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="description" >{{$category['description']}}</textarea>
+                        <label for="description" class="form-label">Description</label>
+                        <textarea class="form-control" id="description" rows="3" style="resize: none;" name="description" >{{$category['description']}}</textarea>
                     </div>
             </div>
             <div class="modal-footer">

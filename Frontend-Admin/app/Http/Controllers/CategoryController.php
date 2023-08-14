@@ -2,27 +2,31 @@
 
 namespace App\Http\Controllers;
 
+use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Http\Request;
 use GuzzleHttp\Client;
-use Illuminate\Pagination\LengthAwarePaginator;
-use Illuminate\Support\Collection;
+
 class CategoryController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public $bookService = 'http://bookservice.test:8080/api/';
+    private const BOOKS_SERVICE = 'http://bookservice.test:8080/api/';
+
+    private const BOOKS_SERVICE_ADMIN = 'http://bookservice.test:8080/api/admin/';
+
     public function index(Request $request)
     {
-        // dd($request);
         $client = new Client();
+
         try {
-            $response = $client->get($this->bookService.'category/admin');
+            $response = $client->get(self::BOOKS_SERVICE.'category/admin');
             $paginator = json_decode($response->getBody(), true);
-            return view('home.category.list', compact('paginator'));
+//
+//            foreach ($paginator as $key => $value) {
+//                $paginator[$key]['image'] = base64_decode($value['image']);
+//            }
+
+            return view('home.category.list')->with('paginator', $paginator);
         } catch (\Exception $e) {
-            dd($e);
-            // return view('home.category.list')->withErrors(['errors' => 'Cannot connect to server']);
+            return view('home.category.list')->withErrors(['errors' => 'Cannot connect to server']);
         }
     }
 
@@ -39,23 +43,32 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
-    }
+        if ($request->hasFile('image')) {
+            $imageFile = $request->file('image');
+            $imageContents = file_get_contents($imageFile->getPathname());
+            $base64Image = base64_encode($imageContents);
+        }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
+        $data = [
+            'name' => $request->name,
+            'description' => $request->description,
+            'image' => $base64Image,
+        ];
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
+        $client = new Client();
+
+        try{
+            $client->post(self::BOOKS_SERVICE_ADMIN.'categories', [
+                'form_params' => [
+                    'name' => $data['name'],
+                    'description' => $data['description'],
+                    'image' => $data['image'],
+                ]
+            ]);
+            return redirect()->route('category.index')->with('success', 'Create category successfully');
+        } catch (\Exception|GuzzleException $e) {
+            return view('home.category.list')->withErrors(['errors' => 'Cannot connect to server']);
+        }
     }
 
     /**
@@ -63,22 +76,52 @@ class CategoryController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        if ($request->hasFile('image')) {
+            $imageFile = $request->file('image');
+            $imageContents = file_get_contents($imageFile->getPathname());
+            $base64Image = base64_encode($imageContents);
+        }
+
+        $data = [
+            'name' => $request->name,
+            'image' => $base64Image,
+            'description' => $request->description,
+        ];
+
+        $client = new Client();
+
+        try {
+            $client->post(self::BOOKS_SERVICE_ADMIN.'categories/'.$id, [
+                'headers' => [
+                    'Accept' => 'application/json',
+                    'Content-Type' => 'application/json',
+                ],
+                'form_params' => [
+                    'name' => $data['name'] ?? '',
+                    'image' => $data['image'] ?? '',
+                    'description' => $data['description'] ?? '',
+                ]
+            ]);
+            return redirect()->route('category.index')->with('success', 'Update category successfully');
+        } catch (\Exception|GuzzleException $e) {
+            dd($e);
+            // return view('home.category.list')->withErrors(['errors' => 'Cannot connect to server']);
+        }
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function delete(string $id)
     {
         $client = new Client();
         try {
-            $response = $client->delete($this->bookService.'category/'.$id);
+            $response = $client->post(self::BOOKS_SERVICE_ADMIN.'categories/delete'.$id);
             $categories = json_decode($response->getBody(), true);
-            return redirect()->route('home.category.list')->with('success', 'Delete category successfully');
+            return redirect()->route('category.index')->with('success', 'Delete category successfully');
         } catch (\Exception $e) {
             dd($e);
-            // return view('home.category.list')->withErrors(['errors' => 'Cannot connect to server']);
+            // return view('category.index')->withErrors(['errors' => 'Cannot connect to server']);
         }
     }
 }
