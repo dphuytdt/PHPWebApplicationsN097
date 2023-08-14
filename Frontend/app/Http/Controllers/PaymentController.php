@@ -11,6 +11,8 @@ use App\Services\CategoryService;
 class PaymentController extends Controller
 {
     private const DOLLAR_RATE = 23000;
+
+    private const REDIRECT_URL = 'http://frontend.test:8080/thankYou';
     protected $categoryService;
 
     public function __construct(CategoryService $categoryService)
@@ -25,9 +27,9 @@ class PaymentController extends Controller
         date_default_timezone_set('Asia/Ho_Chi_Minh');
 
         $vnp_Url = "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html";
-        $vnp_Returnurl = "http://frontend.test:8080/thankYou";
-        $vnp_TmnCode = "1ACLHH74";//Mã website tại VNPAY
-        $vnp_HashSecret = "TMEVRTPDXCOKQKXQLZFNKDROUCTMWXHS"; //Chuỗi bí mật
+        $vnp_Returnurl = self::REDIRECT_URL;
+        $vnp_TmnCode = "1ACLHH74";
+        $vnp_HashSecret = "TMEVRTPDXCOKQKXQLZFNKDROUCTMWXHS";
 
         $vnp_TxnRef = time() . rand(10000, 99999);
         $vnp_OrderInfo = "User Name: ".$request->userName . " - Payment for order: " .  $vnp_TxnRef;
@@ -82,6 +84,10 @@ class PaymentController extends Controller
         , 'message' => 'success'
         , 'data' => $vnp_Url);
 
+        if ($returnData) {
+            $this->paymentSuccess($request);
+        }
+
         if (isset($_POST['redirect'])) {
             header('Location: ' . $vnp_Url);
             die();
@@ -90,31 +96,9 @@ class PaymentController extends Controller
         }
     }
 
-    private function paymentSuccess($data)
-    {
-        $client = new Client();
-
-        try{
-            $response = $client->post($this->paymentService.'cart/checkout', [
-                'form_params' => [
-                    "bookId" => $data->bookId,
-                    "userID" => $data->userID,
-                    "price" => $data->total,
-                ]
-            ]);
-            $response = json_decode($response->getBody()->getContents());
-            return response()->json($response);
-        } catch (\Exception $e) {
-            return response()->json($e->getMessage());
-        } catch (GuzzleException $e) {
-            return response()->json($e->getMessage());
-        }
-    }
-
     public function paymentMomo(Request $request)
     {
         $endpoint = "https://test-payment.momo.vn/v2/gateway/api/create";
-
 
         $partnerCode = 'MOMOBKUN20180529';
         $accessKey = 'klm05TvNBzhg7h7j';
@@ -122,16 +106,15 @@ class PaymentController extends Controller
         $orderInfo = "Thanh toán qua MoMo";
         $amount = $request->total * self::DOLLAR_RATE;
         $orderId = time() . rand(10000, 99999);
-        $redirectUrl = "http://frontend.test:8080/thankYou";
-        $ipnUrl = $redirectUrl;
+        $redirectUrl = self::REDIRECT_URL;
+        $ipnUrl = self::REDIRECT_URL;
         $extraData = "";
 
         $requestId = time() . "";
         $requestType = "payWithATM";
-//        $extraData = ($_POST["extraData"] ? $_POST["extraData"] : "");
-        //before sign HMAC SHA256 signature
         $rawHash = "accessKey=" . $accessKey . "&amount=" . $amount . "&extraData=" . $extraData . "&ipnUrl=" . $ipnUrl . "&orderId=" . $orderId . "&orderInfo=" . $orderInfo . "&partnerCode=" . $partnerCode . "&redirectUrl=" . $redirectUrl . "&requestId=" . $requestId . "&requestType=" . $requestType;
         $signature = hash_hmac("sha256", $rawHash, $secretKey);
+
         $data = array('partnerCode' => $partnerCode,
             'partnerName' => "Test",
             "storeId" => "MomoTestStore",
@@ -146,11 +129,16 @@ class PaymentController extends Controller
             'requestType' => $requestType,
             'signature' => $signature);
         $result = $this->execPostRequest($endpoint, json_encode($data));
-        $jsonResult = json_decode($result, true);  // decode json
 
-        //Just a example, please check more in there
-        return  redirect()->to($jsonResult['payUrl']);
-//        header('Location: ' . $jsonResult['payUrl']);
+        if($result){
+            $this->paymentSuccess($request);
+        }
+
+        $jsonResult = json_decode($result, true);
+
+        if($jsonResult){
+            return  redirect()->to($jsonResult['payUrl']);
+        }
     }
 
     function execPostRequest($url, $data)
@@ -165,11 +153,34 @@ class PaymentController extends Controller
         );
         curl_setopt($ch, CURLOPT_TIMEOUT, 5);
         curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 5);
-        //execute post
         $result = curl_exec($ch);
-        //close connection
         curl_close($ch);
+
         return $result;
     }
+
+
+    private function paymentSuccess($data)
+    {
+        $client = new Client();
+
+        try{
+            $response = $client->post($this->paymentService.'cart/checkout', [
+                'form_params' => [
+                    "bookId" => $data->bookId,
+                    "userID" => $data->userID,
+                    "price" => $data->total,
+                ]
+            ]);
+
+            $response = json_decode($response->getBody()->getContents());
+            return response()->json($response);
+        } catch (\Exception $e) {
+            return response()->json($e->getMessage());
+        } catch (GuzzleException $e) {
+            return response()->json($e->getMessage());
+        }
+    }
+
 
 }
