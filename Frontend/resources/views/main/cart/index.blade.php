@@ -7,7 +7,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-12 d-flex justify-content-between justify-content-md-between  align-items-center flex-md-row flex-column">
-                    <h3 class="breadcrumb-title">Cart</h3>
+                    <h3 class="breadcrumb-title">{{__('messages.caRt')}}</h3>
                     {{ Breadcrumbs::render('cart') }}
                 </div>
             </div>
@@ -28,10 +28,10 @@
                                 <!-- Start Cart Table Head -->
                                 <thead>
                                 <tr>
-                                    <th class="product_remove">Delete</th>
-                                    <th class="product_thumb">Image</th>
-                                    <th class="product_name">Product</th>
-                                    <th class="product-price">Price</th>
+                                    <th class="product_remove">{{__('messages.Delete')}}</th>
+                                    <th class="product_thumb">{{__('messages.Image')}}</th>
+                                    <th class="product_name">{{__('messages.Title')}}</th>
+                                    <th class="product-price">{{__('messages.Price')}}</th>
                                 </tr>
                                 </thead> <!-- End Cart Table Head -->
                                 <tbody>
@@ -65,20 +65,20 @@
             <div class="row">
                 <div class="col-lg-6 col-md-6">
                     <div class="coupon_code left">
-                        <h3>Coupon</h3>
+                        <h3>{{__('messages.Delete')}}</h3>
                         <div class="coupon_inner">
-                            <p>Enter your coupon code if you have one.</p>
+                            <p>{{__('messages.Delete')}}</p>
                             <input placeholder="Coupon code" type="text">
-                            <button type="submit">Apply coupon</button>
+                            <button type="submit">{{__('messages.Delete')}}</button>
                         </div>
                     </div>
                 </div>
                 <div class="col-lg-6 col-md-6">
                     <div class="coupon_code right">
-                        <h3>Cart Totals</h3>
+                        <h3>{{__('messages.cartTotals')}}</h3>
                         <div class="coupon_inner">
                             <div class="cart_subtotal">
-                                <p>Total</p>
+                                <p>{{__('messages.Total')}}</p>
                                 <p class="cart_amount">${{$subtotal}}</p>
                                 <input type="hidden" id="subtotal" name="subtotal" value="{{$subtotal}}">
                             </div>
@@ -87,7 +87,7 @@
                                 @php
                                     $user_id = session()->get('user')['id']
                                 @endphp
-                                <a href="{{route('cart.checkOut', $user_id)}}">Proceed to Checkout</a>
+                                <a href="{{route('cart.checkOut', $user_id)}}">{{__('messages.ProceedtoCheckout')}}</a>
                             </div>
                         </div>
                     </div>

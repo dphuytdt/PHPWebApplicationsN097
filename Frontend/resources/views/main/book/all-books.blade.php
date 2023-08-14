@@ -43,7 +43,7 @@
             <div class="row">
                 <div class="col-12">
                     <div class="alert alert-danger" role="alert">
-                        No products found
+                        {{__('messages.no_books_found')}}
                     </div>
                 </div>
             </div>
@@ -111,7 +111,7 @@
                                                                 <div class="product-default-content">
                                                                     <h6 class="product-default-link"><a href="{{URL::to('/book-details/'.$book['id'])}}">{{$book['title']}}</a></h6>
                                                                     @if($book['price'] == 0)
-                                                                        <span class="product-default-price">Free for now</span>
+                                                                        <span class="product-default-price">{{__('messages.free_for_now')}}</span>
                                                                     @else
                                                                         <span class="product-default-price">$ {{$book['price']}}</span>
                                                                     @endif
@@ -127,7 +127,7 @@
                                                         <div class="col-12">
                                                             <!-- Start Product Defautlt Single -->
                                                             <div class="product-list-single border-around">
-                                                                <a href="{{URL::to('/book-details/'.$book['id'])}}"" class="product-list-img-link">
+                                                                <a href="{{URL::to('/book-details/'.$book['id'])}}" class="product-list-img-link">
                                                                 <img src="data:image/png;base64,{{ $book['cover_image'] }}" alt="" class="img-fluid">
                                                                 </a>
                                                                 <div class="product-list-content">
@@ -246,15 +246,7 @@
                                                 <div class="product-image-large-single">
                                                     <img class="img-fluid" src="data:image/png;base64,{{ $book['cover_image'] }}" alt="">
                                                 </div>
-{{--                                                <div class="product-image-large-single">--}}
-{{--                                                    <img class="img-fluid" src="assets/images/products_images/aments_products_image_2.jpg" alt="">--}}
-{{--                                                </div>--}}
                                             </div>
-{{--                                            <div class="product-image-thumb modal-product-image-thumb">--}}
-{{--                                                <div class="zoom-active product-image-thumb-single">--}}
-{{--                                                    <img class="img-fluid" src="assets/images/products_images/aments_products_image_1.jpg" alt="">--}}
-{{--                                                </div>--}}
-{{--                                            </div>--}}
                                         </div>
                                     </div>
                                     <div class="col-md-6">
@@ -263,32 +255,23 @@
                                             <div class="product-details-text">
                                                 <h4 class="title">{{$book['title']}}</h4>
                                                 @if($book['price'] == 0)
-                                                    <div class="price">Free for now</div>
+                                                    <div class="price">{{__('messages.free_for_now')}}</div>
                                                 @else
                                                     <div class="price">${{$book['price']}}</div>
 
                                                 @endif
                                                 <p>{{$book['description']}}</p>
                                             </div> <!-- End  Product Details Text Area-->
-                                            <!-- Start Product Variable Area -->
                                             <div class="product-details-variable">
-                                                <!-- Product Variable Single Item -->
-                                                <!-- Product Variable Single Item -->
 
                                                 @if ($book['price'] == 0)
                                                     <div class="product-add-to-cart-btn">
-                                                        <a href="#" data-toggle="modal" data-target="#modalAddcart">Read Now</a>
+                                                        <a href="#" data-toggle="modal" data-target="#modalAddcart">{{__('messages.readNow')}}</a>
                                                     </div>
                                                     <br>
                                                 @else
-                                                    {{-- <div class="variable-single-item ">
-                                                        <span>Quantity Available</span>
-                                                        <div class="product-variable-quantity">
-                                                            <input  value="{{$book['quantity']}}" type="text" readonly disabled>
-                                                        </div>
-                                                    </div> --}}
                                                     <div class="product-add-to-cart-btn">
-                                                        <a href="#" data-toggle="modal" data-target="#modalAddcart">Add To Cart</a>
+                                                        <a href="#" data-toggle="modal" data-target="#modalAddcart">{{__('messages.addToCart')}}</a>
                                                     </div>
                                                     <br>
                                                 @endif
@@ -296,9 +279,8 @@
                                             <!-- Start  Product Details Meta Area-->
                                             <div class="product-details-meta mb-20">
                                                 <ul>
-                                                    <li><a href=""><i class="icon-heart"></i>Add to wishlist</a></li>
-                                                    <li><a href=""><i class="icon-repeat"></i>Compare</a></li>
-                                                    <li><a href="#" data-toggle="modal" data-target="#modalQuickview-{{$book['id']}}"><i class="icon-eye"></i>Quick view</a></li>
+                                                    <li><a href=""><i class="icon-heart"></i>{{__('messages.addToWishlist')}}</a></li>
+                                                    <li><a href="#" data-toggle="modal" data-target="#modalQuickview-{{$book['id']}}"><i class="icon-eye"></i>{{__('messages.quickView')}}</a></li>
                                                 </ul>
                                             </div> <!-- End  Product Details Meta Area-->
                                             <!-- Start  Product Details Social Area-->
@@ -339,19 +321,17 @@
                                                 </div>
                                             </div>
                                             <div class="col-md-8">
-                                                <div class="modal-add-cart-info"><i class="fa fa-check-square"></i>Added to cart successfully!</div>
+                                                <div class="modal-add-cart-info"><i class="fa fa-check-square"></i>{{__('messages.addCartSuccess')}}</div>
                                                 <div class="modal-add-cart-product-cart-buttons">
-                                                    <a href="cart.html">View Cart</a>
-                                                    <a href="checkout.html">Checkout</a>
+{{--                                                    <a href="{{route('cart.add')}}">{{__('messages.addToCart')}}</a>--}}
+{{--                                                    <a href="{{route('cart.checkOut')}}">{{__('messages.checkOut')}}</a>--}}
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-md-5 modal-border">
                                         <ul class="modal-add-cart-product-shipping-info">
-                                            {{-- <li> <strong><i class="icon-shopping-cart"></i> There Are 5 Items In Your Cart.</strong></li>
-                                            <li> <strong>TOTAL PRICE: </strong> <span>$187.00</span></li> --}}
-                                            <li class="modal-continue-button"><a href="#" data-dismiss="modal">CONTINUE SHOPPING</a></li>
+                                            <li class="modal-continue-button"><a href="#" data-dismiss="modal">{{__('messages.CONTINUESHOPPING')}}</a></li>
                                         </ul>
                                     </div>
                                 </div>

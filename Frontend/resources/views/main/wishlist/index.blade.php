@@ -49,7 +49,7 @@
                                             <td class="product_remove"><a href=""><i class="fa fa-trash-o"></i></a></td>
                                             <td class="product_thumb">
                                                 <a href="">
-                                                    <img src="{{$wishlist->cover_image}}" alt="">
+                                                    <img src="data:image/png;base64,{{$wishlist->cover_image}}" alt="">
                                                 </a>
                                             </td>
                                             <td class="product_name"><a href="">{{$wishlist->title}}</a></td>

@@ -43,23 +43,13 @@
             <div class="row d-flex justify-content-between align-items-center">
                 <div class="col-6">
                     <div class="header-top--left">
-                        <span>Welcome to our store!</span>
+                        <span>{{__('messages.welcome')}}</span>
                     </div>
                 </div>
                 <div class="col-6">
                     <div class="header-top--right">
                         <!-- Start Header Top Menu -->
                         <ul class="header-user-menu">
-                            {{-- <li class="has-user-dropdown">
-                                <a href="">Setting</a>
-                                <!-- Header Top Menu's Dropdown -->
-                                <ul class="user-sub-menu">
-                                    <li><a href="">Checkout</a></li>
-                                    <li><a href="">My Account</a></li>
-                                    <li><a href="">Shopping Cart</a></li>
-                                    <li><a href="">Wishlist</a></li>
-                                </ul>
-                            </li> --}}
                             <li class="has-user-dropdown">
                                 <a href="">$ USD</a>
                                 <!-- Header Top Menu's Dropdown -->
@@ -71,7 +61,6 @@
                             </li>
                             <li class="has-user-dropdown">
                                 <a href="">English</a>
-                                <!-- Header Top Menu's Dropdown -->
                                 <ul class="user-sub-menu">
                                     <style type="text/css">
                                         .user-sub-menu-in-icon {
@@ -79,14 +68,14 @@
                                             height: 20px;
                                         }
                                     </style>
-                                    <li><a href=""><img class="user-sub-menu-in-icon" src="assets/images/icon/united-kingdom.png" alt=""> English</a></li>
-                                    <li><a href=""><img class="user-sub-menu-in-icon" src="assets/images/icon/vietnam.png" alt=""> VietNam</a></li>
-                                    <li><a href=""><img class="user-sub-menu-in-icon" src="assets/images/icon/japan.png" alt=""> Japan</a></li>
-                                    <li><a href=""><img class="user-sub-menu-in-icon" src="assets/images/icon/korea.png" alt=""> Korea</a></li>
+                                    <li><a href="{!! route('changeLanguage', ['en']) !!}"><img class="user-sub-menu-in-icon" src="{{asset('assets/images/icon/united-kingdom.png')}}" alt=""> English</a></li>
+                                    <li><a href="{!! route('changeLanguage', ['vi']) !!}"><img class="user-sub-menu-in-icon" src="{{asset('assets/images/icon/vietnam.png')}}" alt=""> VietNam</a></li>
+                                    <li><a href="{!! route('changeLanguage', ['jp']) !!}"><img class="user-sub-menu-in-icon" src="{{asset('assets/images/icon/japan.png')}}" alt=""> Japan</a></li>
+                                    <li><a href="{!! route('changeLanguage', ['kr']) !!}"><img class="user-sub-menu-in-icon" src="{{asset('assets/images/icon/korea.png')}}" alt=""> Korea</a></li>
 
                                 </ul>
                             </li>
-                            <li><a href=""><i class="icon-repeat"></i> Compare (0)</a></li>
+                            <li><a href=""><i class="icon-repeat"></i> {{__('messages.compare')}}</a></li>
                         </ul> <!-- End Header Top Menu -->
                     </div>
                 </div>
@@ -118,7 +107,7 @@
                             {{-- @csrf --}}
                             <div class="header-search-box default-search-style d-flex">
 {{--                                <i class="icon-edit"></i>--}}
-                                <input name="keyword" class="default-search-style-input-box border-around border-right-none" type="search" placeholder="Type any Keyword and press Enter ..." required>
+                                <input name="keyword" class="default-search-style-input-box border-around border-right-none" type="search" placeholder="{{__('messages.typeKeyWord')}}">
                                 <button class="default-search-style-input-btn" type="submit"><i class="icon-search"></i></button>
                             </div>
                         </form>
@@ -155,16 +144,16 @@
                                                 height: 20px;
                                             }
                                         </style>
-                                        <li><a href="{{route('profile')}}">My Account</a></li>
+                                        <li><a href="{{route('profile')}}">{{__('messages.myAccount')}}</a></li>
                                         @php
                                             $user_id = session()->get('user')['id'];
                                         @endphp
                                         @if($is_vip == 1)
-                                            <li><a href="{{route('vipBenefits')}}">VIP Member</a></li>
+                                            <li><a href="{{route('vipBenefits')}}">{{__('messages.vipMember')}}</a></li>
                                         @else
-                                            <li><a href="{{route('upgrade')}}">Upgrade to VIP</a></li>
+                                            <li><a href="{{route('upgrade')}}">{{__('messages.upgradeVip')}}</a></li>
                                         @endif
-                                        <li><a href="{{route('logout')}}">Logout</a></li>
+                                        <li><a href="{{route('logout')}}">{{__('messages.logout')}}</a></li>
                                     </ul>
                                 </a>
                             </li>
@@ -191,26 +180,29 @@
                         <nav>
                             <ul>
                                 <li class="has-dropdown">
-                                    <a class="active main-menu-link" href="{{route('home')}}">Home</a>
+                                    <a class="active main-menu-link" href="{{route('home')}}">{{ __('messages.home') }}</a>
                                 </li>
                                 <li class="has-dropdown">
-                                    <a href="blog-single-sidebar-left.html">Category <i class="fa fa-angle-down"></i></a>
+                                    <a href="blog-single-sidebar-left.html">{{ __('messages.category') }} <i class="fa fa-angle-down"></i></a>
                                     <!-- Sub Menu -->
                                     <ul class="sub-menu">
                                         @foreach ( $categories as $category )
-                                            <li><a  href="{{route('getBookByCategory', ['id' => $category['id']])}}"> {{$category['name']}} </a></li>
+                                            @php
+                                                $name = __('messages.'.$category['name']);
+                                            @endphp
+                                            <li><a  href="{{route('getBookByCategory', ['id' => $category['id']])}}"> {{ $category['name'] }}</a></li>
                                         @endforeach
-                                        <li><a>View more</a></li>
+                                        <li><a> {{ __('messages.viewMore') }}</a></li>
                                     </ul>
                                 </li>
                                 <li>
-                                    <a href="{{route('news')}}">News</a>
+                                    <a href="{{route('news')}}">{{ __('messages.news') }}</a>
                                 </li>
                                 <li>
-                                    <a href="{{route('about')}}">About Us</a>
+                                    <a href="{{route('about')}}">{{ __('messages.about') }}</a>
                                 </li>
                                 <li>
-                                    <a href="{{route('contact')}}">Contact Us</a>
+                                    <a href="{{route('contact')}}"> {{ __('messages.contact') }}</a>
                                 </li>
                             </ul>
                         </nav>
@@ -255,18 +247,24 @@
     <div class="offcanvas-mobile-menu-wrapper">
         <!-- Start Mobile Menu User Top -->
         <div class="mobile-menu-top">
-            <span>Welcome to our store!</span>
+            <span>{{ __('messages.welcome') }}</span>
             <!-- Start Header Top Menu -->
             <ul class="mobile-menu-user-menu">
-                <li><a class="header-user-menu-link" href=""><i class="icon-repeat"></i>Compare (0)</a></li>
+                <li><a class="header-user-menu-link" href=""><i class="icon-repeat"></i>{{ __('messages.compare') }}</a></li>
                 <li class="has-mobile-user-dropdown">
-                    <a class="mobile-user-menu-link" href="">Setting</a>
+                    <a class="mobile-user-menu-link" href="">{{ __('messages.myAccount') }}</a>
                     <!-- Header Top Menu's Dropdown -->
                     <ul class="mobile-user-sub-menu">
-                        <li><a href="">Checkout</a></li>
-                        <li><a href="">My Account</a></li>
-                        <li><a href="">Shopping Cart</a></li>
-                        <li><a href="">Wishlist</a></li>
+                        <li><a href="{{route('profile')}}">{{__('messages.myAccount')}}</a></li>
+                        @php
+                            $user_id = session()->get('user')['id'];
+                        @endphp
+                        @if($is_vip == 1)
+                            <li><a href="{{route('vipBenefits')}}">{{__('messages.vipMember')}}</a></li>
+                        @else
+                            <li><a href="{{route('upgrade')}}">{{__('messages.upgradeVip')}}</a></li>
+                        @endif
+                        <li><a href="{{route('logout')}}">{{__('messages.logout')}}</a></li>
                     </ul>
                 </li>
                 <li class=" has-mobile-user-dropdown">
@@ -283,8 +281,10 @@
                     <a class="mobile-user-menu-link" href="">English</a>
                     <!-- Header Top Menu's Dropdown -->
                     <ul class="mobile-user-sub-menu">
-                        <li><a href=""><img class="user-sub-menu-link-icon" src="assets/images/icon/lang-en.png" alt=""> English</a></li>
-                        <li><a href=""><img class="user-sub-menu-link-icon" src="assets/images/icon/lang-gr.png" alt=""> Germany</a></li>
+                        <li><a href="{!! route('changeLanguage', ['en']) !!}"><img class="user-sub-menu-in-icon" src="assets/images/icon/united-kingdom.png" alt=""> English</a></li>
+                        <li><a href="{!! route('changeLanguage', ['vi']) !!}"><img class="user-sub-menu-in-icon" src="assets/images/icon/vietnam.png" alt=""> VietNam</a></li>
+                        <li><a href="{!! route('changeLanguage', ['jp']) !!}"><img class="user-sub-menu-in-icon" src="assets/images/icon/japan.png" alt=""> Japan</a></li>
+                        <li><a href="{!! route('changeLanguage', ['kr']) !!}"><img class="user-sub-menu-in-icon" src="assets/images/icon/korea.png" alt=""> Korea</a></li>
                     </ul>
                 </li>
             </ul> <!-- End Header Top Menu -->
@@ -294,7 +294,7 @@
             <form action="#" method="post">
                 <div class="header-search-box default-search-style d-flex">
                     <i class="fa-solid fa-filter"></i>
-                    <input class="default-search-style-input-box border-around border-right-none" type="search" placeholder="Search entire store here ..." required>
+                    <input class="default-search-style-input-box border-around border-right-none" type="search" placeholder="{{__('messages.typeKeyWord')}}" required>
                     <button class="default-search-style-input-btn" type="submit"><i class="icon-search"></i></button>
                 </div>
             </form>
@@ -303,7 +303,7 @@
                     <img src="assets/images/icon/support-icon.png" alt="">
                 </div>
                 <div class="mobile-menu-customer-support-text">
-                    <span>Customer Support</span>
+                    <span>{{__('messages.customerSupport')}}</span>
                     <a class="mobile-menu-customer-support-text-phone" href="tel:(08)123456789">(08) 123 456 789</a>
                 </div>
             </div>
@@ -343,7 +343,7 @@
             <div class="offcanvas-menu">
                 <ul>
                     <li>
-                        <a href="#"><span>Home</span></a>
+                        <a href="{{route('home')}}"><span>{{ __('home') }}</span></a>
                         <ul class="mobile-sub-menu">
                             <li><a href="index.html">Home 1</a></li>
                             <li><a href="index-2.html">Home 2</a></li>
@@ -456,22 +456,22 @@
 
     <!-- Start  Offcanvas Addcart Wrapper -->
     <div class="offcanvas-add-cart-wrapper">
-        <h4 class="offcanvas-title">Shopping Cart</h4>
+        <h4 class="offcanvas-title"{{__('messages.cart')}}></h4>
         <ul class="offcanvas-cart">
         </ul>
         @if(session()->has('user'))
         <div class="offcanvas-cart-total-price">
-            <span class="offcanvas-cart-total-price-text">Subtotal:</span>
+            <span class="offcanvas-cart-total-price-text">{{__('messages.subtotal')}}:</span>
             <span class="offcanvas-cart-total-price-value total_price" id="total_price"></span>
         </div>
         <ul class="offcanvas-cart-action-button">
                 @php
                     $user_id = session()->get('user')['id']
                 @endphp
-                <li class="offcanvas-cart-action-button-list"><a href="{{route('cart.getUserCart',$user_id)}}" class="offcanvas-cart-action-button-link">View Cart</a></li>
-                <li class="offcanvas-cart-action-button-list"><a href="{{route('cart.checkOut',$user_id)}}" class="offcanvas-cart-action-button-link">Checkout</a></li>
+                <li class="offcanvas-cart-action-button-list"><a href="{{route('cart.getUserCart',$user_id)}}" class="offcanvas-cart-action-button-link">{{__('messages.viewCart')}}</a></li>
+                <li class="offcanvas-cart-action-button-list"><a href="{{route('cart.checkOut',$user_id)}}" class="offcanvas-cart-action-button-link">{{__('messages.checkout')}}</a></li>
             @else
-                <li class="offcanvas-cart-action-button-list"><a href="{{route('login')}}" class="offcanvas-cart-action-button-link">Please login or register to view cart!</a></li>
+                <li class="offcanvas-cart-action-button-list"><a href="{{route('login')}}" class="offcanvas-cart-action-button-link">{{__('messages.requestLogin')}}</a></li>
             @endif
         </ul>
     </div> <!-- End  Offcanvas Addcart Wrapper -->
@@ -487,7 +487,7 @@
 
     <!-- Start Offcanvas Mobile Menu Wrapper -->
     <div class="offcanvas-wishlist-wrapper">
-        <h4 class="offcanvas-title">Wishlist</h4>
+        <h4 class="offcanvas-title">{{__('messages.wishlist')}}</h4>
         <ul class="offcanvas-wishlist" id="offcanvas-wishlist">
         </ul>
         <ul class="offcanvas-wishlist-action-button">
@@ -521,13 +521,13 @@
                             <a href="index.html"><img src="{{ asset('images/logo.png') }}" alt="" class="img-fluid"></a>
                         </div>
                         <div class="footer-contact">
-                            <p>We are a team of designers and developers that create high quality Magento, Prestashop, Opencart...</p>
+                            <p>{{__('messages.intro')}}</p>
                             <div class="customer-support">
                                 <div class="customer-support-icon">
                                     <img src="assets/images/icon/support-icon.png" alt="">
                                 </div>
                                 <div class="customer-support-text">
-                                    <span>Customer Support</span>
+                                    <span>{{__('messages.customerSupport')}}</span>
                                     <a class="customer-support-text-phone" href="tel:(03)32420477">(03) 3242 0477</a>
                                 </div>
                             </div>
@@ -536,14 +536,14 @@
                 </div>
                 <div class="col-lg-5 col-md-5 col-sm-7">
                     <div class="footer-widget footer-widget-subscribe">
-                        <h3 class="footer-widget-title">Subscribe newsletter to get updated</h3>
+                        <h3 class="footer-widget-title">{{__('messages.subscribeNow')}}</h3>
                         <form action="#" method="post">
                             <div class="footer-subscribe-box default-search-style d-flex">
                                 <input class="default-search-style-input-box border-around border-right-none subscribe-form" type="email" placeholder="Search entire store here ..." required>
-                                <button class="default-search-style-input-btn" type="submit">Subscribe</button>
+                                <button class="default-search-style-input-btn" type="submit">{{__('messages.subscribe')}}</button>
                             </div>
                         </form>
-                        <p class="footer-widget-subscribe-note">We’ll never share your email address <br> with a third-party.</p>
+                        <p class="footer-widget-subscribe-note">{{__('messages.notShareEmail')}} <br> {{__('messages.thirdParty')}}</p>
                         <ul class="footer-social">
                             <li><a href="" class="facebook"><i class="fa fa-facebook"></i></a></li>
                             <li><a href="" class="twitter"><i class="fa fa-twitter"></i></a></li>
@@ -555,7 +555,7 @@
                 </div>
                 <div class="col-lg-4 col-md-4 col-sm-6">
                     <div class="footer-widget footer-widget-menu">
-                        <h3 class="footer-widget-title">Information</h3>
+                        <h3 class="footer-widget-title">{{__('messages.information')}}</h3>
                         <div class="footer-menu">
                             <ul class="footer-menu-nav">
                                 <li><a href="">Delivery</a></li>

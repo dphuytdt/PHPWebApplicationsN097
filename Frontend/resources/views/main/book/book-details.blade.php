@@ -35,7 +35,7 @@
             <div class="container">
                 <div class="row">
                     <div class="col-12 d-flex justify-content-between justify-content-md-between  align-items-center flex-md-row flex-column">
-                        <h3 class="breadcrumb-title">Product Details - {{ $result['book']['title'] }}</h3>
+                        <h3 class="breadcrumb-title">{{__('messages.productDetails')}} {{ $result['book']['title'] }}</h3>
                         {{ Breadcrumbs::render('bookDetails', $result['book']) }}
                     </div>
                 </div>
@@ -70,7 +70,7 @@
                                     <span class="review-fill"><i class="fa fa-star"></i></span>
                                     <span class="review-empty"><i class="fa fa-star"></i></span>
                                 </div>
-                                <a href="" class="customer-review">(customer review )</a>
+                                <a href="" class="customer-review">({{__('messages.customerReview')}})</a>
                             </div>
                             {{-- <div class="price"><del>$70.00</del>$80.00</div> --}}
                             @if($result['book']['price'] == 0)
@@ -96,45 +96,44 @@
                                             $today = date("Y-m-d");
                                             $vip_experied_date = date("d-m-Y", strtotime($vip_experied_date));
                                             $today = date("d-m-Y", strtotime($today));
-                                            //use strtotime function to convert date into timestamp then subtract the two dates then use floor function to convert seconds into days
                                             $diff = floor(strtotime($vip_experied_date) - strtotime($today))/ (60 * 60 * 24);
                                         @endphp
                                         @if ($diff < 0)
                                             <div class="product-add-to-cart-btn">
-                                                <a  id="addCartDetails" href="{{route('cart.add')}}" data-toggle="modal" data-target="#modalAddcart">Add To Cart</a>
+                                                <a  id="addCartDetails" href="{{route('cart.add')}}" data-toggle="modal" data-target="#modalAddcart">{{__('messages.addToCart')}}</a>
                                             </div>
                                         @else
                                             @if($result['book']['is_vip_valid'] == 1)
                                                 <div class="product-add-to-cart-btn">
-                                                    <a href="#" data-toggle="modal" data-target=".bd-example-modal-lg-{{$result['book']['id']}}">Read now</a>
+                                                    <a href="#" data-toggle="modal" data-target=".bd-example-modal-lg-{{$result['book']['id']}}">{{__('messages.readNow')}}</a>
                                                 </div>
                                             @else
                                                 <div class="product-add-to-cart-btn">
-                                                    <a  id="addCartDetails" href="#" data-toggle="modal" data-target="#modalAddcart">Add To Cart</a>
+                                                    <a  id="addCartDetails" href="#" data-toggle="modal" data-target="#modalAddcart">{{__('messages.addToCart')}}</a>
                                                 </div>
                                             @endif
                                         @endif
                                     @else
                                         @if ($result['book']['price'] == 0)
                                             <div class="product-add-to-cart-btn">
-                                                <a href="#" data-toggle="modal" data-target=".bd-example-modal-lg-{{$result['book']['id']}}">Read now</a>
+                                                <a href="#" data-toggle="modal" data-target=".bd-example-modal-lg-{{$result['book']['id']}}">{{__('messages.readNow')}}</a>
                                             </div>
                                         @else
                                             <div class="product-add-to-cart-btn">
-                                                <a  id="addCartDetails" href="" data-toggle="modal" data-target="#modalAddcart">Add To Cart</a>
+                                                <a  id="addCartDetails" href="" data-toggle="modal" data-target="#modalAddcart">{{__('messages.addToCart')}}</a>
                                             </div>
                                         @endif
                                     @endif
                                 @else
                                     <div class="product-add-to-cart-btn">
-                                        <a  href="{{route('login')}}">Please login for details</a>
+                                        <a  href="{{route('login')}}">>{{__('messages.plsLogin')}}</a>
                                     </div>
                                 @endif
                                 <div class="product-add-to-cart-btn">
-                                    <button class="btn-continue">Continue</button>
+                                    <button class="btn-continue">{{__('messages.Continue')}}</button>
                                 </div>
                                 <div class="product-add-to-cart-btn">
-                                    <button class="btn-restart">Restart</button>
+                                    <button class="btn-restart">{{__('messages.Restart')}}</button>
                                 </div>
                                 <input type="hidden" name="_token" value="{{csrf_token()}}">
                             </div>
@@ -193,8 +192,8 @@
                         <div class="product-details-meta mb-20">
                             <ul>
                                 @if(session()->has('user'))
-                                    <li><a href="" id="addToWishlistDetails"><i class="icon-heart"></i>Add to wishlist</a></li>
-                                    <li><a href=""><i class="icon-repeat"></i>Compare</a></li>
+                                    <li><a href="" id="addToWishlistDetails"><i class="icon-heart"></i>{{__('messages.addToWishlist')}}s</a></li>
+{{--                                    <li><a href=""><i class="icon-repeat"></i>Compare</a></li>--}}
                                 @endif
                             </ul>
                         </div> <!-- End  Product Details Meta Area-->
@@ -215,13 +214,13 @@
                         <!-- Start Product Details Tab Button -->
                         <ul class="nav tablist product-details-content-tab-btn d-flex justify-content-center">
                             <li><a class="nav-link active" data-toggle="tab" href="#description">
-                                    <h5>Description</h5>
+                                    <h5>{{__('messages.Description')}}</h5>
                                 </a></li>
                             <li><a class="nav-link" data-toggle="tab" href="#specification">
-                                    <h5>Specification</h5>
+                                    <h5>{{__('messages.Specification')}}</h5>
                                 </a></li>
                             <li><a class="nav-link" data-toggle="tab" href="#review">
-                                    <h5>Reviews (1)</h5>
+                                    <h5>{{__('messages.Reviews')}}</h5>
                                 </a></li>
                         </ul> <!-- End Product Details Tab Button -->
 
@@ -281,7 +280,7 @@
                                                                     </div>
                                                                 </div>
                                                                 <div class="comment-content-right">
-                                                                    <a href="#"><i class="fa fa-reply"></i>Reply</a>
+                                                                    <a href="#"><i class="fa fa-reply"></i>{{__('messages.Reply')}}</a>
                                                                 </div>
                                                             </div>
 
@@ -352,15 +351,15 @@
                                         <div class="review-form">
                                             @if(session()->has('user'))
                                                 <div class="review-form-text-top">
-                                                    <h5>ADD A REVIEW</h5>
-                                                    <p>Your email address will not be published. Required fields are marked *</p>
+                                                    <h5>{{__('messages.ADDAREVIEW')}}</h5>
+                                                    <p>{{__('messages.emailNotPublish')}}</p>
                                                 </div>
 
                                                 <form action="#" method="post">
                                                     <div class="row">
                                                         <div class="col-md-6">
                                                             <div class="default-form-box mb-20">
-                                                                <label for="comment-name">Your name <span>*</span></label>
+                                                                <label for="comment-name">{{__('messages.Yourname')}}<span>*</span></label>
                                                                 <input id="comment-name" type="text" placeholder="Enter your name" required>
                                                             </div>
                                                         </div>
@@ -388,7 +387,7 @@
                                                 </div>
                                                 <div class="row">
                                                     <div class="col-12">
-                                                        <a href="{{ route('login') }}" class="btn btn-lg btn-block btn-primary">Login Now</a>
+                                                        <a href="{{ route('login') }}" class="btn btn-lg btn-block btn-primary">{{__('messages.LoginNow')}}</a>
                                                     </div>
                                                 </div>
                                             @endif

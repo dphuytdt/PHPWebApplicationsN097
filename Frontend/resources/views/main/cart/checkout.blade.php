@@ -7,7 +7,7 @@
             <div class="container">
                 <div class="row">
                     <div class="col-12 d-flex justify-content-between justify-content-md-between  align-items-center flex-md-row flex-column">
-                        <h3 class="breadcrumb-title">Checkout</h3>
+                        <h3 class="breadcrumb-title">{{__('messages.checkout')}}</h3>
                         {{ Breadcrumbs::render('checkOut') }}
                     </div>
                 </div>
@@ -26,7 +26,7 @@
                             <div class="checkout_info">
                                 <form action="#">
                                     <input placeholder="Coupon code" type="text">
-                                    <button type="submit">Apply coupon</button>
+                                    <button type="submit">{{__('messages.Applycoupon')}}n</button>
                                 </form>
                             </div>
                         </div>
@@ -38,14 +38,14 @@
             <div class="checkout_form">
                 <div class="row">
                     <div class="col-lg-12 col-md-12">
-                            <h3>Your order</h3>
+                            <h3>{{__('messages.Yourorder')}}</h3>
                             <div class="order_table">
                                 <table>
                                     <thead>
                                         <tr>
-                                            <th>Product</th>
-                                            <th>Image</th>
-                                            <th>Total</th>
+                                            <th>{{__('messages.Product')}}</th>
+                                            <th>{{__('messages.Image')}}</th>
+                                            <th>{{__('messages.Total')}}</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -84,6 +84,7 @@
                                     </tfoot>
                                 </table>
                             </div>
+                        @if(isset($cart))
                         <form method="post" action="{{route('cart.payment.vnPay')}}">
                             @csrf
                             <input type="hidden" name="id" value="{{$item->id}}">
@@ -94,7 +95,7 @@
                             <input type="hidden" name="total" value="{{$total}}">
                             <div class="payment_method">
                                 <div class="order_button pt-15">
-                                    <button id="proceedToPayBtn" name="redirect" type="submit">Purchase with VNPay</button>
+                                    <button id="proceedToPayBtn" name="redirect" type="submit">{{__('messages.PurchasewithVNPay')}}</button>
                                 </div>
                             </div>
                         </form>
@@ -108,10 +109,11 @@
                             <input type="hidden" name="total" value="{{$total}}">
                             <div class="payment_method">
                                 <div class="order_button pt-15">
-                                    <button  name="payUrl" type="submit">Purchase with Momo</button>
+                                    <button  name="payUrl" type="submit">{{__('messages.PurchasewithMomo')}}</button>
                                 </div>
                             </div>
                         </form>
+                        @endif
                     </div>
                 </div>
             </div> <!-- Start User Details Checkout Form -->

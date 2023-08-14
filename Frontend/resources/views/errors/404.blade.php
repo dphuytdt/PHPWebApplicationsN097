@@ -23,15 +23,15 @@
             <div class="row">
                 <div class="error_form">
                     <h1>404</h1>
-                    <h4>Opps! PAGE NOT BE FOUND</h4>
-                    <p>Sorry but the page you are looking for does not exist, have been<br> removed, name changed or is temporarily unavailable.</p>
+                    <h4>{{__('messages.PNF')}}</h4>
+                    <p>{{__('messages.PNF')}}<br>{{__('messages.remmove')}}</p>
                     <div class="row">
                         <div class="col-10 offset-1 col-md-6 offset-md-3">
                             <div class="default-search-style d-flex">
-                                <input class="default-search-style-input-box border-around border-right-none" type="search" placeholder="Search entire store here ..." required>
+                                <input class="default-search-style-input-box border-around border-right-none" type="search" placeholder="{{__('messages.typeKeyWord')}}" required>
                                 <button class="default-search-style-input-btn" type="submit"><i class="icon-search"></i></button>
                             </div>
-                            <a href="index.html">Back to home page</a>
+                            <a href="{{route('home')}}">{{__('messages.backHome')}}</a>
                         </div>
                     </div>
                 </div>

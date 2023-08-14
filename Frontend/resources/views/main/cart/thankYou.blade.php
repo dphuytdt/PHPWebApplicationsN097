@@ -51,7 +51,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-12 d-flex justify-content-between justify-content-md-between  align-items-center flex-md-row flex-column">
-                    <h3 class="breadcrumb-title">Thank you</h3>
+                    <h3 class="breadcrumb-title">{{__('messages.Thankyou')}}</h3>
                     {{ Breadcrumbs::render('thankYou') }}
                 </div>
             </div>
@@ -63,9 +63,9 @@
         <div class="login-process">
             <div class="login-main-container">
                 <div class="thankyou-wrapper">
-                    <h1><img src="http://montco.happeningmag.com/wp-content/uploads/2014/11/thankyou.png" alt="thanks" /></h1>
-                    <p>for choosing our services... </p>
-                    <a href="{{route('home')}}">Back to home</a>
+                    <h1><img src="http://montco.happeningmag.com/wp-content/uploads/2014/11/thankyou.png" alt="thanks"/></h1>
+                    <p>{{__('messages.forChoosing')}} </p>
+                    <a href="{{route('home')}}">{{__('messages.backHome')}}</a>
                     <div class="clr"></div>
                 </div>
                 <div class="clr"></div>

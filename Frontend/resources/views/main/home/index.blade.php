@@ -18,10 +18,10 @@
 				<div class="container">
 					<div class="row">
 						<div class="col-10 col-md-8 col-xl-6">
-							<h5>The Quality of Our Products is Unmatched</h5>
-							<h2>Book Store</h2>
-							<p>Books with a variety of genres and the best quality</p>
-							<a href="{{route('view.more' , ['dataType' => 'all'])}}" class="hero-button">Shopping Now</a>
+							<h5>{{__('messages.TheQuality')}}</h5>
+							<h2>{{__('messages.BookStore')}}</h2>
+							<p>{{__('messages.aVariety')}}</p>
+							<a href="{{route('view.more' , ['dataType' => 'all'])}}" class="hero-button">{{__('messages.ShoppingNow')}}</a>
 						</div>
 					</div>
 				</div>
@@ -36,10 +36,10 @@
 				<div class="container">
 					<div class="row">
 						<div class="col-10 col-md-8 col-xl-6">
-							<h5>World Best Book</h5>
-							<h2>New Book</h2>
-							<p>With the help of consectetur adipisicing elit sed do eiu</p>
-							<a href="{{route('view.more' , ['dataType' => 'all'])}}" class="hero-button">Shopping Now</a>
+							<h5>{{__('messages.WorldBestBooks')}}</h5>
+							<h2>{{__('messages.NewBooks')}}</h2>
+							<p>{{__('messages.winTheHelp')}}</p>
+							<a href="{{route('view.more' , ['dataType' => 'all'])}}" class="hero-button">{{__('messages.ShoppingNow')}}</a>
 						</div>
 					</div>
 				</div>
@@ -55,7 +55,7 @@
 		<div class="container">
 			<div class="row">
 				<div class="section-content">
-					<h3 class="section-title">Popular Categories</h3>
+					<h3 class="section-title">{{__('messages.PopularCategories')}}</h3>
 				</div>
 			</div>
 		</div>
@@ -148,9 +148,9 @@
 		<div class="container">
 			<div class="row">
 				<div class="section-content d-flex justify-content-between align-items-md-center align-items-start flex-md-row flex-column">
-					<h3 class="section-title">New Books</h3>
+					<h3 class="section-title">{{__('messages.NewBooks')}}</h3>
 					<ul class="tablist nav product-tab-btn">
-						<li><a class="nav-link active"  href="{{route('view.more' , ['dataType' => 'new'])}}">View more</a></li>
+						<li><a class="nav-link active"  href="{{route('view.more' , ['dataType' => 'new'])}}">{{__('messages.Viewmore')}}</a></li>
 					</ul>
 				</div>
 			</div>
@@ -217,9 +217,9 @@
 		<div class="container">
 			<div class="row">
 				<div class="section-content d-flex justify-content-between align-items-md-center align-items-start flex-md-row flex-column">
-					<h3 class="section-title">Free Books</h3>
+					<h3 class="section-title">{{__('messages.FreeBooks')}}</h3>
 					<ul class="tablist nav product-tab-btn">
-						<li><a class="nav-link active" href="{{route('view.more' , ['dataType' => 'free'])}}">View more</a></li>
+						<li><a class="nav-link active" href="{{route('view.more' , ['dataType' => 'free'])}}">{{__('messages.Viewmore')}}</a></li>
 					</ul>
 				</div>
 			</div>
@@ -281,10 +281,6 @@
 						<a href="product-details-default.html" class="banner-img-link">
 							<img class="banner-img banner-img-big" src="https://img.freepik.com/premium-photo/row-old-books-blue-shelf-horizontal-background-banner_118047-9024.jpg" alt="">
 						</a>
-						{{-- <div class="banner-content">
-							<span class="banner-text-small">2021 Latest Collection</span>
-							<h2 class="banner-text-big"><span class="banner-text-big-highlight">-40%</span> Offer All Car Parts</h2>
-						</div> --}}
 					</div> <!-- End Banner Single -->
 				</div>
 			</div>
@@ -299,9 +295,9 @@
         <div class="container">
             <div class="row">
                 <div class="section-content d-flex justify-content-between align-items-md-center align-items-start flex-md-row flex-column">
-                    <h3 class="section-title">Featured Books</h3>
+                    <h3 class="section-title">{{__('messages.FeaturedBooks')}}</h3>
                     <ul class="tablist nav product-tab-btn">
-                        <li><a class="nav-link active" href="{{route('view.more' , ['dataType' => 'featured'])}}">View more</a></li>
+                        <li><a class="nav-link active" href="{{route('view.more' , ['dataType' => 'featured'])}}">{{__('messages.Viewmore')}}s</a></li>
                     </ul>
                 </div>
             </div>
