@@ -12,7 +12,7 @@
                         <div class="breadcrumb-nav">
                             <nav aria-label="breadcrumb">
                                 <ul>
-                                    <li><a href="index.html">Home</a></li>
+                                    <li><a href="{{route('home')}}">Home</a></li>
                                     <li class="active" aria-current="page">Contact Us</li>
                                 </ul>
                             </nav>

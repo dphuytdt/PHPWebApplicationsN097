@@ -21,7 +21,6 @@ class UserController extends Controller
     {
         // Kiểm tra xem người dùng đã đăng nhập hay chưa
         if (!session()->has('token')) {
-            // Người dùng chưa đăng nhập, chuyển hướng đến trang login
             return redirect()->route('login');
         }
 

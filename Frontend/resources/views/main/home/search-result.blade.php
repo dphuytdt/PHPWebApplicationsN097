@@ -48,8 +48,8 @@
                                 <!-- Start Sort tab Button -->
                                 <div class="sort-tablist">
                                     <ul class="tablist nav sort-tab-btn">
-                                        <li><a class="nav-link active" data-toggle="tab" href="#layout-4-grid"><img src="assets/images/icon/bkg_grid.png" alt=""></a></li>
-                                        <li><a class="nav-link" data-toggle="tab" href="#layout-list"><img src="assets/images/icon/bkg_list.png" alt=""></a></li>
+                                        <li><a class="nav-link active" data-toggle="tab" href="#layout-4-grid"><img src="{{asset('assets/images/icon/bkg_grid.png')}}" alt=""></a></li>
+                                        <li><a class="nav-link" data-toggle="tab" href="#layout-list"><img src="{{asset('assets/images/icon/bkg_list.png')}}" alt=""></a></li>
                                     </ul>
                                 </div> <!-- End Sort tab Button -->
 
@@ -93,12 +93,12 @@
                                                 <div class="product-default-single border-around">
                                                     <div class="product-img-warp">
                                                         <a href="{{URL::to('/book-details/'.$book['id'])}}" class="product-default-img-link">
-                                                            <img src="data:image/png;base64,{{ $book['cover_image'] }}" alt="" class="product-default-img img-fluid">
+                                                            <img src="data:image/{{ $book['image_extension'] }};base64,{{ $book['cover_image'] }}" alt="" class="product-default-img img-fluid">
                                                         </a>
                                                         <div class="product-action-icon-link">
                                                             <ul>
-                                                                <li><a href="wishlist.html"><i class="icon-heart"></i></a></li>
-                                                                <li><a href="compare.html"><i class="icon-repeat"></i></a></li>
+                                                                <li><a href="#"><i class="icon-heart"></i></a></li>
+                                                                <li><a href="#"><i class="icon-repeat"></i></a></li>
                                                                 <li><a href="#" data-toggle="modal" data-target="#modalQuickview-{{$book['id']}}"><i class="icon-eye"></i></a></li>
                                                                 @if($book['price'] != 0)
                                                                 <li><a href="#" data-toggle="modal" data-target="#modalAddcart-{{$book['id']}}"><i class="icon-shopping-cart"></i></a></li>
@@ -126,7 +126,7 @@
                                                 <!-- Start Product Defautlt Single -->
                                                 <div class="product-list-single border-around">
                                                     <a href="{{URL::to('/book-details/'.$book['id'])}}" class="product-list-img-link">
-                                                        <img src="data:image/png;base64,{{ $book['cover_image'] }}" alt="" class="img-fluid">
+                                                        <img src="data:image/{{ $book['image_extension'] }};base64,{{ $book['cover_image'] }}" alt="" class="img-fluid">
                                                     </a>
                                                     <div class="product-list-content">
                                                         <h5 class="product-list-link"><a href="{{URL::to('/book-details/'.$book['id'])}}">{{$book['title']}}</a></h5>
@@ -138,8 +138,8 @@
                                                         <p>{{$book['description']}}</p>
                                                         <div class="product-action-icon-link-list">
                                                             <ul>
-                                                                <li><a href="wishlist.html"><i class="icon-heart"></i></a></li>
-                                                                <li><a href="compare.html"><i class="icon-repeat"></i></a></li>
+                                                                <li><a href="#"><i class="icon-heart"></i></a></li>
+                                                                <li><a href="#"><i class="icon-repeat"></i></a></li>
                                                                 <li><a href="#" data-toggle="modal" data-target="#modalQuickview-{{$book['id']}}"><i class="icon-eye"></i></a></li>
                                                                 @if($book['price'] != 0)
                                                                     <li><a href="#" data-toggle="modal" data-target="#modalAddcart-{{$book['id']}}"><i class="icon-shopping-cart"></i></a></li>
@@ -242,15 +242,15 @@
                                 <div class="product-details-gallery-area">
                                     <div class="product-large-image modal-product-image-large">
                                         <div class="product-image-large-single">
-                                            <img class="img-fluid" src="data:image/png;base64,{{ $book['cover_image'] }}" alt="">
+                                            <img class="img-fluid" src="data:image/{{ $book['image_extension'] }};base64,{{ $book['cover_image'] }}" alt="">
                                         </div>
                                         <div class="product-image-large-single">
-                                            <img class="img-fluid" src="assets/images/products_images/aments_products_image_2.jpg" alt="">
+                                            <img class="img-fluid" src="{{asset('assets/images/products_images/aments_products_image_2.jpg')}}" alt="">
                                         </div>
                                     </div>
                                     <div class="product-image-thumb modal-product-image-thumb">
                                         <div class="zoom-active product-image-thumb-single">
-                                            <img class="img-fluid" src="assets/images/products_images/aments_products_image_1.jpg" alt="">
+                                            <img class="img-fluid" src="{{asset('assets/images/products_images/aments_products_image_1.jpg')}}" alt="">
                                         </div>
                                     </div>
                                 </div>
@@ -333,14 +333,14 @@
                                 <div class="row">
                                     <div class="col-md-4">
                                         <div class="modal-add-cart-product-img">
-                                            <img class="img-fluid" src="data:image/png;base64,{{ $book['cover_image'] }}" alt="">
+                                            <img class="img-fluid" src="data:image/{{ $book['image_extension'] }};base64,{{ $book['cover_image'] }}" alt="">
                                         </div>
                                     </div>
                                     <div class="col-md-8">
                                         <div class="modal-add-cart-info"><i class="fa fa-check-square"></i>Added to cart successfully!</div>
                                         <div class="modal-add-cart-product-cart-buttons">
-                                            <a href="cart.html">View Cart</a>
-                                            <a href="checkout.html">Checkout</a>
+                                            <a href="#">View Cart</a>
+                                            <a href="#">Checkout</a>
                                         </div>
                                     </div>
                                 </div>

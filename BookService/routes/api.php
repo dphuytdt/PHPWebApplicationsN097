@@ -43,6 +43,7 @@ Route::prefix('admin')->group(function () {
     Route::prefix('categories')->group(function () {
         Route::post('/', [AdminCategoryController::class, 'store']);
         Route::get('/', [AdminCategoryController::class, 'index']);
+        Route::post('/import', [AdminCategoryController::class, 'import']);
         Route::get('/{id}', [AdminCategoryController::class, 'show']);
         Route::post('/{id}', [AdminCategoryController::class, 'update']);
         Route::post('delete/{id}', [AdminCategoryController::class, 'destroy']);

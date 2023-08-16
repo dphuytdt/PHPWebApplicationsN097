@@ -6,6 +6,8 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use App\Models\User;
 use App\Models\UserDetail;
+use Illuminate\Support\Facades\Hash;
+
 class DatabaseSeeder extends Seeder
 {
     /**
@@ -20,5 +22,21 @@ class DatabaseSeeder extends Seeder
                 'user_id' => $item->id,
             ]);
         }
+
+        User::factory()->create([
+            'email' => 'admin@gmail.com',
+            'password' => Hash::make('12345678'),
+            'role' => 'ROLE_ADMIN',
+            'is_active' => 1,
+            'created_at' => '2021-07-01 00:00:00',
+        ]);
+
+        User::factory()->create([
+            'email' => 'user@gmail.com',
+            'password' => Hash::make('12345678'),
+            'role' => 'ROLE_USER',
+            'is_active' => 1,
+            'created_at' => '2021-07-01 00:00:00',
+        ]);
     }
 }

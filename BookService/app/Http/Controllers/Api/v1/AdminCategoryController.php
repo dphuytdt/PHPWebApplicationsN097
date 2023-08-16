@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Api\v1;
 
 use App\Http\Controllers\Controller;
+use App\Imports\CategoryImport;
 use App\Interfaces\CategoryRepositoryInterface;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class AdminCategoryController extends Controller
 {
@@ -81,6 +83,32 @@ class AdminCategoryController extends Controller
             return response()->json($category, 200);
         } catch (\Exception $e) {
             return response()->json($e->getMessage(), 500);
+        }
+    }
+
+    public function import(Request $request)
+    {
+        DB::beginTransaction();
+
+        if ($request->hasFile('file')) {
+            $file = $request->file('file');
+        } else {
+            return response()->json(['message' => 'No file selected']);
+        }
+
+        try {
+            $categoryImport = new CategoryImport();
+            $categoryImport->import($file);
+            DB::commit();
+
+            if($categoryImport->failures()->count() > 0) {
+                return response()->json(['message' => 'Import user failed']);
+            } else {
+                return response()->json(['message' => 'Import user successfully']);
+            }
+
+        } catch (\Exception|\Error|\Throwable $e) {
+            return response()->json(['message' => $e->getMessage()]);
         }
     }
 }

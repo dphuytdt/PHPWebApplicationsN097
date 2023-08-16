@@ -15,7 +15,9 @@ class WishlistRepository implements WishlistRepositoryInterface
         $wishlist->book_id = $request->bookID;
         $wishlist->title = $request->bookTitle;
         $wishlist->cover_image = $request->bookImage;
+        $wishlist->image_extension = $request->bookImageExtension;
         $wishlist->price = $request->bookPrice;
+        $wishlist->status = 0;
         $wishlist->created_at = now();
         $wishlist->save();
         if($wishlist){
@@ -27,19 +29,19 @@ class WishlistRepository implements WishlistRepositoryInterface
 
     public function getWishlist($userID)
     {
-        $wishlist = Wishlist::where('user_id', $userID)->get();
+        $wishlist = Wishlist::where('user_id', $userID)->where('status', 0)->get();
         return $wishlist;
     }
 
     public function getWishlistBook($userID, $bookID)
     {
-        $wishlist = Wishlist::where('user_id', $userID)->where('book_id', $bookID)->first();
+        $wishlist = Wishlist::where('user_id', $userID)->where('book_id', $bookID)->where('status', 0)->first();
         return $wishlist;
     }
 
     public function deleteWishlist($userID, $bookID)
     {
-        $wishlist = Wishlist::where('user_id', $userID)->where('book_id', $bookID)->delete();
+        $wishlist = Wishlist::where('user_id', $userID)->where('book_id', $bookID)->where('status', 0)->delete();
         if($wishlist){
             return true;
         }else{

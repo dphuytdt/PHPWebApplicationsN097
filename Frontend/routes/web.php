@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\LocaleController;
 use App\Http\Controllers\NewsController;
+use App\Http\Controllers\ProccessController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\AuthController;
@@ -53,7 +54,7 @@ Route::group(['middleware' => 'locale'], function() {
 
         Route::group(['prefix' => 'profile'], function () {
             Route::get('/', [UserController::class, 'profile'])->name('profile');
-            Route::post('/', [AuthController::class, 'postProfile'])->name('profile.update');
+            Route::post('/{id}', [AuthController::class, 'postProfile'])->name('profile.update');
         });
 
         Route::get('upgrade', [UserController::class, 'upgrade'])->name('upgrade');
@@ -85,5 +86,7 @@ Route::group(['middleware' => 'locale'], function() {
     Route::get('thankYou', [HomeController::class, 'thankYou'])->name('thankYou');
 
     Route::get('change-language/{language}', [LocaleController::class, 'changeLanguage'])->name('changeLanguage');
+
+//    Route::post('proccess-payment', [ProccessController::class, 'proccessPayment'])->name('proccessPayment');
 });
 

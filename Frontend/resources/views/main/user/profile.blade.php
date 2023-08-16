@@ -171,7 +171,7 @@
                             <div class="login">
                                 <div class="login_form_container">
                                     <div class="account_login_form">
-                                        <form action="{{route('profile.update')}}" method="POST" id="formProfile">
+                                        <form action="{{route('profile.update' , $user['id'])}}" method="POST">
                                             @csrf
                                             {{-- <p>Already have an account? <a href="#">Log in instead!</a></p> --}}
                                             <div class="input-radio">
@@ -193,9 +193,9 @@
                                                           <input type="file" accept="image/*"  />
                                                           <figure class="personal-figure">
                                                             @if($userDetails['user_detail']['avatar'] == null)
-                                                            <img src="https://static.thenounproject.com/png/5034901-200.png" class="personal-avatar" alt="avatar">
+                                                            <img src="https://static.thenounproject.com/png/5034901-200.png" class="personal-avatar" name="image" alt="avatar">
                                                             @else
-                                                            <img src="{{ asset('storage/app/public/'.$userDetails['user_detail']['avatar']) }}" class="personal-avatar" alt="avatar">
+                                                            <img src="data:image/{{ $userDetails['user_detail']['image_extension'] }};base64,{{$userDetails['user_detail']['avatar'] }}" name="image" class="personal-avatar" alt="avatar">
                                                             @endif
                                                             <figcaption class="personal-figcaption">
                                                               <img src="https://raw.githubusercontent.com/ThiagoLuizNunes/angular-boilerplate/master/src/assets/imgs/camera-white.png" id="imageUpload" alt="camera">
@@ -231,10 +231,6 @@
                                                 });
 
                                             </script>
-                                            {{-- <div class="default-form-box mb-20">
-                                                <label>Last Name</label>
-                                                <input type="text" name="last-name">
-                                            </div> --}}
                                             <div class="default-form-box mb-20">
                                                 <label>Email</label>
                                                 <input type="text" name="email-name" value="{{ $user['email'] }}" disabled>

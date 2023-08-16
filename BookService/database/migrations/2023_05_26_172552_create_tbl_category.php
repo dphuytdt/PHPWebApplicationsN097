@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('name', 100)->unique();
             $table->text('image')->nullable();
+            $table->string('image_extension', 255)->nullable();
             $table->boolean('status')->default(1);
             $table->text('description')->nullable();
             $table->dateTime('created_at');

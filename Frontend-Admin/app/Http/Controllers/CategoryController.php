@@ -49,10 +49,13 @@ class CategoryController extends Controller
             $base64Image = base64_encode($imageContents);
         }
 
+        $imageExtension = $request->file('image')->getClientOriginalExtension();
+
         $data = [
             'name' => $request->name,
             'description' => $request->description,
             'image' => $base64Image,
+            'image_extension' => $imageExtension,
         ];
 
         $client = new Client();
@@ -63,6 +66,7 @@ class CategoryController extends Controller
                     'name' => $data['name'],
                     'description' => $data['description'],
                     'image' => $data['image'],
+                    'image_extension' => $data['image_extension'],
                 ]
             ]);
             return redirect()->route('category.index')->with('success', 'Create category successfully');

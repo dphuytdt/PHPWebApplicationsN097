@@ -77,7 +77,7 @@ class CartController extends Controller
     public function checkout(Request $request)
     {
         $bookId = $request['bookId'];
-        $userId = $request['userID'];
+        $userId = $request['useId'];
         $totalPrice = $request['price'];
 
         $result = $this->cartRepository->checkout($userId, $bookId, $totalPrice);

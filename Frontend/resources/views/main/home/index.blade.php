@@ -78,7 +78,8 @@
 					<div class="col-lg-3 col-md-4 col-sm-6 col-12">
 						<a href="{{route('getBookByCategory', ['id' => $category['id']])}}" class="product-catagory-single">
 							<div class="product-catagory-img">
-								<img src="data:image/png;base64,{{ $category['image'] }}" alt="">
+
+								<img src="data:image/{{$category['image_extension']}};base64,{{ $category['image'] }}" alt="">
 							</div>
 							<div class="product-catagory-content">
 								<h5 class="product-catagory-title">{{ $category['name'] }}</h5>
@@ -100,39 +101,39 @@
 				<div class="col-lg-4 col-md-6 col-12">
 					<!-- Start Banner Single -->
 					<div class="banner-single">
-						<a href="product-details-default.html" class="banner-img-link">
+						<a href="#l" class="banner-img-link">
 							<img class="banner-img" src="https://img.freepik.com/premium-vector/online-library-outline-isometric-education-concept-open-book-with-loupe-isolated-white_119523-8406.jpg" alt="">
 						</a>
 						<div class="banner-content">
 							{{-- <span class="banner-text-tiny">The Best of</span>
 							<h3 class="banner-text-large">30% Off</h3> --}}
-							<a href="product-details-default.html" class="banner-link">Shop Now</a>
+							<a href="#" class="banner-link">Shop Now</a>
 						</div>
 					</div> <!-- End Banner Single -->
 				</div>
 				<div class="col-lg-4 col-md-6 col-12">
 					<!-- Start Banner Single -->
 					<div class="banner-single">
-						<a href="product-details-default.html" class="banner-img-link">
+						<a href="#" class="banner-img-link">
 							<img class="banner-img" src="https://img.freepik.com/premium-vector/collection-cat-with-pile-book-set_77984-276.jpg" alt="">
 						</a>
 						<div class="banner-content">
 							{{-- <span class="banner-text-tiny">Where to</span>
 							<h3 class="banner-text-large">40% Off</h3> --}}
-							<a href="product-details-default.html" class="banner-link">Shop Now</a>
+							<a href="#" class="banner-link">Shop Now</a>
 						</div>
 					</div> <!-- End Banner Single -->
 				</div>
 				<div class="col-lg-4 col-md-6 col-12">
 					<!-- Start Banner Single -->
 					<div class="banner-single">
-						<a href="product-details-default.html" class="banner-img-link">
+						<a href="#" class="banner-img-link">
 							<img class="banner-img" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSbT_Tb79QYgsvr3knZa-cWA-6vxuv3ZFzh0clS46Y2QjPV2VLIRb1VR4-iXRbbwMZiDLM&usqp=CAU" alt="">
 						</a>
 						<div class="banner-content">
 							{{-- <span class="banner-text-tiny">How to</span>
 							<h3 class="banner-text-large">50% Off</h3> --}}
-							<a href="product-details-default.html" class="banner-link">Shop Now</a>
+							<a href="#" class="banner-link">Shop Now</a>
 						</div>
 					</div> <!-- End Banner Single -->
 				</div>
@@ -170,8 +171,7 @@
                                     <div class="product-default-single border-around">
                                         <div class="product-img-warp">
                                             <a id="url-{{$news['id']}}" href="{{URL::to('/book-details/'.$news['id'])}}" class="product-default-img-link">
-
-                                                <img src="data:image/png;base64,{{ $news['cover_image'] }}" id="image-{{$news['id']}}" alt="" class="product-default-img img-fluid">
+                                                <img src="data:image/{{$news['image_extension']}};base64,{{ $news['cover_image'] }}" id="image-{{$news['id']}}" alt="" class="product-default-img img-fluid">
                                             </a>
                                             <div class="product-action-icon-link">
                                                 <ul>
@@ -240,7 +240,7 @@
                                         <div class="product-img-warp">
                                             <a id="url-{{$book['id']}}" href="{{URL::to('/book-details/'.$book['id'])}}" class="product-default-img-link">
 
-                                                <img src="data:image/png;base64,{{ $book['cover_image'] }}" id="image-{{$book['id']}}" alt="" class="product-default-img img-fluid">
+                                                <img src="data:image/{{ $book['image_extension'] }};base64,{{ $book['cover_image'] }}" id="image-{{$book['id']}}" alt="" class="product-default-img img-fluid">
                                             </a>
                                             <div class="product-action-icon-link">
                                                 <ul>
@@ -317,7 +317,7 @@
                                     <div class="product-default-single border-around">
                                         <div class="product-img-warp">
                                             <a id="url-{{$news['id']}}" href="{{URL::to('/book-details/'.$news['id'])}}" class="product-default-img-link">
-                                                <img src="data:image/png;base64,{{ $news['cover_image'] }}" id="image-{{$news['id']}}" alt="" class="product-default-img img-fluid">
+                                                <img src="data:image/{{ $news['image_extension'] }};base64,{{ $news['cover_image'] }}" id="image-{{$news['id']}}" alt="" class="product-default-img img-fluid">
 
                                             </a>
                                             <div class="product-action-icon-link">
@@ -327,7 +327,7 @@
                                                     <input type="hidden" id="bookImage" value="{{$news['cover_image']}}">
                                                     <input type="hidden" id="bookPrice" value="{{$news['price']}}">
                                                     <li><a id="addWishlist-{{$news['id']}}"  > <i class="icon-heart"></i></a></li>
-                                                    <li><a href="compare.html"><i class="icon-repeat"></i></a></li>
+                                                    <li><a href="#"><i class="icon-repeat"></i></a></li>
                                                     <li><a href="#" data-toggle="modal" data-target="#modalQuickviewNewBook-{{$news['id']}}"><i class="icon-eye"></i></a></li>
                                                     @if($news['price'] != 0)
                                                         <li><a id="addCart-{{$news['id']}}"  data-toggle="modal" data-target="#modalAddcartNewBook-{{$news['id']}}"><i class="icon-shopping-cart"></i></a></li>
@@ -379,15 +379,7 @@
                                 <div class="product-details-gallery-area">
                                     <div class="product-large-image modal-product-image-large">
                                         <div class="product-image-large-single">
-                                            <img class="img-fluid" src="data:image/png;base64,{{ $book['cover_image'] }}" alt="">
-                                        </div>
-                                        <div class="product-image-large-single">
-                                            <img class="img-fluid" src="assets/images/products_images/aments_products_image_2.jpg" alt="">
-                                        </div>
-                                    </div>
-                                    <div class="product-image-thumb modal-product-image-thumb">
-                                        <div class="zoom-active product-image-thumb-single">
-                                            <img class="img-fluid" src="assets/images/products_images/aments_products_image_1.jpg" alt="">
+                                            <img class="img-fluid" src="data:image/{{ $book['image_extension'] }};base64,{{ $book['cover_image'] }}" alt="">
                                         </div>
                                     </div>
                                 </div>
@@ -472,7 +464,7 @@
                                 <div class="product-details-gallery-area">
                                     <div class="product-large-image modal-product-image-large">
                                         <div class="product-image-large-single">
-                                            <img class="img-fluid" src="data:image/png;base64,{{ $book['cover_image'] }}" alt="">
+                                            <img class="img-fluid" src="data:image/{{ $book['image_extension'] }};base64,{{ $book['cover_image'] }}" alt="">
                                         </div>
                                     </div>
                                 </div>
@@ -554,7 +546,7 @@
                                 <div class="row">
                                     <div class="col-md-4">
                                         <div class="modal-add-cart-product-img">
-                                            <img class="img-fluid" src="data:image/png;base64,{{ $book['cover_image'] }}" alt="">
+                                            <img class="img-fluid" src="data:image/{{ $book['image_extension'] }};base64,{{ $book['cover_image'] }}" alt="">
                                         </div>
                                     </div>
                                     <div class="col-md-8">
@@ -620,7 +612,7 @@
                                 <div class="product-details-gallery-area">
                                     <div class="product-large-image modal-product-image-large">
                                         <div class="product-image-large-single">
-                                            <img class="img-fluid" src="data:image/png;base64,{{ $book['cover_image'] }}" alt="">
+                                            <img class="img-fluid" src="data:image/{{ $book['image_extension'] }};base64,{{ $book['cover_image'] }}" alt="">
                                         </div>
 
                                     </div>
@@ -699,14 +691,14 @@
                                 <div class="row">
                                     <div class="col-md-4">
                                         <div class="modal-add-cart-product-img">
-                                            <img class="img-fluid" src="data:image/png;base64,{{ $book['cover_image'] }}" alt="">
+                                            <img class="img-fluid" src="data:image/{{ $book['image_extension'] }};base64,{{ $book['cover_image'] }}" alt="">
                                         </div>
                                     </div>
                                     <div class="col-md-8">
                                         <div class="modal-add-cart-info"><i class="fa fa-check-square"></i>Added to cart successfully!</div>
                                         <div class="modal-add-cart-product-cart-buttons">
-                                            <a href="cart.html">View Cart</a>
-                                            <a href="checkout.html">Checkout</a>
+                                            <a href="#">View Cart</a>
+                                            <a href="#">Checkout</a>
                                         </div>
                                     </div>
                                 </div>
@@ -740,6 +732,7 @@
                 var bookPrice = document.getElementById('price-' + bookId).value;
                 bookPrice = parseFloat(bookPrice);
                 var bookImage = document.getElementById('image-' + bookId).src;
+                var image_extension = bookImage.substring(bookImage.indexOf('/') + 1, bookImage.indexOf(';'));
                 bookImage = bookImage.substring(22);
                 var xhr = new XMLHttpRequest();
                 var url = 'http://paymentservice.test:8080/api/cart/add';
@@ -756,6 +749,7 @@
                     bookTitle: bookTitle,
                     bookPrice: bookPrice,
                     bookImage: bookImage,
+                    image_extension: image_extension
                 };
 
                 xhr.send(JSON.stringify(requestBody));
@@ -793,9 +787,8 @@
                 var bookTitle = document.getElementById('name-' + bookId).value;
                 var bookPrice = document.getElementById('price-' + bookId).value;
                 var bookImage = document.getElementById('image-' + bookId).src;
-                //remove '"data:image/png;base64,' from the image
+                var image_extension = bookImage.substring(bookImage.indexOf('/') + 1, bookImage.indexOf(';'));
                 bookImage = bookImage.substring(22);
-                console.log(bookImage);
                 var xhr = new XMLHttpRequest();
                 var url = 'http://paymentservice.test:8080/api/wishlist/add';
 
@@ -814,6 +807,7 @@
                     bookTitle: bookTitle,
                     bookPrice: bookPrice,
                     bookImage: bookImage,
+                    image_extension: image_extension,
                 };
 
                 xhr.send(JSON.stringify(requestBody));

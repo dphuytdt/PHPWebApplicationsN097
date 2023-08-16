@@ -8,6 +8,7 @@ use App\Jobs\AdminSendMailCreateUser;
 use Illuminate\Http\Request;
 use App\Interfaces\UserRepositoryInterface;
 use App\Interfaces\OTPRepositoryInterface;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Maatwebsite\Excel\Facades\Excel;
@@ -157,6 +158,48 @@ class UserController extends Controller
             $user = $this->userRepository->deleteUser($id);
             return response()->json(['message' => 'Delete user successfully']);
         } catch (\Exception|\Error $e) {
+            return response()->json(['message' => $e->getMessage()]);
+        }
+    }
+
+    public function import(Request $request): \Illuminate\Http\JsonResponse
+    {
+        DB::beginTransaction();
+
+        if ($request->hasFile('file')) {
+            $file = $request->file('file');
+        } else {
+            return response()->json(['message' => 'No file selected']);
+        }
+
+        try {
+            $userImport = new UserImport();
+            $userImport->import($file);
+            DB::commit();
+
+            foreach ($userImport->getUsers() as $user) {
+                $passwordGenerate = $this->otpRepository->generatePassword();
+                $password = Hash::make($passwordGenerate);
+                $created_at = date('Y-m-d H:i:s');
+                $is_active = 1;
+                $user['password'] = $password;
+                $user['created_at'] = $created_at;
+                $user['is_active'] = $is_active;
+                $user = $this->userRepository->createUser($user);
+                if($user) {
+                    $req = AdminSendMailCreateUser::dispatch($user->email, $passwordGenerate);
+                } else {
+                    return response()->json(['message' => 'Import user failed']);
+                }
+            }
+
+            if($userImport->failures()->count() > 0 || !$req) {
+                return response()->json(['message' => 'Import user failed']);
+            } else {
+                return response()->json(['message' => 'Import user successfully']);
+            }
+
+        } catch (\Exception|\Error|\Throwable $e) {
             return response()->json(['message' => $e->getMessage()]);
         }
     }

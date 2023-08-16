@@ -21,6 +21,7 @@ class Cart extends Model
         'title',
         'cover_image',
         'price',
+        'status',
         'created_at',
         'updated_at',
         'deleted_at'

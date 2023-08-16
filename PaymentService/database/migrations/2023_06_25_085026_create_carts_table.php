@@ -18,7 +18,9 @@ return new class extends Migration
             $table->string('title', 255);
             $table->integer('quantity')->default(1);
             $table->longText('cover_image')->nullable();
+            $table->string('image_extension', 255)->nullable();
             $table->float('price', 8, 2);
+            $table->boolean('status')->default(0);
             $table->dateTime('created_at');
             $table->dateTime('updated_at')->nullable();
             $table->dateTime('deleted_at')->nullable();

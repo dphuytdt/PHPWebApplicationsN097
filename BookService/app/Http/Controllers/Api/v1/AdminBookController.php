@@ -41,7 +41,8 @@ class AdminBookController extends Controller
             'discount' => $request->discount,
             'cover_image' => $request->image,
             'content' => $request->contentPdf,
-            'created_at' => $created_at
+            'created_at' => $created_at,
+            'image_extension' => $request->image_extension,
         ];
 
         try{
@@ -69,19 +70,42 @@ class AdminBookController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-
-    }
-
-    /**
      * Update the specified resource in storage.
      */
     public function update(Request $request, string $id)
     {
-//        return response()->json($book, 200);
+        $data = [
+            'title' => $request->title,
+            'description' => $request->description,
+            'author' => $request->author,
+            'category_id' => $request->category_id,
+            'price' => $request->price,
+            'discount' => $request->discount,
+        ];
+
+        $book = $this->bookRepository->getBookById($id);
+
+        if($request->cover_image != null && $request->image_extension != null){
+            $data['cover_image'] = $request->image;
+            $data['image_extension'] = $request->image_extension;
+        } else {
+            $data['cover_image'] = $book->cover_image;
+            $data['image_extension'] = $book->image_extension;
+        }
+
+        if($request->contentPdf != null){
+            $data['content'] = $request->contentPdf;
+        } else {
+            $data['content'] = $book->content;
+        }
+
+        try{
+            $book = $this->bookRepository->updateBook($id, $data);
+
+            return response()->json($book, 200);
+        } catch (\Exception $e) {
+            return response()->json($e->getMessage(), 500);
+        }
     }
 
     /**

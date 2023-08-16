@@ -7,6 +7,9 @@ use Illuminate\Http\Request;
 use GuzzleHttp\Client;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\DB;
+use Maatwebsite\Excel\Facades\Excel;
+
 class UserController extends Controller
 {
     /**
@@ -135,6 +138,27 @@ class UserController extends Controller
 
             $res = json_decode($req->getBody(), true);
             return view('home.user.list', compact('res'));
+        } catch (\Exception|GuzzleException $e) {
+            return view('home.user.list')->withErrors(['errors' => 'Cannot connect to server']);
+        }
+    }
+
+    private function import(Request $request){
+        $data = $request->all();
+        $file = $data['file'];
+
+        $client = new Client();
+
+        try{
+            $req = $client->post($this->userService.'admin/user/import', [
+                'form-param' => [
+                    'file' => $file,
+                ],
+            ]);
+
+            return response()->json([
+                'message' => 'Import success',
+            ]);
         } catch (\Exception|GuzzleException $e) {
             return view('home.user.list')->withErrors(['errors' => 'Cannot connect to server']);
         }

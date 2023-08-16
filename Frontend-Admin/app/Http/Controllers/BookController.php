@@ -47,6 +47,7 @@ class BookController extends Controller
             try{
                 $imageFile = $request->file('image');
                 $imageContents = file_get_contents($imageFile->getPathname());
+                $imageExtension = $request->file('image')->getClientOriginalExtension();
                 $base64Image = base64_encode($imageContents);
             } catch (\Exception $e) {
                 return redirect()->route('books.index')->withErrors(['errors' => 'Cannot read file']);
@@ -64,8 +65,6 @@ class BookController extends Controller
 
         }
 
-
-
         $data = [
             'title' => $request->title,
             'description' => $request->description,
@@ -76,6 +75,7 @@ class BookController extends Controller
             'content' => $base64Content ?? '',
             'status' => $request->status,
             'image' => $base64Image ?? '',
+            'image_extension' => $imageExtension ?? '',
         ];
 
         $client = new Client();
@@ -92,6 +92,7 @@ class BookController extends Controller
                     'contentPdf' => $data['content'],
                     'status' => $data['status'],
                     'image' => $data['image'],
+                    'image_extension' => $data['image_extension'],
                 ]
             ]);
 
@@ -99,14 +100,6 @@ class BookController extends Controller
         } catch (\Exception|GuzzleException $e) {
             return redirect()->route('books.index')->withErrors(['errors' => 'Cannot connect to server']);
         }
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
     }
 
     /**
@@ -131,7 +124,73 @@ class BookController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        if ($request->hasFile('image')) {
+            try{
+                $imageFile = $request->file('image');
+                $imageContents = file_get_contents($imageFile->getPathname());
+                $imageExtension = $request->file('image')->getClientOriginalExtension();
+                $base64Image = base64_encode($imageContents);
+                $data['cover_image'] = $base64Image;
+                $data['image_extension'] = $imageExtension;
+            } catch (\Exception $e) {
+
+                return redirect()->route('books.index')->withErrors(['errors' => 'Cannot read file']);
+            }
+        } else {
+            $data['cover_image'] = null;
+            $data['image_extension'] = null;
+        }
+
+        if ($request->hasFile('content')) {
+            try{
+                $contentFile = $request->file('content');
+                $contentContents = file_get_contents($contentFile->getPathname());
+                $base64Content = base64_encode($contentContents);
+                $data['content'] = $base64Content;
+            } catch (\Exception $e) {
+
+                return redirect()->route('books.index')->withErrors(['errors' => 'Cannot read file']);
+            }
+
+        } else {
+            $data['content'] = null;
+        }
+
+        $client = new Client();
+
+        $data = [
+            'title' => $request->title,
+            'description' => $request->description,
+            'author' => $request->author,
+            'category_id' => $request->category_id,
+            'price' => $request->price,
+            'discount' => $request->discount,
+            'content' => $base64Content ?? '',
+            'status' => $request->status,
+            'cover_image' => $base64Image ?? '',
+            'image_extension' => $imageExtension ?? '',
+        ];
+
+        try{
+            $client->post($this->bookService.'admin/books/'.$id, [
+                'form_params' => [
+                    'title' => $data['title'],
+                    'description' => $data['description'],
+                    'author' => $data['author'],
+                    'category_id' => $data['category_id'],
+                    'price' => $data['price'],
+                    'discount' => $data['discount'],
+                    'contentPdf' => $data['content'],
+                    'status' => $data['status'],
+                    'cover_image' => $data['cover_image'],
+                    'image_extension' => $data['image_extension'],
+                ]
+            ]);
+
+            return redirect()->route('books.index')->with('success', 'Update book successfully');
+        } catch (\Exception|GuzzleException $e) {
+            return redirect()->route('books.index')->withErrors(['errors' => 'Cannot connect to server']);
+        }
     }
 
     public function delete(string $id)

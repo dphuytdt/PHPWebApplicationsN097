@@ -23,7 +23,8 @@ return new class extends Migration
             $table->tinyInteger('gender')->default(0);
             $table->date('birthday')->nullable();
             $table->string('avatar')->nullable();
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');    
+            $table->string('image_extension', 255)->nullable();
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 

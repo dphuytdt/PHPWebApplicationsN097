@@ -78,6 +78,17 @@ class CategoryRepository implements CategoryRepositoryInterface
             $category->image = $data['image'];
         }
 
+        if (isset($data['status'])) {
+            $category->status = $data['status'];
+            if ($data['status'] == 0) {
+                $books = Book::where('category_id', $id)->get();
+                foreach ($books as $book) {
+                    $book->category_id = null;
+                    $book->save();
+                }
+            }
+        }
+
         $category->updated_at = $data['updated_at'];
 
         return $category->save();

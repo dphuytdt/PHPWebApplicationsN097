@@ -25,6 +25,7 @@ class UserDetail extends Model
         'phone',
         'gender',
         'birthday',
+        'image_extension',
         'avatar',
     ];
 

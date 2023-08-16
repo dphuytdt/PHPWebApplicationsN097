@@ -51,7 +51,7 @@
                     <div class="product-details-gallery-area">
                         <div class="product-large-image product-large-image-horaizontal">
                             <div class="product-image-large-single zoom-image-hover">
-                                <img src="data:image/png;base64,{{ $result['book']['cover_image'] }}" alt="">
+                                <img src="data:image/{{$result['book']['image_extension']}};base64,{{ $result['book']['cover_image'] }}" alt="">
                             </div>
 
                         </div>
@@ -126,7 +126,7 @@
                                     @endif
                                 @else
                                     <div class="product-add-to-cart-btn">
-                                        <a  href="{{route('login')}}">>{{__('messages.plsLogin')}}</a>
+                                        <a  href="{{route('login')}}">{{__('messages.plsLogin')}}</a>
                                     </div>
                                 @endif
                                 <div class="product-add-to-cart-btn">
@@ -265,7 +265,7 @@
                                                     @if($comment['comment_parent_id'] == null)
                                                     <div class="comment-wrapper">
                                                         <div class="comment-img">
-                                                            <img src="assets/images/user/image-1.png" alt="">
+                                                            <img src="{{asset('assets/images/user/image-1.png')}}" alt="">
                                                         </div>
                                                         <div class="comment-content">
                                                             <div class="comment-content-top">
@@ -296,7 +296,7 @@
                                                         <li class="comment-reply-list">
                                                             <div class="comment-wrapper">
                                                                 <div class="comment-img">
-                                                                    <img src="assets/images/user/image-2.png" alt="">
+                                                                    <img src="{{asset('assets/images/user/image-2.png')}}" alt="">
                                                                 </div>
                                                                 <div class="comment-content">
                                                                     <div class="comment-content-top">
@@ -318,35 +318,6 @@
                                                     @endif
                                                 @endforeach
                                             </li> <!-- End - Review Comment list-->
-                                            {{-- <!-- Start - Review Comment list-->
-                                            <li class="comment-list">
-                                                <div class="comment-wrapper">
-                                                    <div class="comment-img">
-                                                        <img src="assets/images/user/image-3.png" alt="">
-                                                    </div>
-                                                    <div class="comment-content">
-                                                        <div class="comment-content-top">
-                                                            <div class="comment-content-left">
-                                                                <h6 class="comment-name">Jaydin Jones</h6>
-                                                                <div class="product-review">
-                                                                    <span class="review-fill"><i class="fa fa-star"></i></span>
-                                                                    <span class="review-fill"><i class="fa fa-star"></i></span>
-                                                                    <span class="review-fill"><i class="fa fa-star"></i></span>
-                                                                    <span class="review-fill"><i class="fa fa-star"></i></span>
-                                                                    <span class="review-empty"><i class="fa fa-star"></i></span>
-                                                                </div>
-                                                            </div>
-                                                            <div class="comment-content-right">
-                                                                <a href="#"><i class="fa fa-reply"></i>Reply</a>
-                                                            </div>
-                                                        </div>
-
-                                                        <div class="para-content">
-                                                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Tempora inventore dolorem a unde modi iste odio amet, fugit fuga aliquam, voluptatem maiores animi dolor nulla magnam ea! Dignissimos aspernatur cumque nam quod sint provident modi alias culpa, inventore deserunt accusantium amet earum soluta consequatur quasi eum eius laboriosam, maiores praesentium explicabo enim dolores quaerat! Voluptas ad ullam quia odio sint sunt. Ipsam officia, saepe repellat. </p>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </li> <!-- End - Review Comment list--> --}}
                                         </ul> <!-- End - Review Comment -->
                                         <div class="review-form">
                                             @if(session()->has('user'))

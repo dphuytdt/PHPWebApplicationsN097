@@ -16,7 +16,9 @@ class CartRepository implements CartRepositoryInterface
         $cart->book_id = $request->bookID;
         $cart->title = $request->bookTitle;
         $cart->cover_image = $request->bookImage;
+        $cart->image_extension = $request->bookImageExtension;
         $cart->price = floatval($request->bookPrice);
+        $cart->status = 0;
         $cart->created_at = now();
         $cart->save();
         if($cart){
@@ -29,7 +31,7 @@ class CartRepository implements CartRepositoryInterface
     //get user cart
     public function getCart($userID)
     {
-        $cart = Cart::where('user_id', $userID)->get();
+        $cart = Cart::where('user_id', $userID)->where('status', 0)->get();
         if($cart){
             return $cart;
         }else{
@@ -37,10 +39,9 @@ class CartRepository implements CartRepositoryInterface
         }
     }
 
-    //get user cart book
     public function getCartBook($userID, $bookID)
     {
-        $cart = Cart::where('user_id', $userID)->where('book_id', $bookID)->first();
+        $cart = Cart::where('user_id', $userID)->where('book_id', $bookID)->where('status', 0)->first();
         if($cart){
             return $cart;
         }else{
@@ -51,7 +52,7 @@ class CartRepository implements CartRepositoryInterface
     //delete cart
     public function deleteCart($request)
     {
-        $cart = Cart::where('user_id', $request->userID)->where('book_id', $request->bookID)->first();
+        $cart = Cart::where('user_id', $request->userID)->where('book_id', $request->bookID)->where('status', 0)->delete();
         if($cart){
             $cart->delete();
             return true;
@@ -62,14 +63,14 @@ class CartRepository implements CartRepositoryInterface
 
     public function checkout($userId, $bookId, $totalPrice)
     {
-        foreach($bookId as $book){
-            $cart = Cart::where('user_id', $userId)->where('book_id', $book)->first();
-            $cart->delete();
+        $cart = Cart::where('user_id', $userId)->where('status', 0)->get();
+        if($cart) {
+            $cart->status = 1;
         }
 
-        $userCart = new UserBooks;
-        $userCart->user_id = $userId;
-        $userCart->book_id = $bookId;
+//        $userCart = new UserBooks;
+//        $userCart->user_id = $userId;
+//        $userCart->book_id = $bookId;
 
         $paymentHistory = new HistoryPayment();
         $paymentHistory->user_id = $userId;
@@ -77,7 +78,6 @@ class CartRepository implements CartRepositoryInterface
         $paymentHistory->total_price = $totalPrice;
         $paymentHistory->created_at = now();
         $paymentHistory->save();
-        $userCart->save();
 
         $orderHistory = new HistoryPayment();
 

@@ -12,7 +12,7 @@
                         <div class="breadcrumb-nav">
                             <nav aria-label="breadcrumb">
                                 <ul>
-                                    <li><a href="index.html">Home</a></li>
+                                    <li><a href="{{route('home')}}">Home</a></li>
                                     <li class="active" aria-current="page">About</li>
                                 </ul>
                             </nav>
@@ -29,7 +29,7 @@
             <div class="row">
                 <div class="col-12">
                     <div class="about-us-top-img">
-                        <img class="img-fluid" src="assets/images/about/about.jpg" alt="">
+                        <img class="img-fluid" src="{{asset('assets/images/about/about.jpg')}}" alt="">
                     </div>
                     <div class="about-us-top-content text-center">
                         <h4>Welcome To Esther!</h4>
@@ -54,7 +54,7 @@
                 <div class="col-lg-4 col-md-6">
                     <!-- Start About Promo Single Item -->
                     <div class="about-promo-single-item">
-                        <img src="assets/images/icon/about-icon-1.jpg" alt="">
+                        <img src="{{asset('assets/images/icon/about-icon-1.jpg')}}" alt="">
                         <h6>Creative Design</h6>
                         <p>Erat metus sodales eget dolor consectetuer, porta ut purus at et alias, nulla ornare velit amet enim</p>
                     </div> <!-- End About Promo Single Item -->
@@ -62,7 +62,7 @@
                 <div class="col-lg-4 col-md-6">
                     <!-- Start About Promo Single Item -->
                     <div class="about-promo-single-item">
-                        <img src="assets/images/icon/about-icon-2.jpg" alt="">
+                        <img src="{{asset('assets/images/icon/about-icon-2.jpg')}}" alt="">
                         <h6>100% Money Back Guarantee</h6>
                         <p>Erat metus sodales eget dolor consectetuer, porta ut purus at et alias, nulla ornare velit amet enim</p>
                     </div> <!-- End About Promo Single Item -->
@@ -70,7 +70,7 @@
                 <div class="col-lg-4 col-md-6">
                     <!-- Start About Promo Single Item -->
                     <div class="about-promo-single-item">
-                        <img src="assets/images/icon/about-icon-3.jpg" alt="">
+                        <img src="{{asset('assets/images/icon/about-icon-3.jpg')}}" alt="">
                         <h6>Online Support 24/7</h6>
                         <p>Erat metus sodales eget dolor consectetuer, porta ut purus at et alias, nulla ornare velit amet enim</p>
                     </div> <!-- End About Promo Single Item -->
@@ -86,7 +86,7 @@
                 <div class="col-lg-4 col-md-6">
                     <!-- Start About Promo Single Item -->
                     <div class="about-feature-single-item">
-                        <img class="img-fluid" src="assets/images/about/about-feature-1.jpg" alt="">
+                        <img class="img-fluid" src="{{asset('assets/images/about/about-feature-1.jpg')}}" alt="">
                         <h6>What Do We Do?</h6>
                         <p>Mirum est notare quam littera gothica, quam nunc putamus parum claram, anteposuerit litterarum formas humanitatis per seacula quarta decima et quinta decima.</p>
                     </div> <!-- End About Promo Single Item -->
@@ -94,7 +94,7 @@
                 <div class="col-lg-4 col-md-6">
                     <!-- Start About Promo Single Item -->
                     <div class="about-feature-single-item">
-                        <img class="img-fluid" src="assets/images/about/about-feature-2.jpg" alt="">
+                        <img class="img-fluid" src="{{asset('assets/images/about/about-feature-2.jpg')}}" alt="">
                         <h6>Our Mission</h6>
                         <p>Mirum est notare quam littera gothica, quam nunc putamus parum claram, anteposuerit litterarum formas humanitatis per seacula quarta decima et quinta decima.</p>
                     </div> <!-- End About Promo Single Item -->
@@ -102,7 +102,7 @@
                 <div class="col-lg-4 col-md-6">
                     <!-- Start About Promo Single Item -->
                     <div class="about-feature-single-item">
-                        <img class="img-fluid" src="assets/images/about/about-feature-3.jpg" alt="">
+                        <img class="img-fluid" src="{{asset('assets/images/about/about-feature-3.jpg')}}" alt="">
                         <h6>History Of Us</h6>
                         <p>Mirum est notare quam littera gothica, quam nunc putamus parum claram, anteposuerit litterarum formas humanitatis per seacula quarta decima et quinta decima.</p>
                     </div> <!-- End About Promo Single Item -->
@@ -123,7 +123,7 @@
                     <div class="testimonial-slider-single">
                         <p>These guys have been absolutely outstanding. Perfect Themes and the best of all that you have many options to choose! Best Support team ever! Very fast responding! Thank you very much! I highly recommend this theme and these people!</p>
                         <div class="testimonial-img">
-                            <img src="assets/images/testimonial/testimonial-1.png" alt="">
+                            <img src="{{asset("assets/images/testimonial/testimonial-1.png")}}" alt="">
                         </div>
                         <span class="name">Kathy Young</span>
                         <span class="job-title">CEO of SunPark</span>
@@ -139,7 +139,7 @@
                     <div class="testimonial-slider-single">
                         <p>These guys have been absolutely outstanding. Perfect Themes and the best of all that you have many options to choose! Best Support team ever! Very fast responding! Thank you very much! I highly recommend this theme and these people!</p>
                         <div class="testimonial-img">
-                            <img src="assets/images/testimonial/testimonial-2.jpg" alt="">
+                            <img src="{{asset("assets/images/testimonial/testimonial-2.jpg")}}" alt="">
                         </div>
                         <span class="name">Kathy Young</span>
                         <span class="job-title">CEO of SunPark</span>
@@ -155,7 +155,7 @@
                     <div class="testimonial-slider-single">
                         <p>These guys have been absolutely outstanding. Perfect Themes and the best of all that you have many options to choose! Best Support team ever! Very fast responding! Thank you very much! I highly recommend this theme and these people!</p>
                         <div class="testimonial-img">
-                            <img src="assets/images/testimonial/testimonial-3.jpg" alt="">
+                            <img src="{{asset('assets/images/testimonial/testimonial-3.jpg')}}" alt="">
                         </div>
                         <span class="name">Kathy Young</span>
                         <span class="job-title">CEO of SunPark</span>

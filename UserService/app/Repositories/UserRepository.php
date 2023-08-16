@@ -2,8 +2,6 @@
 
 namespace App\Repositories;
 
-use App\Http\Requests\StorePostRequest;
-use App\Http\Requests\UpdatePostRequest;
 use App\Interfaces\UserRepositoryInterface;
 use App\Models\User;
 use App\Models\UserDetail;
@@ -125,6 +123,21 @@ class UserRepository implements UserRepositoryInterface
             $user->deleted_at = date('Y-m-d H:i:s');
         }
         $user->role = $data['role'];
+        return $user->save();
+    }
+    public function updateProfile($request, $id)
+    {
+        $user = $this->user->where('id', $id)->first();
+        $user->fullname = $request->fullname ?? $user->fullname;
+
+        $userDetail = UserDetail::where('user_id', $id)->first();
+        $userDetail->phone = $request->phone ?? $userDetail->phone;
+        $userDetail->address = $request->address ?? $userDetail->address;
+        $userDetail->birthday = $request->birthday ?? $userDetail->birthday;
+        $userDetail->gender = $request->gender ?? $userDetail->gender;
+
+        $userDetail->save();
+
         return $user->save();
     }
 }

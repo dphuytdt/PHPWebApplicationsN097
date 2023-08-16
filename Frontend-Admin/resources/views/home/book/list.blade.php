@@ -50,11 +50,11 @@
                                     <td>{{ ++$key }}</td>
                                     <td>{{ $book['title'] }}</td>
 {{--                                    <td><img src="{{ asset('storage/'.$book['cover_image']) }}" alt="" width="100px" height="100px"></td>--}}
-                                    <td><img src="data:image/png;base64,{{ $book['cover_image'] }}" alt="" width="100px" height="100px"></td>
+                                    <td><img src="data:image/{{$book['image_extension']}};base64,{{ $book['cover_image'] }}" alt="" width="100px" height="100px"></td>
                                     <td>{{ $book['author'] }}</td>
                                    <td>{{ $book['category_name'] }}</td>
                                     <td>
-                                        <a  class="btn btn-info btn-sm" data-target="#exampleModalCenter-{{$book['id']}}" data-toggle="modal">View</a>
+                                        <a  class="btn btn-info btn-sm" data-target=".bd-example-modal-lg-{{$book['id']}}" data-toggle="modal">View</a>
                                     </td>
                                     @if($book['price'] == null)
                                         <td>Not Updated</td>
@@ -68,6 +68,32 @@
                                         <a href="{{ route('books.edit', $book['id']) }}" class="btn btn-primary btn-sm">Edit</a>
                                     </td>
                                 </tr>
+
+
+                                <div class="modal fade bd-example-modal-lg-{{$book['id']}}">
+                                    <div class="modal-dialog modal-fullscreen no-scroll">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title">{{$book['title']}}</h5>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+
+                                            <div class="modal-body">
+                                                <div id="pdf-wrapper">
+                                                    <iframe src="data:application/pdf;base64,{{ $book['content'] }}#toolbar=0" width="100%" height="100%" frameborder="0">
+                                                    </iframe>
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                <button type="button" id="bookmarked" class="btn btn-primary">Bookmarked</button>
+                                            </div>
+                                            <input type="hidden" id="bookId" value="{{$book['id']}}">
+                                        </div>
+                                    </div>
+                                </div>
                             @endforeach
                         @else
                         <style type="text/css">
@@ -88,6 +114,7 @@
         </div>
     </div>
 </div>
+
 <script type="text/javascript">
     $(document).ready(function() {
         $('#listBook').DataTable(

@@ -104,7 +104,7 @@ class PaymentController extends Controller
         $accessKey = 'klm05TvNBzhg7h7j';
         $secretKey = 'at67qH6mk8w5Y1nAyMoYKMWACiEi2bsa';
         $orderInfo = "Thanh toán qua MoMo";
-        $amount = $request->total * self::DOLLAR_RATE;
+        $amount = $request->total;
         $orderId = time() . rand(10000, 99999);
         $redirectUrl = self::REDIRECT_URL;
         $ipnUrl = self::REDIRECT_URL;
@@ -130,10 +130,6 @@ class PaymentController extends Controller
             'signature' => $signature);
         $result = $this->execPostRequest($endpoint, json_encode($data));
 
-        if($result){
-            $this->paymentSuccess($request);
-        }
-
         $jsonResult = json_decode($result, true);
 
         if($jsonResult){
@@ -158,29 +154,4 @@ class PaymentController extends Controller
 
         return $result;
     }
-
-
-    private function paymentSuccess($data)
-    {
-        $client = new Client();
-
-        try{
-            $response = $client->post($this->paymentService.'cart/checkout', [
-                'form_params' => [
-                    "bookId" => $data->bookId,
-                    "userID" => $data->userID,
-                    "price" => $data->total,
-                ]
-            ]);
-
-            $response = json_decode($response->getBody()->getContents());
-            return response()->json($response);
-        } catch (\Exception $e) {
-            return response()->json($e->getMessage());
-        } catch (GuzzleException $e) {
-            return response()->json($e->getMessage());
-        }
-    }
-
-
 }

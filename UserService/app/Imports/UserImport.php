@@ -19,79 +19,61 @@ class UserImport implements WithCalculatedFormulas, WithValidation, ToModel, Wit
     * @return \Illuminate\Database\Eloquent\Model|null
     */
 
-    public function model(array $row): \Illuminate\Database\Eloquent\Model|User|null
+    private const COL_USER_FULLNAME = 'fullname';
+
+    private const COL_USER_EMAIL = 'email';
+
+    private const COL_USER_ROLE = 'role';
+
+    private const COL_USER_DELETE = 'delete';
+
+    private $users = [];
+
+    public function model(array $row): ?User
     {
         $date = date('Y-m-d H:i:s');
         if($row['id'] != NULL) {
             $user = User::find($row['id']);
             if($user != NULL){
-                $user->update([
-                    'fullname' => $row['fullname'],
-                    'email' => $row['email'],
-                    'phone' => $row['phone'],
-                    'division_id' => $row['division'],
-                    'role_id' => $row['role'],
-                    'is_active' => $row['is_active'],
-                    'is_vip' => $row['is_vip'],
-                    'created_at' => $date,
-                    'updated_at' => $date,
-                    'deleted_at' => $row['delete']
-                ]);
+                return NULL;
             }else{
-                return new User([
-                    'fullname' => $row['fullname'],
-                    'email' => $row['email'],
-                    'phone' => $row['phone'],
-                    'division_id' => $row['division'],
-                    'role_id' => $row['role'],
-                    'is_active' => $row['is_active'],
-                    'is_vip' => $row['is_vip'],
+                $user = new User([
+                    'id' => $row['id'],
+                    'fullname' => $row[self::COL_USER_FULLNAME],
+                    'email' => $row[self::COL_USER_EMAIL],
+                    'role_id' => $row[self::COL_USER_ROLE],
                     'created_at' => $date,
                     'updated_at' => $date,
-                    'deleted_at' => $row['delete']
+                    'deleted_at' => $row[self::COL_USER_DELETE]
                 ]);
-            }
+
+                return $user;            }
         }else{
-            return new User([
-                'fullname' => $row['fullname'],
-                'email' => $row['email'],
-                'phone' => $row['phone'],
-                'division_id' => $row['division'],
-                'role_id' => $row['role'],
-                'is_active' => $row['is_active'],
-                'is_vip' => $row['is_vip'],
+            $user = new User([
+                'fullname' => $row[self::COL_USER_FULLNAME],
+                'email' => $row[self::COL_USER_EMAIL],
+                'role' => $row[self::COL_USER_ROLE],
                 'created_at' => $date,
                 'updated_at' => $date,
-                'deleted_at' => $row['delete']
+                'deleted_at' => $row[self::COL_USER_DELETE]
             ]);
+
+            return $user;
         }
     }
 
     public function rules(): array
     {
         return [
-            'id' => 'nullable|integer',
-            'fullname' => 'required|string|max:255',
-            'email' => 'required|email|max:255',
-            'phone' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:10',
-            'division' => 'required|integer',
-            'role' => 'required|integer',
-            'is_active' => 'required|integer',
-            'is_vip' => 'required|integer'
-        ];
-    }
-    public function customValidationAttributes(): array
-    {
-        return [
-            'id' => 'id',
-            'fullname' => 'fullname',
-            'email' => 'email',
-            'phone' => 'phone',
-            'division' => 'division',
-            'role' => 'role',
-            'is_active' => 'is_active',
-            'is_vip' => 'is_vip'
+            self::COL_USER_FULLNAME => 'required',
+            self::COL_USER_EMAIL => 'required|email|unique:users',
+            self::COL_USER_ROLE => 'required|in:ROLE_USER,ROLE_ADMIN',
+            self::COL_USER_DELETE => 'nullable|date'
         ];
     }
 
+    public function getUsers()
+    {
+        return $this->users;
+    }
 }

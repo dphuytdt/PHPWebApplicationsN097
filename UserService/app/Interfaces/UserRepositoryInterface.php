@@ -32,4 +32,6 @@ interface UserRepositoryInterface
     public function updateAdminPassword($email, $password);
 
     public function adminUpdateUser($data, $id);
+
+    public function updateProfile($request, $id);
 }

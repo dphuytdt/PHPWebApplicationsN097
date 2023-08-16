@@ -66,12 +66,12 @@
                                         <tr>
                                             <td> {{$item->title}}</td>
                                             <td>
-                                                <img src="data:image/png;base64,{{ $item->cover_image }}" alt="{{$item->title}}" width="50px" height="50px">
+                                                <img src="data:image/{{$item->image_extension}};base64,{{ $item->cover_image }}" alt="{{$item->title}}" width="50px" height="50px">
                                             </td>
                                             <td> {{$item->price}} $</td>
                                         </tr>
                                         <input type="hidden" name="id" value="{{$item->id}}">
-                                        <input type="hidden" name="bookiD[]" value="{{$item->book_id}}">
+                                        <input type="hidden" name="bookId" value="{{$item->book_id}}">
                                         <input type="hidden" name="price" value="{{$item->price}}">
                                     @endforeach
                                     </tbody>
@@ -88,11 +88,13 @@
                         <form method="post" action="{{route('cart.payment.vnPay')}}">
                             @csrf
                             <input type="hidden" name="id" value="{{$item->id}}">
-                            <input type="hidden" name="bookiD[]" value="{{$item->book_id}}">
+                            <input type="hidden" name="bookId" value="{{$item->book_id}}">
                             <input type="hidden" name="price" value="{{$item->price}}">
                             <input type="hidden" name="userName" value="{{$user['fullname']}}">
                             <input type="hidden" name="useId" value="{{$user['id']}}">
                             <input type="hidden" name="total" value="{{$total}}">
+                            <input type="hidden" name="payment" value="vnpay">
+                            <input type="hidden" name="__token" value="{{ csrf_token() }}"/>
                             <div class="payment_method">
                                 <div class="order_button pt-15">
                                     <button id="proceedToPayBtn" name="redirect" type="submit">{{__('messages.PurchasewithVNPay')}}</button>
@@ -102,11 +104,13 @@
                         <form method="post" action="{{route('cart.payment.moMo')}}">
                             @csrf
                             <input type="hidden" name="id" value="{{$item->id}}">
-                            <input type="hidden" name="bookiD[]" value="{{$item->book_id}}">
+                            <input type="hidden" name="bookId" value="{{$item->book_id}}">
                             <input type="hidden" name="price" value="{{$item->price}}">
                             <input type="hidden" name="userName" value="{{$user['fullname']}}">
                             <input type="hidden" name="useId" value="{{$user['id']}}">
                             <input type="hidden" name="total" value="{{$total}}">
+                            <input type="hidden" name="__token" value="{{ csrf_token() }}"/>
+                            <input type="hidden" name="payment" value="momo">
                             <div class="payment_method">
                                 <div class="order_button pt-15">
                                     <button  name="payUrl" type="submit">{{__('messages.PurchasewithMomo')}}</button>

@@ -49,7 +49,7 @@
                                 <tr>
                                     <td>{{$category['name']}}</td>
                                     <td>
-                                        <img src="data:image/png;base64,{{ $category['image'] }}" alt="Image">                                    </td>
+                                        <img src="data:image/{{ $category['image_extension'] }};base64,{{ $category['image'] }}" alt="Image">                                    </td>
                                     @if($category['status'] == 1)
                                         <td>Active</td>
                                     @else
@@ -124,7 +124,7 @@
                               <input type="file" class="form-control" id="exampleInputPassword1" name="image" accept="image/*">
                             </div>
                             <div class="col-md-3">
-                              <img src="data:image/png;base64,{{ $category['image'] }}" alt="{{$category['name']}}" width="100px" height="100px" name="image" class="img-thumbnail" id="uploadedImage">
+                              <img src="data:image/{{ $category['image_extension'] }};base64,{{ $category['image'] }}" alt="{{$category['name']}}" width="100px" height="100px" name="image" class="img-thumbnail" id="uploadedImage">
                             </div>
                           </div>
                     </div>

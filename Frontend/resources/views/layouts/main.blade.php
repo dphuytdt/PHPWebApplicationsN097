@@ -221,7 +221,7 @@
                 <div class="col-12 d-flex justify-content-between align-items-center">
                     <div class="mobile-header--left">
                         <a href="" class="mobile-logo-link">
-                            <img src="assets/images/logo/logo.png" alt="" class="mobile-logo-img">
+                            <img src="{{asset('assets/images/logo/logo.png')}}" alt="" class="mobile-logo-img">
                         </a>
                     </div>
                     <div class="mobile-header--right">
@@ -256,13 +256,15 @@
                     <!-- Header Top Menu's Dropdown -->
                     <ul class="mobile-user-sub-menu">
                         <li><a href="{{route('profile')}}">{{__('messages.myAccount')}}</a></li>
-                        @php
-                            $user_id = session()->get('user')['id'];
-                        @endphp
-                        @if($is_vip == 1)
-                            <li><a href="{{route('vipBenefits')}}">{{__('messages.vipMember')}}</a></li>
-                        @else
-                            <li><a href="{{route('upgrade')}}">{{__('messages.upgradeVip')}}</a></li>
+                        @if(session()->has('user'))
+                            @php
+                                $user_id = session()->get('user')['id'];
+                            @endphp
+                            @if($is_vip == 1)
+                                <li><a href="{{route('vipBenefits')}}">{{__('messages.vipMember')}}</a></li>
+                            @else
+                                <li><a href="{{route('upgrade')}}">{{__('messages.upgradeVip')}}</a></li>
+                            @endif
                         @endif
                         <li><a href="{{route('logout')}}">{{__('messages.logout')}}</a></li>
                     </ul>
@@ -281,10 +283,10 @@
                     <a class="mobile-user-menu-link" href="">English</a>
                     <!-- Header Top Menu's Dropdown -->
                     <ul class="mobile-user-sub-menu">
-                        <li><a href="{!! route('changeLanguage', ['en']) !!}"><img class="user-sub-menu-in-icon" src="assets/images/icon/united-kingdom.png" alt=""> English</a></li>
-                        <li><a href="{!! route('changeLanguage', ['vi']) !!}"><img class="user-sub-menu-in-icon" src="assets/images/icon/vietnam.png" alt=""> VietNam</a></li>
-                        <li><a href="{!! route('changeLanguage', ['jp']) !!}"><img class="user-sub-menu-in-icon" src="assets/images/icon/japan.png" alt=""> Japan</a></li>
-                        <li><a href="{!! route('changeLanguage', ['kr']) !!}"><img class="user-sub-menu-in-icon" src="assets/images/icon/korea.png" alt=""> Korea</a></li>
+                        <li><a href="{!! route('changeLanguage', ['en']) !!}"><img class="user-sub-menu-in-icon" src="{{asset('assets/images/icon/united-kingdom.png')}}" alt=""> English</a></li>
+                        <li><a href="{!! route('changeLanguage', ['vi']) !!}"><img class="user-sub-menu-in-icon" src="{{asset('assets/images/icon/vietnam.png')}}" alt=""> VietNam</a></li>
+                        <li><a href="{!! route('changeLanguage', ['jp']) !!}"><img class="user-sub-menu-in-icon" src="{{asset('assets/images/icon/japan.png')}}" alt=""> Japan</a></li>
+                        <li><a href="{!! route('changeLanguage', ['kr']) !!}"><img class="user-sub-menu-in-icon" src="{{asset('assets/images/icon/korea.png')}}" alt=""> Korea</a></li>
                     </ul>
                 </li>
             </ul> <!-- End Header Top Menu -->
@@ -300,7 +302,7 @@
             </form>
             <div class="mobile-menu-customer-support">
                 <div class="mobile-menu-customer-support-icon">
-                    <img src="assets/images/icon/support-icon.png" alt="">
+                    <img src="{{asset('assets/images/icon/support-icon.png')}}" alt="">
                 </div>
                 <div class="mobile-menu-customer-support-text">
                     <span>{{__('messages.customerSupport')}}</span>
@@ -518,13 +520,13 @@
                             }
                         </style>
                         <div class="footer-logo">
-                            <a href="index.html"><img src="{{ asset('images/logo.png') }}" alt="" class="img-fluid"></a>
+                            <a href="{{route('home')}}"><img src="{{ asset('images/logo.png') }}" alt="" class="img-fluid"></a>
                         </div>
                         <div class="footer-contact">
                             <p>{{__('messages.intro')}}</p>
                             <div class="customer-support">
                                 <div class="customer-support-icon">
-                                    <img src="assets/images/icon/support-icon.png" alt="">
+                                    <img src="{{asset('assets/images/icon/support-icon.png')}}" alt="">
                                 </div>
                                 <div class="customer-support-text">
                                     <span>{{__('messages.customerSupport')}}</span>
@@ -586,7 +588,7 @@
                 </div>
                 <div class="col-lg-6 col-md-6">
                     <div class="footer-payment">
-                        <a href=""><img class="img-fluid" src="assets/images/icon/payment-icon.png" alt=""></a>
+                        <a href=""><img class="img-fluid" src="{{asset('assets/images/icon/payment-icon.png')}}" alt=""></a>
                     </div>
                 </div>
             </div>
@@ -645,7 +647,7 @@
                     li.innerHTML = `
                         <div class="offcanvas-cart-item-block">
                           <a href="" class="offcanvas-cart-item-image-link">
-                            <img src="data:image/png;base64,${item.cover_image}" alt="" class="offcanvas-cart-image">
+                            <img src="data:image/${item.image_extension};base64,${item.cover_image}" alt="" class="offcanvas-cart-image">
                           </a>
                           <div class="offcanvas-cart-item-content">
                             <a href="" class="offcanvas-cart-item-link">${item.title}</a>
@@ -751,7 +753,7 @@
                     li.innerHTML = `
                               <div class="offcanvas-wishlist-item-block">
                                 <a href="" class="offcanvas-wishlist-item-image-link">
-                                  <img src="data:image/png;base64,${item.cover_image}" alt="" class="offcanvas-cart-image">
+                                  <img src="data:image/${item.image_extension};base64,${item.cover_image}" alt="" class="offcanvas-cart-image">
                                 </a>
                                 <div class="offcanvas-wishlist-item-content">
                                   <a href="" class="offcanvas-wishlist-item-link">${item.title}</a>

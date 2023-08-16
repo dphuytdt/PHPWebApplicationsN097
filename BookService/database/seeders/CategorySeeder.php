@@ -39,10 +39,12 @@ class CategorySeeder extends Seeder
             $randomImage = $imageFiles[array_rand($imageFiles)];
             $imageUrl = $randomImage->getPathname();
             $image = $this->parseImageToBase64($imageUrl);
+            $image_extension = $randomImage->getExtension();
 
             Category::create([
                 'name' => $categoryName,
                 'image' => $image,
+                'image_extension' => $image_extension,
                 'status' => 1,
                 'description' => 'This is description for category ' . $categoryName,
                 'created_at' => now(),
