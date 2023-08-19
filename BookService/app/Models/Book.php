@@ -28,6 +28,7 @@ class Book extends Model
         'discount',
         'is_featured',
         'status',
+        'rating',
         'created_at',
         'updated_at',
         'deleted_at',

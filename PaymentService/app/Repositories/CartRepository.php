@@ -79,14 +79,6 @@ class CartRepository implements CartRepositoryInterface
         $paymentHistory->created_at = now();
         $paymentHistory->save();
 
-        $orderHistory = new HistoryPayment();
-
-        $orderHistory->user_id = $userId;
-        $orderHistory->book_id = $bookId;
-        $orderHistory->total_price = $totalPrice;
-        $orderHistory->created_at = now();
-        $orderHistory->save();
-
         return true;
     }
 }

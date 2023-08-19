@@ -15,9 +15,6 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id');
             $table->string('wallet')->default(0);
-            $table->integer('province_id')->nullable();
-            $table->integer('district_id')->nullable();
-            $table->integer('ward_id')->nullable();
             $table->string('address')->nullable();
             $table->string('phone')->nullable();
             $table->tinyInteger('gender')->default(0);

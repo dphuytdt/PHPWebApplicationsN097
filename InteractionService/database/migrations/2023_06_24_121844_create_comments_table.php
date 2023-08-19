@@ -17,6 +17,7 @@ return new class extends Migration
             $table->text('content');
             $table->string('image')->nullable();
             $table->unsignedBigInteger('user_id');
+            $table->string('user_name');
             $table->unsignedBigInteger('book_id');
             $table->unsignedBigInteger('comment_parent_id')->nullable();
             $table->boolean('status')->default(1);

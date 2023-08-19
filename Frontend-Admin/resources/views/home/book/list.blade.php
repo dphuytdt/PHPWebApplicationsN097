@@ -16,6 +16,9 @@
       });
     });
 </script>
+@php
+    $numberLimit = 30;
+@endphp
 <!-- Begin Page Content -->
 <div class="container-fluid">
 
@@ -51,8 +54,8 @@
                                     <td>{{ $book['title'] }}</td>
 {{--                                    <td><img src="{{ asset('storage/'.$book['cover_image']) }}" alt="" width="100px" height="100px"></td>--}}
                                     <td><img src="data:image/{{$book['image_extension']}};base64,{{ $book['cover_image'] }}" alt="" width="100px" height="100px"></td>
-                                    <td>{{ $book['author'] }}</td>
-                                   <td>{{ $book['category_name'] }}</td>
+                                    <td>{{ Illuminate\Support\Str::limit($book['author'], $numberLimit) }}</td>
+                                   <td>{{ Illuminate\Support\Str::limit($book['category_name'], $numberLimit) }}</td>
                                     <td>
                                         <a  class="btn btn-info btn-sm" data-target=".bd-example-modal-lg-{{$book['id']}}" data-toggle="modal">View</a>
                                     </td>

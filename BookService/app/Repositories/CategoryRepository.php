@@ -58,7 +58,7 @@ class CategoryRepository implements CategoryRepositoryInterface
         return $category->save();
     }
 
-    public function updateCategory(array $data, string $id)
+    public function updateCategory($data, $id)
     {
         $category = Category::find($id);
 
@@ -66,30 +66,30 @@ class CategoryRepository implements CategoryRepositoryInterface
             return false;
         }
 
-        if (isset($data['name'])) {
+        if (isset($data['name']) && $data['name'] !== $category->name) {
             $category->name = $data['name'];
         }
 
-        if (isset($data['description'])) {
-            $category->description = $data['description'];
-        }
-
-        if (isset($data['image'])) {
-            $category->image = $data['image'];
-        }
-
-        if (isset($data['status'])) {
-            $category->status = $data['status'];
-            if ($data['status'] == 0) {
-                $books = Book::where('category_id', $id)->get();
-                foreach ($books as $book) {
-                    $book->category_id = null;
-                    $book->save();
-                }
+        if (isset($data['status']) && $data['status'] !== $category->status) {
+            if ($data['status'] == 1) {
+                $category->status = 1;
+                $category->deleted_at = null;
+            } else {
+                $category->status = 0;
+                $category->deleted_at = date('Y-m-d H:i:s');
             }
         }
 
-        $category->updated_at = $data['updated_at'];
+        if (isset($data['description']) && $data['description'] !== $category->description) {
+            $category->description = $data['description'];
+        }
+
+        if (isset($data['image']) && $data['image'] !== $category->image) {
+            $category->image = $data['image'];
+            $category->image_extension = $data['image_extension'];
+        }
+
+        $category->updated_at = date('Y-m-d H:i:s');
 
         return $category->save();
     }

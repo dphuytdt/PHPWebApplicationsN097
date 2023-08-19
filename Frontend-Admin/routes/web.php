@@ -35,7 +35,7 @@ Route::group(['middleware' => 'check.auth'] , function(){
         Route::post('store', [CategoryController::class, 'store'])->name('category.store');
         Route::get('edit/{id}', [CategoryController::class, 'edit'])->name('category.edit');
         Route::post('update/{id}', [CategoryController::class, 'update'])->name('category.update');
-        Route::get('delete/{id}', [CategoryController::class, 'delete'])->name('category.delete');
+        Route::post('delete/{id}', [CategoryController::class, 'delete'])->name('category.delete');
     });
     Route::group(['prefix' => 'users'], function () {
         Route::get('/', [UserController::class, 'index'])->name('users.index');

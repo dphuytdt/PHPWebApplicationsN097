@@ -72,7 +72,7 @@ class AdminBookController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, string $id): \Illuminate\Http\JsonResponse
     {
         $data = [
             'title' => $request->title,
@@ -82,22 +82,6 @@ class AdminBookController extends Controller
             'price' => $request->price,
             'discount' => $request->discount,
         ];
-
-        $book = $this->bookRepository->getBookById($id);
-
-        if($request->cover_image != null && $request->image_extension != null){
-            $data['cover_image'] = $request->image;
-            $data['image_extension'] = $request->image_extension;
-        } else {
-            $data['cover_image'] = $book->cover_image;
-            $data['image_extension'] = $book->image_extension;
-        }
-
-        if($request->contentPdf != null){
-            $data['content'] = $request->contentPdf;
-        } else {
-            $data['content'] = $book->content;
-        }
 
         try{
             $book = $this->bookRepository->updateBook($id, $data);

@@ -19,10 +19,6 @@ class CategoryController extends Controller
         try {
             $response = $client->get(self::BOOKS_SERVICE.'category/admin');
             $paginator = json_decode($response->getBody(), true);
-//
-//            foreach ($paginator as $key => $value) {
-//                $paginator[$key]['image'] = base64_decode($value['image']);
-//            }
 
             return view('home.category.list')->with('paginator', $paginator);
         } catch (\Exception $e) {
@@ -47,9 +43,8 @@ class CategoryController extends Controller
             $imageFile = $request->file('image');
             $imageContents = file_get_contents($imageFile->getPathname());
             $base64Image = base64_encode($imageContents);
+            $imageExtension = $request->file('image')->getClientOriginalExtension();
         }
-
-        $imageExtension = $request->file('image')->getClientOriginalExtension();
 
         $data = [
             'name' => $request->name,
@@ -80,17 +75,16 @@ class CategoryController extends Controller
      */
     public function update(Request $request, string $id)
     {
+        $data = $request->all();
+
         if ($request->hasFile('image')) {
             $imageFile = $request->file('image');
             $imageContents = file_get_contents($imageFile->getPathname());
             $base64Image = base64_encode($imageContents);
+            $imageExtension = $request->file('image')->getClientOriginalExtension();
+            $data['image'] = $base64Image;
+            $data['image_extension'] = $imageExtension;
         }
-
-        $data = [
-            'name' => $request->name,
-            'image' => $base64Image,
-            'description' => $request->description,
-        ];
 
         $client = new Client();
 
@@ -101,9 +95,7 @@ class CategoryController extends Controller
                     'Content-Type' => 'application/json',
                 ],
                 'form_params' => [
-                    'name' => $data['name'] ?? '',
-                    'image' => $data['image'] ?? '',
-                    'description' => $data['description'] ?? '',
+                    $data
                 ]
             ]);
             return redirect()->route('category.index')->with('success', 'Update category successfully');
@@ -120,8 +112,7 @@ class CategoryController extends Controller
     {
         $client = new Client();
         try {
-            $response = $client->post(self::BOOKS_SERVICE_ADMIN.'categories/delete'.$id);
-            $categories = json_decode($response->getBody(), true);
+            $client->post(self::BOOKS_SERVICE_ADMIN.'categories/delete'.$id);
             return redirect()->route('category.index')->with('success', 'Delete category successfully');
         } catch (\Exception $e) {
             dd($e);

@@ -35,7 +35,45 @@ class BookRepository implements BookRepositoryInterface
 
     public function updateBook($id, $data)
     {
-        return Book::find($id)->update($data);
+        $book = Book::find($id);
+        if (is_null($book)) {
+            return false;
+        }
+
+        if (isset($data['cover_image']) && ($data['cover_image']  !== $book->cover_image)) {
+            $book->cover_image = $data['cover_image'];
+            $book->image_extension = $data['image_extension'];
+        }
+
+        if (isset($data['title']) && ($data['title']  !== $book->title)) {
+            $book->title = $data['title'];
+        }
+
+        if (isset($data['description']) && ($data['description']  !== $book->description)) {
+            $book->description = $data['description'];
+        }
+
+        if (isset($data['author']) && ($data['author']  !== $book->author)) {
+            $book->author = $data['author'];
+        }
+
+        if (isset($data['category_id']) && ($data['category_id']  !== $book->category_id)) {
+            $book->category_id = $data['category_id'];
+        }
+
+        if (isset($data['content']) && ($data['content']  !== $book->content)) {
+            $book->content = $data['content'];
+        }
+
+        if (isset($data['price']) && ($data['price']  !== $book->price)) {
+            $book->price = $data['price'];
+        }
+
+        if (isset($data['discount']) && ($data['discount']  !== $book->discount)) {
+            $book->discount = $data['discount'];
+        }
+
+        return $book->save();
     }
 
     public function deleteBook($id)

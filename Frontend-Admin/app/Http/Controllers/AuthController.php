@@ -48,7 +48,7 @@ class AuthController extends Controller
     {
         $http = new Client();
         try {
-            $http->post($this->userService. 'auth/logout', [
+            $http->post($this->userService. 'auth/admin/logout', [
                 'headers' => [
                     'Authorization' => 'Bearer ' . session('token'), // Truyền token từ session
                 ],

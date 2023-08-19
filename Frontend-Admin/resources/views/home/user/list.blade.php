@@ -51,7 +51,7 @@
                                 <tr>
                                     <td>{{$user['fullname']}}</td>
                                     <td>{{$user['email']}}</td>
-                                    <td>{{$user['user_detail']['wallet']}}</td>
+                                    <td>{{$user['user_detail']['wallet'] ?? 'N/A'}}</td>
                                     <td>
                                         @if($user['role'] == "ROLE_USER")
                                             <span class="badge badge-danger">User</span>

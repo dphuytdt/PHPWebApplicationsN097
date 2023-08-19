@@ -4,23 +4,27 @@
 {{-- <script src="https://code.jquery.com/jquery-2.2.4.js"></script> --}}
 <script>
     $(document).ready(function() {
-      $("#exampleInputPassword1").on("change", function() {
-        var input = this;
-        if (input.files && input.files[0]) {
-          var reader = new FileReader();
-          reader.onload = function(e) {
-            $('#uploadedImage').attr('src', e.target.result);
+      $("#image").on("change", function() {
+          const input = this;
+          if (input.files && input.files[0]) {
+              const reader = new FileReader();
+              reader.onload = function(e) {
+                $('#uploadedImage').attr('src', e.target.result);
           }
           reader.readAsDataURL(input.files[0]);
         }
       });
     });
 </script>
+@php
+    $numberLimit = 30;
+@endphp
 <!-- Begin Page Content -->
 <div class="container-fluid">
 
     <!-- Page Heading -->
     <h1 class="h3 mb-2 text-gray-800">{{ Breadcrumbs::render('category.index') }}</h1>
+    <input type="hidden" id="__token" name="__token" value="{{ csrf_token() }}">
     {{-- <p class="mb-4">List of all categories</p> --}}
 
     <!-- DataTales Example -->
@@ -30,7 +34,7 @@
         </div> --}}
         <div class="card-body">
             <div class="table-responsive">
-                <table id="listCategory" class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <table id="listCategory" class="table table-bordered" width="100%" cellspacing="0">
                     <thead>
                         <tr>
                             <th>Name</th>
@@ -47,7 +51,7 @@
                         @if(isset($paginator))
                             @foreach($paginator as $category)
                                 <tr>
-                                    <td>{{$category['name']}}</td>
+                                    <td>{{Illuminate\Support\Str::limit($category['name'],  $numberLimit)}}</td>
                                     <td>
                                         <img src="data:image/{{ $category['image_extension'] }};base64,{{ $category['image'] }}" alt="Image">                                    </td>
                                     @if($category['status'] == 1)
@@ -55,7 +59,7 @@
                                     @else
                                         <td>Deactive</td>
                                     @endif
-                                    <td>{{$category['description']}}</td>
+                                    <td>{{Illuminate\Support\Str::limit($category['description'],  $numberLimit)}}</td>
                                     <td>{{$category['created_at']}}</td>
                                     @if($category['updated_at'] == null)
                                         <td>Not Updated</td>
@@ -71,9 +75,6 @@
                                     <td>
                                         <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#exampleModalCenter-{{$category['id']}}">
                                             Edit
-                                        </button>
-                                        <button type="button" class="btn btn-danger btn-sm">
-                                            Delete
                                         </button>
                                     </td>
                                 </tr>
@@ -114,14 +115,14 @@
             </div>
             <div class="modal-body">
                     <div class="mb-3">
-                        <label for="exampleInputEmail1" class="form-label">Name Category</label>
-                        <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="name" value="{{$category['name']}}">
+                        <label for="name" class="form-label">Name Category</label>
+                        <input type="text" class="form-control" id="name" aria-describedby="name" name="name" value="{{Illuminate\Support\Str::limit($category['name'],  $numberLimit)}}" required>
                     </div>
                     <div class="mb-3">
-                        <label for="exampleInputPassword1" class="form-label">Cover Image</label>
+                        <label for="image" class="form-label">Cover Image</label>
                         <div class="row">
                             <div class="col-md-9">
-                              <input type="file" class="form-control" id="exampleInputPassword1" name="image" accept="image/*">
+                              <input type="file" class="form-control" id="image" name="image" accept="image/*">
                             </div>
                             <div class="col-md-3">
                               <img src="data:image/{{ $category['image_extension'] }};base64,{{ $category['image'] }}" alt="{{$category['name']}}" width="100px" height="100px" name="image" class="img-thumbnail" id="uploadedImage">
@@ -129,8 +130,8 @@
                           </div>
                     </div>
                     <div class="">
-                        <label class="form-check-label" for="inputState">Status</label>
-                        <select id="inputState" class="form-control" name="status">
+                        <label class="form-check-label" for="status">Status</label>
+                        <select id="status" class="form-control" name="status">
                             @if($category['status'] == 1)
                                 <option value="1" selected>Active</option>
                                 <option value="0">Deactivate</option>
@@ -142,7 +143,7 @@
                       </div>
                       <div class="mb-3">
                         <label for="description" class="form-label">Description</label>
-                        <textarea class="form-control" id="description" rows="3" style="resize: none;" name="description" >{{$category['description']}}</textarea>
+                        <textarea class="form-control" id="description" rows="3" style="resize: none;" name="description" >{{Illuminate\Support\Str::limit($category['description'],  $numberLimit)}}</textarea>
                     </div>
             </div>
             <div class="modal-footer">
@@ -155,41 +156,6 @@
     </form>
     @endforeach
 @endif
-<script type="text/javascript">
-    $(document).ready(function(){
-        $('.btn-danger').click(function(){
-            var id = $(this).closest('tr').find('input[name="id"]').val();
-            var url = "{{route('category.delete', ['id' => 'id'])}}";
-            url = url.replace('id', id);
-            swal({
-                title: "Are you sure?",
-                text: "Once deleted, you will not be able to recover this imaginary file!",
-                icon: "warning",
-                buttons: true,
-                dangerMode: true,
-                })
-                .then((willDelete) => {
-                if (willDelete) {
-                    $.ajax({
-                        url: url,
-                        data: {id: id},
-                        success: function(data){
-                            swal("Poof! Your imaginary file has been deleted!", {
-                                icon: "success",
-                            });
-                            location.reload();
-                        }
-                    });
-                } else {
-                    swal("Your imaginary file is safe!",{
-                        icon: "success",
-                    });
-                }
-            });
-
-        });
-    });
-</script>
 
 <script>
     $(document).ready(function() {

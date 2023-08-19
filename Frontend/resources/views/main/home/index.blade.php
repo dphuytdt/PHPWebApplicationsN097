@@ -73,20 +73,32 @@
                         $category_selected[] = $value;
 					}
 				@endphp
+                @if(count($category_selected) == 0 || $category_selected == null)
+                    <div class="col-lg-3 col-md-4 col-sm-6 col-12">
+                        <a href="#" class="product-catagory-single">
+                            <div class="product-catagory-img">
+                                <img src="https://img.freepik.com/free-vector/online-library-concept_23-2148538594.jpg?size=626&ext=jpg" alt="">
+                            </div>
+                            <div class="product-catagory-content">
+                                <h5 class="product-catagory-title">{{__('messages.NoCategory')}}</h5>
+                            </div>
+                        </a> <!-- End Product Catagory Single -->
+                    </div>
+                @else
+                    @foreach ( $category_selected as $category )
+                        <div class="col-lg-3 col-md-4 col-sm-6 col-12">
+                            <a href="{{route('getBookByCategory', ['id' => $category['id']])}}" class="product-catagory-single">
+                                <div class="product-catagory-img">
 
-				@foreach ( $category_selected as $category )
-					<div class="col-lg-3 col-md-4 col-sm-6 col-12">
-						<a href="{{route('getBookByCategory', ['id' => $category['id']])}}" class="product-catagory-single">
-							<div class="product-catagory-img">
-
-								<img src="data:image/{{$category['image_extension']}};base64,{{ $category['image'] }}" alt="">
-							</div>
-							<div class="product-catagory-content">
-								<h5 class="product-catagory-title">{{ $category['name'] }}</h5>
-							</div>
-						</a> <!-- End Product Catagory Single -->
-					</div>
-				@endforeach
+                                    <img src="data:image/{{$category['image_extension']}};base64,{{ $category['image'] }}" alt="">
+                                </div>
+                                <div class="product-catagory-content">
+                                    <h5 class="product-catagory-title">{{ $category['name'] }}</h5>
+                                </div>
+                            </a> <!-- End Product Catagory Single -->
+                        </div>
+                    @endforeach
+                @endif
 			</div>
 		</div>
 	</div> <!-- End Catagory Wrapper -->

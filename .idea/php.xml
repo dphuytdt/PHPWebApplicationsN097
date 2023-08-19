@@ -648,7 +648,6 @@
       <path value="$PROJECT_DIR$/BookService/vendor/symfony/polyfill-ctype" />
       <path value="$PROJECT_DIR$/BookService/vendor/symfony/polyfill-php72" />
       <path value="$PROJECT_DIR$/BookService/vendor/symfony/error-handler" />
-      <path value="$PROJECT_DIR$/BookService/vendor/myclabs/php-enum" />
       <path value="$PROJECT_DIR$/BookService/vendor/symfony/event-dispatcher-contracts" />
       <path value="$PROJECT_DIR$/BookService/vendor/symfony/polyfill-intl-idn" />
       <path value="$PROJECT_DIR$/BookService/vendor/symfony/console" />
@@ -838,6 +837,21 @@
       <path value="$PROJECT_DIR$/PaymentService/vendor/sebastian/exporter" />
       <path value="$PROJECT_DIR$/PaymentService/vendor/sebastian/cli-parser" />
       <path value="$PROJECT_DIR$/PaymentService/vendor/sebastian/version" />
+      <path value="$PROJECT_DIR$/Frontend-Admin/vendor/phpoffice/phpspreadsheet" />
+      <path value="$PROJECT_DIR$/Frontend-Admin/vendor/spatie/pdf-to-text" />
+      <path value="$PROJECT_DIR$/Frontend-Admin/vendor/laravel/prompts" />
+      <path value="$PROJECT_DIR$/Frontend-Admin/vendor/psr/clock" />
+      <path value="$PROJECT_DIR$/Frontend-Admin/vendor/maennchen/zipstream-php" />
+      <path value="$PROJECT_DIR$/Frontend-Admin/vendor/ezyang/htmlpurifier" />
+      <path value="$PROJECT_DIR$/Frontend-Admin/vendor/maatwebsite/excel" />
+      <path value="$PROJECT_DIR$/Frontend-Admin/vendor/markbaker/complex" />
+      <path value="$PROJECT_DIR$/Frontend-Admin/vendor/markbaker/matrix" />
+      <path value="$PROJECT_DIR$/BookService/vendor/tymon/jwt-auth" />
+      <path value="$PROJECT_DIR$/BookService/vendor/laravel/prompts" />
+      <path value="$PROJECT_DIR$/BookService/vendor/psr/clock" />
+      <path value="$PROJECT_DIR$/BookService/vendor/spatie/pdf-to-text" />
+      <path value="$PROJECT_DIR$/BookService/vendor/lcobucci/jwt" />
+      <path value="$PROJECT_DIR$/BookService/vendor/lcobucci/clock" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="8.1" />

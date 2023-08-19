@@ -26,6 +26,7 @@ return new class extends Migration
             $table->boolean('is_featured')->default(0);
             $table->boolean('is_vip_valid')->default(0);
             $table->boolean('status')->default(1);
+            $table->integer('rating')->default(0);
             $table->dateTime('created_at');
             $table->dateTime('updated_at')->nullable();
             $table->dateTime('deleted_at')->nullable();

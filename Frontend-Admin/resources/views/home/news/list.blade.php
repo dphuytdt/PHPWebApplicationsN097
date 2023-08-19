@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 @section('content')
-    @section('title', 'Category List')
+    @section('title', 'News List')
     {{-- <script src="https://code.jquery.com/jquery-2.2.4.js"></script> --}}
     {{-- <script>
         $(document).ready(function() {
@@ -30,19 +30,19 @@
             </div> --}}
             <div class="card-body">
                 <div class="table-responsive">
-                    <table id="listUsers" class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <table id="listNews" class="table table-bordered" width="100%" cellspacing="0">
                         <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Title</th>
-                            <th>Slug</th>
-                            <th>Description</th>
-                            <th>Image</th>
-                            <th>Status</th>
-                            <th>Update Date</th>
-                            <th>Delete Date</th>
-                            <th>Action</th>
-                        </tr>
+                            <tr>
+                                <th>ID</th>
+                                <th>Title</th>
+                                <th>Slug</th>
+                                <th>Description</th>
+                                <th>Image</th>
+                                <th>Status</th>
+                                <th>Update Date</th>
+                                <th>Delete Date</th>
+                                <th>Action</th>
+                            </tr>
                         </thead>
                         <tbody>
                         @if(isset($news))
@@ -156,7 +156,7 @@
 
     <script>
         $(document).ready(function() {
-            $('#listUsers').DataTable();
+            $('#listNews').DataTable();
         });
     </script>
 @endsection

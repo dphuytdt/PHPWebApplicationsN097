@@ -30,8 +30,8 @@ Route::prefix('admin')->group(function () {
         Route::get('/', [AdminBookController::class, 'index']);
         Route::get('/{id}', [AdminBookController::class, 'show']);
         Route::post('/', [AdminBookController::class, 'store']);
-        Route::post('/{id}', [AdminBookController::class, 'update']);
         Route::post('delete/{id}', [AdminBookController::class, 'delete']);
+        Route::post('/{id}', [AdminBookController::class, 'update']);
     });
     Route::prefix('comments')->group(function () {
         Route::get('/', [CommentController::class, 'getAllComment']);

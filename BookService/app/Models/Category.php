@@ -25,8 +25,7 @@ class Category extends Model
         'updated_at',
         'deleted_at',
     ];
-
-    //relationship
+    
     public function books()
     {
         return $this->hasMany(Book::class, 'category_id', 'id');

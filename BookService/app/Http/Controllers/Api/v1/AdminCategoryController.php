@@ -26,7 +26,9 @@ class AdminCategoryController extends Controller
         $data = [
             'name' => $request->name,
             'description' => $request->description ?? '',
-            'image' => $request->image,
+            'image' => $request->image ?? '',
+            'image_extension' => $request->image_extension ?? '',
+            'status' => $request->status ?? 1,
             'created_at' => $created_at
         ];
 
@@ -54,19 +56,13 @@ class AdminCategoryController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, string $id): \Illuminate\Http\JsonResponse
     {
-        $updated_at = date('Y-m-d H:i:s');
-
-        $data = [
-            'name' => $request->name,
-            'description' => $request->description,
-            'image' => $request->image,
-            'updated_at' => $updated_at
-        ];
+        $data = $request->all();
 
         try{
             $category = $this->categoryRepository->updateCategory($data, $id);
+
             return response()->json($category, 200);
         } catch (\Exception $e) {
             return response()->json($e->getMessage(), 500);

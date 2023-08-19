@@ -64,13 +64,29 @@
                             <h4 class="title">{{$result['book']['title']}}</h4>
                             <div class="d-flex align-items-center">
                                 <div class="product-review">
-                                    <span class="review-fill"><i class="fa fa-star"></i></span>
-                                    <span class="review-fill"><i class="fa fa-star"></i></span>
-                                    <span class="review-fill"><i class="fa fa-star"></i></span>
-                                    <span class="review-fill"><i class="fa fa-star"></i></span>
-                                    <span class="review-empty"><i class="fa fa-star"></i></span>
+
+                                    @php
+                                        $rating = $result['book']['rating'];
+                                        $rating = round($rating);
+                                    @endphp
+                                    @if($rating == 0)
+                                        <span class="review-none">No review (Review now)</span>
+                                        <br>
+                                    @else
+                                        for ($i = 1; $i <= 5; $i++) {
+                                            if ($i <= $rating) {
+                                                echo ' <span class="review-fill"><i class="fa fa-star"></i></span>';
+                                            } else {
+                                                echo '<span class=""><i class="fa fa-star"></i></span>';
+                                            }
+                                        }
+                                    @endif
+                                    <span class=""><i class="fa fa-star"></i></span>
+                                    <span class=""><i class="fa fa-star"></i></span>
+                                    <span class=""><i class="fa fa-star"></i></span>
+                                    <span class=""><i class="fa fa-star"></i></span>
+                                    <span class=""><i class="fa fa-star"></i></span>
                                 </div>
-                                <a href="" class="customer-review">({{__('messages.customerReview')}})</a>
                             </div>
                             {{-- <div class="price"><del>$70.00</del>$80.00</div> --}}
                             @if($result['book']['price'] == 0)
@@ -262,59 +278,33 @@
                                             <!-- Start - Review Comment list-->
                                             <li class="comment-list">
                                                 @foreach ($result['comments'] as $comment)
-                                                    @if($comment['comment_parent_id'] == null)
-                                                    <div class="comment-wrapper">
-                                                        <div class="comment-img">
-                                                            <img src="{{asset('assets/images/user/image-1.png')}}" alt="">
-                                                        </div>
-                                                        <div class="comment-content">
-                                                            <div class="comment-content-top">
-                                                                <div class="comment-content-left">
-                                                                    <h6 class="comment-name">Kaedyn Fraser</h6>
-                                                                    <div class="product-review">
-                                                                        <span class="review-fill"><i class="fa fa-star"></i></span>
-                                                                        <span class="review-fill"><i class="fa fa-star"></i></span>
-                                                                        <span class="review-fill"><i class="fa fa-star"></i></span>
-                                                                        <span class="review-fill"><i class="fa fa-star"></i></span>
-                                                                        <span class="review-empty"><i class="fa fa-star"></i></span>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="comment-content-right">
-                                                                    <a href="#"><i class="fa fa-reply"></i>{{__('messages.Reply')}}</a>
-                                                                </div>
+                                                    @if(null === $comment['comment_parent_id'])
+                                                        <div class="comment-wrapper">
+                                                            <div class="comment-img">
+                                                                <img src="{{asset('assets/images/user/image-1.png')}}" alt="">
                                                             </div>
-
-                                                            <div class="para-content">
-                                                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Tempora inventore dolorem a unde modi iste odio amet, fugit fuga aliquam, voluptatem maiores animi dolor nulla magnam ea! Dignissimos aspernatur cumque nam quod sint provident modi alias culpa, inventore deserunt accusantium amet earum soluta consequatur quasi eum eius laboriosam, maiores praesentium explicabo enim dolores quaerat! Voluptas ad ullam quia odio sint sunt. Ipsam officia, saepe repellat. </p>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    @else
-
-                                                    <!-- Start - Review Comment Reply-->
-                                                    <ul class="comment-reply">
-                                                        <li class="comment-reply-list">
-                                                            <div class="comment-wrapper">
-                                                                <div class="comment-img">
-                                                                    <img src="{{asset('assets/images/user/image-2.png')}}" alt="">
-                                                                </div>
-                                                                <div class="comment-content">
-                                                                    <div class="comment-content-top">
-                                                                        <div class="comment-content-left">
-                                                                            <h6 class="comment-name">Oaklee Odom</h6>
-                                                                        </div>
-                                                                        <div class="comment-content-right">
-                                                                            <a href="#"><i class="fa fa-reply"></i>Reply</a>
+                                                            <div class="comment-content">
+                                                                <div class="comment-content-top">
+                                                                    <div class="comment-content-left">
+                                                                        <h6 class="comment-name">Kaedyn Fraser</h6>
+                                                                        <div class="product-review">
+                                                                            <span class="review-fill"><i class="fa fa-star"></i></span>
+                                                                            <span class="review-fill"><i class="fa fa-star"></i></span>
+                                                                            <span class="review-fill"><i class="fa fa-star"></i></span>
+                                                                            <span class="review-fill"><i class="fa fa-star"></i></span>
+                                                                            <span class="review-empty"><i class="fa fa-star"></i></span>
                                                                         </div>
                                                                     </div>
-
-                                                                    <div class="para-content">
-                                                                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Tempora inventore dolorem a unde modi iste odio amet, fugit fuga aliquam, voluptatem maiores animi dolor nulla magnam ea! Dignissimos aspernatur cumque nam quod sint provident modi alias culpa, inventore deserunt accusantium amet earum soluta consequatur quasi eum eius laboriosam, maiores praesentium explicabo enim dolores quaerat! Voluptas ad ullam quia odio sint sunt. Ipsam officia, saepe repellat. </p>
+                                                                    <div class="comment-content-right">
+                                                                        <a href="#"><i class="fa fa-reply"></i>{{__('messages.Reply')}}</a>
                                                                     </div>
                                                                 </div>
+
+                                                                <div class="para-content">
+                                                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Tempora inventore dolorem a unde modi iste odio amet, fugit fuga aliquam, voluptatem maiores animi dolor nulla magnam ea! Dignissimos aspernatur cumque nam quod sint provident modi alias culpa, inventore deserunt accusantium amet earum soluta consequatur quasi eum eius laboriosam, maiores praesentium explicabo enim dolores quaerat! Voluptas ad ullam quia odio sint sunt. Ipsam officia, saepe repellat. </p>
+                                                                </div>
                                                             </div>
-                                                        </li>
-                                                    </ul> <!-- End - Review Comment Reply-->
+                                                        </div>
                                                     @endif
                                                 @endforeach
                                             </li> <!-- End - Review Comment list-->

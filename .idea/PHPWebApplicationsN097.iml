@@ -58,7 +58,6 @@
       <excludeFolder url="file://$MODULE_DIR$/BookService/vendor/mockery/mockery" />
       <excludeFolder url="file://$MODULE_DIR$/BookService/vendor/monolog/monolog" />
       <excludeFolder url="file://$MODULE_DIR$/BookService/vendor/myclabs/deep-copy" />
-      <excludeFolder url="file://$MODULE_DIR$/BookService/vendor/myclabs/php-enum" />
       <excludeFolder url="file://$MODULE_DIR$/BookService/vendor/nesbot/carbon" />
       <excludeFolder url="file://$MODULE_DIR$/BookService/vendor/nette/schema" />
       <excludeFolder url="file://$MODULE_DIR$/BookService/vendor/nette/utils" />
@@ -846,13 +845,31 @@
       <excludeFolder url="file://$MODULE_DIR$/UserService/vendor/vlucas/phpdotenv" />
       <excludeFolder url="file://$MODULE_DIR$/UserService/vendor/voku/portable-ascii" />
       <excludeFolder url="file://$MODULE_DIR$/UserService/vendor/webmozart/assert" />
+      <excludeFolder url="file://$MODULE_DIR$/BookService/vendor/laravel/prompts" />
+      <excludeFolder url="file://$MODULE_DIR$/BookService/vendor/lcobucci/clock" />
+      <excludeFolder url="file://$MODULE_DIR$/BookService/vendor/lcobucci/jwt" />
+      <excludeFolder url="file://$MODULE_DIR$/BookService/vendor/psr/clock" />
+      <excludeFolder url="file://$MODULE_DIR$/BookService/vendor/spatie/pdf-to-text" />
+      <excludeFolder url="file://$MODULE_DIR$/BookService/vendor/tymon/jwt-auth" />
+      <excludeFolder url="file://$MODULE_DIR$/Frontend-Admin/vendor/ezyang/htmlpurifier" />
+      <excludeFolder url="file://$MODULE_DIR$/Frontend-Admin/vendor/laravel/prompts" />
+      <excludeFolder url="file://$MODULE_DIR$/Frontend-Admin/vendor/maatwebsite/excel" />
+      <excludeFolder url="file://$MODULE_DIR$/Frontend-Admin/vendor/maennchen/zipstream-php" />
+      <excludeFolder url="file://$MODULE_DIR$/Frontend-Admin/vendor/markbaker/complex" />
+      <excludeFolder url="file://$MODULE_DIR$/Frontend-Admin/vendor/markbaker/matrix" />
+      <excludeFolder url="file://$MODULE_DIR$/Frontend-Admin/vendor/phpoffice/phpspreadsheet" />
+      <excludeFolder url="file://$MODULE_DIR$/Frontend-Admin/vendor/psr/clock" />
+      <excludeFolder url="file://$MODULE_DIR$/Frontend-Admin/vendor/spatie/pdf-to-text" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="jquery-validation" level="application" />
-    <orderEntry type="library" name="jquery-3.6.0" level="application" />
     <orderEntry type="library" name="sweetalert" level="application" />
-    <orderEntry type="library" name="pdf.js" level="application" />
+    <orderEntry type="library" name="jquery-validation" level="application" />
     <orderEntry type="library" name="jquery-3.6.0" level="application" />
+    <orderEntry type="library" name="pdf.js" level="application" />
+    <orderEntry type="library" name="sweetalert" level="application" />
+    <orderEntry type="library" name="jquery-3.6.0" level="application" />
+    <orderEntry type="library" name="jquery.dataTables" level="application" />
   </component>
 </module>
