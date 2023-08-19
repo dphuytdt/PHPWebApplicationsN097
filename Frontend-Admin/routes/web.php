@@ -27,7 +27,7 @@ Route::prefix('auth')->group(function () {
     Route::post('request-reset-password', [AuthController::class, 'postRequestResetPassword'])->name('postRequestResetPassword');
 });
 
-Route::group(['middleware' => 'check.auth'] , function(){
+//Route::group(['middleware' => 'check.auth'] , function(){
     Route::get('/', [HomeController::class, 'index'])->name('home');
     Route::group(['prefix' => 'category'], function () {
         Route::get('/', [CategoryController::class, 'index'])->name('category.index');
@@ -81,6 +81,6 @@ Route::group(['middleware' => 'check.auth'] , function(){
 
     });
     Route::fallback([HomeController::class, 'handleError'])->name('handleError');
-});
+//});
 
 

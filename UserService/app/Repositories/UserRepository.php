@@ -101,8 +101,10 @@ class UserRepository implements UserRepositoryInterface
 
     public function getUserDetail($user_id)
     {
+        $user = $this->user->where('id', $user_id)->first();
         $user_detail = UserDetail::where('user_id', $user_id)->first();
-        return $user_detail;
+        $user->user_detail = $user_detail;
+        return $user;
     }
 
     public function updateAdminPassword($email, $password)

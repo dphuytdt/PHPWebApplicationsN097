@@ -11,7 +11,10 @@ use Illuminate\Support\Facades\Validator;
 class UserController extends Controller
 {
     protected $categoryService;
-    public $userService = 'http://userservice.test:8080/api/auth';
+    private const USER_SERVICE = 'http://userservice.test:8080/api/auth';
+
+    private const PAYMENT_SERVICE = 'http://paymentservice.test:8080/api';
+
     public function __construct(CategoryService $categoryService)
     {
         $this->categoryService = $categoryService;
@@ -19,7 +22,6 @@ class UserController extends Controller
 
     public function profile()
     {
-        // Kiểm tra xem người dùng đã đăng nhập hay chưa
         if (!session()->has('token')) {
             return redirect()->route('login');
         }
@@ -27,20 +29,15 @@ class UserController extends Controller
         $categories = $this->categoryService->getCategory();
         $user = session()->get('user');
         $user_id = $user['id'];
+
         $client = new Client();
+
         try {
-            $response = $client->post($this->userService.'/user-detail', [
-                'timeout' => 60,
-                'headers' => [
-                    // 'Authorization' => 'Bearer ' . session('token'),
-                    "Accept"=>"application/json"
-                ],
-                'json' => [
-                    'user_id' => $user_id
-                ]
-            ]);
-            $userDetails = json_decode($response->getBody(), true);
-            // dd($userDetails);
+            $response = $client->post(self::USER_SERVICE.'/user-detail/'.$user_id);
+
+            $res = json_decode($response->getBody(), true);
+            $userDetails = $res['user'];
+
             return view('main.user.profile')->with('categories', $categories)->with('user', $user)
                     ->with('userDetails', $userDetails);
         } catch (\Exception $e) {

@@ -143,14 +143,14 @@ class UserController extends Controller
         }
     }
 
-    private function import(Request $request){
+    public function import(Request $request){
         $data = $request->all();
         $file = $data['file'];
 
         $client = new Client();
 
         try{
-            $req = $client->post($this->userService.'admin/user/import', [
+            $client->post($this->userService.'admin/user/import', [
                 'form-param' => [
                     'file' => $file,
                 ],

@@ -20,6 +20,11 @@ class RepositoryServiceProvider extends ServiceProvider
             \App\Interfaces\WishlistRepositoryInterface::class,
             \App\Repositories\WishlistRepository::class
         );
+
+        $this->app->bind(
+            \App\Interfaces\OrderHistoryRepositoryInterface::class,
+            \App\Repositories\OrderHistoryRepository::class
+        );
     }
 
     /**

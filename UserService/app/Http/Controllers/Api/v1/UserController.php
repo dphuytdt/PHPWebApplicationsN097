@@ -57,11 +57,11 @@ class UserController extends Controller
         return response()->json(['users' => $users]);
     }
 
-    public function userDetail(Request $request): \Illuminate\Http\JsonResponse
+    public function userDetail($id): \Illuminate\Http\JsonResponse
     {
-        $user_detail = $this->userRepository->getUserDetail($request->user_id);
+        $user_detail = $this->userRepository->getUserDetail($id);
         if($user_detail) {
-            return response()->json(['user_detail' => $user_detail]);
+            return response()->json(['user' => $user_detail]);
         } else {
             return response()->json(['message' => 'User not found']);
         }

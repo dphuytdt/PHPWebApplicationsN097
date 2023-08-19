@@ -102,20 +102,20 @@
             <div class="sidebar-heading">
                 Product
             </div>
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
-                    aria-expanded="true" aria-controls="collapsePages">
-                    <i class="fas fa-fw fa-table"></i>
-                    <span>Slideshow Setting</span>
-                </a>
-                <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Slide</h6>
-                        <a class="collapse-item" href="{{ route('slides.index') }}">List Slide</a>
-                        <a class="collapse-item" href="{{ route('slides.create') }}">Add Slide</a>
-                    </div>
-                </div>
-            </li>
+{{--            <li class="nav-item">--}}
+{{--                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"--}}
+{{--                    aria-expanded="true" aria-controls="collapsePages">--}}
+{{--                    <i class="fas fa-fw fa-table"></i>--}}
+{{--                    <span>Slideshow Setting</span>--}}
+{{--                </a>--}}
+{{--                <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">--}}
+{{--                    <div class="bg-white py-2 collapse-inner rounded">--}}
+{{--                        <h6 class="collapse-header">Slide</h6>--}}
+{{--                        <a class="collapse-item" href="{{ route('slides.index') }}">List Slide</a>--}}
+{{--                        <a class="collapse-item" href="{{ route('slides.create') }}">Add Slide</a>--}}
+{{--                    </div>--}}
+{{--                </div>--}}
+{{--            </li>--}}
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePagesNews"
                    aria-expanded="true" aria-controls="collapsePages">

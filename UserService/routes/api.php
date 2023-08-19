@@ -45,5 +45,5 @@ Route::group(['middleware' => 'api','prefix' => 'auth'], function ($router) {
     });
 
     Route::post('upgrate-user', [UserController::class, 'upgrateUser']);
-    Route::post('user-detail', [UserController::class, 'userDetail']);
+    Route::post('user-detail/{id}', [UserController::class, 'userDetail']);
 });

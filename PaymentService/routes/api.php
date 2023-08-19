@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\v1\OrderHistoryController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\v1\CartController;
@@ -31,4 +32,8 @@ Route::prefix('wishlist')->group(function () {
     Route::post('add', [WishlistController::class, 'add']);
     Route::post('delete', [WishlistController::class, 'deleteWishlist']);
     Route::get('get/{userID}', [WishlistController::class, 'getWishlist']);
+});
+
+Route::prefix('order-history')->group(function () {
+    Route::get('{userID}', [OrderHistoryController::class, 'getOrderHistory']);
 });

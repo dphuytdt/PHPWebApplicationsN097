@@ -173,8 +173,18 @@ class AuthController extends Controller
         ]);
     }
 
-    public function userProfile() {
-        return response()->json(auth()->user());
+    public function userProfile($id) {
+        $user = $this->userRepository->getUserById($id);
+        if ($user) {
+            return response()->json([
+                'message' => 'User profile',
+                'user' => $user,
+            ], 200);
+        } else {
+            return response()->json([
+                'error' => 'User does not exist',
+            ], 400);
+        }
     }
 
     public function changePassWord(Request $request) {
@@ -371,7 +381,6 @@ class AuthController extends Controller
     public function profile(Request $request, $id) {
         $user = $this->userRepository->getUserById($id);
         if ($user) {
-            //update profile
             $user = $this->userRepository->updateProfile($request, $id);
             if ($user) {
                 return response()->json([

@@ -24,19 +24,27 @@ class DatabaseSeeder extends Seeder
         }
 
         User::factory()->create([
-            'email' => 'admin@gmail.com',
+            'email' => 'admin@yopmail.com',
             'password' => Hash::make('12345678'),
             'role' => 'ROLE_ADMIN',
             'is_active' => 1,
             'created_at' => '2021-07-01 00:00:00',
         ]);
 
+        UserDetail::factory()->create([
+            'user_id' => 301,
+        ]);
+
         User::factory()->create([
-            'email' => 'user@gmail.com',
+            'email' => 'user@yopmail.com',
             'password' => Hash::make('12345678'),
             'role' => 'ROLE_USER',
             'is_active' => 1,
             'created_at' => '2021-07-01 00:00:00',
+        ]);
+
+        UserDetail::factory()->create([
+            'user_id' => 302,
         ]);
     }
 }

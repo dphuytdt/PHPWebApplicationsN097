@@ -76,10 +76,7 @@
                             <li><a href="#dashboard" data-toggle="tab" class="nav-link active">Dashboard</a></li>
                             <li><a href="#account-details" data-toggle="tab" class="nav-link ">Account details</a></li>
                             <li> <a href="#orders" data-toggle="tab" class="nav-link">Orders</a></li>
-                            {{-- <li><a href="#downloads" data-toggle="tab" class="nav-link">Downloads</a></li> --}}
                             <li><a href="#address" data-toggle="tab" class="nav-link">History</a></li>
-{{--
-                            <li><a href="login.html" class="nav-link">logout</a></li> --}}
                         </ul>
                     </div>
                 </div>
@@ -173,18 +170,16 @@
                                     <div class="account_login_form">
                                         <form action="{{route('profile.update' , $user['id'])}}" method="POST">
                                             @csrf
-                                            {{-- <p>Already have an account? <a href="#">Log in instead!</a></p> --}}
                                             <div class="input-radio">
                                                 <span class="custom-radio"><input type="radio" value="0" name="id_gender" @checked('0' == $userDetails['user_detail']['gender'])> Mr.</span>
                                                 <span class="custom-radio"><input type="radio" value="1" name="id_gender" @checked('1' == $userDetails['user_detail']['gender'])> Mrs.</span>
                                             </div> <br>
 
                                             <div class="row">
-                                                {{-- full name and avatar in the same row --}}
                                                 <div class="col-md-6 col-12">
                                                     <div class="default-form-box mb-20">
                                                         <label>Full Name</label>
-                                                        <input type="text" name="fullname" value="{{ $user['fullname'] }}" data-label="Full Name" placeholder="Full Name" required>
+                                                        <input type="text" name="fullname" value="{{ $userDetails['fullname'] ?? '' }}" data-label="Full Name" placeholder="Full Name" required>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6 col-12">
@@ -233,7 +228,7 @@
                                             </script>
                                             <div class="default-form-box mb-20">
                                                 <label>Email</label>
-                                                <input type="text" name="email-name" value="{{ $user['email'] }}" disabled>
+                                                <input type="text" name="email-name" value="{{ $userDetails['email'] }}" disabled>
                                             </div>
                                             <div class="default-form-box mb-20">
                                                 <label>Birthday</label>
