@@ -21,6 +21,7 @@ class News extends Model
         'description',
         'content',
         'image',
+        'image_extension',
         'is_active',
         'view',
         'like',

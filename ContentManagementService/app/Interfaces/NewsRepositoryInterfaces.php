@@ -4,7 +4,7 @@ namespace App\Interfaces;
 
 interface NewsRepositoryInterfaces
 {
-    public function store($request);
+    public function store(array $data);
 
     public function destroy($id);
 

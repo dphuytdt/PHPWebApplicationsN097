@@ -17,7 +17,8 @@ return new class extends Migration
             $table->string('slug', 255)->nullable(true);
             $table->string('description', 255)->nullable(true);
             $table->text('content');
-            $table->text('image');
+            $table->longText('image');
+            $table->string('image_extension', 255);
             $table->boolean('is_active');
             $table->integer('view')->nullable(true);
             $table->integer('like')->nullable(true);

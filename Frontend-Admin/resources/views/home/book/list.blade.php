@@ -52,7 +52,6 @@
                                 <tr>
                                     <td>{{ ++$key }}</td>
                                     <td>{{ $book['title'] }}</td>
-{{--                                    <td><img src="{{ asset('storage/'.$book['cover_image']) }}" alt="" width="100px" height="100px"></td>--}}
                                     <td><img src="data:image/{{$book['image_extension']}};base64,{{ $book['cover_image'] }}" alt="" width="100px" height="100px"></td>
                                     <td>{{ Illuminate\Support\Str::limit($book['author'], $numberLimit) }}</td>
                                    <td>{{ Illuminate\Support\Str::limit($book['category_name'], $numberLimit) }}</td>
@@ -91,7 +90,6 @@
                                             </div>
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                                <button type="button" id="bookmarked" class="btn btn-primary">Bookmarked</button>
                                             </div>
                                             <input type="hidden" id="bookId" value="{{$book['id']}}">
                                         </div>

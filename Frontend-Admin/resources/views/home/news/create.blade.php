@@ -69,11 +69,11 @@
             </div>
             <div class="mb-3">
                 <label for="description" class="form-label">Description: (Optional)</label>
-                <textarea class="form-control" id="description" name="description" rows="3" required></textarea>
+                <textarea class="form-control" id="description" name="description" rows="4"></textarea>
             </div>
             <div class="mb-3">
-                <label for="content" class="form-label">Content: <color style="color: red;">*</color></label>
-                <textarea class="form-control" id="content" name="content" rows="3" required></textarea>
+                <label for="contents" class="form-label">Content: <color style="color: red;">*</color></label>
+                <textarea class="form-control" id="contents" name="contents" rows="7" required></textarea>
             </div>
             <div class="mb-3">
                 <label for="exampleInputPassword1" class="form-label">Image <color style="color: red;">*</color></label>

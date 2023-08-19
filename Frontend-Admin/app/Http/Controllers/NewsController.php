@@ -36,21 +36,29 @@ class NewsController extends Controller
      */
     public function store(Request $request)
     {
+        if ($request->hasFile('image')) {
+            try{
+                $imageFile = $request->file('image');
+                $imageContents = file_get_contents($imageFile->getPathname());
+                $imageExtension = $request->file('image')->getClientOriginalExtension();
+                $base64Image = base64_encode($imageContents);
+            } catch (\Exception $e) {
+                return redirect()->route('books.index')->withErrors(['errors' => 'Cannot read file']);
+            }
+        }
+
         $client = new Client();
 
         try {
             $client->post(self::NEWS_SERVICE.'news', [
-                'headers' => [
-                    'Accept' => 'application/json',
-                    'Content-Type' => 'application/json'
-                ],
-                'form-param' => [
-                    'title' => $request['title'],
-                    'slug' => $request['slug'],
-                    'description' => $request['description'],
-                    'content' => $request['content'],
-                    'image' => $request['image'],
-                    'is_active' => $request['is_active'],
+                'form_params' => [
+                    'title' => $request->title,
+                    'slug' => $request->slug,
+                    'description' => $request->description,
+                    'contents' => $request->contents,
+                    'image' => $base64Image,
+                    'image_extension' => $imageExtension,
+                    'is_active' => $request->is_active,
                 ]
             ]);
 

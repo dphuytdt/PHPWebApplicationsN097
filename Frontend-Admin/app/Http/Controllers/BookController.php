@@ -18,8 +18,7 @@ class BookController extends Controller
             $paginator = json_decode($response->getBody(), true);
             return view('home.book.list', compact('paginator'));
         } catch (\Exception $e) {
-            dd($e);
-            // return view('home.category.list')->withErrors(['errors' => 'Cannot connect to server']);
+            return view('home.category.list')->withErrors(['errors' => 'Cannot connect to server']);
         }
     }
 

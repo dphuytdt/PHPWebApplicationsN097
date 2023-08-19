@@ -493,9 +493,6 @@
       <path value="$PROJECT_DIR$/ContentManagementService/vendor/vlucas/phpdotenv" />
       <path value="$PROJECT_DIR$/ContentManagementService/vendor/monolog/monolog" />
       <path value="$PROJECT_DIR$/ContentManagementService/vendor/composer" />
-      <path value="$PROJECT_DIR$/ContentManagementService/vendor/spatie/backtrace" />
-      <path value="$PROJECT_DIR$/ContentManagementService/vendor/spatie/flare-client-php" />
-      <path value="$PROJECT_DIR$/ContentManagementService/vendor/spatie/ignition" />
       <path value="$PROJECT_DIR$/ContentManagementService/vendor/spatie/laravel-ignition" />
       <path value="$PROJECT_DIR$/ContentManagementService/vendor/phpunit/php-file-iterator" />
       <path value="$PROJECT_DIR$/ContentManagementService/vendor/tijsverkoyen/css-to-inline-styles" />
@@ -541,11 +538,9 @@
       <path value="$PROJECT_DIR$/ContentManagementService/vendor/sebastian/code-unit-reverse-lookup" />
       <path value="$PROJECT_DIR$/ContentManagementService/vendor/ramsey/uuid" />
       <path value="$PROJECT_DIR$/ContentManagementService/vendor/ramsey/collection" />
-      <path value="$PROJECT_DIR$/ContentManagementService/vendor/mockery/mockery" />
       <path value="$PROJECT_DIR$/ContentManagementService/vendor/filp/whoops" />
       <path value="$PROJECT_DIR$/ContentManagementService/vendor/brick/math" />
       <path value="$PROJECT_DIR$/ContentManagementService/vendor/hamcrest/hamcrest-php" />
-      <path value="$PROJECT_DIR$/ContentManagementService/vendor/psy/psysh" />
       <path value="$PROJECT_DIR$/ContentManagementService/vendor/nette/schema" />
       <path value="$PROJECT_DIR$/ContentManagementService/vendor/nette/utils" />
       <path value="$PROJECT_DIR$/ContentManagementService/vendor/myclabs/deep-copy" />
@@ -852,6 +847,13 @@
       <path value="$PROJECT_DIR$/BookService/vendor/spatie/pdf-to-text" />
       <path value="$PROJECT_DIR$/BookService/vendor/lcobucci/jwt" />
       <path value="$PROJECT_DIR$/BookService/vendor/lcobucci/clock" />
+      <path value="$PROJECT_DIR$/ContentManagementService/vendor/laravel/prompts" />
+      <path value="$PROJECT_DIR$/ContentManagementService/vendor/psr/clock" />
+      <path value="$PROJECT_DIR$/ContentManagementService/vendor/psy/psysh" />
+      <path value="$PROJECT_DIR$/ContentManagementService/vendor/mockery/mockery" />
+      <path value="$PROJECT_DIR$/ContentManagementService/vendor/spatie/backtrace" />
+      <path value="$PROJECT_DIR$/ContentManagementService/vendor/spatie/flare-client-php" />
+      <path value="$PROJECT_DIR$/ContentManagementService/vendor/spatie/ignition" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="8.1" />

@@ -14,19 +14,11 @@ class NewsRepository implements NewsRepositoryInterfaces
         $this->news = $news;
     }
 
-    public function store($request)
+    public function store(array $data)
     {
-        $news = new News();
+        $news = News::create($data);
 
-        $news->title = $request['title'];
-        $news->slug = $request['slug'];
-        $news->description = $request['description'];
-        $news->content = $request['content'];
-        $news->image = $request['image'];
-        $news->is_active = $request['is_active'];
-        $news->created_at = $request['created_at'];
-
-        return $news->save();
+        return response()->json($news, 200);
     }
 
     public function destroy($id)

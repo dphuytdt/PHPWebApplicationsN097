@@ -76,7 +76,6 @@ Route::group(['middleware' => 'check.auth'] , function(){
         Route::get('create', [NewsController::class, 'create'])->name('news.create');
         Route::post('store', [NewsController::class, 'store'])->name('news.store');
         Route::post('import', [NewsController::class, 'import'])->name('news.import');
-//        Route::get('edit/{id}', [NewsController::class, 'edit'])->name('news.edit');
         Route::post('update/{id}', [NewsController::class, 'update'])->name('news.update');
         Route::post('delete/{id}', [NewsController::class, 'delete'])->name('news.delete');
 

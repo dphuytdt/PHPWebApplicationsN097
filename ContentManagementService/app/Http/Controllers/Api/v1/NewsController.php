@@ -30,9 +30,22 @@ class NewsController extends Controller
 
     public function store(Request $request)
     {
-        $news = $this->newsRepository->store($request);
+        $data = [
+            'title' => $request->title,
+            'slug' => $request->slug,
+            'description' => $request->description ?? '',
+            'content' => $request->contents ?? '',
+            'image' => $request->image ?? '',
+            'image_extension' => $request->image_extension ?? '',
+            'is_active' => $request->is_active ?? 1,
+            'created_at' => now()
+        ];
 
-        return response()->json($news, 201);
+        try {
+            $news = $this->newsRepository->store($data);
+        } catch (\Exception $e) {
+            return response()->json($e->getMessage(), 500);
+        }
     }
 
     public function delete($id)

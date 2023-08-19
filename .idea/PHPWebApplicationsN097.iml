@@ -851,6 +851,8 @@
       <excludeFolder url="file://$MODULE_DIR$/BookService/vendor/psr/clock" />
       <excludeFolder url="file://$MODULE_DIR$/BookService/vendor/spatie/pdf-to-text" />
       <excludeFolder url="file://$MODULE_DIR$/BookService/vendor/tymon/jwt-auth" />
+      <excludeFolder url="file://$MODULE_DIR$/ContentManagementService/vendor/laravel/prompts" />
+      <excludeFolder url="file://$MODULE_DIR$/ContentManagementService/vendor/psr/clock" />
       <excludeFolder url="file://$MODULE_DIR$/Frontend-Admin/vendor/ezyang/htmlpurifier" />
       <excludeFolder url="file://$MODULE_DIR$/Frontend-Admin/vendor/laravel/prompts" />
       <excludeFolder url="file://$MODULE_DIR$/Frontend-Admin/vendor/maatwebsite/excel" />

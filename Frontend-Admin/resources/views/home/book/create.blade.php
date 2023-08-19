@@ -107,7 +107,7 @@
             </select>
         </div>
         <div class="mb-3">
-            <label for="image" class="form-label">Price: <color style="color: red;">*</color></label>
+            <label for="price" class="form-label">Price: <color style="color: red;">*</color></label>
             <input type="number" class="form-control" id="price" name="price">
         </div>
         <div class="mb-3 quantiy">
