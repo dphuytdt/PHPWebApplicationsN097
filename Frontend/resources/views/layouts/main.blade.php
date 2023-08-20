@@ -6,38 +6,38 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="_token" content="{{ csrf_token() }}">
     <title>@yield('title') | Ebook</title>
-
-    <!-- ::::::::::::::Favicon icon::::::::::::::-->
     <link rel="icon" type="image/png" href="{{ asset('images/logo.png') }}" />
-
-    <!-- ::::::::::::::All CSS Files here :::::::::::::: -->
-    <!-- Vendor CSS -->
     <link rel="stylesheet" href="{{asset('assets/css/vendor/font-awesome.min.css')}}">
     <link rel="stylesheet" href="{{asset('assets/css/vendor/plaza-icon.css')}}">
     <link rel="stylesheet" href="{{asset('assets/css/vendor/jquery-ui.min.css')}}">
-
-    <!-- Plugin CSS -->
     <link rel="stylesheet" href="{{asset('assets/css/plugins/slick.css')}}">
     <link rel="stylesheet" href="{{asset('assets/css/plugins/animate.min.css')}}">
     <link rel="stylesheet" href="{{asset('assets/css/plugins/nice-select.css')}}">
     <link rel="stylesheet" href="{{asset('assets/css/plugins/venobox.min.css')}}">
-
-    <!-- Main CSS -->
     <link rel="stylesheet" href="{{asset('assets/css/style.css')}}">
-    <!-- Use the minified version files listed below for better performance and remove the files listed above -->
-    <!-- <link rel="stylesheet" href="assets/css/vendor/vendor.min.css">
-    <link rel="stylesheet" href="assets/css/plugins/plugins.min.css">
-    <link rel="stylesheet" href="assets/css/style.min.css"> -->
-
-
-
+    <style>
+        .user-sub-menu-in-icon {
+            width: 20px;
+            height: 20px;
+        }
+        .header-logo img {
+            width: 50px;
+            height: 50px;
+        }
+        .user-sub-menu-in-icon {
+            width: 20px;
+            height: 20px;
+        }
+        .footer-logo img {
+            width: 40%;
+            height: 50%;
+        }
+    </style>
 </head>
 
 <body>
 
-<!-- ...:::: Start Header Section:::... -->
 <header class="header-section d-lg-block d-none">
-    <!-- Start Header Top Area -->
     <div class="header-top">
         <div class="container">
             <div class="row d-flex justify-content-between align-items-center">
@@ -48,73 +48,51 @@
                 </div>
                 <div class="col-6">
                     <div class="header-top--right">
-                        <!-- Start Header Top Menu -->
                         <ul class="header-user-menu">
                             <li class="has-user-dropdown">
-                                <a href="">$ USD</a>
-                                <!-- Header Top Menu's Dropdown -->
+                                <i class="fa fa-language"></i>
+                                <a>{{__('messages.Language')}}</a>
                                 <ul class="user-sub-menu">
-                                    <li><a href="">EUR – Euro</a></li>
-                                    <li><a href="">GBP – British Pound</a></li>
-                                    <li><a href="">INR – India Rupee</a></li>
-                                </ul>
-                            </li>
-                            <li class="has-user-dropdown">
-                                <a href="">English</a>
-                                <ul class="user-sub-menu">
-                                    <style type="text/css">
-                                        .user-sub-menu-in-icon {
-                                            width: 20px;
-                                            height: 20px;
-                                        }
-                                    </style>
                                     <li><a href="{!! route('changeLanguage', ['en']) !!}"><img class="user-sub-menu-in-icon" src="{{asset('assets/images/icon/united-kingdom.png')}}" alt=""> English</a></li>
                                     <li><a href="{!! route('changeLanguage', ['vi']) !!}"><img class="user-sub-menu-in-icon" src="{{asset('assets/images/icon/vietnam.png')}}" alt=""> VietNam</a></li>
                                     <li><a href="{!! route('changeLanguage', ['jp']) !!}"><img class="user-sub-menu-in-icon" src="{{asset('assets/images/icon/japan.png')}}" alt=""> Japan</a></li>
                                     <li><a href="{!! route('changeLanguage', ['kr']) !!}"><img class="user-sub-menu-in-icon" src="{{asset('assets/images/icon/korea.png')}}" alt=""> Korea</a></li>
-
                                 </ul>
                             </li>
-                            <li><a href=""><i class="icon-repeat"></i> {{__('messages.compare')}}</a></li>
-                        </ul> <!-- End Header Top Menu -->
+                            <li class="has-user-dropdown">  
+                                <i class="fa fa-cog"></i>
+                                <a href="">{{__('messages.setting')}}</a>
+                                <ul class="user-sub-menu">
+                                    <li><a href="#"><i class="fa fa-moon-o"></i> {{__('messages.darkmode')}}</a></li>
+                                    <li><a href="#"><i class="fa fa-sun-o"></i> {{__('messages.lightmode')}}</a></li>
+                                </ul>
+                            </li>
+                        </ul>
                     </div>
                 </div>
             </div>
         </div>
-    </div> <!-- End Header Top Area -->
-
-    <!-- Start Header Center Area -->
+    </div>>
     <div class="header-center">
         <div class="container">
             <div class="row d-flex justify-content-between align-items-center">
                 <div class="col-3">
-                    <!-- Logo Header -->
-                    <style type="text/css">
-                        /* ajust logo size */
-                        .header-logo img {
-                            width: 50px;
-                            height: 50px;
-                        }
-                    </style>
                     <div class="header-logo">
                         <a href="{{route('home')}}"><img src="{{asset('images/logo.png')}}" alt=""></a>
                     </div>
                 </div>
                 <div class="col-6">
-                    <!-- Start Header Search -->
                     <div class="header-search">
                         <form action="{{route('search')}}" method="GET">
-                            {{-- @csrf --}}
                             <div class="header-search-box default-search-style d-flex">
-{{--                                <i class="icon-edit"></i>--}}
                                 <input name="keyword" class="default-search-style-input-box border-around border-right-none" type="search" placeholder="{{__('messages.typeKeyWord')}}">
                                 <button class="default-search-style-input-btn" type="submit"><i class="icon-search"></i></button>
                             </div>
                         </form>
-                    </div> <!-- End Header Search -->
+                    </div> 
                 </div>
                 <div class="col-3 text-right">
-                    <!-- Start Header Action Icon -->
+
                     <ul class="header-action-icon">
                         <li>
                             <a href="#offcanvas-wishlish" class="offcanvas-toggle">
@@ -137,56 +115,7 @@
                                 <a href="">
                                     <i class="icon-user has-user-dropdow"></i>
                                     <ul class="user-sub-menu">
-                                        <style type="text/css">
-                                            /* ajust icon language size */
-                                            .user-sub-menu-in-icon {
-                                                width: 20px;
-                                                height: 20px;
-                                            }
-                                        </style>
-                                        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-                                        <script>
-                                            document.addEventListener('DOMContentLoaded', function() {
-                                                var callMicroservicesLink = document.getElementById('callMicroservicesLink');
-
-                                                if (callMicroservicesLink) {
-                                                    callMicroservicesLink.addEventListener('click', function(event) {
-                                                        event.preventDefault(); // Prevent the default link behavior
-                                                        var userID = @json(session('user_id'));
-                                                        axios.all([
-                                                            axios.post('http://userservice.test:8080/api/auth/user-detail/' + userID),
-                                                            axios.get('http://paymentservice.test:8080/api/order-history/' + userID)
-                                                        ])
-                                                            .then(axios.spread(function (userProfileResponse, orderHistoryResponse) {
-                                                                var userProfile = JSON.stringify(userProfileResponse.data);
-                                                                var orderHistory = JSON.stringify(orderHistoryResponse.data);
-                                                                var data = {
-                                                                    userProfile: userProfile,
-                                                                    orderHistory: orderHistory
-                                                                };
-
-                                                                var userProfileData = JSON.parse(userProfile);
-                                                                var orderHistoryData = JSON.parse(orderHistory);
-
-                                                                localStorage.setItem('userProfile', userProfile);
-                                                                localStorage.setItem('orderHistory', orderHistory);
-
-                                                                axios.get('{{route('profile')}}', {
-                                                                    params: data
-                                                                })
-                                                                .then(function (response) {
-                                                                    window.location.href = '{{route('profile')}} ';
-                                                                })
-                                                                .catch(function (error) {
-                                                                    console.log(error);
-                                                                });
-                                                            }));
-                                                    });
-                                                }
-                                            });
-                                        </script>
                                         <li>
-{{--                                            <a href="{{route('profile')}}">--}}
                                             <a id="callMicroservicesLink" href="#">
                                                 {{__('messages.myAccount')}}
                                             </a>
@@ -216,12 +145,12 @@
         </div>
     </div>
 
-    <!-- Start Bottom Area -->
+
     <div class="header-bottom sticky-header">
         <div class="container">
             <div class="row">
                 <div class="col-12">
-                    <!-- Header Main Menu -->
+
                     <div class="main-menu">
                         <nav>
                             <ul>
@@ -229,8 +158,8 @@
                                     <a class="active main-menu-link" href="{{route('home')}}">{{ __('messages.home') }}</a>
                                 </li>
                                 <li class="has-dropdown">
-                                    <a href="blog-single-sidebar-left.html">{{ __('messages.category') }} <i class="fa fa-angle-down"></i></a>
-                                    <!-- Sub Menu -->
+                                    <a href="#">{{ __('messages.category') }} <i class="fa fa-angle-down"></i></a>
+
                                     <ul class="sub-menu">
                                         @foreach ( $categories as $category )
                                             @php
@@ -252,14 +181,13 @@
                                 </li>
                             </ul>
                         </nav>
-                    </div> <!-- Header Main Menu Start -->
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </header>
 <div class="mobile-header-section d-block d-lg-none">
-    <!-- Start Mobile Header Wrapper -->
     <div class="mobile-header-wrapper">
         <div class="container">
             <div class="row">
@@ -279,24 +207,19 @@
                 </div>
             </div>
         </div>
-    </div> <!-- End Mobile Header Wrapper -->
+    </div>
 </div>
 <div id="mobile-menu-offcanvas" class="offcanvas offcanvas-leftside offcanvas-mobile-menu-section">
-    <!-- Start Offcanvas Header -->
     <div class="offcanvas-header text-right">
         <button class="offcanvas-close"><i class="fa fa-times"></i></button>
-    </div> <!-- End Offcanvas Header -->
-    <!-- Start Offcanvas Mobile Menu Wrapper -->
+    </div>
     <div class="offcanvas-mobile-menu-wrapper">
-        <!-- Start Mobile Menu User Top -->
         <div class="mobile-menu-top">
             <span>{{ __('messages.welcome') }}</span>
-            <!-- Start Header Top Menu -->
             <ul class="mobile-menu-user-menu">
-                <li><a class="header-user-menu-link" href=""><i class="icon-repeat"></i>{{ __('messages.compare') }}</a></li>
+                <li><a class="header-user-menu-link" href=""><i class="fa fa-cog"></i>{{ __('messages.setting') }}</a></li>
                 <li class="has-mobile-user-dropdown">
                     <a class="mobile-user-menu-link" href="">{{ __('messages.myAccount') }}</a>
-                    <!-- Header Top Menu's Dropdown -->
                     <ul class="mobile-user-sub-menu">
                         <li><a href="{{route('profile')}}">{{__('messages.myAccount')}}</a></li>
                         @if(session()->has('user'))
@@ -312,19 +235,8 @@
                         <li><a href="{{route('logout')}}">{{__('messages.logout')}}</a></li>
                     </ul>
                 </li>
-                <li class=" has-mobile-user-dropdown">
-                    <a class="mobile-user-menu-link" href="">$ USD</a>
-                    <!-- Header Top Menu's Dropdown -->
-                    <ul class="mobile-user-sub-menu">
-                        <li><a href="">EUR – Euro</a></li>
-                        <li><a href="">GBP – British Pound</a></li>
-                        <li><a href="">Shopping Cart</a></li>
-                        <li><a href="">INR – India Rupee</a></li>
-                    </ul>
-                </li>
                 <li class="has-mobile-user-dropdown">
-                    <a class="mobile-user-menu-link" href="">English</a>
-                    <!-- Header Top Menu's Dropdown -->
+                    <a class="mobile-user-menu-link" href="">{{__('messages.Language')}}</a>
                     <ul class="mobile-user-sub-menu">
                         <li><a href="{!! route('changeLanguage', ['en']) !!}"><img class="user-sub-menu-in-icon" src="{{asset('assets/images/icon/united-kingdom.png')}}" alt=""> English</a></li>
                         <li><a href="{!! route('changeLanguage', ['vi']) !!}"><img class="user-sub-menu-in-icon" src="{{asset('assets/images/icon/vietnam.png')}}" alt=""> VietNam</a></li>
@@ -332,9 +244,9 @@
                         <li><a href="{!! route('changeLanguage', ['kr']) !!}"><img class="user-sub-menu-in-icon" src="{{asset('assets/images/icon/korea.png')}}" alt=""> Korea</a></li>
                     </ul>
                 </li>
-            </ul> <!-- End Header Top Menu -->
-        </div> <!-- End Mobile Menu User Top -->
-        <!-- Start Mobile Menu User Center -->
+            </ul>
+        </div>
+
         <div class="mobile-menu-center">
             <form action="#" method="post">
                 <div class="header-search-box default-search-style d-flex">
@@ -352,7 +264,6 @@
                     <a class="mobile-menu-customer-support-text-phone" href="tel:(08)123456789">(08) 123 456 789</a>
                 </div>
             </div>
-            <!-- Start Header Action Icon -->
             <ul class="mobile-action-icon">
                 <li class="mobile-action-icon-item">
                     @if(session()->has('user'))
@@ -368,71 +279,44 @@
                     @endif
                 </li>
                 <li class="mobile-action-icon-item">
-                    @if(session()->has('user'))
-                        @php
-                            $user_id = session()->get('user')['id']
-                        @endphp
-                        <a href="{{route('cart.getUserCart', $user_id)}}" class="mobile-action-icon-link">
-                    @else
-                        <a class="mobile-action-icon-link">
-                    @endif
-                        <i class="icon-shopping-cart"></i>
-                        <span class="mobile-action-icon-item-count cart-count">0</span>
-                    </a>
+
                 </li>
-            </ul> <!-- End Header Action Icon -->
-        </div> <!-- End Mobile Menu User Center -->
-        <!-- Start Mobile Menu Bottom -->
+            </ul>
+        </div>
         <div class="mobile-menu-bottom">
-            <!-- Start Mobile Menu Nav -->
             <div class="offcanvas-menu">
                 <ul>
                     <li>
                         <a href="{{route('home')}}"><span>{{ __('home') }}</span></a>
+                    </li>
+                    <li>
+                        <a href="#"><span>>{{ __('messages.category') }}</span></a>
                         <ul class="mobile-sub-menu">
-                            <li><a href="index.html">Home 1</a></li>
-                            <li><a href="index-2.html">Home 2</a></li>
+                            <li>
+                                <a href="#">>{{ __('messages.category') }}t</a>
+                                <ul class="mobile-sub-menu">
+                                    @foreach ( $categories as $category )
+                                        @php
+                                            $name = __('messages.'.$category['name']);
+                                        @endphp
+                                        <li><a  href="{{route('getBookByCategory', ['id' => $category['id']])}}"> {{ $category['name'] }}</a></li>
+                                    @endforeach
+                                    <li><a> {{ __('messages.viewMore') }}</a></li>
+                                </ul>
+                            </li>
                         </ul>
                     </li>
                     <li>
-                        <a href="#"><span>Shop</span></a>
-                        <ul class="mobile-sub-menu">
-                            <li>
-                                <a href="#">Shop Layout</a>
-                                <ul class="mobile-sub-menu">
-                                    <li><a href="shop-grid-sidebar-left.html">Grid Left Sidebar</a></li>
-                                    <li><a href="shop-grid-sidebar-right.html">Grid Right Sidebar</a></li>
-                                    <li><a href="shop-full-width.html">Full Width</a></li>
-                                    <li><a href="shop-list-sidebar-left.html">List Left Sidebar</a></li>
-                                    <li><a href="shop-list-sidebar-right.html">List Right Sidebar</a></li>
-                                </ul>
-                            </li>
-                        </ul>
-                        <ul class="mobile-sub-menu">
-                            <li>
-                                <a href="#">Shop Pages</a>
-                                <ul class="mobile-sub-menu">
-                                    <li><a href="#">Cart</a></li>
-                                    <li><a href="#">Wishlist</a></li>
-                                    <li><a href="#">Compare</a></li>
-                                    <li><a href="#">Checkout</a></li>
-                                    <li><a href="#">Login</a></li>
-                                    <li><a href="#">My Account</a></li>
-                                    <li><a href="#">Error 404</a></li>
-                                </ul>
-                            </li>
-                        </ul>
+                        <a href="{{route('news')}}">{{ __('messages.news') }}</a>
+                    </li>
+                    <li>
+                        <a href="{{route('about')}}">{{ __('messages.about') }}</a>
+                    </li>
+                    <li>
+                        <a href="{{route('contact')}}"> {{ __('messages.contact') }}</a>
                     </li>
                 </ul>
             </div>
-            <a class="mobile-menu-email icon-text-right" href="mailto:info@yourdomain.com"><i class="fa fa-envelope-o"> info@yourdomain.com</i></a>
-            <ul class="mobile-menu-social">
-                <li><a href="" class="facebook"><i class="fa fa-facebook"></i></a></li>
-                <li><a href="" class="twitter"><i class="fa fa-twitter"></i></a></li>
-                <li><a href="" class="youtube"><i class="fa fa-youtube"></i></a></li>
-                <li><a href="" class="pinterest"><i class="fa fa-pinterest"></i></a></li>
-                <li><a href="" class="instagram"><i class="fa fa-instagram"></i></a></li>
-            </ul>
         </div>
     </div>
 </div>
@@ -459,47 +343,35 @@
                 <li class="offcanvas-cart-action-button-list"><a href="{{route('login')}}" class="offcanvas-cart-action-button-link">{{__('messages.requestLogin')}}</a></li>
             @endif
         </ul>
-    </div> <!-- End  Offcanvas Addcart Wrapper -->
+    </div>
 
 </div>
 <div id="offcanvas-wishlish" class="offcanvas offcanvas-rightside offcanvas-add-cart-section">
-    <!-- Start Offcanvas Header -->
     <div class="offcanvas-header text-right">
         <button class="offcanvas-close"><i class="fa fa-times"></i></button>
-    </div> <!-- ENd Offcanvas Header -->
-
-    <!-- Start Offcanvas Mobile Menu Wrapper -->
+    </div>
     <div class="offcanvas-wishlist-wrapper">
         <h4 class="offcanvas-title">{{__('messages.wishlist')}}</h4>
         <ul class="offcanvas-wishlist" id="offcanvas-wishlist">
         </ul>
         <ul class="offcanvas-wishlist-action-button">
             @if(session()->has('user'))
-            <li class="offcanvas-wishlist-action-button-list"><a href="{{route('wishlist.index', $user_id )}}" class="offcanvas-wishlist-action-button-link">View Wishlist</a></li>
+            <li class="offcanvas-wishlist-action-button-list"><a href="{{route('wishlist.index', $user_id )}}" class="offcanvas-wishlist-action-button-link">{{__('messages.View Wishlist')}}</a></li>
             @else
-            <li class="offcanvas-wishlist-action-button-list"><a href="{{route('login')}}" class="offcanvas-wishlist-action-button-link">Please login or register to view wishlist!</a></li>
+            <li class="offcanvas-wishlist-action-button-list"><a href="{{route('login')}}" class="offcanvas-wishlist-action-button-link">{{__('messages.Please login or register to view wishlist!')}}</a></li>
             @endif
         </ul>
-    </div> <!-- End Offcanvas Mobile Menu Wrapper -->
-
+    </div>
 </div>
 
 <div class="offcanvas-overlay"></div>
 @yield('content')
 <footer class="footer-section section-top-gap-100">
-    <!-- Start Footer Top Area -->
     <div class="footer-top section-inner-bg">
         <div class="container">
             <div class="row">
                 <div class="col-lg-3 col-md-3 col-sm-5">
                     <div class="footer-widget footer-widget-contact">
-                        {{-- change logo size --}}
-                        <style type="text/css">
-                            .footer-logo img {
-                                width: 40%;
-                                height: 50%;
-                            }
-                        </style>
                         <div class="footer-logo">
                             <a href="{{route('home')}}"><img src="{{ asset('images/logo.png') }}" alt="" class="img-fluid"></a>
                         </div>
@@ -520,12 +392,12 @@
                 <div class="col-lg-5 col-md-5 col-sm-7">
                     <div class="footer-widget footer-widget-subscribe">
                         <h3 class="footer-widget-title">{{__('messages.subscribeNow')}}</h3>
-                        <form action="#" method="post">
-                            <div class="footer-subscribe-box default-search-style d-flex">
-                                <input class="default-search-style-input-box border-around border-right-none subscribe-form" type="email" placeholder="Search entire store here ..." required>
+                        <div class="footer-subscribe-box default-search-style d-flex">
+                            <form action="{{route('search')}}" method="GET">
+                                <input name="keyword" type="search" class="default-search-style-input-box border-around border-right-none subscribe-form"placeholder="{{__('messages.typeKeyWord')}}">
                                 <button class="default-search-style-input-btn" type="submit">{{__('messages.subscribe')}}</button>
-                            </div>
-                        </form>
+                            </form>
+                        </div>
                         <p class="footer-widget-subscribe-note">{{__('messages.notShareEmail')}} <br> {{__('messages.thirdParty')}}</p>
                         <ul class="footer-social">
                             <li><a href="" class="facebook"><i class="fa fa-facebook"></i></a></li>
@@ -541,24 +413,15 @@
                         <h3 class="footer-widget-title">{{__('messages.information')}}</h3>
                         <div class="footer-menu">
                             <ul class="footer-menu-nav">
-                                <li><a href="">Delivery</a></li>
-                                <li><a href="about-us.html">About Us</a></li>
-                                <li><a href="contact-us.html">Contact us</a></li>
-                                <li><a href="">Stores</a></li>
-                            </ul>
-                            <ul class="footer-menu-nav">
-                                <li><a href="">Legal Notice</a></li>
-                                <li><a href="">Secure payment</a></li>
-                                <li><a href="">Sitemap</a></li>
-                                <li><a href="#">My Account</a></li>
+                                <li><a href="{{route('about')}}">{{ __('messages.about') }}</a></li>
+                                <li><a href="{{route('contact')}}">{{ __('messages.contact') }}</a></li>
                             </ul>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div> <!-- End Footer Top Area -->
-    <!-- Start Footer Bottom Area -->
+    </div>
     <div class="footer-bottom">
         <div class="container">
             <div class="row align-items-center">
@@ -574,7 +437,7 @@
                 </div>
             </div>
         </div>
-    </div> <!-- End Footer Bottom Area -->
+    </div>
 </footer>
 
 <button class="material-scrolltop" type="button"></button>
@@ -593,27 +456,18 @@
 <script src="{{asset('assets/js/main.js')}}"></script>
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <script type="text/javascript">
-    // function addCart(){
-    //reload page
-    // location.reload();
         var userID = @json(session('user_id', ['id' => 'id']));
         const url = "http://paymentservice.test:8080/api/cart/get/" + userID;
 
         axios.get(url)
             .then(response => {
-                // console.log('abc'  );
-                const cartItems = Object.values(response.data); // Assuming the cart items are stored as values in the response object
-                // console.log(cartItems[0]);
-                // Select the <ul> element with the class "offcanvas-cart"
+                const cartItems = Object.values(response.data);
                 const offcanvasCart = document.querySelector('.offcanvas-cart');
                 let totalPrice = 0;
-                // Loop through the cart items and generate the <li> elements
+
                 cartItems[0].forEach(item => {
-                    // Create the <li> element
                     const li = document.createElement('li');
                     li.classList.add('offcanvas-cart-item-single');
-                    // Create the inner HTML for the <li> element
-                    //console.log(item);
                     li.innerHTML = `
                         <div class="offcanvas-cart-item-block">
                           <a href="" class="offcanvas-cart-item-image-link">
@@ -631,17 +485,14 @@
                           <a  class="offcanvas-cart-item-delete" id="deleteCart-${item.book_id}" onclick="deleteCartItem(${item.book_id})"><i class="fa fa-trash-o"></i></a>
                         </div>
                       `;
-                    // Append the <li> element to the <ul> element
+
                     totalPrice += parseFloat(item.price);
                     offcanvasCart.appendChild(li);
-                    // console.log(totalPrice);
                 });
 
-                // Select the <span> element with the class "offcanvas-cart-total-price-value"
                 const totalPriceElement = document.querySelector('.offcanvas-cart-total-price-value');
 
-                // Set the total price value in the HTML
-                totalPriceElement.textContent = totalPrice.toFixed(2) + '$';// Assuming you want to display the total with 2 decimal places
+                totalPriceElement.textContent = totalPrice.toFixed(2) + '$';
 
                 const itemCountElement = document.querySelector('.cart-count');
 
@@ -654,8 +505,6 @@
             .catch(error => {
                 console.error(error);
             });
-    // }
-
     function deleteCartItem(itemId) {
         var userID = @json(session('user_id', ['id' => 'id']));
         const deleteUrl = "http://paymentservice.test:8080/api/cart/delete";
@@ -663,16 +512,12 @@
             bookID: itemId,
             userID: userID
         };
-        // console.log(requestData);
 
         axios.post(deleteUrl, requestData)
             .then(response => {
-                // Item deleted successfully from the database
-                // Remove the item from the UI
                 const cartItem = document.querySelector(`#deleteCart-${itemId}`).closest('.offcanvas-cart-item-single');
                 cartItem.remove();
 
-                // Update the total price and item count
                 updateTotalPrice();
                 updateItemCount();
             })
@@ -704,7 +549,6 @@
 </script>
 
 <script type="text/javascript">
-    // function addWishlist(){
         var userID = @json(session('user_id', ['id' => 'id']));
         const urlWishlist = "http://paymentservice.test:8080/api/wishlist/get/" + userID;
 
@@ -713,8 +557,6 @@
                 const wishlistItems = Object.values(response.data);
 
                 const offcanvasWishlist = document.querySelector('.offcanvas-wishlist');
-                //
-                // console.log(wishlistItems);
 
                 wishlistItems.forEach(item => {
                     const li = document.createElement('li');
@@ -740,12 +582,11 @@
                     offcanvasWishlist.appendChild(li);
                 });
 
-                updateWishlistCount(); // Update the wishlist count initially
+                updateWishlistCount();
             })
             .catch(error => {
                 console.error(error);
             });
-    // }
 
     function deleteWishlistItem(itemId) {
         const deleteUrl = "http://paymentservice.test:8080/api/wishlist/delete";
@@ -756,12 +597,10 @@
 
         axios.post(deleteUrl, requestData)
             .then(response => {
-                // Item deleted successfully from the database
-                // Remove the item from the UI
                 const wishlistItem = document.querySelector(`#deleteWishlist-${itemId}`).closest('.offcanvas-wishlist-item-single');
                 wishlistItem.remove();
 
-                updateWishlistCount(); // Update the wishlist count after item deletion
+                updateWishlistCount();
             })
             .catch(error => {
                 console.error(error);
@@ -774,8 +613,47 @@
         wishlistCount.textContent = wishlistItems.length;
     }
 </script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var callMicroservicesLink = document.getElementById('callMicroservicesLink');
 
+        if (callMicroservicesLink) {
+            callMicroservicesLink.addEventListener('click', function(event) {
+                event.preventDefault();
+                var userID = @json(session('user_id'));
+                axios.all([
+                    axios.post('http://userservice.test:8080/api/auth/user-detail/' + userID),
+                    axios.get('http://paymentservice.test:8080/api/order-history/' + userID)
+                ])
+                    .then(axios.spread(function (userProfileResponse, orderHistoryResponse) {
+                        var userProfile = JSON.stringify(userProfileResponse.data);
+                        var orderHistory = JSON.stringify(orderHistoryResponse.data);
+                        var data = {
+                            userProfile: userProfile,
+                            orderHistory: orderHistory
+                        };
 
+                        var userProfileData = JSON.parse(userProfile);
+                        var orderHistoryData = JSON.parse(orderHistory);
+
+                        localStorage.setItem('userProfile', userProfile);
+                        localStorage.setItem('orderHistory', orderHistory);
+
+                        axios.get('{{route('profile')}}', {
+                            params: data
+                        })
+                        .then(function (response) {
+                            window.location.href = '{{route('profile')}} ';
+                        })
+                        .catch(function (error) {
+                            console.log(error);
+                        });
+                    }));
+            });
+        }
+    });
+</script>
 </body>
 
 </html>

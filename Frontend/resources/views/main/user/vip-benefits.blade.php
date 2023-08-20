@@ -1,6 +1,12 @@
 @extends('layouts.main') @section('content') @section('title', 'VIP Benefits')
-
-<!-- ...:::: Start Breadcrumb Section:::... -->
+@php
+    $user = session()->get('user');
+    $is_vip = $user['is_vip'];
+    $vip_experied_date = $user['valid_vip'];
+    $today = date("Y-m-d");
+    $vip_experied_date = date("d-m-Y", strtotime($vip_experied_date));
+    $today = date("d-m-Y", strtotime($today));
+@endphp
 <div class="breadcrumb-section">
     <div class="breadcrumb-wrapper">
         <div class="container">
@@ -13,91 +19,136 @@
         </div>
     </div>
 </div>
-<!-- ...:::: End Breadcrumb Section:::... -->
-<!-- ...::::Start Privacy Policy  Section:::... -->
 <div class="privacy-section">
     <div class="container">
         <div class="row">
-            <div class="col-12">
-                <div class="privacy-policy-wrapper">
-                    <div class="privacy-single-item">
-                        @php $user = session()->get('user'); $is_vip = $user['is_vip']; $vip_experied_date = $user['valid_vip']; $today = date("Y-m-d"); $vip_experied_date = date("d-m-Y", strtotime($vip_experied_date)); $today =
-                        date("d-m-Y", strtotime($today)); @endphp
-                        <h4>Your VIP Available To: <span class="text-danger">{{ $vip_experied_date }}</span></h4>
-                    </div>
-                    <!--
-                            <!-- Start Privacy Policy Single Item -->
-                    <!-- Start Privacy Policy Single Item -->
-                    <div class="privacy-single-item">
-                        <h4>What is VIP?</h4>
+            <div id="FF-container">
+                <header>
+                    <h1>Your <span>VIP</span> Treatment <sup>starts here</sup></h1>
+                    <img src="https://i.ibb.co/GWLPqyd/scroll-indicator.png" />
+                </header>
 
-                        <p>
-                            Step into the enchanting world of a VIP at your local bookstore and unlock a treasure trove of exclusive benefits that will elevate your reading experience to new heights. As a distinguished book lover, you
-                            deserve nothing short of the finest treatment, and the VIP perks of a bookstore will transport you into a realm of literary luxury.
-                        </p>
+                <section class="One border">
+                    <div class="center">
+                        <h2>You're part of something special</h2>
+                        <h3>Welcome to the vip club</h3>
+                        <p>We think our customers deserve to be rewarded. So as a thank you for your loyalty over the past 12 months, we’re giving you the red carpet treatment.</p>
+                        <p>Our VIP club is designed to give customers even more, with VIP club benefits that only a handful of customers have access to. Plus, our VIP elite customers can expect bonus rewards as part of their experience.</p>
                     </div>
-                    <!-- Start Privacy Policy Single Item -->
-                    <!-- Start Privacy Policy Single Item -->
-                    <div class="privacy-single-item">
-                        <h4>What are the benefits of VIP?</h4>
-                        <p>
-                            First and foremost, as a VIP, you will be greeted with personalized attention and tailored recommendations from knowledgeable staff members. Whether you're seeking the latest bestseller, a hidden gem from a
-                            lesser-known author, or a classic masterpiece, the expert book aficionados will guide you through the labyrinthine shelves, ensuring you discover literary treasures perfectly suited to your tastes.
-                        </p>
+                </section>
+
+                <section class="Three">
+                    <div class="flexbox">
+                        <img src="https://i.ibb.co/N3PCtgN/appreciated.jpg" />
+                        <img src="https://i.ibb.co/SfXC8q0/inspired.jpg" />
+                        <img src="https://i.ibb.co/LRVrWz7/treated.jpg" />
+                        <img src="https://i.ibb.co/Swz8WTD/wowed.jpg" />
                     </div>
-                    <!-- Start Privacy Policy Single Item -->
-                    <!-- Start Privacy Policy Single Item -->
-                    <div class="privacy-single-item">
-                        <h4>How to become a VIP?</h4>
-                        <p>
-                            Moreover, VIP membership grants you coveted access to pre-release books, enabling you to embark on literary adventures before the rest of the world. Imagine the thrill of being among the privileged few who can
-                            delve into the pages of eagerly awaited novels, immersing yourself in stories yet untold, and engaging in conversations with fellow VIPs about the latest literary sensations.
-                        </p>
+                </section>
+
+                <section class="Two border">
+                    <div class="center">
+                        <h2>
+                            Great customers <br />
+                            deserve great<br />
+                            rewards
+                        </h2>
+                        <h3>You’ll have VIP access to</h3>
+                        <p>Specially selected offers, gifts and competitions – the VIP Club has it all. What’s more, this VIP year we’ve made your experience ‘better than ever’ with exciting improvements to our promotions.</p>
                     </div>
-                    <!-- Start Privacy Policy Single Item -->
-                    <!-- Start Privacy Policy Single Item -->
-                    <div class="privacy-single-item">
-                        <h4>How to maintain VIP?</h4>
-                        <p>
-                            To further enhance your bookish journey, VIP benefits often extend to exclusive author events and book signings. Prepare to meet the brilliant minds behind your favorite works, as esteemed authors share their
-                            inspiration and insights during intimate gatherings reserved solely for VIP members. Immerse yourself in thought-provoking discussions, exchange ideas, and forge connections with fellow literary enthusiasts who
-                            share your passion for the written word.
-                        </p>
+                </section>
+
+                <hr />
+
+                <section class="Four border">
+                    <div class="center">
+                        <h2>How to become a VIP?</h2>
+                        <h3>
+                            How to qualify as <br />
+                            a vip every year:
+                        </h3>
+                        <div>
+                            <div class="roundal"><img src="https://i.ibb.co/CBDpPW9/become-vip.png" /></div>
+                            <p>Place 4 or more orders with a total value over £300 on one of your customer accounts (after returns)†</p>
+                        </div>
+                        <div>
+                            <div class="roundal"><img src="https://i.ibb.co/KrLQsdp/become-vip-elite.png" /></div>
+                            <p>Place at least 4 orders with a total value of £650 or more on one of your customer accounts (after returns)†</p>
+                        </div>
                     </div>
-                    <!-- Start Privacy Policy Single Item -->
-                    <!-- Start Privacy Policy Single Item -->
-                    <div class="privacy-single-item">
-                        <h4>How to use VIP?</h4>
-                        <p>
-                            Unleash the power of knowledge with VIP access to special lectures, literary workshops, and book clubs. Expand your horizons through captivating presentations by renowned speakers, engaging in lively debates, and
-                            immersing yourself in intellectual dialogue. These unique opportunities foster personal growth, enabling you to delve deeper into the realms of literature, broaden your perspectives, and nurture a lifelong love
-                            affair with books.
-                        </p>
+                </section>
+
+                <section class="Five border">
+                    <h2>
+                        Comparing <br />
+                        the Rewards
+                    </h2>
+                    <div class="table">
+                        <div class="logos">
+                            <div class="space"></div>
+                            <div class="roundal vip-elite"></div>
+                            <div class="roundal vip"></div>
+                        </div>
+                        <ul>
+                            <li><span>Exclusive VIP mailings and newsletters</span> <sup></sup><sup></sup></li>
+                            <li><span>New &amp; improved access to VIP online area</span><sup></sup><sup></sup></li>
+                            <li><span>Regular VIP-only competitions and offers</span><sup></sup><sup></sup></li>
+                            <li><span>Exclusive email offers</span><sup></sup><sup></sup></li>
+                            <li><span>VIP birthday treat</span><sup></sup><sup></sup></li>
+                            <li><span>VIP free gifts</span><sup></sup><sup></sup></li>
+                            <li><span>Product review panel</span><sup></sup><sup></sup></li>
+                            <li><span>Exclusive delivery discounts</span><sup></sup></li>
+                            <li><span>Sale and new season previews</span><sup></sup></li>
+                            <li><span>Christmas treat</span><sup></sup></li>
+                            <li><span>‘It’s On Us’ monthly treats*</span><sup></sup></li>
+                            <li><span>Freephone priority number</span><sup></sup></li>
+                        </ul>
                     </div>
-                    <!-- Start Privacy Policy Single Item -->
-                    <!-- Start Privacy Policy Single Item -->
-                    <div class="privacy-single-item">
-                        <h4>And some more benefits of VIP?</h4>
-                        <p>
-                            The VIP experience extends beyond the bookstore itself, with exclusive discounts and promotions tailored exclusively for members. From special pricing on new releases to limited-edition book sets and collector's
-                            items, your VIP status ensures that your literary acquisitions are not only a source of endless enjoyment but also a testament to your refined taste and discerning eye for quality.
-                        </p>
+                </section>
+
+                <hr />
+
+                <section class="Six mobile">
+                    <div class="home">
+                        <img src="https://i.ibb.co/7nC9bTv/mob-home.jpg" />
+                        <lm key="#" class="link">shop womens</lm>
                     </div>
-                    <!-- Start Privacy Policy Single Item -->
-                    <!-- Start Privacy Policy Single Item -->
-                    <div class="privacy-single-item">
-                        <h4>Now and future more</h4>
-                        <p>
-                            Furthermore, VIP benefits often encompass convenient services, such as reserved seating in cozy reading nooks, priority access to cozy cafes nestled within the bookstore, and complimentary refreshments to savor
-                            as you lose yourself in the pages of your latest find. Indulge in moments of solitude or engage in stimulating conversations with like-minded individuals as you bask in the tranquil ambiance of a sanctuary
-                            designed to ignite your literary passions.
-                        </p>
+                    <div class="womens">
+                        <img src="https://i.ibb.co/w44qVd5/mob-womens.jpg" />
+                        <lm key="#" class="link"><span>shop home</span></lm>
                     </div>
-                    <!-- Start Privacy Policy Single Item -->
-                </div>
+                    <div class="mens">
+                        <img src="https://i.ibb.co/3FngjyN/mob-mens.jpg" />
+                        <lm key="#" class="link"><span>shop mens</span></lm>
+                    </div>
+                </section>
+
+                <section class="SixTwo desktop grid flexbox">
+                    <div class="box one">
+                        <lm key="#" class="link"><img class="one" src="https://i.ibb.co/pJzTPt8/womens.jpg" /></lm>
+                    </div>
+
+                    <div class="box two">
+                        <div class="one">
+                            <lm key="#" class="link">
+                                <img class="one" src="https://i.ibb.co/wymdsxr/home.jpg" />
+                                <img class="two" src="https://i.ibb.co/TK12BQP/shop-home.png" />
+                            </lm>
+                        </div>
+
+                        <div class="two">
+                            <lm key="#" class="link one">
+                                <img src="https://i.ibb.co/MSNstCQ/shop-womens.png" />
+                            </lm>
+                            <lm key="#" class="link two">
+                                <img style="margin-right: 1%;" src="https://i.ibb.co/VDTV1Hq/mens.jpg" />
+                                <img src="https://i.ibb.co/RbXh01M/shop-mens.png" />
+                            </lm>
+                        </div>
+                    </div>
+                </section>
             </div>
         </div>
     </div>
 </div>
-<!-- ...::::End Privacy Policy Section:::... -->
 @endsection

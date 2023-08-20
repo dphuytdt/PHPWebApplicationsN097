@@ -1,112 +1,92 @@
 @extends('layouts.main') @section('content') @section('title', 'Upgrade to VIP')
-
-<!-- ...:::: Start Breadcrumb Section:::... -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+<link rel="stylesheet" href="{{asset('css/vip/style.css')}}" />
 <div class="breadcrumb-section">
     <div class="breadcrumb-wrapper">
         <div class="container">
             <div class="row">
                 <div class="col-12 d-flex justify-content-between justify-content-md-between align-items-center flex-md-row flex-column">
-                    <h3 class="breadcrumb-title">Upgrade to VIP</h3>
+                    <h3 class="breadcrumb-title">{{__('messages.Upgrade to VIP')}}</h3>
                     {{ Breadcrumbs::render('upgrade') }}
                 </div>
             </div>
         </div>
     </div>
 </div>
-<!-- ...:::: End Breadcrumb Section:::... -->
-
-<!-- ...:::: Start Checkout Section:::... -->
-<div class="checkout_section">
+<section class="pricing-section">
     <div class="container">
-        <div class="checkout_form">
+        <div class="sec-title text-center">
+            <span class="title">{{__('messages.Get plan')}}</span>
+            <h2>{{__('messages.Choose a Plan')}}</h2>
+        </div>
+
+        <div class="outer-box">
             <div class="row">
-                <div class="col-lg-6 col-md-6">
-                    <h3>Your order</h3>
-                    <div class="order_table table-responsive">
-                        <table>
-                            <thead>
-                            <tr>
-                                <th>Service</th>
-                                <th>Total</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr>
-                                <td>Upgrade to <strong> VIP Member</strong></td>
-                                <td>$16.00 per month</td>
-                            </tr>
-                            </tbody>
-                            <tfoot>
-                            <tr>
-                                <th>Choose your plane</th>
-                                <td>
-                                    <input name="numberMonth" type="number" placeholder="Number of months" value="1" min="1" />
-                                </td>
-                            </tr>
-                            <tr class="order_total">
-                                <th>Order Total</th>
-                                {{-- write a script get input numberMonth value and calculate total --}}
-                                <td name="total"><strong id="total">$16.00</strong></td>
-                                <input type="hidden" name="total" value="368000" />
-                            </tr>
-                            </tfoot>
-                        </table>
+                <div class="pricing-block col-lg-4 col-md-6 col-sm-12 wow fadeInUp">
+                    <div class="inner-box">
+                        <div class="icon-box">
+                            <div class="icon-outer"><i class="fas fa-paper-plane"></i></div>
+                        </div>
+                        <div class="price-box">
+                            <div class="title">Monthly Pass</div>
+                            <h4 class="price">$35.99</h4>
+                        </div>
+                        <ul class="features">
+                            <li class="true">Conference plans</li>
+                            <li class="true">Free Lunch And Coffee</li>
+                            <li class="true">Certificate</li>
+                            <li class="false">Easy Access</li>
+                            <li class="false">Free Contacts</li>
+                        </ul>
+                        <div class="btn-box">
+                            <a href="" class="theme-btn">BUY plan</a>
+                        </div>
                     </div>
-                    @php $user = session()->get('user'); @endphp
-                    <div class="col-lg-6 col-md-6">
-                        <form action="{{route('checkout.VNPay')}}" method="POST">
-                            @csrf
-                            <input type="hidden" name="useId" value="{{$user['id']}}" />
-                            <input type="hidden" name="userName" value="{{$user['fullname']}}" />
-                            <input type="hidden" name="total" value="16" id="totalValueInput" />
-                            <div class="payment_method">
-                                <div class="order_button pt-15">
-                                    <button name="redirect" type="submit">Proceed to Pay With VNPay</button>
-                                </div>
-                            </div>
-                        </form>
+                </div>
+                <div class="pricing-block col-lg-4 col-md-6 col-sm-12 wow fadeInUp" data-wow-delay="400ms">
+                    <div class="inner-box">
+                        <div class="icon-box">
+                            <div class="icon-outer"><i class="fas fa-gem"></i></div>
+                        </div>
+                        <div class="price-box">
+                            <div class="title">Year Pass</div>
+                            <h4 class="price">$99.99</h4>
+                        </div>
+                        <ul class="features">
+                            <li class="true">Conference plans</li>
+                            <li class="true">Free Lunch And Coffee</li>
+                            <li class="true">Certificate</li>
+                            <li class="true">Easy Access</li>
+                            <li class="false">Free Contacts</li>
+                        </ul>
+                        <div class="btn-box">
+                            <a href="" class="theme-btn">BUY plan</a>
+                        </div>
                     </div>
-                    <div class="col-lg-6 col-md-6">
-                        <form action="{{route('checkout.Momo')}}" method="POST">
-                            @csrf
-                            <input type="hidden" name="useId" value="{{$user['id']}}" />
-                            <input type="hidden" name="total" value="16" id="totalValueInput" />
-                            <div class="payment_method">
-                                <div class="order_button pt-15">
-                                    <button name="payUrl" type="submit">Proceed to Pay With Momo</button>
-                                </div>
-                            </div>
-                        </form>
+                </div>
+                <div class="pricing-block col-lg-4 col-md-6 col-sm-12 wow fadeInUp" data-wow-delay="800ms">
+                    <div class="inner-box">
+                        <div class="icon-box">
+                            <div class="icon-outer"><i class="fas fa-rocket"></i></div>
+                        </div>
+                        <div class="price-box">
+                            <div class="title">Group Pass</div>
+                            <h4 class="price">$199.99</h4>
+                        </div>
+                        <ul class="features">
+                            <li class="true">Conference plans</li>
+                            <li class="true">Free Lunch And Coffee</li>
+                            <li class="true">Certificate</li>
+                            <li class="true">Easy Access</li>
+                            <li class="true">Free Contacts</li>
+                        </ul>
+                        <div class="btn-box">
+                            <a href="" class="theme-btn">BUY plan</a>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-        <!-- Start User Details Checkout Form -->
     </div>
-</div>
-<!-- ...:::: End Checkout Section:::... -->
-<script>
-    // Lấy tham chiếu đến phần tử input
-    var inputNumberMonth = document.querySelector('input[name="numberMonth"]');
-    var totalValueInput = document.getElementById("totalValueInput");
-    // Lắng nghe sự kiện khi giá trị trong input thay đổi
-    inputNumberMonth.addEventListener("input", function () {
-        // Lấy giá trị mới từ input
-        var months = parseInt(inputNumberMonth.value);
-
-        // Kiểm tra nếu giá trị không phải là một số hợp lệ, đặt giá trị total thành rỗng
-        if (isNaN(months) || months < 1) {
-            document.getElementById("total").textContent = "";
-        } else {
-            // Tính toán tổng số tiền
-            var total = months * 16;
-
-            // Đặt giá trị total mới vào thẻ strong có id là 'total'
-            document.getElementById("total").textContent = "$" + total.toFixed(2);
-            totalValueInput.value = total;
-        }
-        //set value for input total
-        document.querySelector('input[name="total"]').value = total;
-    });
-</script>
+</section>
 @endsection
