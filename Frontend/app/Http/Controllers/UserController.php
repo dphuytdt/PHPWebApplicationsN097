@@ -20,30 +20,15 @@ class UserController extends Controller
         $this->categoryService = $categoryService;
     }
 
-    public function profile()
+    public function profile(Request $request)
     {
         if (!session()->has('token')) {
             return redirect()->route('login');
         }
 
         $categories = $this->categoryService->getCategory();
-        $user = session()->get('user');
-        $user_id = $user['id'];
 
-        $client = new Client();
-
-        try {
-            $response = $client->post(self::USER_SERVICE.'/user-detail/'.$user_id);
-
-            $res = json_decode($response->getBody(), true);
-            $userDetails = $res['user'];
-
-            return view('main.user.profile')->with('categories', $categories)->with('user', $user)
-                    ->with('userDetails', $userDetails);
-        } catch (\Exception $e) {
-            return view('errors.404')->with('categories', $categories);
-        }
-
+        return view('main.user.profile')->with('categories', $categories);
     }
 
     public function postProfile(Request $request) {

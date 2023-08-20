@@ -144,7 +144,53 @@
                                                 height: 20px;
                                             }
                                         </style>
-                                        <li><a href="{{route('profile')}}">{{__('messages.myAccount')}}</a></li>
+                                        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+                                        <script>
+                                            document.addEventListener('DOMContentLoaded', function() {
+                                                var callMicroservicesLink = document.getElementById('callMicroservicesLink');
+
+                                                if (callMicroservicesLink) {
+                                                    callMicroservicesLink.addEventListener('click', function(event) {
+                                                        event.preventDefault(); // Prevent the default link behavior
+                                                        var userID = @json(session('user_id'));
+                                                        axios.all([
+                                                            axios.post('http://userservice.test:8080/api/auth/user-detail/' + userID),
+                                                            axios.get('http://paymentservice.test:8080/api/order-history/' + userID)
+                                                        ])
+                                                            .then(axios.spread(function (userProfileResponse, orderHistoryResponse) {
+                                                                var userProfile = JSON.stringify(userProfileResponse.data);
+                                                                var orderHistory = JSON.stringify(orderHistoryResponse.data);
+                                                                var data = {
+                                                                    userProfile: userProfile,
+                                                                    orderHistory: orderHistory
+                                                                };
+
+                                                                var userProfileData = JSON.parse(userProfile);
+                                                                var orderHistoryData = JSON.parse(orderHistory);
+
+                                                                localStorage.setItem('userProfile', userProfile);
+                                                                localStorage.setItem('orderHistory', orderHistory);
+
+                                                                axios.get('{{route('profile')}}', {
+                                                                    params: data
+                                                                })
+                                                                .then(function (response) {
+                                                                    window.location.href = '{{route('profile')}} ';
+                                                                })
+                                                                .catch(function (error) {
+                                                                    console.log(error);
+                                                                });
+                                                            }));
+                                                    });
+                                                }
+                                            });
+                                        </script>
+                                        <li>
+{{--                                            <a href="{{route('profile')}}">--}}
+                                            <a id="callMicroservicesLink" href="#">
+                                                {{__('messages.myAccount')}}
+                                            </a>
+                                        </li>
                                         @php
                                             $user_id = session()->get('user')['id'];
                                         @endphp
@@ -164,11 +210,11 @@
                                 </a>
                                 @endif
                             </li>
-                    </ul> <!-- End Header Action Icon -->
+                    </ul>
                 </div>
             </div>
         </div>
-    </div> <!-- End Header Center Area -->
+    </div>
 
     <!-- Start Bottom Area -->
     <div class="header-bottom sticky-header">
@@ -210,9 +256,8 @@
                 </div>
             </div>
         </div>
-    </div> <!-- End Bottom Area -->
-</header> <!-- ...:::: End Header Section:::... -->
-<!-- ...:::: Start Mobile Header Section:::... -->
+    </div>
+</header>
 <div class="mobile-header-section d-block d-lg-none">
     <!-- Start Mobile Header Wrapper -->
     <div class="mobile-header-wrapper">
@@ -235,9 +280,7 @@
             </div>
         </div>
     </div> <!-- End Mobile Header Wrapper -->
-</div> <!-- ...:::: Start Mobile Header Section:::... -->
-
-<!-- ...:::: Start Offcanvas Mobile Menu Section:::... -->
+</div>
 <div id="mobile-menu-offcanvas" class="offcanvas offcanvas-leftside offcanvas-mobile-menu-section">
     <!-- Start Offcanvas Header -->
     <div class="offcanvas-header text-right">
@@ -379,65 +422,10 @@
                                 </ul>
                             </li>
                         </ul>
-                        <ul class="mobile-sub-menu">
-                            <li>
-                                <a href="#">Product Single</a>
-                                <ul class="mobile-sub-menu">
-                                    <li><a href="product-details-default.html">Product Default</a></li>
-                                    <li><a href="product-details-variable.html">Product Variable</a></li>
-                                    <li><a href="product-details-affiliate.html">Product Referral</a></li>
-                                    <li><a href="product-details-group.html">Product Group</a></li>
-                                    <li><a href="product-details-single-slide.html">Product Slider</a></li>
-                                    <li><a href="product-details-tab-left.html">Product Tab Left</a></li>
-                                    <li><a href="product-details-tab-right.html">Product Tab Right</a></li>
-                                    <li><a href="product-details-gallery-left.html">Product Gallery Left</a></li>
-                                    <li><a href="product-details-gallery-right.html">Product Gallery Right</a></li>
-                                    <li><a href="product-details-sticky-left.html">Product Sticky Left</a></li>
-                                    <li><a href="product-details-sticky-right.html">Product Sticky right</a></li>
-                                </ul>
-                            </li>
-                        </ul>
                     </li>
-                    <li>
-                        <a href="#"><span>Blogs</span></a>
-                        <ul class="mobile-sub-menu">
-                            <li>
-                                <a href="#">Blog Grid</a>
-                                <ul class="mobile-sub-menu">
-                                    <li><a href="blog-grid-sidebar-left.html">Blog Grid Sidebar left</a></li>
-                                    <li><a href="blog-grid-sidebar-right.html">Blog Grid Sidebar Right</a></li>
-                                </ul>
-                            </li>
-                            <li>
-                                <a href="blog-full-width.html">Blog Full Width</a>
-                            </li>
-                            <li>
-                                <a href="#">Blog Single</a>
-                                <ul class="mobile-sub-menu">
-                                    <li><a href="blog-single-sidebar-left.html">Blog Single Sidebar left</a></li>
-                                    <li><a href="blog-single-sidebar-right.html">Blog Single Sidebar Right</a></li>
-                                </ul>
-                            </li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a href="#"><span>Pages</span></a>
-                        <ul class="mobile-sub-menu">
-                            <li><a href="about-us.html">About Us</a></li>
-                            <li><a href="service.html">Service</a></li>
-                            <li><a href="faq.html">Frequently Questions</a></li>
-                            <li><a href="privacy-policy.html">Privacy Policy</a></li>
-                            <li><a href="404.html">404 Page</a></li>
-                        </ul>
-                    </li>
-                    <li><a href="contact-us.html">Contact Us</a></li>
                 </ul>
-            </div> <!-- End Mobile Menu Nav -->
-
-            <!-- Mobile Manu Mail Address -->
+            </div>
             <a class="mobile-menu-email icon-text-right" href="mailto:info@yourdomain.com"><i class="fa fa-envelope-o"> info@yourdomain.com</i></a>
-
-            <!-- Mobile Manu Social Link -->
             <ul class="mobile-menu-social">
                 <li><a href="" class="facebook"><i class="fa fa-facebook"></i></a></li>
                 <li><a href="" class="twitter"><i class="fa fa-twitter"></i></a></li>
@@ -445,18 +433,13 @@
                 <li><a href="" class="pinterest"><i class="fa fa-pinterest"></i></a></li>
                 <li><a href="" class="instagram"><i class="fa fa-instagram"></i></a></li>
             </ul>
-        </div> <!-- End Mobile Menu Bottom -->
-    </div> <!-- End Offcanvas Mobile Menu Wrapper -->
-</div> <!-- ...:::: End Offcanvas Mobile Menu Section:::... -->
-
-<!-- ...:::: Start Offcanvas Addcart Section :::... -->
+        </div>
+    </div>
+</div>
 <div id="offcanvas-add-cart" class="offcanvas offcanvas-rightside offcanvas-add-cart-section">
-    <!-- Start Offcanvas Header -->
     <div class="offcanvas-header text-right">
         <button class="offcanvas-close"><i class="fa fa-times"></i></button>
-    </div> <!-- End Offcanvas Header -->
-
-    <!-- Start  Offcanvas Addcart Wrapper -->
+    </div>
     <div class="offcanvas-add-cart-wrapper">
         <h4 class="offcanvas-title"{{__('messages.cart')}}></h4>
         <ul class="offcanvas-cart">
@@ -478,9 +461,7 @@
         </ul>
     </div> <!-- End  Offcanvas Addcart Wrapper -->
 
-</div> <!-- ...:::: End  Offcanvas Addcart Section :::... -->
-
-<!-- ...:::: Start Offcanvas Mobile Menu Section:::... -->
+</div>
 <div id="offcanvas-wishlish" class="offcanvas offcanvas-rightside offcanvas-add-cart-section">
     <!-- Start Offcanvas Header -->
     <div class="offcanvas-header text-right">
@@ -501,7 +482,7 @@
         </ul>
     </div> <!-- End Offcanvas Mobile Menu Wrapper -->
 
-</div> <!-- ...:::: End Offcanvas Mobile Menu Section:::... -->
+</div>
 
 <div class="offcanvas-overlay"></div>
 @yield('content')
@@ -594,32 +575,21 @@
             </div>
         </div>
     </div> <!-- End Footer Bottom Area -->
-</footer> <!-- ...:::: End Footer Section:::... -->
+</footer>
 
-<!-- material-scrolltop button -->
 <button class="material-scrolltop" type="button"></button>
 
-<!-- ::::::::::::::All JS Files here :::::::::::::: -->
-<!-- Global Vendor, plugins JS -->
 <script src="{{asset('assets/js/vendor/modernizr-3.11.2.min.js')}}"></script>
 <script src="{{asset('assets/js/vendor/jquery-3.5.1.min.js')}}"></script>
 <script src="{{asset('assets/js/vendor/jquery-migrate-3.3.0.min.js')}}"></script>
 <script src="{{asset('assets/js/vendor/bootstrap.bundle.min.js')}}"></script>
 <script src="{{asset('assets/js/vendor/jquery-ui.min.js')}}"></script>
-
-<!--Plugins JS-->
 <script src="{{asset('assets/js/plugins/slick.min.js')}}"></script>
 <script src="{{asset('assets/js/plugins/material-scrolltop.js')}}"></script>
 <script src="{{asset('assets/js/plugins/jquery.nice-select.min.js')}}"></script>
 <script src="{{asset('assets/js/plugins/jquery.zoom.min.js')}}"></script>
 <script src="{{asset('assets/js/plugins/venobox.min.js')}}"></script>
-
-<!-- Use the minified version files listed below for better performance and remove the files listed above -->
-<!-- <script src="assets/js/vendor.min.js"></script>
-<script src="assets/js/plugins.min.js"></script> -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js" integrity="sha512-AA1Bzp5Q0K1KanKKmvN/4d3IRKVlv9PYgwFPvm32nPO6QS8yH1HO7LbgB1pgiOxPtfeg5zEn2ba64MUcqJx6CA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-
-<!-- Main JS -->
 <script src="{{asset('assets/js/main.js')}}"></script>
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <script type="text/javascript">

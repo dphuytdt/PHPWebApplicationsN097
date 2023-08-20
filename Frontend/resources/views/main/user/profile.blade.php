@@ -63,9 +63,37 @@
                 </div>
             </div>
         </div>
-    </div> <!-- ...:::: End Breadcrumb Section:::... -->
+    </div>
+    <script type="text/javascript">
+        document.addEventListener("DOMContentLoaded", function() {
+            const userData = JSON.parse(localStorage.getItem('userProfile'));
 
-    <!-- ...:::: Start Account Dashboard Section:::... -->
+            $('#fullname').val(userData.user.fullname);
+
+            if(null === userData.user.user_detail.avatar){
+                $('#imageAvatar').attr('src', 'https://static.thenounproject.com/png/5034901-200.png');
+            } else {
+                $('#imageAvatar').attr('src', 'data:image/'+userData.user.user_detail.image_extension+';base64,'+userData.user.user_detail.avatar);
+            }
+
+            $('#email').val(userData.user.email);
+            $('#birthday').val(userData.user.user_detail.birthday);
+            $('#phone').val(userData.user.user_detail.phone);
+            $('#address').val(userData.user.user_detail.address);
+            $('#wallet').val(userData.user.user_detail.wallet);
+
+            if (userData && userData.user.user_detail.gender !== null) {
+                const maleRadio = document.getElementById('male');
+                const femaleRadio = document.getElementById('female');
+
+                if (userData.user.user_detail.gender === 0) {
+                    maleRadio.checked = true;
+                } else if (userData.user.user_detail.gender === 1) {
+                    femaleRadio.checked = true;
+                }
+            }
+        });
+    </script>
     <div class="account_dashboard">
         <div class="container">
             <div class="row">
@@ -168,18 +196,24 @@
                             <div class="login">
                                 <div class="login_form_container">
                                     <div class="account_login_form">
-                                        <form action="{{route('profile.update' , $user['id'])}}" method="POST">
+                                        @if(session()->has('user'))
+                                            @php
+                                                $user_id = session()->get('user')['id'];
+                                            @endphp
+                                        @endif
+                                        <form action="{{route('profile.update' , $user_id)}}" method="POST">
                                             @csrf
                                             <div class="input-radio">
-                                                <span class="custom-radio"><input type="radio" value="0" name="id_gender" @checked('0' == $userDetails['user_detail']['gender'])> Mr.</span>
-                                                <span class="custom-radio"><input type="radio" value="1" name="id_gender" @checked('1' == $userDetails['user_detail']['gender'])> Mrs.</span>
-                                            </div> <br>
+                                                <span class="custom-radio"><label for="male"></label><input type="radio" value="0" id="male" name="gender"> Mr.</span>
+                                                <span class="custom-radio"><label for="female"></label><input type="radio" value="1" id="female" name="gender"> Mrs.</span>
+                                            </div>
+                                            <br>
 
                                             <div class="row">
                                                 <div class="col-md-6 col-12">
                                                     <div class="default-form-box mb-20">
-                                                        <label>Full Name</label>
-                                                        <input type="text" name="fullname" value="{{ $userDetails['fullname'] ?? '' }}" data-label="Full Name" placeholder="Full Name" required>
+                                                        <label for="fullname">Full Name</label>
+                                                        <input type="text" name="fullname" id="fullname" data-label="Full Name" placeholder="Full Name" required>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6 col-12">
@@ -187,11 +221,7 @@
                                                         <label class="label">
                                                           <input type="file" accept="image/*"  />
                                                           <figure class="personal-figure">
-                                                            @if($userDetails['user_detail']['avatar'] == null)
-                                                            <img src="https://static.thenounproject.com/png/5034901-200.png" class="personal-avatar" name="image" alt="avatar">
-                                                            @else
-                                                            <img src="data:image/{{ $userDetails['user_detail']['image_extension'] }};base64,{{$userDetails['user_detail']['avatar'] }}" name="image" class="personal-avatar" alt="avatar">
-                                                            @endif
+                                                            <img src="https://static.thenounproject.com/png/5034901-200.png" class="personal-avatar" id="imageAvatar" name="imager" alt="avatar">
                                                             <figcaption class="personal-figcaption">
                                                               <img src="https://raw.githubusercontent.com/ThiagoLuizNunes/angular-boilerplate/master/src/assets/imgs/camera-white.png" id="imageUpload" alt="camera">
                                                             </figcaption>
@@ -228,11 +258,11 @@
                                             </script>
                                             <div class="default-form-box mb-20">
                                                 <label>Email</label>
-                                                <input type="text" name="email-name" value="{{ $userDetails['email'] }}" disabled>
+                                                <input type="text" id="email" name="email" disabled>
                                             </div>
                                             <div class="default-form-box mb-20">
                                                 <label>Birthday</label>
-                                                <input type="date" name="birthday" value="{{ $userDetails['user_detail']['birthday'] }}" data-label="Birthday" required>
+                                                <input type="date" name="birthday" id="birthday" data-label="Birthday" required>
                                             </div>
                                             <span class="example">
                                                   (E.g.: 05/31/1970)
@@ -240,15 +270,15 @@
                                             <br>
                                             <div class="default-form-box mb-20">
                                                 <label>Wallet</label>
-                                                <input type="text" name="wallet" value="{{ $userDetails['user_detail']['wallet'] }}" disabled>
+                                                <input type="text" id="wallet" name="wallet"  disabled>
                                             </div>
                                             <div class="default-form-box mb-20">
                                                 <label>Address</label>
-                                                <input type="text" name="address" value="{{ $userDetails['user_detail']['address'] }}" data-label="Address" required>
+                                                <input type="text" id="address" name="address" data-label="Address" required>
                                             </div>
                                             <div class="default-form-box mb-20">
-                                                <label>Phone</label>
-                                                <input type="text" name="phone" value="{{ $userDetails['user_detail']['phone'] }}" data-label="Phone" required>
+                                                <label for="phone">Phone</label>
+                                                <input type="text" name="phone" id="phone" data-label="Phone" required>
                                             </div>
                                             <div class="save_button primary_btn default_button">
                                                 <button type="submit">Save</button>
