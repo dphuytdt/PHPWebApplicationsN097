@@ -152,9 +152,9 @@ class BookRepository implements BookRepositoryInterface
         } else if ($dataType == 'new') {
             $news = Book::where('created_at', '>=', now()->subDays(7))
                 ->orWhere('updated_at', '>=', now()->subDays(7))
-                ->get();
+                ->paginate(8);
             if (count($news) == 0) {
-                return Book::orderBy('updated_at', 'desc')->paginate(8);
+                return Book::orderBy('created_at', 'desc')->paginate(8);
             }
             return $news;
         } else {

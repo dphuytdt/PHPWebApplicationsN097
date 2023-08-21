@@ -52,7 +52,7 @@ class CartRepository implements CartRepositoryInterface
     public function deleteCart($request)
     {
         $cart = Cart::where('user_id', $request->userID)->where('book_id', $request->bookID)->where('status', 0);
-        
+
         if($cart){
             $cart->delete();
             return true;

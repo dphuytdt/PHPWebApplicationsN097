@@ -70,11 +70,6 @@ class BookController extends Controller
         }
     }
 
-    public function allBook(Request $request){
-
-        // return view('main.all-book', compact('paginator'));
-    }
-
     public function viewMore(string $dataType, Request $request)
     {
         $categories = $this->categoryService->getCategory();
