@@ -95,5 +95,4 @@ class BookController extends Controller
         $books = $this->bookRepository->getBookByCategory($id);
         return response()->json($books, 200);
     }
-
 }
