@@ -24,33 +24,6 @@ class UserController extends Controller
         $this->otpRepository = $otpRepository;
     }
 
-    public function upgrateUser(Request $request) {
-        $validator = Validator::make($request->all(), [
-            'email' => 'required|email',
-            'amount' => 'required|numeric'
-        ]);
-        if ($validator->fails()) {
-            return response()->json($validator->errors(), 422);
-        }
-        $email = $request->email;
-        $user = $this->userRepository->getUserByemail($email);
-        if($user) {
-            if($user->is_vip == 1) {
-                return response()->json(['message' => 'User is vip']);
-            } else {
-                $result = $this->userRepository->upgradeUser($user, $request->amount, $request->numberMonth);
-                if($result) {
-                    return response()->json(['message' => 'Upgrade user successfully']);
-                } else {
-                    return response()->json(['message' => 'Upgrade user failed']);
-                }
-            }
-        } else{
-            return response()->json(['message' => 'User not found']);
-        }
-
-    }
-
     public function getAllUser(): \Illuminate\Http\JsonResponse
     {
         $users = $this->userRepository->getAllUser();
@@ -201,6 +174,31 @@ class UserController extends Controller
 
         } catch (\Exception|\Error|\Throwable $e) {
             return response()->json(['message' => $e->getMessage()]);
+        }
+    }
+
+    public function upgradeVip(Request $request)
+    {
+        $userId = $request->userId;
+        $dateStart = $request->dateStart;
+        $plan = $request->plan;
+
+        $user = $this->userRepository->getUserById($userId);
+
+        if($user) {
+            if($user->is_vip == 1) {
+                return response()->json(['message' => 'User is vip']);
+            } else {
+                $result = $this->userRepository->upgradeUser($userId, $dateStart, $plan);
+
+                if($result) {
+                    return response()->json(['message' => 'Upgrade user successfully']);
+                } else {
+                    return response()->json(['message' => 'Upgrade user failed']);
+                }
+            }
+        } else {
+            return response()->json(['message' => 'User not found']);
         }
     }
 }

@@ -57,11 +57,10 @@ Route::group(['middleware' => 'locale'], function() {
             Route::post('/{id}', [AuthController::class, 'postProfile'])->name('profile.update');
         });
 
-        Route::get('upgrade', [UserController::class, 'upgrade'])->name('upgrade');
-
-        Route::post('checkout-VNPay', [PaymentController::class, 'payment'])->name('checkout.VNPay');
-
-        Route::post('checkout-Momo', [PaymentController::class, 'paymentMomo'])->name('checkout.Momo');
+        Route::group(['prefix' => 'upgrade'], function () {
+            Route::get('/', [UserController::class, 'upgrade'])->name('upgrade');
+            Route::post('process', [PaymentController::class, 'payment'])->name('upgradeVip.checkout.VNPay');
+        });
 
         Route::get('vip-benefits', [UserController::class, 'vipBenefits'])->name('vipBenefits');
     });
@@ -86,7 +85,5 @@ Route::group(['middleware' => 'locale'], function() {
     Route::get('thankYou', [HomeController::class, 'thankYou'])->name('thankYou');
 
     Route::get('change-language/{language}', [LocaleController::class, 'changeLanguage'])->name('changeLanguage');
-
-//    Route::post('proccess-payment', [ProccessController::class, 'proccessPayment'])->name('proccessPayment');
 });
 

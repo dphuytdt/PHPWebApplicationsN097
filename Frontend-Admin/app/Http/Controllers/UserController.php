@@ -22,7 +22,7 @@ class UserController extends Controller
         try {
             $response = $client->get($this->userService.'admin/user', [
                 'headers' => [
-                    'Authorization' => 'Bearer ' . session('token'), // Truyền token từ session
+                    'Authorization' => 'Bearer ' . session('token'),
                     "Accept"=>"application/json"
                 ],
 
@@ -31,8 +31,7 @@ class UserController extends Controller
             $user_infor = $users['users'];
             return view('home.user.list', compact('users', 'user_infor'));
         } catch (\Exception $e) {
-            dd($e);
-            // return view('home.user.list')->withErrors(['errors' => 'Cannot connect to server']);
+            return view('home.user.list')->withErrors(['errors' => 'Cannot connect to server']);
         }
     }
 

@@ -29,19 +29,14 @@ class NewsController extends Controller
 
             if($articles) {
                 $news = json_decode($response->getBody(), true);
-                // Số lượng sách hiển thị trên mỗi trang
                 $perPage = 8;
-
-                // Số trang hiện tại, lấy từ query string hoặc mặc định là 1
                 $currentPage = $request->query('page', 1);
 
-                // Tạo một LengthAwarePaginator từ kết quả sách và các thông số phân trang
-
                 $paginator = new LengthAwarePaginator(
-                    $news['data'],   // Dữ liệu sách
-                    $news['total'],  // Tổng số sách
-                    $perPage,         // Số lượng sách trên mỗi trang
-                    $currentPage,     // Trang hiện tại
+                    $news['data'],
+                    $news['total'],
+                    $perPage,
+                    $currentPage,
                     ['path' => $request->url(), 'query' => $request->query()]
                 );
             }

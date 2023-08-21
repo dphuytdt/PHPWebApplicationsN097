@@ -23,8 +23,6 @@ interface UserRepositoryInterface
 
     public function updateUser($email);
 
-    public function upgradeUser($email, $amount,$numberMonth);
-
     public function getUserByemail($email);
 
     public function getUserDetail($user_id);
@@ -34,4 +32,6 @@ interface UserRepositoryInterface
     public function adminUpdateUser($data, $id);
 
     public function updateProfile($request, $id);
+
+    public function upgradeUser($userId, $dateStart, $plan);
 }

@@ -340,7 +340,6 @@
                     <div class="tab-content tab-animate-zoom">
                         <div class="tab-pane show active" id="car_and_drive">
                             <div class="product-default-slider product-default-slider-4grids-1row">
-                                <!-- Start Product Defautlt Single -->
                                 @foreach($featured as $news)
                                     <div class="product-default-single border-around">
                                         <div class="product-img-warp">
@@ -382,7 +381,6 @@
                                             <input type="text" disabled hidden value="Free for now" id="price-{{$news['id']}}" />
                                         </div>
                                     </div>
-                                    <!-- End Product Defautlt Single -->
                                 @endforeach
                             </div>
                         </div>
@@ -391,12 +389,7 @@
             </div>
         </div>
     </div>
-    <!-- End Catagory Wrapper -->
 </div>
-<!-- ...:::: Start Product Tab Section:::... -->
-<!-- ...:::: Start Product Tab Section:::... -->
-
-<!-- ...:::: Start Blog Feed Section:::... -->
 @foreach($free as $book)
     <div class="modal fade" id="modalQuickview-{{$book['id']}}" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
@@ -422,7 +415,6 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="product-details-content-area">
-                                    <!-- Start  Product Details Text Area-->
                                     <div class="product-details-text">
                                         <h4 class="title">{{$book['title']}}</h4>
                                         @if($book['price'] == 0)
@@ -433,32 +425,19 @@
                                         @endif
                                         <p>{{$book['description']}}</p>
                                     </div>
-                                    <!-- End  Product Details Text Area-->
-                                    <!-- Start Product Variable Area -->
                                     <div class="product-details-variable">
-                                        <!-- Product Variable Single Item -->
-                                        <!-- Product Variable Single Item -->
-
                                         @if ($book['price'] == 0)
                                             <div class="product-add-to-cart-btn">
                                                 <a href="#" data-toggle="modal" data-target="#modalAddcart">Read Now</a>
                                             </div>
                                             <br />
-                                        @else {{--
-                                    <div class="variable-single-item">
-                                        --}} {{-- <span>Quantity Available</span>--}} {{--
-                                        <div class="product-variable-quantity">--}} {{-- <input value="{{$book['quantity']}}" type="text" readonly disabled />--}} {{--</div>
-                                        --}} {{--
-                                    </div>
-                                    --}}
+                                        @else
                                         <div class="product-add-to-cart-btn">
                                             <a href="#" data-toggle="modal" data-target="#modalAddcart">Add To Cart</a>
                                         </div>
                                         <br />
                                         @endif
                                     </div>
-                                    <!-- End Product Variable Area -->
-                                    <!-- Start  Product Details Meta Area-->
                                     <div class="product-details-meta mb-20">
                                         <ul>
                                             <li>
@@ -472,8 +451,6 @@
                                             </li>
                                         </ul>
                                     </div>
-                                    <!-- End  Product Details Meta Area-->
-                                    <!-- Start  Product Details Social Area-->
                                     <ul class="modal-product-details-social">
                                         <li>
                                             <a href="#" class="facebook"><i class="fa fa-facebook"></i></a>
@@ -491,7 +468,6 @@
                                             <a href="#" class="linkedin"><i class="fa fa-linkedin"></i></a>
                                         </li>
                                     </ul>
-                                    <!-- End  Product Details Social Area-->
                                 </div>
                             </div>
                         </div>
@@ -500,7 +476,6 @@
             </div>
         </div>
     </div>
-    <!-- End Modal Quickview cart -->
 @endforeach @foreach($new as $book)
     <div class="modal fade" id="modalQuickviewNewBook-{{$book['id']}}" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
@@ -526,7 +501,6 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="product-details-content-area">
-                                    <!-- Start  Product Details Text Area-->
                                     <div class="product-details-text">
                                         <h4 class="title">{{$book['title']}}</h4>
                                         @if($book['price'] == 0)
@@ -537,12 +511,7 @@
                                         @endif
                                         <p>{{$book['description']}}</p>
                                     </div>
-                                    <!-- End  Product Details Text Area-->
-                                    <!-- Start Product Variable Area -->
                                     <div class="product-details-variable">
-                                        <!-- Product Variable Single Item -->
-                                        <!-- Product Variable Single Item -->
-
                                         @if ($book['price'] == 0)
                                             <div class="product-add-to-cart-btn">
                                                 <a href="#" data-toggle="modal" data-target="#modalAddcart">Read Now</a>
@@ -666,7 +635,6 @@
             </div>
         </div>
     </div>
-    <!-- End Modal Add cart -->
 @endforeach @foreach($featured as $book)
     <div class="modal fade" id="modalQuickviewFeaturedBook-{{$book['id']}}" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">

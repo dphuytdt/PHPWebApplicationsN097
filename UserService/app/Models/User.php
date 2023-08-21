@@ -25,6 +25,8 @@ class User extends Authenticatable implements JWTSubject
         'role',
         'is_vip',
         'valid_vip',
+        'date_start_vip',
+        'date_end_vip',
         'is_active',
         'created_at',
         'updated_at',

@@ -59,7 +59,7 @@
                                     <li><a href="{!! route('changeLanguage', ['kr']) !!}"><img class="user-sub-menu-in-icon" src="{{asset('assets/images/icon/korea.png')}}" alt=""> Korea</a></li>
                                 </ul>
                             </li>
-                            <li class="has-user-dropdown">  
+                            <li class="has-user-dropdown">
                                 <i class="fa fa-cog"></i>
                                 <a href="">{{__('messages.setting')}}</a>
                                 <ul class="user-sub-menu">
@@ -89,7 +89,7 @@
                                 <button class="default-search-style-input-btn" type="submit"><i class="icon-search"></i></button>
                             </div>
                         </form>
-                    </div> 
+                    </div>
                 </div>
                 <div class="col-3 text-right">
 
@@ -616,26 +616,26 @@
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        var callMicroservicesLink = document.getElementById('callMicroservicesLink');
+        const callMicroservicesLink = document.getElementById('callMicroservicesLink');
 
         if (callMicroservicesLink) {
             callMicroservicesLink.addEventListener('click', function(event) {
                 event.preventDefault();
-                var userID = @json(session('user_id'));
+                let userID = @json(session('user_id'));
                 axios.all([
                     axios.post('http://userservice.test:8080/api/auth/user-detail/' + userID),
                     axios.get('http://paymentservice.test:8080/api/order-history/' + userID)
                 ])
                     .then(axios.spread(function (userProfileResponse, orderHistoryResponse) {
-                        var userProfile = JSON.stringify(userProfileResponse.data);
-                        var orderHistory = JSON.stringify(orderHistoryResponse.data);
-                        var data = {
+                        const userProfile = JSON.stringify(userProfileResponse.data);
+                        const orderHistory = JSON.stringify(orderHistoryResponse.data);
+                        const data = {
                             userProfile: userProfile,
                             orderHistory: orderHistory
                         };
 
-                        var userProfileData = JSON.parse(userProfile);
-                        var orderHistoryData = JSON.parse(orderHistory);
+                        const userProfileData = JSON.parse(userProfile);
+                        const orderHistoryData = JSON.parse(orderHistory);
 
                         localStorage.setItem('userProfile', userProfile);
                         localStorage.setItem('orderHistory', orderHistory);

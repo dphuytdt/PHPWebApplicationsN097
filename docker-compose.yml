@@ -1,0 +1,77 @@
+version: '3'
+services:
+  bookservice:
+    build:
+      context: ./BookService
+    ports:
+      - "8001:80"
+    volumes:
+      - ./BookService:/var/www/html
+    environment:
+      - APP_ENV=local
+      - APP_DEBUG=true
+      # Add other necessary environment variables
+
+  contentmanagementservice:
+    build:
+      context: ./ContentManagementService
+    ports:
+      - "8002:80"
+    volumes:
+      - ./ContentManagementService:/var/www/html
+    environment:
+      - APP_ENV=local
+      - APP_DEBUG=true
+      # Add other necessary environment variables
+
+  frontend:
+    build:
+      context: ./Frontend
+    ports:
+      - "8003:80"
+    # Add other necessary configurations
+
+  frontend-admin:
+    build:
+      context: ./Frontend-Admin
+    ports:
+      - "8004:80"
+    # Add other necessary configurations
+
+  interactionservice:
+    build:
+      context: ./InteractionService
+    ports:
+      - "8005:80"
+    volumes:
+      - ./InteractionService:/var/www/html
+    environment:
+      - APP_ENV=local
+      - APP_DEBUG=true
+      # Add other necessary environment variables
+
+  paymentservice:
+    build:
+      context: ./PaymentService
+    ports:
+      - "8006:80"
+    # Add other necessary configurations
+
+  recommendationservice:
+    build:
+      context: ./RecommendationService
+    ports:
+      - "8007:80"
+    # Add other necessary configurations
+
+  userservice:
+    build:
+      context: ./UserService
+    ports:
+      - "8008:80"
+    volumes:
+      - ./UserService:/var/www/html
+    environment:
+      - APP_ENV=local
+      - APP_DEBUG=true
+      # Add other necessary environment variables

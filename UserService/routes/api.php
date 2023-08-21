@@ -30,6 +30,8 @@ Route::group(['middleware' => 'api','prefix' => 'auth'], function ($router) {
     Route::post('verify-account', [AuthController::class, 'verifyAccount']);
     Route::post('resend-otp', [AuthController::class, 'resendOTP']);
     Route::post('profile/{id}', [AuthController::class, 'profile']);
+    Route::post('upgrade-vip', [UserController::class, 'upgradeVip']);
+    Route::post('user-detail/{id}', [UserController::class, 'userDetail']);
 
 
     Route::group(['prefix' => 'admin'], function ($router) {
@@ -43,7 +45,4 @@ Route::group(['middleware' => 'api','prefix' => 'auth'], function ($router) {
         Route::post('user/in-active/{id}', [UserController::class, 'destroy']);
         Route::post('request-reset-password', [AdminAuthController::class, 'requestResetPassword']);
     });
-
-    Route::post('upgrate-user', [UserController::class, 'upgrateUser']);
-    Route::post('user-detail/{id}', [UserController::class, 'userDetail']);
 });

@@ -14,6 +14,8 @@ class CartController extends Controller
 
     public $paymentService = 'http://paymentservice.test:8080/api/';
 
+    private const REDIRECT_URL = 'http://frontend.test:8080/thankYou';
+
     protected $categoryService;
 
     private const DOLLAR_RATE = 23000;
@@ -134,7 +136,7 @@ class CartController extends Controller
                 date_default_timezone_set('Asia/Ho_Chi_Minh');
 
                 $vnp_Url = "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html";
-                $vnp_Returnurl = "http://frontend.test:8080/thankYou";
+                $vnp_Returnurl = self::REDIRECT_URL;
                 $vnp_TmnCode = "1ACLHH74";
                 $vnp_HashSecret = "TMEVRTPDXCOKQKXQLZFNKDROUCTMWXHS";
 

@@ -73,26 +73,6 @@ class UserRepository implements UserRepositoryInterface
         return $user;
     }
 
-    public function upgradeUser($email, $amount, $numberMonth)
-    {
-        $user_id = $email->id;
-        $user_detail = UserDetail::where('user_id', $email->id)->first();
-        $wallet = $user_detail->wallet;
-        if($wallet <= $amount) {
-            return false;
-        } else {
-            $wallet = $wallet - $amount;
-            $user_detail->wallet = $wallet;
-            $user_detail->save();
-            $email->is_vip = 1;
-            $expired_date = date('Y-m-d H:i:s', strtotime('+'.$numberMonth.' month'));
-            $email->valid_vip = $expired_date;
-            $email->save();
-            return true;
-        }
-        return $email;
-    }
-
     public function getUserByemail($email)
     {
         $user = $this->user->where('email', $email)->first();
@@ -141,5 +121,31 @@ class UserRepository implements UserRepositoryInterface
         $userDetail->save();
 
         return $user->save();
+    }
+
+    public function upgradeUser($userId, $dateStart, $plan)
+    {
+        $user = $this->user->where('id', $userId)->first();
+
+        if($plan === 1){
+            $plan = 30;
+        }else if($plan === 6){
+            $plan = 30 * 6;
+        } else {
+            $plan = 365;
+        }
+        $validVip = date('Y-m-d H:i:s', strtotime($dateStart . ' + ' . $plan . ' days'));
+        $dateStart = date('Y-m-d H:i:s', strtotime($dateStart));
+
+        if($user){
+            $user->is_vip = 1;
+            $user->valid_vip = $validVip;
+            $user->date_start_vip = $dateStart;
+            $user->date_end_vip = $validVip;
+
+            return $user->save();
+        }
+
+        return false;
     }
 }

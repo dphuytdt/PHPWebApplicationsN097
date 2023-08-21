@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Validator;
 class UserController extends Controller
 {
     protected $categoryService;
+
     private const USER_SERVICE = 'http://userservice.test:8080/api/auth';
 
     private const PAYMENT_SERVICE = 'http://paymentservice.test:8080/api';
@@ -42,29 +43,23 @@ class UserController extends Controller
 
     public function upgrade()
     {
-        // Kiểm tra xem người dùng đã đăng nhập hay chưa
         if (!session()->has('token')) {
-            // Người dùng chưa đăng nhập, chuyển hướng đến trang login
             return redirect()->route('login');
         }
 
         $categories = $this->categoryService->getCategory();
 
-        // Hiển thị trang upgrade
         return view('main.user.upgrade')->with('categories', $categories);
     }
 
     public function vipBenefits()
     {
-        // Kiểm tra xem người dùng đã đăng nhập hay chưa
         if (!session()->has('token')) {
-            // Người dùng chưa đăng nhập, chuyển hướng đến trang login
             return redirect()->route('login');
         }
 
         $categories = $this->categoryService->getCategory();
 
-        // Hiển thị trang upgrade
         return view('main.user.vip-benefits')->with('categories', $categories);
     }
 }

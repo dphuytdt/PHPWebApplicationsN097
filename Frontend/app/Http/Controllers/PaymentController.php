@@ -13,6 +13,11 @@ class PaymentController extends Controller
     private const DOLLAR_RATE = 23000;
 
     private const REDIRECT_URL = 'http://frontend.test:8080/thankYou';
+
+    private const USER_SERVICE = 'http://userservice.test:8080/api/auth/';
+
+    private const VN_PAY = 'vnpay';
+
     protected $categoryService;
 
     public function __construct(CategoryService $categoryService)
@@ -22,119 +27,99 @@ class PaymentController extends Controller
 
     public function payment(Request $request)
     {
+        $data = $request->all();
 
-        error_reporting(E_ALL & ~E_NOTICE & ~E_DEPRECATED);
-        date_default_timezone_set('Asia/Ho_Chi_Minh');
+        $client = new Client();
 
-        $vnp_Url = "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html";
-        $vnp_Returnurl = self::REDIRECT_URL;
-        $vnp_TmnCode = "1ACLHH74";
-        $vnp_HashSecret = "TMEVRTPDXCOKQKXQLZFNKDROUCTMWXHS";
+         //get datetime now for mat dd-mm-yyyy hh:mm:ss
+        $data['currentTimestamp'] = now()->format('d-m-Y H:i:s');
 
-        $vnp_TxnRef = time() . rand(10000, 99999);
-        $vnp_OrderInfo = "User Name: ".$request->userName . " - Payment for order: " .  $vnp_TxnRef;
-        $vnp_OrderType = 'billpayment';
-        $vnp_Amount = $request->total * self::DOLLAR_RATE * 100;
-        $vnp_Locale = 'vn';
-        $vnp_BankCode = 'NCB';
-        $vnp_IpAddr = $_SERVER['REMOTE_ADDR'];
-        $inputData = array(
-            "vnp_Version" => "2.1.0",
-            "vnp_TmnCode" => $vnp_TmnCode,
-            "vnp_Amount" => $vnp_Amount,
-            "vnp_Command" => "pay",
-            "vnp_CreateDate" => date('YmdHis'),
-            "vnp_CurrCode" => "VND",
-            "vnp_IpAddr" => $vnp_IpAddr,
-            "vnp_Locale" => $vnp_Locale,
-            "vnp_OrderInfo" => $vnp_OrderInfo,
-            "vnp_OrderType" => $vnp_OrderType,
-            "vnp_ReturnUrl" => $vnp_Returnurl,
-            "vnp_TxnRef" => $vnp_TxnRef
-        );
+        try{
+            $client->post(self::USER_SERVICE . 'upgrade-vip', [
+                'headers' => [
+                    'Authorization' => 'Bearer ' . session('token'),
+                    "Accept"=>"application/json"
+                ],
+                'form_params' => [
+                    "userId" => $data['userId'],
+                    "dateStart" => $data['currentTimestamp'],
+                    "plan" => $data['plan']
+                ]
+            ]);
 
-        if (isset($vnp_BankCode) && $vnp_BankCode != "") {
-            $inputData['vnp_BankCode'] = $vnp_BankCode;
-        }
-        if (isset($vnp_Bill_State) && $vnp_Bill_State != "") {
-            $inputData['vnp_Bill_State'] = $vnp_Bill_State;
-        }
+            if($data['payment'] == self::VN_PAY) {
+                error_reporting(E_ALL & ~E_NOTICE & ~E_DEPRECATED);
+                date_default_timezone_set('Asia/Ho_Chi_Minh');
 
-        ksort($inputData);
-        $query = "";
-        $i = 0;
-        $hashdata = "";
-        foreach ($inputData as $key => $value) {
-            if ($i == 1) {
-                $hashdata .= '&' . urlencode($key) . "=" . urlencode($value);
-            } else {
-                $hashdata .= urlencode($key) . "=" . urlencode($value);
-                $i = 1;
+                $vnp_Url = "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html";
+                $vnp_Returnurl = self::REDIRECT_URL;
+                $vnp_TmnCode = "1ACLHH74";
+                $vnp_HashSecret = "TMEVRTPDXCOKQKXQLZFNKDROUCTMWXHS";
+
+                $vnp_TxnRef = rand(1000000,999999999) . now()->timestamp;
+                $vnp_OrderInfo = "User Name: " . $request->userName . " - Payment for order: " . $vnp_TxnRef;
+                $vnp_OrderType = 'billpayment';
+                $vnp_Amount = $request->total * self::DOLLAR_RATE * 100;
+                $vnp_Locale = 'vn';
+                $vnp_BankCode = 'NCB';
+                $vnp_IpAddr = $_SERVER['REMOTE_ADDR'];
+                $inputData = array(
+                    "vnp_Version" => "2.1.0",
+                    "vnp_TmnCode" => $vnp_TmnCode,
+                    "vnp_Amount" => $vnp_Amount,
+                    "vnp_Command" => "pay",
+                    "vnp_CreateDate" => date('YmdHis'),
+                    "vnp_CurrCode" => "VND",
+                    "vnp_IpAddr" => $vnp_IpAddr,
+                    "vnp_Locale" => $vnp_Locale,
+                    "vnp_OrderInfo" => $vnp_OrderInfo,
+                    "vnp_OrderType" => $vnp_OrderType,
+                    "vnp_ReturnUrl" => $vnp_Returnurl,
+                    "vnp_TxnRef" => $vnp_TxnRef
+                );
+
+                if (isset($vnp_BankCode) && $vnp_BankCode != "") {
+                    $inputData['vnp_BankCode'] = $vnp_BankCode;
+                }
+                if (isset($vnp_Bill_State) && $vnp_Bill_State != "") {
+                    $inputData['vnp_Bill_State'] = $vnp_Bill_State;
+                }
+
+                ksort($inputData);
+                $query = "";
+                $i = 0;
+                $hashdata = "";
+                foreach ($inputData as $key => $value) {
+                    if ($i == 1) {
+                        $hashdata .= '&' . urlencode($key) . "=" . urlencode($value);
+                    } else {
+                        $hashdata .= urlencode($key) . "=" . urlencode($value);
+                        $i = 1;
+                    }
+                    $query .= urlencode($key) . "=" . urlencode($value) . '&';
+                }
+
+                $vnp_Url = $vnp_Url . "?" . $query;
+                if (isset($vnp_HashSecret)) {
+                    $vnpSecureHash = hash_hmac('sha512', $hashdata, $vnp_HashSecret);//
+                    $vnp_Url .= 'vnp_SecureHash=' . $vnpSecureHash;
+                }
+
+                $returnData = array('code' => '00'
+                , 'message' => 'success'
+                , 'data' => $vnp_Url);
+
+                if (isset($_POST['redirect'])) {
+                    header('Location: ' . $vnp_Url);
+                    die();
+                } else {
+                    echo json_encode($returnData);
+                }
             }
-            $query .= urlencode($key) . "=" . urlencode($value) . '&';
+        } catch (\Exception| GuzzleException $e) {
+            dd($e->getMessage());
         }
-
-        $vnp_Url = $vnp_Url . "?" . $query;
-        if (isset($vnp_HashSecret)) {
-            $vnpSecureHash = hash_hmac('sha512', $hashdata, $vnp_HashSecret);//
-            $vnp_Url .= 'vnp_SecureHash=' . $vnpSecureHash;
-        }
-
-        $returnData = array('code' => '00'
-        , 'message' => 'success'
-        , 'data' => $vnp_Url);
-
-        if ($returnData) {
-            $this->paymentSuccess($request);
-        }
-
-        if (isset($_POST['redirect'])) {
-            header('Location: ' . $vnp_Url);
-            die();
-        } else {
-            echo json_encode($returnData);
-        }
-    }
-
-    public function paymentMomo(Request $request)
-    {
-        $endpoint = "https://test-payment.momo.vn/v2/gateway/api/create";
-
-        $partnerCode = 'MOMOBKUN20180529';
-        $accessKey = 'klm05TvNBzhg7h7j';
-        $secretKey = 'at67qH6mk8w5Y1nAyMoYKMWACiEi2bsa';
-        $orderInfo = "Thanh toán qua MoMo";
-        $amount = $request->total;
-        $orderId = time() . rand(10000, 99999);
-        $redirectUrl = self::REDIRECT_URL;
-        $ipnUrl = self::REDIRECT_URL;
-        $extraData = "";
-
-        $requestId = time() . "";
-        $requestType = "payWithATM";
-        $rawHash = "accessKey=" . $accessKey . "&amount=" . $amount . "&extraData=" . $extraData . "&ipnUrl=" . $ipnUrl . "&orderId=" . $orderId . "&orderInfo=" . $orderInfo . "&partnerCode=" . $partnerCode . "&redirectUrl=" . $redirectUrl . "&requestId=" . $requestId . "&requestType=" . $requestType;
-        $signature = hash_hmac("sha256", $rawHash, $secretKey);
-
-        $data = array('partnerCode' => $partnerCode,
-            'partnerName' => "Test",
-            "storeId" => "MomoTestStore",
-            'requestId' => $requestId,
-            'amount' => $amount,
-            'orderId' => $orderId,
-            'orderInfo' => $orderInfo,
-            'redirectUrl' => $redirectUrl,
-            'ipnUrl' => $ipnUrl,
-            'lang' => 'vi',
-            'extraData' => $extraData,
-            'requestType' => $requestType,
-            'signature' => $signature);
-        $result = $this->execPostRequest($endpoint, json_encode($data));
-
-        $jsonResult = json_decode($result, true);
-
-        if($jsonResult){
-            return  redirect()->to($jsonResult['payUrl']);
-        }
+        //return redirect()->back();
     }
 
     function execPostRequest($url, $data)

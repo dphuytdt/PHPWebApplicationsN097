@@ -20,6 +20,8 @@ return new class extends Migration
             $table->string('role')->default('ROLE_USER');
             $table->boolean('is_vip')->default(false);
             $table->dateTime('valid_vip')->nullable();
+            $table->dateTime('date_start_vip')->nullable();
+            $table->dateTime('date_end_vip')->nullable();
             $table->boolean('is_active')->default(false);
             $table->rememberToken();
             $table->dateTime('created_at');
