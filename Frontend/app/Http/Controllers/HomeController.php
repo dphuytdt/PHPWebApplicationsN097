@@ -17,9 +17,9 @@ use App\Services\HttpService;
 class HomeController extends Controller
 {
     // //CALL TO ENVIRONMENT VARIABLE TO GET BOOK SERVICE URL
-    public $bookService = 'http://bookservice.test:8080/api/';
+    private const USER_SERVICE = 'http://bookservice.test:8080/api/';
 
-    private $contentManagementService = 'http://contentmanagementservice.test:8080/api/';
+    private const CONTENT_SERVICE = 'http://contentmanagementservice.test:8080/api/';
 
     protected $categoryService;
 
@@ -30,10 +30,12 @@ class HomeController extends Controller
 
     public function index(Request $request){
         $categories = $this->categoryService->getCategory();
+
         $httpService = app(HttpService::class);
         $client = $httpService->getClient();
+
         try {
-            $response1 = $client->get($this->bookService.'books/homepage', ['timeout' => 60]);
+            $response1 = $client->get(self::USER_SERVICE .'books/homepage', ['timeout' => 60]);
             $books = json_decode($response1->getBody(), true);
             return view('main.home.index')->with('books', $books)->with('categories', $categories);
         } catch (\Exception $e) {
@@ -64,7 +66,7 @@ class HomeController extends Controller
         $httpService = app(HttpService::class);
         $client = $httpService->getClient();
         try {
-            $response = $client->get($this->contentManagementService.'news/latest', ['timeout' => 60]);
+            $response = $client->get(self::CONTENT_SERVICE.'news/latest', ['timeout' => 60]);
 
             return json_decode($response->getBody(), true);
         } catch (\Exception $e) {

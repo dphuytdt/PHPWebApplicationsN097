@@ -28,8 +28,8 @@ class CategoryController extends Controller
         return response()->json($categories, 200);
     }
 
-    
-    public function getCategory()
+
+    public function getCategory(): \Illuminate\Http\JsonResponse
     {
         $categories = $this->categoryRepository->getAllCategory();
         return response()->json($categories, 200);

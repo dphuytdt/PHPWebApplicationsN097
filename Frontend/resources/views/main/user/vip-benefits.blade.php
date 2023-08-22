@@ -16,16 +16,13 @@ date("d-m-Y", strtotime($vip_experied_date)); $today = date("d-m-Y", strtotime($
 <div class="privacy-section">
     <div class="container">
         <section class="w-full h-full flex flex-col justify-center items-center">
-            <!--Time-->
             <div class="mt-[80px] flex justify-center items-center gap-[40px]">
-                <!--HOURS-->
                 <div class="flex flex-col-reverse justify-center items-center space-y-10">
                     <h1 class="mt-[30px] text-2xl text-grayishBlue font-bold">
                         DAYS
                     </h1>
                     <div class="flex justify-center items-center">
                         <div class="flex flex-col text-softRed space-y-[1px] rounded-xl container-shadow" data-days>
-                            <!--Top-->
                             <span class="relative w-[180px] h-[90px] bg-slightlyDarkerDesBlue overflow-hidden rounded-tl-xl rounded-tr-xl flex justify-center items-end text-8xl">
                                 <div class="absolute w-full h-full flex justify-start items-end">
                                     <div class="w-[10px] h-[8px] rounded-tr-full bg-veryDarkBlue"></div>
@@ -36,7 +33,6 @@ date("d-m-Y", strtotime($vip_experied_date)); $today = date("d-m-Y", strtotime($
                                 <span class="translate-y-[46px]" data-card-top>
                                     09
                                 </span>
-                                <!--FlipTop-->
                                 <span class="absolute w-[180px] h-[90px] bg-slightlyDarkerDesBlue overflow-hidden rounded-tl-xl rounded-tr-xl flex justify-center items-end text-8xl top-flip-shadow" data-flip-top>
                                     <div class="absolute w-full h-full flex justify-start items-end">
                                         <div class="w-[10px] h-[8px] rounded-tr-full bg-veryDarkBlue"></div>
@@ -49,7 +45,6 @@ date("d-m-Y", strtotime($vip_experied_date)); $today = date("d-m-Y", strtotime($
                                     </span>
                                 </span>
                             </span>
-                            <!--Bottom-->
                             <span class="relative w-[180px] h-[90px] bg-darkDesaturatedBlue overflow-hidden rounded-bl-xl rounded-br-xl flex justify-center items-end text-8xl bottom-flip-shadow">
                                 <div class="absolute w-full h-full flex justify-start items-start">
                                     <div class="w-[10px] h-[8px] rounded-br-full bg-veryDarkBlue"></div>
@@ -58,7 +53,6 @@ date("d-m-Y", strtotime($vip_experied_date)); $today = date("d-m-Y", strtotime($
                                     <div class="w-[10px] h-[8px] rounded-bl-full bg-veryDarkBlue"></div>
                                 </div>
                                 <span class="-translate-y-[45px]" data-card-bot>00</span>
-                                <!--FlipBottom-->
                                 <span class="absolute w-[180px] h-[90px] bg-darkDesaturatedBlue overflow-hidden rounded-bl-xl rounded-br-xl flex justify-center items-end text-8xl bottom-flip-shadow" data-flip-bot>
                                     <div class="absolute w-full h-full flex justify-start items-start">
                                         <div class="w-[10px] h-[8px] rounded-br-full bg-veryDarkBlue"></div>
@@ -72,14 +66,12 @@ date("d-m-Y", strtotime($vip_experied_date)); $today = date("d-m-Y", strtotime($
                         </div>
                     </div>
                 </div>
-                <!--HOURS-->
                 <div class="flex flex-col-reverse justify-center items-center space-y-10">
                     <h1 class="mt-[30px] text-2xl text-grayishBlue font-bold">
                         HOURS
                     </h1>
                     <div class="flex justify-center items-center">
                         <div class="flex flex-col text-softRed space-y-[1px] rounded-xl container-shadow" data-hours>
-                            <!--Top-->
                             <span class="relative w-[180px] h-[90px] bg-slightlyDarkerDesBlue overflow-hidden rounded-tl-xl rounded-tr-xl flex justify-center items-end text-8xl">
                                 <div class="absolute w-full h-full flex justify-start items-end">
                                     <div class="w-[10px] h-[8px] rounded-tr-full bg-veryDarkBlue"></div>
@@ -90,7 +82,6 @@ date("d-m-Y", strtotime($vip_experied_date)); $today = date("d-m-Y", strtotime($
                                 <span class="translate-y-[46px]" data-card-top>
                                     00
                                 </span>
-                                <!--FlipTop-->
                                 <span class="absolute w-[180px] h-[90px] bg-slightlyDarkerDesBlue overflow-hidden rounded-tl-xl rounded-tr-xl flex justify-center items-end text-8xl top-flip-shadow" data-flip-top>
                                     <div class="absolute w-full h-full flex justify-start items-end">
                                         <div class="w-[10px] h-[8px] rounded-tr-full bg-veryDarkBlue"></div>
@@ -103,7 +94,6 @@ date("d-m-Y", strtotime($vip_experied_date)); $today = date("d-m-Y", strtotime($
                                     </span>
                                 </span>
                             </span>
-                            <!--Bottom-->
                             <span class="relative w-[180px] h-[90px] bg-darkDesaturatedBlue overflow-hidden rounded-bl-xl rounded-br-xl flex justify-center items-end text-8xl bottom-flip-shadow">
                                 <div class="absolute w-full h-full flex justify-start items-start">
                                     <div class="w-[10px] h-[8px] rounded-br-full bg-veryDarkBlue"></div>
@@ -112,7 +102,6 @@ date("d-m-Y", strtotime($vip_experied_date)); $today = date("d-m-Y", strtotime($
                                     <div class="w-[10px] h-[8px] rounded-bl-full bg-veryDarkBlue"></div>
                                 </div>
                                 <span class="-translate-y-[45px]" data-card-bot>00</span>
-                                <!--FlipBottom-->
                                 <span class="absolute w-[180px] h-[90px] bg-darkDesaturatedBlue overflow-hidden rounded-bl-xl rounded-br-xl flex justify-center items-end text-8xl bottom-flip-shadow" data-flip-bot>
                                     <div class="absolute w-full h-full flex justify-start items-start">
                                         <div class="w-[10px] h-[8px] rounded-br-full bg-veryDarkBlue"></div>
@@ -126,14 +115,12 @@ date("d-m-Y", strtotime($vip_experied_date)); $today = date("d-m-Y", strtotime($
                         </div>
                     </div>
                 </div>
-                <!--MINUTES-->
                 <div class="flex flex-col-reverse justify-center items-center space-y-10">
                     <h1 class="mt-[30px] text-2xl text-grayishBlue font-bold">
                         MINUTES
                     </h1>
                     <div class="flex justify-center items-center">
                         <div class="flex flex-col text-softRed space-y-[1px] rounded-xl container-shadow" data-minutes>
-                            <!--Top-->
                             <span class="relative w-[180px] h-[90px] bg-slightlyDarkerDesBlue overflow-hidden rounded-tl-xl rounded-tr-xl flex justify-center items-end text-8xl">
                                 <div class="absolute w-full h-full flex justify-start items-end">
                                     <div class="w-[10px] h-[8px] rounded-tr-full bg-veryDarkBlue"></div>
@@ -144,7 +131,6 @@ date("d-m-Y", strtotime($vip_experied_date)); $today = date("d-m-Y", strtotime($
                                 <span class="translate-y-[46px]" data-card-top>
                                     00
                                 </span>
-                                <!--FlipTop-->
                                 <span class="absolute w-[180px] h-[90px] bg-slightlyDarkerDesBlue overflow-hidden rounded-tl-xl rounded-tr-xl flex justify-center items-end text-8xl top-flip-shadow" data-flip-top>
                                     <div class="absolute w-full h-full flex justify-start items-end">
                                         <div class="w-[10px] h-[8px] rounded-tr-full bg-veryDarkBlue"></div>
@@ -157,7 +143,6 @@ date("d-m-Y", strtotime($vip_experied_date)); $today = date("d-m-Y", strtotime($
                                     </span>
                                 </span>
                             </span>
-                            <!--Bottom-->
                             <span class="relative w-[180px] h-[90px] bg-darkDesaturatedBlue overflow-hidden rounded-bl-xl rounded-br-xl flex justify-center items-end text-8xl bottom-flip-shadow">
                                 <div class="absolute w-full h-full flex justify-start items-start">
                                     <div class="w-[10px] h-[8px] rounded-br-full bg-veryDarkBlue"></div>
@@ -166,7 +151,6 @@ date("d-m-Y", strtotime($vip_experied_date)); $today = date("d-m-Y", strtotime($
                                     <div class="w-[10px] h-[8px] rounded-bl-full bg-veryDarkBlue"></div>
                                 </div>
                                 <span class="-translate-y-[45px]" data-card-bot>00</span>
-                                <!--FlipBottom-->
                                 <span class="absolute w-[180px] h-[90px] bg-darkDesaturatedBlue overflow-hidden rounded-bl-xl rounded-br-xl flex justify-center items-end text-8xl bottom-flip-shadow" data-flip-bot>
                                     <div class="absolute w-full h-full flex justify-start items-start">
                                         <div class="w-[10px] h-[8px] rounded-br-full bg-veryDarkBlue"></div>
@@ -180,14 +164,12 @@ date("d-m-Y", strtotime($vip_experied_date)); $today = date("d-m-Y", strtotime($
                         </div>
                     </div>
                 </div>
-                <!--Seconds-->
                 <div class="flex flex-col-reverse justify-center items-center space-y-10">
                     <h1 class="mt-[30px] text-2xl text-grayishBlue font-bold">
                         SECONDS
                     </h1>
                     <div class="flex justify-center items-center">
                         <div class="flex flex-col text-softRed space-y-[1px] rounded-xl container-shadow" data-seconds>
-                            <!--Top-->
                             <span class="relative w-[180px] h-[90px] bg-slightlyDarkerDesBlue overflow-hidden rounded-tl-xl rounded-tr-xl flex justify-center items-end text-8xl">
                                 <div class="absolute w-full h-full flex justify-start items-end">
                                     <div class="w-[10px] h-[8px] rounded-tr-full bg-veryDarkBlue"></div>
@@ -198,7 +180,6 @@ date("d-m-Y", strtotime($vip_experied_date)); $today = date("d-m-Y", strtotime($
                                 <span class="translate-y-[46px]" data-card-top>
                                     00
                                 </span>
-                                <!--FlipTop-->
                                 <span class="absolute w-[180px] h-[90px] bg-slightlyDarkerDesBlue overflow-hidden rounded-tl-xl rounded-tr-xl flex justify-center items-end text-8xl top-flip-shadow">
                                     <div class="absolute w-full h-full flex justify-start items-end" data-flip-top>
                                         <div class="w-[10px] h-[8px] rounded-tr-full bg-veryDarkBlue"></div>
@@ -211,7 +192,6 @@ date("d-m-Y", strtotime($vip_experied_date)); $today = date("d-m-Y", strtotime($
                                     </span>
                                 </span>
                             </span>
-                            <!--Bottom-->
                             <span class="relative w-[180px] h-[90px] bg-darkDesaturatedBlue overflow-hidden rounded-bl-xl rounded-br-xl flex justify-center items-end text-8xl bottom-flip-shadow">
                                 <div class="absolute w-full h-full flex justify-start items-start">
                                     <div class="w-[10px] h-[8px] rounded-br-full bg-veryDarkBlue"></div>
@@ -220,7 +200,6 @@ date("d-m-Y", strtotime($vip_experied_date)); $today = date("d-m-Y", strtotime($
                                     <div class="w-[10px] h-[8px] rounded-bl-full bg-veryDarkBlue"></div>
                                 </div>
                                 <span class="-translate-y-[45px]" data-card-bot>00</span>
-                                <!--FlipBottom-->
                                 <span class="absolute w-[180px] h-[90px] bg-darkDesaturatedBlue overflow-hidden rounded-bl-xl rounded-br-xl flex justify-center items-end text-8xl bottom-flip-shadow" data-flip-bot>
                                     <div class="absolute w-full h-full flex justify-start items-start">
                                         <div class="w-[10px] h-[8px] rounded-br-full bg-veryDarkBlue"></div>

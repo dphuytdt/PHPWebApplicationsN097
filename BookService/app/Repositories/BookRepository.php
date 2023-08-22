@@ -130,9 +130,11 @@ class BookRepository implements BookRepositoryInterface
         $books['free'] = Book::where('price', 0)->orderBy('created_at', 'desc')->get();
         $books['featured'] = Book::where('is_featured', 1)->orderBy('updated_at', 'desc')->get();
         $books['new'] = Book::where('created_at', '>=', now()->subDays(7))->orWhere('updated_at', '>=', now()->subDays(7))->get();
+
         if (count($books['new']) == 0) {
             $books['new'] = Book::orderBy('updated_at', 'desc')->take(10)->get();
         }
+
         return $books;
     }
 

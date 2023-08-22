@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Http;
 
 class CategoryService
 {
-    public $bookService = 'http://bookservice.test:8080/api/';
+    private const BOOK_SERVICE = 'http://bookservice.test:8080/api/';
     public function getCategory()
     {
         $minutes = 60 * 24 * 30 * 3 * 12;
@@ -17,7 +17,7 @@ class CategoryService
         return Cache::remember('categories', $minutes, function () {
             $client = new Client();
             try {
-                $response = $client->get($this->bookService.'category');
+                $response = $client->get(self::BOOK_SERVICE . 'category', ['timeout' => 60]);
                 return json_decode($response->getBody(), true);
             } catch (\Exception $e) {
                 return [];

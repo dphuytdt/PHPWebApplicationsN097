@@ -406,7 +406,6 @@
       <excludeFolder url="file://$MODULE_DIR$/Frontend/vendor/mockery/mockery" />
       <excludeFolder url="file://$MODULE_DIR$/Frontend/vendor/monolog/monolog" />
       <excludeFolder url="file://$MODULE_DIR$/Frontend/vendor/myclabs/deep-copy" />
-      <excludeFolder url="file://$MODULE_DIR$/Frontend/vendor/myclabs/php-enum" />
       <excludeFolder url="file://$MODULE_DIR$/Frontend/vendor/nesbot/carbon" />
       <excludeFolder url="file://$MODULE_DIR$/Frontend/vendor/nette/schema" />
       <excludeFolder url="file://$MODULE_DIR$/Frontend/vendor/nette/utils" />
@@ -862,6 +861,8 @@
       <excludeFolder url="file://$MODULE_DIR$/Frontend-Admin/vendor/phpoffice/phpspreadsheet" />
       <excludeFolder url="file://$MODULE_DIR$/Frontend-Admin/vendor/psr/clock" />
       <excludeFolder url="file://$MODULE_DIR$/Frontend-Admin/vendor/spatie/pdf-to-text" />
+      <excludeFolder url="file://$MODULE_DIR$/Frontend/vendor/laravel/prompts" />
+      <excludeFolder url="file://$MODULE_DIR$/Frontend/vendor/symfony/polyfill-php83" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

@@ -2,10 +2,12 @@
 namespace App\Services;
 
 use GuzzleHttp\Client;
+use GuzzleHttp\Exception\GuzzleException;
 
 class HttpService
 {
     private static $instance;
+
     private $client;
 
     private function __construct()
@@ -29,6 +31,9 @@ class HttpService
         return $this->client;
     }
 
+    /**
+     * @throws GuzzleException
+     */
     public function post($url, $options = [])
     {
         return $this->client->post($url, $options);
