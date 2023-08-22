@@ -141,4 +141,38 @@ class BookController extends Controller
         }
     }
 
+    public function category(Request $request)
+    {
+        $categories = $this->categoryService->getCategory();
+
+        $client = new Client();
+
+        try {
+            $response = $client->get($this->bookService.'category/all');
+            $responseData = json_decode($response->getBody(), true);
+
+            if($responseData) {
+                $books = json_decode($response->getBody(), true);
+
+                $perPage = 8;
+
+                $currentPage = $request->query('page', 1);
+
+                $paginator = new LengthAwarePaginator(
+                    $books['data'],
+                    $books['total'],
+                    $perPage,
+                    $currentPage,
+                    ['path' => $request->url(), 'query' => $request->query()]
+                );
+            } else {
+                $paginator = [];
+            }
+
+            return view('main.category.index', compact('paginator', 'categories'));
+        } catch (\Exception|GuzzleException $e) {
+            return view('errors.404')->with('categories', $categories);
+        }
+    }
+
 }

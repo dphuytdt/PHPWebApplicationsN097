@@ -22,6 +22,8 @@ Route::group(['middleware' => 'locale'], function() {
 
     Route::get('category/{id}', [BookController::class, 'getBookByCategory'])->name('getBookByCategory');
 
+    Route::get('category', [BookController::class, 'category'])->name('category');
+
     Route::get('about', [HomeController::class, 'about'])->name('about');
 
     Route::get('contact', [HomeController::class, 'contact'])->name('contact');

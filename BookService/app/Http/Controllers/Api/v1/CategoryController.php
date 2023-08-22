@@ -21,17 +21,20 @@ class CategoryController extends Controller
         return response()->json($categories, 200);
     }
 
-    //get category
     public function getSelectedCategory()
     {
         $categories = $this->categoryRepository->getSelectedCategory();
         return response()->json($categories, 200);
     }
-
-
     public function getCategory(): \Illuminate\Http\JsonResponse
     {
         $categories = $this->categoryRepository->getAllCategory();
+        return response()->json($categories, 200);
+    }
+
+    public function getAllCategory()
+    {
+        $categories = $this->categoryRepository->getCategory();
         return response()->json($categories, 200);
     }
 }

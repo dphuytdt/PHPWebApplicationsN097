@@ -87,4 +87,9 @@ class CategoryRepository implements CategoryRepositoryInterface
 
         return $category->save();
     }
+    public function getCategory()
+    {
+        $categories = Category::orderBy('created_at', 'desc')->paginate(8);
+        return $categories;
+    }
 }

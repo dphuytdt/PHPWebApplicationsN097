@@ -1,71 +1,54 @@
-@import url('https://fonts.googleapis.com/css2?family=Red+Hat+Text:wght@700&display=swap');
-
-.font-redHatText{
-    font-family: 'Red Hat Text', sans-serif;
-}
-.bg-grayishBlue{
-    background-color: hsl(237, 18%, 59%);
-}
-.text-grayishBlue{
-    color: hsl(237, 18%, 59%);
-}
-.text-softRed{
-    color: hsl(345, 95%, 68%);
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
-.bg-darkDesaturatedBlue {
-    background-color: hsl(236, 21%, 26%);
+body {
+    font-family: "Lato", sans-serif;
+    color: #404244;
 }
 
-.bg-slightlyDarkerDesBlue {
-    background-color: hsl(236, 21%, 20%);
+ul {
+    padding: 0;
+    margin: 0;
+    list-style: none;
 }
 
-.bg-veryDarkBlue{
-    background-color: hsl(235, 16%, 14%);
+h2 {
+    font-size: 3.5rem;
+    font-weight: bold;
+    padding: 3rem;
+    text-align: center;
 }
 
-.bgmostlyBlackBlue {
-    background-color: hsl(234, 17%, 12%);
+h2 span {
+    background: linear-gradient(to bottom, #005bbb 50%, #ffd500 80%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 
-.container-shadow{
-    -webkit-box-shadow: 0px 17px 12px 1px rgba(0,0,0,0.75);
-    -moz-box-shadow: 0px 17px 12px 1px rgba(0,0,0,0.75);
-    box-shadow: 0px 17px 12px 1px rgba(0,0,0,0.75);
+.coming-soon {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
 
-.bottom-flip-shadow{
-    -webkit-box-shadow: inset 0px -2px 1px 0px rgba(0,0,0,0.42);
-    -moz-box-shadow: inset 0px -2px 1px 0px rgba(0,0,0,0.42);
-    box-shadow: inset 0px -2px 1px 0px rgba(0,0,0,0.42);
+.countdown {
+    display: flex;
+    justify-content: space-around;
+    text-align: center;
 }
 
-.top-flip-shadow{
-    -webkit-box-shadow: inset 0px 2px 1px 0px rgba(0,0,0,0.42);
-    -moz-box-shadow: inset 0px 2px 1px 0px rgba(0,0,0,0.42);
-    box-shadow: inset 0px 2px 1px 0px rgba(0,0,0,0.42);
+.day,
+.hour,
+.minute,
+.second {
+    font-size: 3rem;
 }
 
-.flip-card-top {
-    animation: flip-top 350ms ease-in;
-    transform-origin: bottom;
-}
-
-@keyframes flip-top {
-    100% {
-        transform: rotateX(90deg);
-    }
-}
-
-.flip-card-bottom {
-    animation: flip-bottom 350ms ease-in-out 350ms;
-    transform-origin: top;
-    transform: rotateX(90deg);
-}
-
-@keyframes flip-bottom {
-    100% {
-        transform: rotateX(0deg);
-    }
+.waiting {
+    height: 50vh;
 }

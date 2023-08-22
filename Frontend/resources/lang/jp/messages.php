@@ -126,4 +126,11 @@
             'lightmode' => 'ライトモード',
             'View Wishlist' => 'ウィッシュリストを見る',
             'Please login or register to view wishlist!' => 'ウィッシュリストを表示するにはログインまたは登録してください！',
+            'Congratulations! You are a VIP member!' => 'おめでとうございます！ VIPメンバーです！',
+            'Enjoy your benefits!' => '特典をお楽しみください！',
+            'Day' => '日',
+            'Hour' => '時間',
+            'Minute' => '分',
+            'Second' => '秒',
+            'VIP Benefits' => 'VIP特典',
         ];

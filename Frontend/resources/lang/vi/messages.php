@@ -124,5 +124,12 @@
         'darkmode' => 'Chế độ tối',
         'lightmode' => 'Chế độ sáng',
         'View Wishlist' => 'Xem danh sách yêu thích',
-        'Please login or register to view wishlist!' => 'Please login or register to view wishlist!',
+        'Please login or register to view wishlist!' => 'Vui lòng đăng nhập hoặc đăng ký để xem danh sách yêu thích!',
+        'Congratulations! You are a VIP member!' => 'Chúc mừng! Bạn là thành viên VIP!',
+        'Enjoy your benefits!' => 'Hãy tận hưởng những lợi ích của bạn!',
+        'Day' => 'Ngày',
+        'Hour' => 'Giờ',
+        'Minute' => 'Phút',
+        'Second' => 'Giây',
+        'VIP Benefits' => 'Lợi ích VIP',
     ];

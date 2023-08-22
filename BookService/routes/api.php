@@ -22,6 +22,7 @@ Route::prefix('category')->group(function () {
     Route::get('/', [CategoryController::class, 'getCategory']);
     Route::get('admin', [CategoryController::class, 'getAllCategoryForAdmin']);
     Route::get('selected', [CategoryController::class, 'getSelectedCategory']);
+    Route::get('all', [CategoryController::class, 'getAllCategory']);
 });
 
 

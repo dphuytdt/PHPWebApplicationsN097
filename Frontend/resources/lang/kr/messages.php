@@ -125,5 +125,12 @@
         'lightmode' => '라이트 모드',
         'View Wishlist' => '위시리스트보기',
         'Please login or register to view wishlist!' => '위시리스트를 보려면 로그인하거나 등록하십시오!',
+        'Congratulations! You are a VIP member!' => '축하합니다! VIP 회원입니다!',
+        'Enjoy your benefits!' => '혜택을 즐기십시오!',
+        'Day' => '일',
+        'Hour' => '시간',
+        'Minute' => '분',
+        'Second' => '둘째',
+        'VIP Benefits' => 'VIP 혜택',
     ];
 

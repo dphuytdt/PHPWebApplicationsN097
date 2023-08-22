@@ -125,4 +125,11 @@
         'lightmode' => 'Light Mode',
         'View Wishlist' => 'View Wishlist',
         'Please login or register to view wishlist!' => 'Please login or register to view wishlist!',
+        'Congratulations! You are a VIP member!' => 'Congratulations! You are a VIP member!',
+        'Enjoy your benefits!' => 'Enjoy your benefits!',
+        'Day' => 'Day',
+        'Hour' => 'Hour',
+        'Minute' => 'Minute',
+        'Second' => 'Second',
+        'VIP Benefits' => 'VIP Benefits'
     ];

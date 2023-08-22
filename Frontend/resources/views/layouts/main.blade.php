@@ -167,7 +167,7 @@
                                             @endphp
                                             <li><a  href="{{route('getBookByCategory', ['id' => $category['id']])}}"> {{ $category['name'] }}</a></li>
                                         @endforeach
-                                        <li><a> {{ __('messages.viewMore') }}</a></li>
+                                        <li><a href="{{route('category')}}"> {{ __('messages.viewMore') }}</a></li>
                                     </ul>
                                 </li>
                                 <li>
@@ -301,7 +301,7 @@
                                         @endphp
                                         <li><a  href="{{route('getBookByCategory', ['id' => $category['id']])}}"> {{ $category['name'] }}</a></li>
                                     @endforeach
-                                    <li><a> {{ __('messages.viewMore') }}</a></li>
+                                    <li><a href="{{route('category')}}"> {{ __('messages.viewMore') }}</a></li>
                                 </ul>
                             </li>
                         </ul>

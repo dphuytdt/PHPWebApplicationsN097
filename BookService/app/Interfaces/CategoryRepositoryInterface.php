@@ -6,7 +6,6 @@ interface CategoryRepositoryInterface
 {
     public function getAllCategory();
 
-
     public function getSelectedCategory();
 
     public function getAllCategoryForAdmin();
@@ -14,4 +13,6 @@ interface CategoryRepositoryInterface
     public function createCategory(array $data);
 
     public function updateCategory($data, $id);
+
+    public function getCategory();
 }

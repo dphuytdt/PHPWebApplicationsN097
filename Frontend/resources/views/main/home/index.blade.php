@@ -39,14 +39,9 @@
                 </div>
             </div>
         </div>
-        <!-- End Hero Slider Single -->
     </div>
 </div>
-<!-- ...:::: End Hero Area Section:::... -->
-
-<!-- ...:::: Start Product Catagory Section:::... -->
 <div class="product-catagory-section section-top-gap-100">
-    <!-- Start Section Content -->
     <div class="section-content-gap">
         <div class="container">
             <div class="row">
@@ -56,9 +51,6 @@
             </div>
         </div>
     </div>
-    <!-- End Section Content -->
-
-    <!-- Start Catagory Wrapper -->
     <div class="product-catagory-wrapper">
         <div class="container">
             <div class="row">
@@ -72,7 +64,6 @@
                                 <h5 class="product-catagory-title">{{__('messages.NoCategory')}}</h5>
                             </div>
                         </a>
-                        <!-- End Product Catagory Single -->
                     </div>
                 @else @foreach ( $category_selected as $category )
                         <div class="col-lg-3 col-md-4 col-sm-6 col-12">
@@ -84,77 +75,51 @@
                                     <h5 class="product-catagory-title">{{ $category['name'] }}</h5>
                                 </div>
                             </a>
-                            <!-- End Product Catagory Single -->
                         </div>
                     @endforeach @endif
             </div>
         </div>
     </div>
-    <!-- End Catagory Wrapper -->
 </div>
-<!-- ...:::: End Product Catagory Section:::... -->
-
-<!-- ...:::: Start Banner Section:::... -->
 <div class="banner-section section-top-gap-100">
-    <!-- Start Banner Wrapper -->
     <div class="banner-wrapper">
         <div class="container">
             <div class="row">
                 <div class="col-lg-4 col-md-6 col-12">
-                    <!-- Start Banner Single -->
                     <div class="banner-single">
                         <a href="#l" class="banner-img-link">
                             <img class="banner-img" src="https://img.freepik.com/premium-vector/online-library-outline-isometric-education-concept-open-book-with-loupe-isolated-white_119523-8406.jpg" alt="" />
                         </a>
                         <div class="banner-content">
-                            {{-- <span class="banner-text-tiny">The Best of</span>
-                            <h3 class="banner-text-large">30% Off</h3>
-                            --}}
                             <a href="#" class="banner-link">Shop Now</a>
                         </div>
                     </div>
-                    <!-- End Banner Single -->
                 </div>
                 <div class="col-lg-4 col-md-6 col-12">
-                    <!-- Start Banner Single -->
                     <div class="banner-single">
                         <a href="#" class="banner-img-link">
                             <img class="banner-img" src="https://img.freepik.com/premium-vector/collection-cat-with-pile-book-set_77984-276.jpg" alt="" />
                         </a>
                         <div class="banner-content">
-                            {{-- <span class="banner-text-tiny">Where to</span>
-                            <h3 class="banner-text-large">40% Off</h3>
-                            --}}
                             <a href="#" class="banner-link">Shop Now</a>
                         </div>
                     </div>
-                    <!-- End Banner Single -->
                 </div>
                 <div class="col-lg-4 col-md-6 col-12">
-                    <!-- Start Banner Single -->
                     <div class="banner-single">
                         <a href="#" class="banner-img-link">
                             <img class="banner-img" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSbT_Tb79QYgsvr3knZa-cWA-6vxuv3ZFzh0clS46Y2QjPV2VLIRb1VR4-iXRbbwMZiDLM&usqp=CAU" alt="" />
                         </a>
                         <div class="banner-content">
-                            {{-- <span class="banner-text-tiny">How to</span>
-                            <h3 class="banner-text-large">50% Off</h3>
-                            --}}
                             <a href="#" class="banner-link">Shop Now</a>
                         </div>
                     </div>
-                    <!-- End Banner Single -->
                 </div>
             </div>
         </div>
     </div>
-    <!-- End Banner Wrapper -->
 </div>
-<!-- ...:::: End Banner Section:::... -->
-
-<!-- ...:::: Start Product Tab Section:::... -->
 <div class="product-tab-section section-top-gap-100">
-    <!-- Start Section Content -->
     <div class="section-content-gap">
         <div class="container">
             <div class="row">
@@ -167,9 +132,6 @@
             </div>
         </div>
     </div>
-    <!-- End Section Content -->
-
-    <!-- Start Tab Wrapper -->
     <div class="product-tab-wrapper">
         <div class="container">
             <div class="row">
@@ -177,7 +139,6 @@
                     <div class="tab-content tab-animate-zoom">
                         <div class="tab-pane show active" id="car_and_drive">
                             <div class="product-default-slider product-default-slider-4grids-1row">
-                                <!-- Start Product Defautlt Single -->
                                 @foreach($new as $news)
                                     <div class="product-default-single border-around">
                                         <div class="product-img-warp">
@@ -216,7 +177,6 @@
                                             <input type="text" disabled hidden value="Free for now" id="price-{{$news['id']}}" />
                                         </div>
                                     </div>
-                                    <!-- End Product Defautlt Single -->
                                 @endforeach
                             </div>
                         </div>
@@ -225,9 +185,7 @@
             </div>
         </div>
     </div>
-    <!-- End Catagory Wrapper -->
 </div>
-<!-- ...:::: Start Product Tab Section:::... -->
 
 <div class="product-tab-section section-top-gap-100">
     <!-- Start Section Content -->
@@ -243,9 +201,6 @@
             </div>
         </div>
     </div>
-    <!-- End Section Content -->
-
-    <!-- Start Tab Wrapper -->
     <div class="product-tab-wrapper">
         <div class="container">
             <div class="row">
@@ -253,7 +208,6 @@
                     <div class="tab-content tab-animate-zoom">
                         <div class="tab-pane show active" id="car_and_drive">
                             <div class="product-default-slider product-default-slider-4grids-1row">
-                                <!-- Start Product Defautlt Single -->
                                 @foreach ($free as $book)
                                     <div class="product-default-single border-around">
                                         <div class="product-img-warp">
@@ -281,7 +235,6 @@
                                             <input type="text" disabled hidden value="Free for now" id="price-{{$book['id']}}" />
                                         </div>
                                     </div>
-                                    <!-- End Product Defautlt Single -->
                                 @endforeach
                             </div>
                         </div>
@@ -290,34 +243,25 @@
             </div>
         </div>
     </div>
-    <!-- End Catagory Wrapper -->
 </div>
-<!-- ...:::: Start Product Tab Section:::... -->
 
-<!-- ...:::: Start Product Catagory Section:::... -->
 <div class="banner-section section-top-gap-100">
-    <!-- Start Banner Wrapper -->
     <div class="banner-wrapper">
         <div class="container">
             <div class="row">
                 <div class="col-12">
-                    <!-- Start Banner Single -->
                     <div class="banner-single">
                         <a href="product-details-default.html" class="banner-img-link">
                             <img class="banner-img banner-img-big" src="https://img.freepik.com/premium-photo/row-old-books-blue-shelf-horizontal-background-banner_118047-9024.jpg" alt="" />
                         </a>
                     </div>
-                    <!-- End Banner Single -->
                 </div>
             </div>
         </div>
     </div>
-    <!-- End Banner Wrapper -->
 </div>
-<!-- ...:::: End Product Catagory Section:::... -->
 
 <div class="product-tab-section section-top-gap-100">
-    <!-- Start Section Content -->
     <div class="section-content-gap">
         <div class="container">
             <div class="row">
@@ -330,9 +274,6 @@
             </div>
         </div>
     </div>
-    <!-- End Section Content -->
-
-    <!-- Start Tab Wrapper -->
     <div class="product-tab-wrapper">
         <div class="container">
             <div class="row">

@@ -1,6 +1,33 @@
 @extends('layouts.main') @section('content') @section('title', 'Search Result')
+<style>
+    .pagination-container {
+        text-align: center;
+    }
 
-<!-- ...:::: Start Breadcrumb Section:::... -->
+    .pagination {
+        display: inline-block;
+        margin-top: 10px;
+    }
+
+    .pagination a,
+    .pagination span {
+        display: inline-block;
+        padding: 5px 10px;
+        margin-right: 5px;
+        border: 1px solid #ccc;
+        text-decoration: none;
+        color: #333;
+    }
+
+    .pagination a:hover {
+        background-color: #f5f5f5;
+    }
+
+    .pagination .current {
+        background-color: #ccc;
+        color: #fff;
+    }
+</style>
 <div class="breadcrumb-section">
     <div class="breadcrumb-wrapper">
         <div class="container">
@@ -13,8 +40,7 @@
         </div>
     </div>
 </div>
-<!-- ...:::: End Breadcrumb Section:::... -->
-@if($paginator->count() == 0) {{-- //display center, color red --}}
+@if($paginator->count() == 0)
 <style type="text/css">
     .alert-danger {
         text-align: center;
@@ -31,18 +57,14 @@
     </div>
 </div>
 @else
-    <!-- ...:::: Start Shop Section:::... -->
     <div class="shop-section">
         <div class="container">
             <div class="row flex-column-reverse flex-lg-row">
                 <div class="col-lg-12">
-                    <!-- Start Shop Product Sorting Section -->
                     <div class="shop-sort-section">
                         <div class="container">
                             <div class="row">
-                                <!-- Start Sort Wrapper Box -->
                                 <div class="sort-box d-flex justify-content-between align-items-md-center align-items-start flex-md-row flex-column">
-                                    <!-- Start Sort tab Button -->
                                     <div class="sort-tablist">
                                         <ul class="tablist nav sort-tab-btn">
                                             <li>
@@ -53,9 +75,6 @@
                                             </li>
                                         </ul>
                                     </div>
-                                    <!-- End Sort tab Button -->
-
-                                    <!-- Start Sort Select Option -->
                                     <div class="sort-select-list">
                                         <form action="#">
                                             <fieldset>
@@ -68,33 +87,22 @@
                                             </fieldset>
                                         </form>
                                     </div>
-                                    <!-- End Sort Select Option -->
-
-                                    <!-- Start Page Amount -->
                                     <div class="page-amount">
-                                        {{-- use paigante to get the number of pages --}}
                                         <span>@if($paginator->total() > 0) Showing {{ $paginator->firstItem() }}–{{ $paginator->lastItem() }} of {{ $paginator->total() }} results @endif</span>
                                     </div>
-                                    <!-- End Page Amount -->
                                 </div>
-                                <!-- Start Sort Wrapper Box -->
                             </div>
                         </div>
                     </div>
-                    <!-- End Section Content -->
-
-                    <!-- Start Tab Wrapper -->
                     <div class="sort-product-tab-wrapper">
                         <div class="container">
                             <div class="row">
                                 <div class="col-12">
                                     <div class="tab-content tab-animate-zoom">
-                                        <!-- Start Grid View Product -->
                                         <div class="tab-pane active show sort-layout-single" id="layout-4-grid">
                                             <div class="row">
                                                 @foreach($paginator as $book)
                                                     <div class="col-xl-3 col-lg-4 col-sm-6 col-12">
-                                                        <!-- Start Product Defautlt Single -->
                                                         <div class="product-default-single border-around">
                                                             <div class="product-img-warp">
                                                                 <a href="{{URL::to('/book-details/'.$book['id'])}}" class="product-default-img-link">
@@ -128,17 +136,14 @@
                                                                 @endif
                                                             </div>
                                                         </div>
-                                                        <!-- End Product Defautlt Single -->
                                                     </div>
                                                 @endforeach
                                             </div>
                                         </div>
-                                        <!-- End Grid View Product -->
                                         <div class="tab-pane sort-layout-single" id="layout-list">
                                             <div class="row">
                                                 @foreach($paginator as $book)
                                                     <div class="col-12">
-                                                        <!-- Start Product Defautlt Single -->
                                                         <div class="product-list-single border-around">
                                                             <a href="{{URL::to('/book-details/'.$book['id'])}}" class="product-list-img-link">
                                                                 <img src="data:image/{{ $book['image_extension'] }};base64,{{ $book['cover_image'] }}" alt="" class="img-fluid" />
@@ -171,49 +176,16 @@
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <!-- End Product Defautlt Single -->
                                                     </div>
                                                 @endforeach
                                             </div>
                                         </div>
-                                        <!-- End List View Product -->
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <!-- End Tab Wrapper -->
-                    <style>
-                        .pagination-container {
-                            text-align: center;
-                        }
-
-                        .pagination {
-                            display: inline-block;
-                            margin-top: 10px;
-                        }
-
-                        .pagination a,
-                        .pagination span {
-                            display: inline-block;
-                            padding: 5px 10px;
-                            margin-right: 5px;
-                            border: 1px solid #ccc;
-                            text-decoration: none;
-                            color: #333;
-                        }
-
-                        .pagination a:hover {
-                            background-color: #f5f5f5;
-                        }
-
-                        .pagination .current {
-                            background-color: #ccc;
-                            color: #fff;
-                        }
-                    </style>
-                    <br />
-                    <!-- Start Pagination -->
+                    <br>
                     <div class="pagination-container">
                         <div class="pagination">
                             @if ($paginator->currentPage() != 1)
@@ -234,14 +206,11 @@
                                 <a href="{{ $paginator->url($paginator->lastPage()) }}">Last</a>
                             @endif
                         </div>
-                        <!-- End Pagination -->
                     </div>
                 </div>
-                <!-- End Shop Product Sorting Section  -->
             </div>
         </div>
     </div>
-    <!-- ...:::: End Shop Section:::... -->
     @foreach($paginator as $book)
         <div class="modal fade" id="modalQuickview-{{$book['id']}}" tabindex="-1" role="dialog" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
@@ -286,33 +255,20 @@
                                             @endif
                                             <p>{{$book['description']}}</p>
                                         </div>
-                                        <!-- End  Product Details Text Area-->
-                                        <!-- Start Product Variable Area -->
-                                        <div class="product-details-variable">
-                                            <!-- Product Variable Single Item -->
-                                            <!-- Product Variable Single Item -->
 
+                                        <div class="product-details-variable">
                                             @if ($book['price'] == 0)
                                                 <div class="product-add-to-cart-btn">
                                                     <a href="#" data-toggle="modal" data-target="#modalAddcart">Read Now</a>
                                                 </div>
                                                 <br />
-                                            @else {{--
-                                    <div class="variable-single-item">
-                                        <span>Quantity Available</span>
-                                        <div class="product-variable-quantity">
-                                            <input value="{{$book['quantity']}}" type="text" readonly disabled />
-                                        </div>
-                                    </div>
-                                    --}}
+                                            @else
                                             <div class="product-add-to-cart-btn">
                                                 <a href="#" data-toggle="modal" data-target="#modalAddcart">Add To Cart</a>
                                             </div>
                                             <br />
                                             @endif
                                         </div>
-                                        <!-- End Product Variable Area -->
-                                        <!-- Start  Product Details Meta Area-->
                                         <div class="product-details-meta mb-20">
                                             <ul>
                                                 <li>
@@ -326,8 +282,6 @@
                                                 </li>
                                             </ul>
                                         </div>
-                                        <!-- End  Product Details Meta Area-->
-                                        <!-- Start  Product Details Social Area-->
                                         <ul class="modal-product-details-social">
                                             <li>
                                                 <a href="#" class="facebook"><i class="fa fa-facebook"></i></a>
@@ -345,7 +299,6 @@
                                                 <a href="#" class="linkedin"><i class="fa fa-linkedin"></i></a>
                                             </li>
                                         </ul>
-                                        <!-- End  Product Details Social Area-->
                                     </div>
                                 </div>
                             </div>
@@ -354,7 +307,6 @@
                 </div>
             </div>
         </div>
-        <!-- End Modal Quickview cart -->
 
         <div class="modal fade" id="modalAddcart-{{$book['id']}}" tabindex="-1" role="dialog" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
@@ -387,12 +339,6 @@
                                 </div>
                                 <div class="col-md-5 modal-border">
                                     <ul class="modal-add-cart-product-shipping-info">
-                                        {{--
-                                        <li>
-                                            <strong><i class="icon-shopping-cart"></i> There Are 5 Items In Your Cart.</strong>
-                                        </li>
-                                        <li><strong>TOTAL PRICE: </strong> <span>$187.00</span></li>
-                                        --}}
                                         <li class="modal-continue-button"><a href="#" data-dismiss="modal">CONTINUE SHOPPING</a></li>
                                     </ul>
                                 </div>
@@ -402,5 +348,4 @@
                 </div>
             </div>
         </div>
-        <!-- End Modal Add cart -->
     @endforeach @endif @endsection
