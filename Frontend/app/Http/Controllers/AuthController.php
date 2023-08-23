@@ -15,13 +15,16 @@ use Illuminate\Support\Facades\Session;
 
 class AuthController extends Controller
 {
-    protected $categoryService;
-
-    private const USER_SERVICE = 'http://userservice.test:8080/api/';
+    protected $categoryService, $bookService, $contentService, $userService, $paymentService, $interactionService;
 
     public function __construct(CategoryService $categoryService)
     {
         $this->categoryService = $categoryService;
+        $this->bookService = env('BOOK_SERVICE_HOST', null);
+        $this->contentService = env('CONTENT_MANAGEMENT_SERVICE_HOST', null);
+        $this->userService = env('USER_SERVICE_HOST', null);
+        $this->paymentService = env('PAYMENT_SERVICE_HOST', null);
+        $this->interactionService = env('INTERACTION_SERVICE_HOST', null);
     }
 
     public function login()
@@ -40,7 +43,7 @@ class AuthController extends Controller
         $client = new Client();
 
         try {
-            $response = $client->post(self::USER_SERVICE . 'auth/login', [
+            $response = $client->post($this->userService . 'auth/login', [
                 'json' => $request->all(),
             ]);
 
@@ -71,7 +74,7 @@ class AuthController extends Controller
         $client = new Client();
 
         try {
-            $response = $client->post(self::USER_SERVICE . 'auth/logout', [
+            $response = $client->post($this->userService . 'auth/logout', [
                 'headers' => [
                     'Authorization' => 'Bearer ' . session('token'),
                 ],
@@ -96,7 +99,7 @@ class AuthController extends Controller
         $client = new Client();
 
         try {
-            $response = $client->post(self::USER_SERVICE . 'auth/register', [
+            $response = $client->post($this->userService . 'auth/register', [
                 'json' => $request->all(),
             ]);
 
@@ -134,7 +137,7 @@ class AuthController extends Controller
         $client = new Client();
 
         try {
-            $response = $client->post(self::USER_SERVICE . 'auth/verify-account', [
+            $response = $client->post($this->userService . 'auth/verify-account', [
                 'json' => $request->all(),
             ]);
 
@@ -168,7 +171,7 @@ class AuthController extends Controller
         $client = new Client();
 
         try{
-            $response = $client->post(self::USER_SERVICE . 'auth/forgot-password', [
+            $response = $client->post($this->userService . 'auth/forgot-password', [
                 'json' => $request->all(),
             ]);
 
@@ -204,7 +207,7 @@ class AuthController extends Controller
         $email = session('emailForgot');
         $request->merge(['email' => $email]);
         try {
-            $response = $client->post(self::USER_SERVICE . 'auth/verify-otp', [
+            $response = $client->post($this->userService . 'auth/verify-otp', [
                 'json' => $request->all(),
             ]);
 
@@ -246,7 +249,7 @@ class AuthController extends Controller
         $client = new Client();
 
         try {
-            $response = $client->post(self::USER_SERVICE . 'auth/reset-password', [
+            $response = $client->post($this->userService . 'auth/reset-password', [
                 'json' => $request->all(),
             ]);
 
@@ -291,7 +294,7 @@ class AuthController extends Controller
 
         $request->merge(['data' => $data]);
         try {
-            $client->post(self::USER_SERVICE . 'auth/profile' . $id, [
+            $client->post($this->userService . 'auth/profile' . $id, [
                 'json' => $request->all(),
             ]);
 

@@ -30,6 +30,7 @@ class News extends Model
         'share',
         'type',
         'is_hot',
+        'creadted_by',
         'created_at',
         'updated_at',
         'deleted_at',
@@ -44,5 +45,6 @@ class News extends Model
         'share' => 'integer',
         'type' => 'integer',
         'is_hot' => 'integer',
+        'creadted_by' => 'string',
     ];
 }

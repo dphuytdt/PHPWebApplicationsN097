@@ -62,13 +62,11 @@ class NewsRepository implements NewsRepositoryInterfaces
 
     public function userIndex()
     {
-        $news = $this->news->orderBy('created_at', 'desc')->paginate(6);
-        return response()->json($news);
+        return $this->news->orderBy('created_at', 'desc')->paginate(6);
     }
 
     public function newRecent()
     {
-        $news = $this->news->orderBy('created_at', 'desc')->take(3)->get();
-        return response()->json($news);
+        return $this->news->orderBy('created_at', 'desc')->take(3)->get();
     }
 }

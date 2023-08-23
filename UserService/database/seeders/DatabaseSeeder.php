@@ -24,7 +24,7 @@ class DatabaseSeeder extends Seeder
         }
 
         User::factory()->create([
-            'email' => 'admin@yopmail.com',
+                'email' => 'admin@yopmail.com',
             'password' => Hash::make('12345678'),
             'role' => 'ROLE_ADMIN',
             'is_active' => 1,

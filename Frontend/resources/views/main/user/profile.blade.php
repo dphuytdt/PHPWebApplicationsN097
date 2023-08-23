@@ -69,6 +69,7 @@
 <script type="text/javascript">
     document.addEventListener("DOMContentLoaded", function () {
         const userData = JSON.parse(localStorage.getItem("userProfile"));
+        const orderHistory = JSON.parse(localStorage.getItem("orderHistory"));
 
         $("#fullname").val(userData.user.fullname);
 
@@ -83,6 +84,16 @@
         $("#phone").val(userData.user.user_detail.phone);
         $("#address").val(userData.user.user_detail.address);
         $("#wallet").val(userData.user.user_detail.wallet);
+
+        if (orderHistory) {
+            for (let i = 0; i < orderHistory.length; i++) {
+                $("#order").append(orderHistory.orderHistory[i].order_id + "<br />");
+                $("#date").append(orderHistory.orderHistory[i].created_at + "<br />");
+                $("#status").append(orderHistory.orderHistory[i].status + "<br />");
+                $("#total").append(orderHistory.orderHistory[i].total + "<br />");
+                $("#action").append("<a href='/order/" + orderHistory.orderHistory[i].book_id + "'>View</a><br />");
+            }
+        }
 
         if (userData && userData.user.user_detail.gender !== null) {
             const maleRadio = document.getElementById("male");
@@ -134,18 +145,11 @@
                                 </thead>
                                 <tbody>
                                 <tr>
-                                    <td>1</td>
-                                    <td>May 10, 2018</td>
-                                    <td><span class="success">Completed</span></td>
-                                    <td>$25.00 for 1 item</td>
-                                    <td><a href="cart.html" class="view">view</a></td>
-                                </tr>
-                                <tr>
-                                    <td>2</td>
-                                    <td>May 10, 2018</td>
-                                    <td>Processing</td>
-                                    <td>$17.00 for 1 item</td>
-                                    <td><a href="cart.html" class="view">view</a></td>
+                                    <td id="order"></td>
+                                    <td id="date"></td>
+                                    <td id="status"><span class="success"></span></td>
+                                    <td id="total"></td>
+                                    <td id="action"><a id="view" class="view">View</a></td>
                                 </tr>
                                 </tbody>
                             </table>

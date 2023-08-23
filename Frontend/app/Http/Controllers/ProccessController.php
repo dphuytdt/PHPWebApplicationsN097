@@ -10,13 +10,17 @@ use Illuminate\Http\Request;
 class ProccessController extends Controller
 {
 
-    protected $categoryService;
-
-    public $paymentService = 'http://paymentservice.test:8080/api/';
+    protected $categoryService, $bookService, $contentService, $userService, $paymentService, $interactionService, $redriectUrl;
 
     public function __construct(CategoryService $categoryService)
     {
         $this->categoryService = $categoryService;
+        $this->bookService = env('BOOK_SERVICE_HOST', null);
+        $this->contentService = env('CONTENT_MANAGEMENT_SERVICE_HOST', null);
+        $this->userService = env('USER_SERVICE_HOST', null);
+        $this->paymentService = env('PAYMENT_SERVICE_HOST', null);
+        $this->interactionService = env('INTERACTION_SERVICE_HOST', null);
+        $this->redriectUrl = env('REDIRECT_URL', null);
     }
 
     private function proccessPayment($data)

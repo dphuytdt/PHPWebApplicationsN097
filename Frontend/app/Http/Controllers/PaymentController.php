@@ -7,22 +7,25 @@ use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use App\Services\CategoryService;
+use Psr\Container\ContainerExceptionInterface;
+use Psr\Container\NotFoundExceptionInterface;
 
 class PaymentController extends Controller
 {
+    protected $categoryService, $bookService, $contentService, $userService, $paymentService, $interactionService, $redriectUrl;
+
     private const DOLLAR_RATE = 23000;
 
-    private const REDIRECT_URL = 'http://frontend.test:8080/thankYou';
-
-    private const USER_SERVICE = 'http://userservice.test:8080/api/auth/';
-
     private const VN_PAY = 'vnpay';
-
-    protected $categoryService;
 
     public function __construct(CategoryService $categoryService)
     {
         $this->categoryService = $categoryService;
+        $this->bookService = env('BOOK_SERVICE_HOST', null);
+        $this->contentService = env('CONTENT_MANAGEMENT_SERVICE_HOST', null);
+        $this->userService = env('USER_SERVICE_HOST', null);
+        $this->paymentService = env('PAYMENT_SERVICE_HOST', null);
+        $this->interactionService = env('INTERACTION_SERVICE_HOST', null);
     }
 
     public function payment(Request $request)
@@ -31,11 +34,10 @@ class PaymentController extends Controller
 
         $client = new Client();
 
-         //get datetime now for mat dd-mm-yyyy hh:mm:ss
         $data['currentTimestamp'] = now()->format('d-m-Y H:i:s');
 
         try{
-            $client->post(self::USER_SERVICE . 'upgrade-vip', [
+            $client->post($this->userService . 'auth/upgrade-vip', [
                 'headers' => [
                     'Authorization' => 'Bearer ' . session('token'),
                     "Accept"=>"application/json"
@@ -47,12 +49,30 @@ class PaymentController extends Controller
                 ]
             ]);
 
+            // add payment history later
+
+//            $client->post($this->paymentService . 'add-payment-history', [
+//                'form_params' => [
+//                    "userId" => $data['userId'],
+//                    "bookId" => $data['bookId'],
+//                    "totalPrice" => $data['totalPrice'],
+//                    "payment" => $data['payment'],
+//                    "date" => $data['currentTimestamp']
+//                ]
+//            ]);
+
+            $user = session()->get('user');
+            $user['is_vip'] = 1;
+
+            session()->forget('user');
+            session()->put('user', $user);
+
             if($data['payment'] == self::VN_PAY) {
                 error_reporting(E_ALL & ~E_NOTICE & ~E_DEPRECATED);
                 date_default_timezone_set('Asia/Ho_Chi_Minh');
 
                 $vnp_Url = "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html";
-                $vnp_Returnurl = self::REDIRECT_URL;
+                $vnp_Returnurl = $this->redriectUrl;
                 $vnp_TmnCode = "1ACLHH74";
                 $vnp_HashSecret = "TMEVRTPDXCOKQKXQLZFNKDROUCTMWXHS";
 
@@ -116,10 +136,9 @@ class PaymentController extends Controller
                     echo json_encode($returnData);
                 }
             }
-        } catch (\Exception| GuzzleException $e) {
+        } catch (\Exception|GuzzleException|NotFoundExceptionInterface|ContainerExceptionInterface $e) {
             dd($e->getMessage());
         }
-        //return redirect()->back();
     }
 
     function execPostRequest($url, $data)

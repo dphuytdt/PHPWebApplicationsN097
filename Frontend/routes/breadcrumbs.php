@@ -86,3 +86,9 @@ use DaveJamesMiller\Breadcrumbs\Facades\Breadcrumbs;
         $trail->parent('home');
         $trail->push($dataType, route('view.more', $dataType));
     });
+
+    //login
+    Breadcrumbs::for('login', function ($trail) {
+        $trail->parent('home');
+        $trail->push('Login', route('login'));
+    });

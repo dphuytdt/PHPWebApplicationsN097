@@ -77,48 +77,25 @@
                         <div class="product-details-variable">
                             <h4 class="title">Available Options</h4>
                             <div class="d-flex align-items-center">
-                                @if(session()->has('user')) @php $user = session()->get('user'); $is_vip = $user['is_vip']; @endphp @if($user['role'] === 'ROLE_ADMIN')
+                                @php $user = session()->get('user'); if (isset($user)) { $vip_expired_date = date("d-m-Y", strtotime($user['valid_vip'])); $today = date("d-m-Y", strtotime(date("Y-m-d"))); } $isReadNow =
+                            ($result['book']['price'] == 0) ($vip_expired_date > $today) ($isPayment['data']); @endphp @if(!session()->has('user'))
                                     <div class="product-add-to-cart-btn">
-                                        <a href="#" data-toggle="modal" data-target=".bd-example-modal-lg-{{$result['book']['id']}}">{{__('messages.readNow')}}</a>
+                                        <a href="{{route('login')}}">{{('messages.plsLogin')}}</a>
                                     </div>
-                                @elseif($is_vip == 1) @php $vip_experied_date = $user['valid_vip']; $today = date("Y-m-d"); $vip_experied_date = date("d-m-Y", strtotime($vip_experied_date)); $today = date("d-m-Y", strtotime($today)); $diff =
-                            floor(strtotime($vip_experied_date) - strtotime($today))/ (60 * 60 * 24); @endphp @if ($diff < 0)
+                                @else @if ($isReadNow)
                                         <div class="product-add-to-cart-btn">
-                                            <a id="addCartDetails" href="{{route('cart.add')}}" data-toggle="modal" data-target="#modalAddcart">{{__('messages.addToCart')}}</a>
-                                        </div>
-                                    @else @if($result['book']['is_vip_valid'] == 1)
-                                            <div class="product-add-to-cart-btn">
-                                                <a href="#" data-toggle="modal" data-target=".bd-example-modal-lg-{{$result['book']['id']}}">{{__('messages.readNow')}}</a>
-                                            </div>
-                                        @else
-                                            <div class="product-add-to-cart-btn">
-                                                <a id="addCartDetails" href="#" data-toggle="modal" data-target="#modalAddcart">{{__('messages.addToCart')}}</a>
-                                            </div>
-                                        @endif @endif @else @if ($result['book']['price'] == 0)
-                                        <div class="product-add-to-cart-btn">
-                                            <a href="#" data-toggle="modal" data-target=".bd-example-modal-lg-{{$result['book']['id']}}">{{__('messages.readNow')}}</a>
+                                            <a href="#" data-toggle="modal" data-target=".bd-example-modal-lg-{{$result['book']['id']}}">{{('messages.readNow')}}</a>
                                         </div>
                                     @else
                                         <div class="product-add-to-cart-btn">
-                                            <a id="addCartDetails" href="" data-toggle="modal" data-target="#modalAddcart">{{__('messages.addToCart')}}</a>
+                                            <a id="addCartDetails" href="{{route('cart.add')}}" data-toggle="modal" data-target="#modalAddcart">{{__('messages.addToCart')}}</a>
                                         </div>
-                                    @endif @endif @else
-                                    <div class="product-add-to-cart-btn">
-                                        <a href="{{route('login')}}">{{__('messages.plsLogin')}}</a>
-                                    </div>
-                                @endif
-                                <div class="product-add-to-cart-btn">
-                                    <button class="btn-continue">{{__('messages.Continue')}}</button>
-                                </div>
-                                <div class="product-add-to-cart-btn">
-                                    <button class="btn-restart">{{__('messages.Restart')}}</button>
-                                </div>
+                                    @endif @endif
                                 <input type="hidden" name="_token" value="{{csrf_token()}}" />
                             </div>
 
                             @if(session()->has('user'))
                                 <script type="text/javascript">
-                                    //write axios to add to cart
                                     $(document).ready(function(){
                                         $('#addCartDetails').click(function(e){
                                             e.preventDefault();
@@ -186,7 +163,6 @@
             <div class="row">
                 <div class="col-12">
                     <div class="product-details-content-tab-wrapper">
-                        <!-- Start Product Details Tab Button -->
                         <ul class="nav tablist product-details-content-tab-btn d-flex justify-content-center">
                             <li>
                                 <a class="nav-link active" data-toggle="tab" href="#description">
@@ -204,19 +180,13 @@
                                 </a>
                             </li>
                         </ul>
-                        <!-- End Product Details Tab Button -->
-
-                        <!-- Start Product Details Tab Content -->
                         <div class="product-details-content-tab">
                             <div class="tab-content">
-                                <!-- Start Product Details Tab Content Singel -->
                                 <div class="tab-pane active show" id="description">
                                     <div class="single-tab-content-item">
                                         <p>{{$result['book']['description']}}</p>
                                     </div>
                                 </div>
-                                <!-- End Product Details Tab Content Singel -->
-                                <!-- Start Product Details Tab Content Singel -->
                                 <div class="tab-pane" id="specification">
                                     <div class="single-tab-content-item">
                                         <table class="table table-bordered mb-20">
@@ -243,13 +213,9 @@
                                         </p>
                                     </div>
                                 </div>
-                                <!-- End Product Details Tab Content Singel -->
-                                <!-- Start Product Details Tab Content Singel -->
                                 <div class="tab-pane" id="review">
                                     <div class="single-tab-content-item">
-                                        <!-- Start - Review Comment -->
                                         <ul class="comment">
-                                            <!-- Start - Review Comment list-->
                                             <li class="comment-list">
                                                 @foreach ($result['comments'] as $comment) @if(null === $comment['comment_parent_id'])
                                                     <div class="comment-wrapper">
@@ -284,9 +250,7 @@
                                                     </div>
                                                 @endif @endforeach
                                             </li>
-                                            <!-- End - Review Comment list-->
                                         </ul>
-                                        <!-- End - Review Comment -->
                                         <div class="review-form">
                                             @if(session()->has('user'))
                                                 <div class="review-form-text-top">
@@ -333,10 +297,8 @@
                                         </div>
                                     </div>
                                 </div>
-                                <!-- End Product Details Tab Content Singel -->
                             </div>
                         </div>
-                        <!-- End Product Details Tab Content -->
                     </div>
                 </div>
             </div>
@@ -355,7 +317,7 @@
 
                 <div class="modal-body">
                     <div id="pdf-wrapper">
-                        <embed src="data:application/pdf;base64,{{ $result['book']['content'] }}#toolbar=0" width="100%" height="100%"></embed>
+                        <iframe src="data:application/pdf;base64,{{ $result['book']['content'] }}#toolbar=0" width="100%" height="100%"></iframe>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -391,7 +353,7 @@
                     var bookImage = "{{$result['book']['cover_image']}}";
                     bookImage = bookImage.substring(22);
                     var _token = $('input[name="_token"]').val();
-                    const urlParams = 'http://paymentservice.test:8080/api/wishlist/add';
+                    const urlParams = 'http://127.0.0.1:8085/api/wishlist/add';
                     $.ajax({
                         url: urlParams,
                         type: "POST",

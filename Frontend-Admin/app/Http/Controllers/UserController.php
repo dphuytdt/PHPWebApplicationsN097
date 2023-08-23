@@ -12,15 +12,22 @@ use Maatwebsite\Excel\Facades\Excel;
 
 class UserController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public $userService = 'http://userservice.test:8080/api/auth/';
+    protected $bookService, $contentService, $userService, $paymentService, $interactionService;
+
+    public function __construct()
+    {
+        $this->bookService = env('BOOK_SERVICE_HOST', null);
+        $this->contentService = env('CONTENT_MANAGEMENT_SERVICE_HOST', null);
+        $this->userService = env('USER_SERVICE_HOST', null);
+        $this->paymentService = env('PAYMENT_SERVICE_HOST', null);
+        $this->interactionService = env('INTERACTION_SERVICE_HOST', null);
+    }
+
     public function index()
     {
         $client = new Client();
         try {
-            $response = $client->get($this->userService.'admin/user', [
+            $response = $client->get($this->userService.'auth/admin/user', [
                 'headers' => [
                     'Authorization' => 'Bearer ' . session('token'),
                     "Accept"=>"application/json"
@@ -35,24 +42,18 @@ class UserController extends Controller
         }
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
         return view('home.user.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
         $data = $request->all();
         $client = new Client();
 
         try {
-            $client->post($this->userService.'admin/user', [
+            $client->post($this->userService.'auth/admin/user', [
                 'headers' => [
                     'Authorization' => 'Bearer ' . session('token'),
                     "Accept"=>"application/json"
@@ -69,15 +70,12 @@ class UserController extends Controller
         }
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(string $id)
     {
         $client = new Client();
 
         try {
-            $req = $client->get($this->userService.'admin/user/'.$id, [
+            $req = $client->get($this->userService.'auth/admin/user/'.$id, [
                 'headers' => [
                     'Authorization' => 'Bearer ' . session('token'), // Truyền token từ session
                     "Accept"=>"application/json"
@@ -91,16 +89,13 @@ class UserController extends Controller
         }
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, string $id)
     {
         $data = $request->all();
         $client = new Client();
 
         try {
-            $req = $client->post($this->userService.'admin/user/'.$id, [
+            $req = $client->post($this->userService.'auth/admin/user/'.$id, [
                 'headers' => [
                     'Authorization' => 'Bearer ' . session('token'), // Truyền token từ session
                     "Accept"=>"application/json"
@@ -120,15 +115,12 @@ class UserController extends Controller
         }
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function deleteUser(string $id)
     {
         $client = new Client();
 
         try {
-            $req = $client->post($this->userService.'admin/user/in-active/'.$id, [
+            $req = $client->post($this->userService.'auth/admin/user/in-active/'.$id, [
                 'headers' => [
                     'Authorization' => 'Bearer ' . session('token'), // Truyền token từ session
                     "Accept"=>"application/json"
@@ -149,7 +141,7 @@ class UserController extends Controller
         $client = new Client();
 
         try{
-            $client->post($this->userService.'admin/user/import', [
+            $client->post($this->userService.'auth/admin/user/import', [
                 'form-param' => [
                     'file' => $file,
                 ],

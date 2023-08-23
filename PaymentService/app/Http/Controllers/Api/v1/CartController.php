@@ -96,4 +96,22 @@ class CartController extends Controller
             ], 400);
         }
     }
+
+    public function isPayment(int $bookId, int $userId) {
+        $result = $this->cartRepository->isPayment($userId, $bookId);
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Payment successfully',
+            'data' => $result
+        ], 200);
+    }
+
+    public function addPaymentHistory(Request $request) {
+        $result = $this->cartRepository->addPaymentHistory($request);
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Payment successfully',
+            'data' => $result
+        ], 200);
+    }
 }

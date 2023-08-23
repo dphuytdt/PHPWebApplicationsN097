@@ -1,11 +1,10 @@
-@extends('layouts.main') @section('content') @section('title', 'Cart')
-<!-- ...:::: Start Breadcrumb Section:::... -->
+@extends('layouts.main') @section('content') @section('title', 'Page Not Found') @section('meta_description', 'Page Not Found') @section('meta_keywords', 'Page Not Found')
 <div class="breadcrumb-section">
     <div class="breadcrumb-wrapper">
         <div class="container">
             <div class="row">
                 <div class="col-12 d-flex justify-content-between justify-content-md-between align-items-center flex-md-row flex-column">
-                    <h3 class="breadcrumb-title">404 Pages</h3>
+                    <h3 class="breadcrumb-title">{{__('messages.404 Not Found')}}</h3>
 
                     {{ Breadcrumbs::render('handleError') }}
                 </div>
@@ -13,9 +12,6 @@
         </div>
     </div>
 </div>
-<!-- ...:::: End Breadcrumb Section:::... -->
-
-<!-- ...:::: Start Error Section :::... -->
 <div class="error-section">
     <div class="container">
         <div class="row">
@@ -39,5 +35,4 @@
         </div>
     </div>
 </div>
-<!-- ...:::: End Error Section :::... -->
 @endsection

@@ -15,4 +15,6 @@ interface CartRepositoryInterface
 
     public function checkout($userId, $bookId, $totalPrice);
 
+    public function addPaymentHistory(Request $request);
+
 }

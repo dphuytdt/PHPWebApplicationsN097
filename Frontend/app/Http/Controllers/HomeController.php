@@ -16,27 +16,27 @@ use App\Services\HttpService;
 
 class HomeController extends Controller
 {
-    // //CALL TO ENVIRONMENT VARIABLE TO GET BOOK SERVICE URL
-    private const USER_SERVICE = 'http://bookservice.test:8080/api/';
-
-    private const CONTENT_SERVICE = 'http://contentmanagementservice.test:8080/api/';
-
-    protected $categoryService;
+    protected $categoryService, $bookService, $contentService, $userService, $paymentService, $interactionService;
 
     public function __construct(CategoryService $categoryService)
     {
         $this->categoryService = $categoryService;
+        $this->bookService = env('BOOK_SERVICE_HOST', null);
+        $this->contentService = env('CONTENT_MANAGEMENT_SERVICE_HOST', null);
+        $this->userService = env('USER_SERVICE_HOST', null);
+        $this->paymentService = env('PAYMENT_SERVICE_HOST', null);
+        $this->interactionService = env('INTERACTION_SERVICE_HOST', null);
     }
 
     public function index(Request $request){
-        $categories = $this->categoryService->getCategory();
-
         $httpService = app(HttpService::class);
         $client = $httpService->getClient();
 
         try {
-            $response1 = $client->get(self::USER_SERVICE .'books/homepage', ['timeout' => 60]);
-            $books = json_decode($response1->getBody(), true);
+            $req1 = $client->get($this->bookService .'books/homepage', ['timeout' => 60]);
+            $books = json_decode($req1->getBody(), true);
+            $req2 = $client->get($this->bookService . 'category');
+            $categories = json_decode($req2->getBody(), true);
             return view('main.home.index')->with('books', $books)->with('categories', $categories);
         } catch (\Exception $e) {
             return view('errors.404')->with('categories', $categories);
@@ -66,7 +66,7 @@ class HomeController extends Controller
         $httpService = app(HttpService::class);
         $client = $httpService->getClient();
         try {
-            $response = $client->get(self::CONTENT_SERVICE.'news/latest', ['timeout' => 60]);
+            $response = $client->get($this->contentService.'news/latest', ['timeout' => 60]);
 
             return json_decode($response->getBody(), true);
         } catch (\Exception $e) {

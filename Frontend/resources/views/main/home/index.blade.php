@@ -1,8 +1,6 @@
 @extends('layouts.main') @section('content') @section('title', 'Book Store') @php $free = $books['free']; $new = $books['new']; $featured = $books['featured']; @endphp
-    <!-- ...:::: Start Hero Area Section:::... -->
 <div class="hero-area">
     <div class="hero-area-wrapper hero-slider-dots fix-slider-dots">
-        <!-- Start Hero Slider Single -->
         <div class="hero-area-single">
             <div class="hero-area-bg">
                 <img class="hero-img" src="https://img.freepik.com/premium-photo/turning-paper-book-pages-literature-banner-with-copy-space-text_361816-5089.jpg" alt="" />
@@ -20,8 +18,6 @@
                 </div>
             </div>
         </div>
-        <!-- End Hero Slider Single -->
-        <!-- Start Hero Slider Single -->
         <div class="hero-area-single">
             <div class="hero-area-bg">
                 <img class="hero-img" src="https://t3.ftcdn.net/jpg/02/60/92/70/360_F_260927075_10lMM4OgNQ2emzsMhKQAlhsBsSGp4KNv.jpg" alt="" />
@@ -465,8 +461,6 @@
                                             <br />
                                         @endif
                                     </div>
-                                    <!-- End Product Variable Area -->
-                                    <!-- Start  Product Details Meta Area-->
                                     <div class="product-details-meta mb-20">
                                         <ul>
                                             <li>
@@ -480,8 +474,6 @@
                                             </li>
                                         </ul>
                                     </div>
-                                    <!-- End  Product Details Meta Area-->
-                                    <!-- Start  Product Details Social Area-->
                                     <ul class="modal-product-details-social">
                                         <li>
                                             <a href="#" class="facebook"><i class="fa fa-facebook"></i></a>
@@ -601,7 +593,6 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="product-details-content-area">
-                                    <!-- Start  Product Details Text Area-->
                                     <div class="product-details-text">
                                         <h4 class="title">{{$book['title']}}</h4>
                                         @if($book['price'] == 0)
@@ -612,12 +603,7 @@
                                         @endif
                                         <p>{{$book['description']}}</p>
                                     </div>
-                                    <!-- End  Product Details Text Area-->
-                                    <!-- Start Product Variable Area -->
                                     <div class="product-details-variable">
-                                        <!-- Product Variable Single Item -->
-                                        <!-- Product Variable Single Item -->
-
                                         @if ($book['price'] == 0)
                                             <div class="product-add-to-cart-btn">
                                                 <a href="#" data-toggle="modal" data-target="#modalAddcart">Read Now</a>
@@ -630,8 +616,6 @@
                                             <br />
                                         @endif
                                     </div>
-                                    <!-- End Product Variable Area -->
-                                    <!-- Start  Product Details Meta Area-->
                                     <div class="product-details-meta mb-20">
                                         <ul>
                                             <li>
@@ -645,8 +629,6 @@
                                             </li>
                                         </ul>
                                     </div>
-                                    <!-- End  Product Details Meta Area-->
-                                    <!-- Start  Product Details Social Area-->
                                     <ul class="modal-product-details-social">
                                         <li>
                                             <a href="#" class="facebook"><i class="fa fa-facebook"></i></a>
@@ -664,7 +646,6 @@
                                             <a href="#" class="linkedin"><i class="fa fa-linkedin"></i></a>
                                         </li>
                                     </ul>
-                                    <!-- End  Product Details Social Area-->
                                 </div>
                             </div>
                         </div>
@@ -673,7 +654,6 @@
             </div>
         </div>
     </div>
-    <!-- End Modal Quickview cart -->
 
     <div class="modal fade" id="modalAddcartFeaturedBook-{{$book['id']}}" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
@@ -706,12 +686,6 @@
                             </div>
                             <div class="col-md-5 modal-border">
                                 <ul class="modal-add-cart-product-shipping-info">
-                                    {{--
-                                    <li>
-                                        <strong><i class="icon-shopping-cart"></i> There Are 5 Items In Your Cart.</strong>
-                                    </li>
-                                    <li><strong>TOTAL PRICE: </strong> <span>$187.00</span></li>
-                                    --}}
                                     <li class="modal-continue-button"><a href="#" data-dismiss="modal">CONTINUE SHOPPING</a></li>
                                 </ul>
                             </div>
@@ -721,7 +695,6 @@
             </div>
         </div>
     </div>
-    <!-- End Modal Add cart -->
 @endforeach
 <script
     src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"
@@ -751,7 +724,7 @@
                 var image_extension = bookImage.substring(bookImage.indexOf('/') + 1, bookImage.indexOf(';'));
                 bookImage = bookImage.substring(22);
                 var xhr = new XMLHttpRequest();
-                var url = 'http://paymentservice.test:8080/api/cart/add';
+                var url = 'http://127.0.0.1:8085/api/cart/add';
                 xhr.open('POST', url, true);
                 xhr.setRequestHeader('Content-Type', 'application/json');
 
@@ -806,7 +779,7 @@
                 var image_extension = bookImage.substring(bookImage.indexOf('/') + 1, bookImage.indexOf(';'));
                 bookImage = bookImage.substring(22);
                 var xhr = new XMLHttpRequest();
-                var url = 'http://paymentservice.test:8080/api/wishlist/add';
+                var url = 'http://127.0.0.1:8085/api/wishlist/add';
 
                 bookPrice = parseFloat(bookPrice);
 

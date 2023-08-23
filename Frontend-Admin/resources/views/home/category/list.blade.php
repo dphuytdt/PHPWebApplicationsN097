@@ -19,19 +19,10 @@
 @php
     $numberLimit = 30;
 @endphp
-<!-- Begin Page Content -->
 <div class="container-fluid">
-
-    <!-- Page Heading -->
     <h1 class="h3 mb-2 text-gray-800">{{ Breadcrumbs::render('category.index') }}</h1>
     <input type="hidden" id="__token" name="__token" value="{{ csrf_token() }}">
-    {{-- <p class="mb-4">List of all categories</p> --}}
-
-    <!-- DataTales Example -->
     <div class="card shadow mb-4">
-        {{-- <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary">DataTables Example</h6>
-        </div> --}}
         <div class="card-body">
             <div class="table-responsive">
                 <table id="listCategory" class="table table-bordered" width="100%" cellspacing="0">
@@ -55,9 +46,9 @@
                                     <td>
                                         <img src="data:image/{{ $category['image_extension'] }};base64,{{ $category['image'] }}" alt="Image">                                    </td>
                                     @if($category['status'] == 1)
-                                        <td>Active</td>
+                                        <span class="badge badge-success">Active</span>
                                     @else
-                                        <td>Deactive</td>
+                                        <span class="badge badge-danger">Deactive</span>
                                     @endif
                                     <td>{{Illuminate\Support\Str::limit($category['description'],  $numberLimit)}}</td>
                                     <td>{{$category['created_at']}}</td>

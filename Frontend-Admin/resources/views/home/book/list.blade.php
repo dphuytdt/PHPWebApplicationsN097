@@ -1,7 +1,6 @@
 @extends('layouts.admin')
 @section('content')
 @section('title', 'Book List')
-{{-- <script src="https://code.jquery.com/jquery-2.2.4.js"></script> --}}
 <script>
     $(document).ready(function() {
       $("#exampleInputPassword1").on("change", function() {
@@ -19,18 +18,9 @@
 @php
     $numberLimit = 30;
 @endphp
-<!-- Begin Page Content -->
 <div class="container-fluid">
-
-    <!-- Page Heading -->
     <h1 class="h3 mb-2 text-gray-800">{{ Breadcrumbs::render('books.index') }}</h1>
-    {{-- <p class="mb-4">List of all categories</p> --}}
-
-    <!-- DataTales Example -->
     <div class="card shadow mb-4">
-        {{-- <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary">DataTables Example</h6>
-        </div> --}}
         <div class="card-body">
             <div class="table-responsive">
                 <table id="listBook" class="table table-bordered"  width="100%" cellspacing="0">
@@ -43,6 +33,7 @@
                             <th>Category</th>
                             <th>Content</th>
                             <th>Price</th>
+                            <th>Status</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -66,6 +57,13 @@
                                         <td>${{ $book['price'] }}</td>
                                     @endif
                                     <input type="hidden" name="id" value="{{ $book['id'] }}">
+                                    <td>
+                                        @if($book['status'] == 0)
+                                            <span class="badge badge-danger">No</span>
+                                        @else
+                                            <span class="badge badge-success">Yes</span>
+                                        @endif
+                                    </td>
                                     <td>
                                         <a href="{{ route('books.edit', $book['id']) }}" class="btn btn-primary btn-sm">Edit</a>
                                     </td>

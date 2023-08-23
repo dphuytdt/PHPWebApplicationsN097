@@ -10,15 +10,16 @@ use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
 {
-    protected $categoryService;
-
-    private const USER_SERVICE = 'http://userservice.test:8080/api/auth';
-
-    private const PAYMENT_SERVICE = 'http://paymentservice.test:8080/api';
+    protected $categoryService, $bookService, $contentService, $userService, $paymentService, $interactionService;
 
     public function __construct(CategoryService $categoryService)
     {
         $this->categoryService = $categoryService;
+        $this->bookService = env('BOOK_SERVICE_HOST', null);
+        $this->contentService = env('CONTENT_MANAGEMENT_SERVICE_HOST', null);
+        $this->userService = env('USER_SERVICE_HOST', null);
+        $this->paymentService = env('PAYMENT_SERVICE_HOST', null);
+        $this->interactionService = env('INTERACTION_SERVICE_HOST', null);
     }
 
     public function profile(Request $request)

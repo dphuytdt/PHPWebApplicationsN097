@@ -87,6 +87,10 @@
                 </div>
             </div>
             <div class="mb-3">
+                <label for="creadted_by" class="form-label">Author Name: <color style="color: red;">*</color></label>
+                <input type="text" class="form-control" id="creadted_by" name="creadted_by" required>
+            </div>
+            <div class="mb-3">
                 <label for="is_active" class="form-label">Status<color style="color: red">*</color></label>
                 <style type="text/css">
                     .form-select{

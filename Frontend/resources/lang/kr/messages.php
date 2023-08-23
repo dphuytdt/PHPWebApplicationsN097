@@ -132,5 +132,23 @@
         'Minute' => '분',
         'Second' => '둘째',
         'VIP Benefits' => 'VIP 혜택',
+        'Login - Register' => '로그인 - 등록',
+        'Login' => '로그인',
+        'Lost your password?' => '비밀번호를 잊으 셨나요?',
+        'Email address' => '이메일 주소',
+        'Passwords' => '암호',
+        'Passwords Confirm' => '비밀번호 확인',
+        'Register' => '레지스터',
+
+        'Forgot Password' => '비밀번호를 잊으 셨나요?',
+        'Get OTP' => 'OTP를 받기',
+        'Reset Password' => '비밀번호 재설정',
+        'New Password' => '새 비밀번호',
+        'New Passwords Confirmation' => '새 비밀번호 확인',
+        'Acount Verify' => '계정 확인',
+        'Your OTP' => '당신의 OTP',
+        'Verify' => '확인',
+        'Verify OTP' => 'OTP 확인',
+        '404 Not Found' => '404 페이지를 찾을 수 없습니다',
     ];
 

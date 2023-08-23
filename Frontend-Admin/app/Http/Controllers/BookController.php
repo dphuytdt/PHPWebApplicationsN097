@@ -9,7 +9,17 @@ use Spatie\PdfToText\Pdf;
 
 class BookController extends Controller
 {
-    public $bookService = 'http://bookservice.test:8080/api/';
+    protected $bookService, $contentService, $userService, $paymentService, $interactionService;
+
+    public function __construct()
+    {
+        $this->bookService = env('BOOK_SERVICE_HOST', null);
+        $this->contentService = env('CONTENT_MANAGEMENT_SERVICE_HOST', null);
+        $this->userService = env('USER_SERVICE_HOST', null);
+        $this->paymentService = env('PAYMENT_SERVICE_HOST', null);
+        $this->interactionService = env('INTERACTION_SERVICE_HOST', null);
+    }
+
     public function index()
     {
         $client = new Client();
@@ -73,6 +83,7 @@ class BookController extends Controller
             'discount' => $request->discount,
             'content' => $base64Content ?? '',
             'status' => $request->status,
+            'is_vip_valid' => $request->is_vip_valid,
             'image' => $base64Image ?? '',
             'image_extension' => $imageExtension ?? '',
         ];
@@ -90,6 +101,7 @@ class BookController extends Controller
                     'discount' => $data['discount'],
                     'contentPdf' => $data['content'],
                     'status' => $data['status'],
+                    'is_vip_valid' => $data['is_vip_valid'],
                     'image' => $data['image'],
                     'image_extension' => $data['image_extension'],
                 ]
@@ -118,9 +130,6 @@ class BookController extends Controller
         }
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, string $id)
     {
         if ($request->hasFile('image')) {
@@ -168,6 +177,7 @@ class BookController extends Controller
             'status' => $request->status,
             'cover_image' => $base64Image ?? '',
             'image_extension' => $imageExtension ?? '',
+            'is_vip_valid' => $request->is_vip_valid ?? ''
         ];
 
         try{
@@ -183,6 +193,7 @@ class BookController extends Controller
                     'status' => $data['status'],
                     'cover_image' => $data['cover_image'],
                     'image_extension' => $data['image_extension'],
+                    'is_vip_valid' => $data['is_vip_valid'],
                 ]
             ]);
 

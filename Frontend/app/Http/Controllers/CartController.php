@@ -10,13 +10,8 @@ use GuzzleHttp\Client;
 
 class CartController extends Controller
 {
-    public $bookService = 'http://bookservice.test:8080/api/';
 
-    public $paymentService = 'http://paymentservice.test:8080/api/';
-
-    private const REDIRECT_URL = 'http://frontend.test:8080/thankYou';
-
-    protected $categoryService;
+    protected $categoryService, $bookService, $contentService, $userService, $paymentService, $interactionService, $redirectUrl;
 
     private const DOLLAR_RATE = 23000;
 
@@ -27,10 +22,14 @@ class CartController extends Controller
     public function __construct(CategoryService $categoryService)
     {
         $this->categoryService = $categoryService;
+        $this->bookService = env('BOOK_SERVICE_HOST', null);
+        $this->contentService = env('CONTENT_MANAGEMENT_SERVICE_HOST', null);
+        $this->userService = env('USER_SERVICE_HOST', null);
+        $this->paymentService = env('PAYMENT_SERVICE_HOST', null);
+        $this->interactionService = env('INTERACTION_SERVICE_HOST', null);
+        $this->redirectUrl = env('REDIRECT_URL', null);
     }
-    /**
-     * Display a listing of the resource.
-     */
+
     public function getUserCart($id)
     {
         if (!session()->has('token')) {
@@ -136,7 +135,7 @@ class CartController extends Controller
                 date_default_timezone_set('Asia/Ho_Chi_Minh');
 
                 $vnp_Url = "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html";
-                $vnp_Returnurl = self::REDIRECT_URL;
+                $vnp_Returnurl = $this->redirectUrl;
                 $vnp_TmnCode = "1ACLHH74";
                 $vnp_HashSecret = "TMEVRTPDXCOKQKXQLZFNKDROUCTMWXHS";
 
@@ -228,7 +227,7 @@ class CartController extends Controller
                 $orderInfo = "Thanh toán qua MoMo";
                 $amount = $request->total * self::DOLLAR_RATE;
                 $orderId = $request->id . time();
-                $redirectUrl = "http://frontend.test:8080/thankYou";
+                $redirectUrl = $this->redirectUrl;
                 $ipnUrl = $redirectUrl;
                 $extraData = "";
 

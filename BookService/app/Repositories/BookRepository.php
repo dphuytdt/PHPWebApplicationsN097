@@ -73,6 +73,19 @@ class BookRepository implements BookRepositoryInterface
             $book->discount = $data['discount'];
         }
 
+        if (isset($data['content']) && ($data['content']  !== $book->content)) {
+            $book->content = $data['content'];
+        }
+
+        if (isset($data['cover_image']) && ($data['cover_image']  !== $book->cover_image)) {
+            $book->cover_image = $data['cover_image'];
+            $book->image_extension = $data['image_extension'];
+        }
+
+        if (isset($data['is_vip_valid']) && ($data['is_vip_valid']  !== $book->is_vip_valid)) {
+            $book->is_vip_valid = $data['is_vip_valid'];
+        }
+
         return $book->save();
     }
 

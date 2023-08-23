@@ -19,7 +19,6 @@
       });
     });
   </script>
-<!-- Begin Page Content -->
 <div class="container-fluid">
     <div class="row text-gray-800">
         <div class="col-md-12">
@@ -126,6 +125,14 @@
                 });
             });
         </script>
+        <div class="mb-3 contentType">
+            <label for="is_vip_valid" class="form-label">Is Valid For Vip <color style="color: red;">*</color></label>
+            <select id="is_vip_valid" class="form-select" name="is_vip_valid">
+                <option selected>Select Status</option>
+                <option value="1">Yes</option>
+                <option value="2">No</option>
+            </select>
+        </div>
         <div class="mb-3 contentType">
             <label for="contentType" class="form-label">Status <color style="color: red;">*</color></label>
             <select id="contentType" class="form-select" name="status">

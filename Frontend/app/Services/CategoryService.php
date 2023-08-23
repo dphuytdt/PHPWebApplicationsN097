@@ -7,17 +7,21 @@ use Illuminate\Support\Facades\Http;
 
 class CategoryService
 {
-    private const BOOK_SERVICE = 'http://bookservice.test:8080/api/';
+    protected $bookService;
+
+    public function __construct()
+    {
+        $this->bookService = env('BOOK_SERVICE_HOST', null);
+    }
+
     public function getCategory()
     {
         $minutes = 60 * 24 * 30 * 3 * 12;
 
-//        Cache::forget('categories');
-
         return Cache::remember('categories', $minutes, function () {
             $client = new Client();
             try {
-                $response = $client->get(self::BOOK_SERVICE . 'category', ['timeout' => 60]);
+                $response = $client->get($this->bookService . 'category');
                 return json_decode($response->getBody(), true);
             } catch (\Exception $e) {
                 return [];

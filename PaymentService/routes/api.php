@@ -37,3 +37,9 @@ Route::prefix('wishlist')->group(function () {
 Route::prefix('order-history')->group(function () {
     Route::get('{userID}', [OrderHistoryController::class, 'getOrderHistory']);
 });
+
+Route::get('is-payment/{bookId}/{userId}', [CartController::class, 'isPayment']);
+
+Route::post('add-payment-history', [CartController::class, 'addPaymentHistory']);
+
+Route::get('get-payment-history/{userId}', [CartController::class, 'getPaymentHistory']);

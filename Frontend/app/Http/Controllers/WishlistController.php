@@ -9,12 +9,16 @@ use Illuminate\Http\Request;
 
 class WishlistController extends Controller
 {
-    public const PAYMENT_SERVICE = 'http://paymentservice.test:8080/api/wishlist';
-    protected $categoryService;
+    protected $categoryService, $bookService, $contentService, $userService, $paymentService, $interactionService;
 
     public function __construct(CategoryService $categoryService)
     {
         $this->categoryService = $categoryService;
+        $this->bookService = env('BOOK_SERVICE_HOST', null);
+        $this->contentService = env('CONTENT_MANAGEMENT_SERVICE_HOST', null);
+        $this->userService = env('USER_SERVICE_HOST', null);
+        $this->paymentService = env('PAYMENT_SERVICE_HOST', null);
+        $this->interactionService = env('INTERACTION_SERVICE_HOST', null);
 
     }
     /**
@@ -27,7 +31,7 @@ class WishlistController extends Controller
         $client = new Client();
 
         try{
-            $response = $client->request('GET', self::PAYMENT_SERVICE . '/get/' . $id);
+            $response = $client->request('GET', $this->paymentService . 'wishlist/get/' . $id);
             $wishlists = json_decode($response->getBody()->getContents());
         } catch (\Exception|GuzzleException $e) {
             $wishlists = [];

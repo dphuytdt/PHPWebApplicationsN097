@@ -38,6 +38,7 @@ class NewsController extends Controller
             'image' => $request->image ?? '',
             'image_extension' => $request->image_extension ?? '',
             'is_active' => $request->is_active ?? 1,
+            'creadted_by' => $request->creadted_by ?? '',
             'created_at' => now()
         ];
 
@@ -82,7 +83,7 @@ class NewsController extends Controller
 
         $new= [
             'news' => $news,
-            'newRecent' => $newRecent
+            'newsRecent' => $newRecent
         ];
         return response()->json($new);
     }

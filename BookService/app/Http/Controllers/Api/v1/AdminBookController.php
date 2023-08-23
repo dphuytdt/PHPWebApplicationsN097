@@ -41,6 +41,7 @@ class AdminBookController extends Controller
             'discount' => $request->discount,
             'cover_image' => $request->image,
             'content' => $request->contentPdf,
+            'is_vip_valid' => $request->is_vip_valid,
             'created_at' => $created_at,
             'image_extension' => $request->image_extension,
         ];
@@ -81,6 +82,10 @@ class AdminBookController extends Controller
             'category_id' => $request->category_id,
             'price' => $request->price,
             'discount' => $request->discount,
+            'content' => $request->contentPdf,
+            'cover_image' => $request->image,
+            'image_extension' => $request->image_extension,
+            'is_vip_valid' => $request->is_vip_valid,
         ];
 
         try{

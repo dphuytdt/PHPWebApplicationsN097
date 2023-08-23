@@ -68,14 +68,22 @@ class CartRepository implements CartRepositoryInterface
             $cart->status = 1;
         }
 
-//        $userCart = new UserBooks;
-//        $userCart->user_id = $userId;
-//        $userCart->book_id = $bookId;
-
         $paymentHistory = new HistoryPayment();
         $paymentHistory->user_id = $userId;
         $paymentHistory->book_id = $bookId;
         $paymentHistory->total_price = $totalPrice;
+        $paymentHistory->created_at = now();
+        $paymentHistory->save();
+
+        return true;
+    }
+
+    public function addPaymentHistory($request)
+    {
+        $paymentHistory = new HistoryPayment();
+        $paymentHistory->user_id = $request->userId;
+        $paymentHistory->book_id = $request->bookId;
+        $paymentHistory->total_price = $request->totalPrice;
         $paymentHistory->created_at = now();
         $paymentHistory->save();
 

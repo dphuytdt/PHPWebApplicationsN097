@@ -8,16 +8,23 @@ use GuzzleHttp\Client;
 
 class CategoryController extends Controller
 {
-    private const BOOKS_SERVICE = 'http://bookservice.test:8080/api/';
+    protected $bookService, $contentService, $userService, $paymentService, $interactionService;
 
-    private const BOOKS_SERVICE_ADMIN = 'http://bookservice.test:8080/api/admin/';
+    public function __construct()
+    {
+        $this->bookService = env('BOOK_SERVICE_HOST', null);
+        $this->contentService = env('CONTENT_MANAGEMENT_SERVICE_HOST', null);
+        $this->userService = env('USER_SERVICE_HOST', null);
+        $this->paymentService = env('PAYMENT_SERVICE_HOST', null);
+        $this->interactionService = env('INTERACTION_SERVICE_HOST', null);
+    }
 
     public function index(Request $request)
     {
         $client = new Client();
 
         try {
-            $response = $client->get(self::BOOKS_SERVICE.'category/admin');
+            $response = $client->get($this->bookService.'category/admin');
             $paginator = json_decode($response->getBody(), true);
 
             return view('home.category.list')->with('paginator', $paginator);
@@ -56,7 +63,7 @@ class CategoryController extends Controller
         $client = new Client();
 
         try{
-            $client->post(self::BOOKS_SERVICE_ADMIN.'categories', [
+            $client->post($this->bookService.'admin/categories', [
                 'form_params' => [
                     'name' => $data['name'],
                     'description' => $data['description'],
@@ -89,7 +96,7 @@ class CategoryController extends Controller
         $client = new Client();
 
         try {
-            $client->post(self::BOOKS_SERVICE_ADMIN.'categories/'.$id, [
+            $client->post($this->bookService.'admin/categories/'.$id, [
                 'headers' => [
                     'Accept' => 'application/json',
                     'Content-Type' => 'application/json',
@@ -100,23 +107,19 @@ class CategoryController extends Controller
             ]);
             return redirect()->route('category.index')->with('success', 'Update category successfully');
         } catch (\Exception|GuzzleException $e) {
-            dd($e);
-            // return view('home.category.list')->withErrors(['errors' => 'Cannot connect to server']);
+            return view('home.category.list')->withErrors(['errors' => 'Cannot connect to server']);
         }
     }
-
-    /**
-     * Remove the specified resource from storage.
-     */
+    
     public function delete(string $id)
     {
         $client = new Client();
+
         try {
-            $client->post(self::BOOKS_SERVICE_ADMIN.'categories/delete'.$id);
+            $client->post($this->bookService.'admin/categories/delete'.$id);
             return redirect()->route('category.index')->with('success', 'Delete category successfully');
         } catch (\Exception $e) {
-            dd($e);
-            // return view('category.index')->withErrors(['errors' => 'Cannot connect to server']);
+            return view('category.index')->withErrors(['errors' => 'Cannot connect to server']);
         }
     }
 }

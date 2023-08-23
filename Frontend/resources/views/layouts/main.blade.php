@@ -72,7 +72,7 @@
                 </div>
             </div>
         </div>
-    </div>>
+    </div>
     <div class="header-center">
         <div class="container">
             <div class="row d-flex justify-content-between align-items-center">
@@ -457,7 +457,7 @@
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <script type="text/javascript">
         var userID = @json(session('user_id', ['id' => 'id']));
-        const url = "http://paymentservice.test:8080/api/cart/get/" + userID;
+        const url = "http://127.0.0.1:8085/api/cart/get/" + userID;
 
         axios.get(url)
             .then(response => {
@@ -507,7 +507,7 @@
             });
     function deleteCartItem(itemId) {
         var userID = @json(session('user_id', ['id' => 'id']));
-        const deleteUrl = "http://paymentservice.test:8080/api/cart/delete";
+        const deleteUrl = "http://127.0.0.1:8085/api/cart/delete";
         const requestData = {
             bookID: itemId,
             userID: userID
@@ -550,7 +550,7 @@
 
 <script type="text/javascript">
         var userID = @json(session('user_id', ['id' => 'id']));
-        const urlWishlist = "http://paymentservice.test:8080/api/wishlist/get/" + userID;
+        const urlWishlist = "http://127.0.0.1:8085/api/wishlist/get/" + userID;
 
         axios.get(urlWishlist)
             .then(response => {
@@ -589,7 +589,7 @@
             });
 
     function deleteWishlistItem(itemId) {
-        const deleteUrl = "http://paymentservice.test:8080/api/wishlist/delete";
+        const deleteUrl = "http://127.0.0.1:8085/api/wishlist/delete";
         const requestData = {
             bookID: itemId,
             userID: userID
@@ -623,8 +623,8 @@
                 event.preventDefault();
                 let userID = @json(session('user_id'));
                 axios.all([
-                    axios.post('http://userservice.test:8080/api/auth/user-detail/' + userID),
-                    axios.get('http://paymentservice.test:8080/api/order-history/' + userID)
+                    axios.post('http://127.0.0.1:8082/api/auth/user-detail/' + userID),
+                    axios.get('http://127.0.0.1:8085/api/order-history/' + userID)
                 ])
                     .then(axios.spread(function (userProfileResponse, orderHistoryResponse) {
                         const userProfile = JSON.stringify(userProfileResponse.data);

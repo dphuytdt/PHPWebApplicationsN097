@@ -1,5 +1,4 @@
 @extends('layouts.main') @section('content') @section('title', 'Wishlist')
-<!-- ...:::: Start Breadcrumb Section:::... -->
 <div class="breadcrumb-section">
     <div class="breadcrumb-wrapper">
         <div class="container">
@@ -12,11 +11,7 @@
         </div>
     </div>
 </div>
-<!-- ...:::: End Breadcrumb Section:::... -->
-
-<!-- ...:::: Start Wishlist Section:::... -->
-<div class="wishlist-section">
-    <!-- Start Cart Table -->
+<div class="wishlist-section">->
     <div class="wishlish-table-wrapper">
         <div class="container">
             <div class="row">
@@ -24,7 +19,6 @@
                     <div class="table_desc">
                         <div class="table_page table-responsive">
                             <table>
-                                <!-- Start Wishlist Table Head -->
                                 <thead>
                                 <tr>
                                     <th class="product_remove">Delete</th>
@@ -35,7 +29,6 @@
                                     <th class="product_addcart">Action</th>
                                 </tr>
                                 </thead>
-                                <!-- End Cart Table Head -->
                                 <tbody id="wishlist_items">
                                 @foreach($wishlists as $wishlist)
                                     <form action="{{route('wishlist.add')}}" method="POST">
@@ -73,7 +66,5 @@
             </div>
         </div>
     </div>
-    <!-- End Cart Table -->
 </div>
-<!-- ...:::: End Wishlist Section:::... -->
 @endsection

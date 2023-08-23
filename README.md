@@ -64,3 +64,17 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 ## License
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+
+#### FE: http://127.0.0.1:8080/
+
+#### FE Admin: http://127.0.0.1:8086/
+
+#### BookService: http://127.0.0.1:8081/
+
+#### UserService: http://127.0.0.1:8082/
+
+#### ContentManagementService: http://127.0.0.1:8083/
+
+#### InteractionService: http://127.0.0.1:8084/
+
+#### PaymentService: http://127.0.0.1:8085/

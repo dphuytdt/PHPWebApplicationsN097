@@ -8,14 +8,21 @@ use GuzzleHttp\Client;
 use App\Services\CategoryService;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
+use Psr\Container\ContainerExceptionInterface;
+use Psr\Container\NotFoundExceptionInterface;
+
 class BookController extends Controller
 {
-    public $bookService = 'http://bookservice.test:8080/api/';
-    protected $categoryService;
+    protected $categoryService, $bookService, $contentService, $userService, $paymentService, $interactionService;
 
     public function __construct(CategoryService $categoryService)
     {
         $this->categoryService = $categoryService;
+        $this->bookService = env('BOOK_SERVICE_HOST', null);
+        $this->contentService = env('CONTENT_MANAGEMENT_SERVICE_HOST', null);
+        $this->userService = env('USER_SERVICE_HOST', null);
+        $this->paymentService = env('PAYMENT_SERVICE_HOST', null);
+        $this->interactionService = env('INTERACTION_SERVICE_HOST', null);
     }
     public function bookDetails($id)
     {
@@ -23,12 +30,16 @@ class BookController extends Controller
         $client = new Client();
         try {
             $response = $client->get($this->bookService.'books/'.$id);
-            $result = json_decode($response->getBody(), true);
 
-            return view('main.book.book-details', compact('result', 'categories'));
+            $user = session()->get('user');
+            $isPaymentResponse = $client->get($this->paymentService.'is-payment/'. $id .'/' . $user['id']);
+
+            $result = json_decode($response->getBody(), true);
+            $isPayment = json_decode($isPaymentResponse->getBody(), true);
+
+            return view('main.book.book-details', compact('result', 'isPayment', 'categories'));
         }
-        catch (\Exception $e) {
-            dd($e);
+        catch (\Exception|GuzzleException|NotFoundExceptionInterface|ContainerExceptionInterface $e) {
             return view('errors.404')->with('categories', $categories);
         }
     }
@@ -64,7 +75,7 @@ class BookController extends Controller
                 return view('main.home.search-result')->with('error', 'No result found')->with('categories', $categories)->with('paginator', $paginator);
             }
         }
-        catch (\Exception $e) {
+        catch (\Exception|GuzzleException $e) {
             $paginator = [];
             return view('main.home.search-result')->with('error', 'No result found')->with('categories', $categories)->with('paginator', $paginator);
         }
@@ -105,7 +116,7 @@ class BookController extends Controller
         $categories = $this->categoryService->getCategory();
 
         $name = '';
-        //
+
         foreach($categories as $category){
             if($category['id'] == $id){
                 $name = $category['name'];

@@ -10,11 +10,16 @@ use Illuminate\Pagination\LengthAwarePaginator;
 
 class NewsController extends Controller
 {
-    protected $categoryService;
+    protected $categoryService, $bookService, $contentService, $userService, $paymentService, $interactionService;
 
     public function __construct(CategoryService $categoryService)
     {
         $this->categoryService = $categoryService;
+        $this->bookService = env('BOOK_SERVICE_HOST', null);
+        $this->contentService = env('CONTENT_MANAGEMENT_SERVICE_HOST', null);
+        $this->userService = env('USER_SERVICE_HOST', null);
+        $this->paymentService = env('PAYMENT_SERVICE_HOST', null);
+        $this->interactionService = env('INTERACTION_SERVICE_HOST', null);
     }
 
     public function index(Request $request)
@@ -23,15 +28,14 @@ class NewsController extends Controller
         $client = new Client();
 
         try{
-            $response = $client->request('GET', 'http://contentmanagementservice.test:8080/api/user/news');
+            $response = $client->request('GET', $this->contentService . 'user/news');
             $data = json_decode($response->getBody()->getContents());
-            $articles = $data->articles;
 
-            if($articles) {
-                $news = json_decode($response->getBody(), true);
+            if($data) {
+                $res = json_decode($response->getBody(), true);
+                $news = $res['news'];
                 $perPage = 8;
                 $currentPage = $request->query('page', 1);
-
                 $paginator = new LengthAwarePaginator(
                     $news['data'],
                     $news['total'],
@@ -39,11 +43,16 @@ class NewsController extends Controller
                     $currentPage,
                     ['path' => $request->url(), 'query' => $request->query()]
                 );
+
+                $recentNews = $res['newsRecent'];
+
+                return view('main.news.index')->with('paginator', $paginator)->with('categories', $categories)->with('recentNews', $recentNews);
             }
+
+            return view('main.news.index')->with('categories', $categories);
         } catch(\Exception|GuzzleException $e) {
-            $articles = [];
+            return view('errors.404')->with('categories', $categories);
         }
-        return view('main.news.index')->with('articles', $articles)->with('categories', $categories);
     }
 
     public function show()
