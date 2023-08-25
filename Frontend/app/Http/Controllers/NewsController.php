@@ -24,8 +24,10 @@ class NewsController extends Controller
 
     public function index(Request $request)
     {
-        $categories = $this->categoryService->getCategory();
         $client = new Client();
+
+        $req2 = $client->get($this->bookService . 'category');
+        $categories = json_decode($req2->getBody(), true);
 
         try{
             $response = $client->request('GET', $this->contentService . 'user/news');
@@ -57,6 +59,11 @@ class NewsController extends Controller
 
     public function show()
     {
-        return view('main.news.show');
+        $client = new Client();
+
+        $req2 = $client->get($this->bookService . 'category');
+        $categories = json_decode($req2->getBody(), true);
+
+        return view('main.news.show')->with('categories', $categories);
     }
 }

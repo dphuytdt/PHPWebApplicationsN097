@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use App\Interfaces\WishlistRepositoryInterface;
 use App\Models\Wishlist;
+use Illuminate\Support\Facades\Storage;
 
 class WishlistRepository implements WishlistRepositoryInterface
 {
@@ -30,12 +31,18 @@ class WishlistRepository implements WishlistRepositoryInterface
     public function getWishlist($userID)
     {
         $wishlist = Wishlist::where('user_id', $userID)->where('status', 0)->get();
-        return $wishlist;
+
+        foreach ($wishlist as $key => $value) {
+            $value->cover_image = Storage::disk('dropbox')->url($value->cover_image);
+        }
+
+        return $wishlist ? $wishlist : false;
     }
 
     public function getWishlistBook($userID, $bookID)
     {
         $wishlist = Wishlist::where('user_id', $userID)->where('book_id', $bookID)->where('status', 0)->first();
+
         return $wishlist;
     }
 

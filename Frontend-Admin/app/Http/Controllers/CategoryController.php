@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Http\Request;
 use GuzzleHttp\Client;
+use Illuminate\Support\Facades\Storage;
 
 class CategoryController extends Controller
 {
@@ -46,18 +47,14 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        if ($request->hasFile('image')) {
-            $imageFile = $request->file('image');
-            $imageContents = file_get_contents($imageFile->getPathname());
-            $base64Image = base64_encode($imageContents);
-            $imageExtension = $request->file('image')->getClientOriginalExtension();
-        }
+        $imageFile = $request->file('image');
+        $pathImage = Storage::disk('dropbox')->putFile('categories/images', $imageFile);
 
         $data = [
             'name' => $request->name,
             'description' => $request->description,
-            'image' => $base64Image,
-            'image_extension' => $imageExtension,
+            'image' => $pathImage,
+            'image_extension' => $imageFile->getClientOriginalExtension(),
         ];
 
         $client = new Client();
@@ -110,7 +107,7 @@ class CategoryController extends Controller
             return view('home.category.list')->withErrors(['errors' => 'Cannot connect to server']);
         }
     }
-    
+
     public function delete(string $id)
     {
         $client = new Client();

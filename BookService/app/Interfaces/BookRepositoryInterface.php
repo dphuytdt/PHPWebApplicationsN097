@@ -39,4 +39,6 @@ interface BookRepositoryInterface
     public function getAllCategories();
 
     public function viewMore($dataType);
+
+    public function getRelatedBooks($category_id, $id);
 }

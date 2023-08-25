@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\v1;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Interfaces\WishlistRepositoryInterface;
+use Illuminate\Support\Facades\Storage;
 
 class WishlistController extends Controller
 {
@@ -18,6 +19,11 @@ class WishlistController extends Controller
     public function add(Request $request)
     {
         $wishlist = $this->wishlistRepository->getWishlistBook($request->userID, $request->bookID);
+        $bookImage = $request->bookImage;
+
+        $imagePath = Storage::disk('dropbox')->putFile('wishlist/images', $bookImage);
+        $request->bookImage = $imagePath;
+
         if($wishlist){
             return response()->json([
                 'status' => 'error',
@@ -44,6 +50,7 @@ class WishlistController extends Controller
     public function getWishlist($userID)
     {
         $result = $this->wishlistRepository->getWishlist($userID);
+
         if($result){
             return response()->json($result, 200);
         }else{

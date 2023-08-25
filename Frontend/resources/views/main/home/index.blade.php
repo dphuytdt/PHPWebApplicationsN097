@@ -65,7 +65,8 @@
                         <div class="col-lg-3 col-md-4 col-sm-6 col-12">
                             <a href="{{route('getBookByCategory', ['id' => $category['id']])}}" class="product-catagory-single">
                                 <div class="product-catagory-img">
-                                    <img src="data:image/{{$category['image_extension']}};base64,{{ $category['image'] }}" alt="" />
+
+                                    <img src="{{ Storage::disk('dropbox')->url($category['image']) }}" alt="" />
                                 </div>
                                 <div class="product-catagory-content">
                                     <h5 class="product-catagory-title">{{ $category['name'] }}</h5>
@@ -139,7 +140,8 @@
                                     <div class="product-default-single border-around">
                                         <div class="product-img-warp">
                                             <a id="url-{{$news['id']}}" href="{{URL::to('/book-details/'.$news['id'])}}" class="product-default-img-link">
-                                                <img src="data:image/{{$news['image_extension']}};base64,{{ $news['cover_image'] }}" id="image-{{$news['id']}}" alt="" class="product-default-img img-fluid" />
+
+                                                <img src="{{ Storage::disk('dropbox')->url($news['cover_image']) }}" id="image-{{$news['id']}}" alt="" class="product-default-img img-fluid" />
                                             </a>
                                             <div class="product-action-icon-link">
                                                 <ul>
@@ -208,7 +210,7 @@
                                     <div class="product-default-single border-around">
                                         <div class="product-img-warp">
                                             <a id="url-{{$book['id']}}" href="{{URL::to('/book-details/'.$book['id'])}}" class="product-default-img-link">
-                                                <img src="data:image/{{ $book['image_extension'] }};base64,{{ $book['cover_image'] }}" id="image-{{$book['id']}}" alt="" class="product-default-img img-fluid" />
+                                                <img src="{{ Storage::disk('dropbox')->url($book['cover_image']) }}" id="image-{{$book['id']}}" alt="" class="product-default-img img-fluid" />
                                             </a>
                                             <div class="product-action-icon-link">
                                                 <ul>
@@ -281,7 +283,8 @@
                                     <div class="product-default-single border-around">
                                         <div class="product-img-warp">
                                             <a id="url-{{$news['id']}}" href="{{URL::to('/book-details/'.$news['id'])}}" class="product-default-img-link">
-                                                <img src="data:image/{{ $news['image_extension'] }};base64,{{ $news['cover_image'] }}" id="image-{{$news['id']}}" alt="" class="product-default-img img-fluid" />
+
+                                                <img src="{{ Storage::disk('dropbox')->url($news['cover_image']) }}" id="image-{{$news['id']}}" alt="" class="product-default-img img-fluid" />
                                             </a>
                                             <div class="product-action-icon-link">
                                                 <ul>
@@ -345,7 +348,7 @@
                                 <div class="product-details-gallery-area">
                                     <div class="product-large-image modal-product-image-large">
                                         <div class="product-image-large-single">
-                                            <img class="img-fluid" src="data:image/{{ $book['image_extension'] }};base64,{{ $book['cover_image'] }}" alt="" />
+                                            <img class="img-fluid" src="{{ Storage::disk('dropbox')->url($book['cover_image']) }}" alt="" />
                                         </div>
                                     </div>
                                 </div>
@@ -431,7 +434,7 @@
                                 <div class="product-details-gallery-area">
                                     <div class="product-large-image modal-product-image-large">
                                         <div class="product-image-large-single">
-                                            <img class="img-fluid" src="data:image/{{ $book['image_extension'] }};base64,{{ $book['cover_image'] }}" alt="" />
+                                            <img class="img-fluid" src="{{ Storage::disk('dropbox')->url($book['cover_image']) }}" alt="" />
                                         </div>
                                     </div>
                                 </div>
@@ -521,7 +524,7 @@
                                 <div class="row">
                                     <div class="col-md-4">
                                         <div class="modal-add-cart-product-img">
-                                            <img class="img-fluid" src="data:image/{{ $book['image_extension'] }};base64,{{ $book['cover_image'] }}" alt="" />
+                                            <img class="img-fluid" src="{{ Storage::disk('dropbox')->url($book['cover_image']) }}" alt="" />
                                         </div>
                                     </div>
                                     <div class="col-md-8">
@@ -586,7 +589,7 @@
                                 <div class="product-details-gallery-area">
                                     <div class="product-large-image modal-product-image-large">
                                         <div class="product-image-large-single">
-                                            <img class="img-fluid" src="data:image/{{ $book['image_extension'] }};base64,{{ $book['cover_image'] }}" alt="" />
+                                            <img class="img-fluid" src="{{ Storage::disk('dropbox')->url($book['cover_image']) }}" alt="" />
                                         </div>
                                     </div>
                                 </div>
@@ -672,7 +675,7 @@
                                 <div class="row">
                                     <div class="col-md-4">
                                         <div class="modal-add-cart-product-img">
-                                            <img class="img-fluid" src="data:image/{{ $book['image_extension'] }};base64,{{ $book['cover_image'] }}" alt="" />
+                                            <img class="img-fluid" src="{{ Storage::disk('dropbox')->url($book['cover_image']) }}" alt="" />
                                         </div>
                                     </div>
                                     <div class="col-md-8">
@@ -721,8 +724,7 @@
                 var bookPrice = document.getElementById('price-' + bookId).value;
                 bookPrice = parseFloat(bookPrice);
                 var bookImage = document.getElementById('image-' + bookId).src;
-                var image_extension = bookImage.substring(bookImage.indexOf('/') + 1, bookImage.indexOf(';'));
-                bookImage = bookImage.substring(22);
+                var image_extension = 'png';
                 var xhr = new XMLHttpRequest();
                 var url = 'http://127.0.0.1:8085/api/cart/add';
                 xhr.open('POST', url, true);
@@ -765,7 +767,8 @@
         button.addEventListener('click', function() {
             var userID = @json(session('user_id'));
 
-            if(null == userID){
+
+            if(null === userID){
                 swal({
                     title: "Please login to add to wishlist!",
                     icon: "warning",
@@ -776,8 +779,7 @@
                 var bookTitle = document.getElementById('name-' + bookId).value;
                 var bookPrice = document.getElementById('price-' + bookId).value;
                 var bookImage = document.getElementById('image-' + bookId).src;
-                var image_extension = bookImage.substring(bookImage.indexOf('/') + 1, bookImage.indexOf(';'));
-                bookImage = bookImage.substring(22);
+                var image_extension = 'png';
                 var xhr = new XMLHttpRequest();
                 var url = 'http://127.0.0.1:8085/api/wishlist/add';
 

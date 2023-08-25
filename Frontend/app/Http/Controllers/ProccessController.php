@@ -28,7 +28,7 @@ class ProccessController extends Controller
         $client = new Client();
 
         try{
-            $response = $client->post($this->paymentService.'cart/checkout', [
+            $client->post($this->paymentService.'cart/checkout', [
                 'form_params' => [
                     "bookId" => $data->bookId,
                     "userID" => $data->userID,
@@ -36,11 +36,11 @@ class ProccessController extends Controller
                 ]
             ]);
 
-            $categories = $this->categoryService->getCategory();
+            $req2 = $client->get($this->bookService . 'category');
+            $categories = json_decode($req2->getBody(), true);
+
             return view('main.cart.thankYou')->with('categories', $categories);
-        } catch (\Exception $e) {
-            return response()->json($e->getMessage());
-        } catch (GuzzleException $e) {
+        } catch (\Exception|GuzzleException $e) {
             return response()->json($e->getMessage());
         }
     }

@@ -43,7 +43,7 @@
                                 <tr>
                                     <td>{{ ++$key }}</td>
                                     <td>{{ $book['title'] }}</td>
-                                    <td><img src="data:image/{{$book['image_extension']}};base64,{{ $book['cover_image'] }}" alt="" width="100px" height="100px"></td>
+                                    <td><img src="{{ Storage::disk('dropbox')->url($book['cover_image']) }}" alt="" width="100px" height="100px"></td>
                                     <td>{{ Illuminate\Support\Str::limit($book['author'], $numberLimit) }}</td>
                                    <td>{{ Illuminate\Support\Str::limit($book['category_name'], $numberLimit) }}</td>
                                     <td>
@@ -71,7 +71,7 @@
 
 
                                 <div class="modal fade bd-example-modal-lg-{{$book['id']}}">
-                                    <div class="modal-dialog modal-fullscreen no-scroll">
+                                    <div class="modal-dialog modal-fullscreen">
                                         <div class="modal-content">
                                             <div class="modal-header">
                                                 <h5 class="modal-title">{{$book['title']}}</h5>
@@ -82,8 +82,7 @@
 
                                             <div class="modal-body">
                                                 <div id="pdf-wrapper">
-                                                    <iframe src="data:application/pdf;base64,{{ $book['content'] }}#toolbar=0" width="100%" height="100%" frameborder="0">
-                                                    </iframe>
+                                                    <iframe src="data:application/pdf;base64,{{base64_encode(Storage::disk('dropbox')->get($book['content']))}}#toolbar=0" width="100%" height="100%" frameborder="0"></iframe>
                                                 </div>
                                             </div>
                                             <div class="modal-footer">

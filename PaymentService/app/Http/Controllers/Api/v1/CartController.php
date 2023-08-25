@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Api\v1;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Interfaces\CartRepositoryInterface;
+use Illuminate\Support\Facades\Storage;
+
 class CartController extends Controller
 {
     protected CartRepositoryInterface $cartRepository;
@@ -17,6 +19,10 @@ class CartController extends Controller
     public function add(Request $request)
     {
         $cart = $this->cartRepository->getCartBook($request->userID, $request->bookID);
+        $bookImage = $request->bookImage;
+        $imagePath = Storage::disk('dropbox')->putFile('cart/images', $bookImage);
+        $request->bookImage = $imagePath;
+
         if($cart){
             return response()->json([
                 'status' => 'error',
@@ -95,15 +101,6 @@ class CartController extends Controller
                 'data' => null
             ], 400);
         }
-    }
-
-    public function isPayment(int $bookId, int $userId) {
-        $result = $this->cartRepository->isPayment($userId, $bookId);
-        return response()->json([
-            'status' => 'success',
-            'message' => 'Payment successfully',
-            'data' => $result
-        ], 200);
     }
 
     public function addPaymentHistory(Request $request) {

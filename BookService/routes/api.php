@@ -9,6 +9,7 @@ use App\Http\Controllers\Api\v1\CommentController;
 
 Route::prefix('books')->group(function () {
     Route::get('is_free', [BookController::class, 'getFreeBook']);
+    Route::get('related/{id}', [BookController::class, 'getRelatedBooks']);
     Route::get('homepage', [BookController::class, 'getHomepageBooks']);
     Route::get('read/{id}', [BookController::class, 'readBook']);
     Route::get('view-more/{dataType}', [BookController::class, 'viewMore']);

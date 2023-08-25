@@ -5,6 +5,7 @@ namespace App\Repositories;
 use App\Interfaces\BookRepositoryInterface;
 use App\Models\Book;
 use App\Models\Category;
+use Illuminate\Support\Facades\Storage;
 
 class BookRepository implements BookRepositoryInterface
 {
@@ -40,7 +41,11 @@ class BookRepository implements BookRepositoryInterface
             return false;
         }
 
-        if (isset($data['cover_image']) && ($data['cover_image']  !== $book->cover_image)) {
+        if (
+            (isset($data['cover_image']) && ($data['cover_image']  !== $book->cover_image))
+            || (($data['cover_image'] != '') && ($data['cover_image']  !== $book->cover_image))
+        ) {
+            //Storage::disk('dropbox')->delete($book->cover_image);
             $book->cover_image = $data['cover_image'];
             $book->image_extension = $data['image_extension'];
         }
@@ -61,7 +66,11 @@ class BookRepository implements BookRepositoryInterface
             $book->category_id = $data['category_id'];
         }
 
-        if (isset($data['content']) && ($data['content']  !== $book->content)) {
+        if (
+            isset($data['content']) && ($data['content']  !== $book->content)
+            || (($data['content'] != '') && ($data['content']  !== $book->content))
+        ) {
+            //Storage::disk('dropbox')->delete($book->content);
             $book->content = $data['content'];
         }
 
@@ -71,15 +80,6 @@ class BookRepository implements BookRepositoryInterface
 
         if (isset($data['discount']) && ($data['discount']  !== $book->discount)) {
             $book->discount = $data['discount'];
-        }
-
-        if (isset($data['content']) && ($data['content']  !== $book->content)) {
-            $book->content = $data['content'];
-        }
-
-        if (isset($data['cover_image']) && ($data['cover_image']  !== $book->cover_image)) {
-            $book->cover_image = $data['cover_image'];
-            $book->image_extension = $data['image_extension'];
         }
 
         if (isset($data['is_vip_valid']) && ($data['is_vip_valid']  !== $book->is_vip_valid)) {
@@ -175,5 +175,10 @@ class BookRepository implements BookRepositoryInterface
         } else {
             return Book::orderBy('updated_at', 'desc')->paginate(8);
         }
+    }
+
+    public function getRelatedBooks($category_id, $id)
+    {
+        return Book::where('category_id', $category_id)->where('id', '!=', $id)->get();
     }
 }

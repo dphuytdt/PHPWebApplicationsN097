@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use GuzzleHttp\Client;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 class AuthController extends Controller
 {
     protected $bookService, $contentService, $userService, $paymentService, $interactionService;
@@ -25,6 +26,7 @@ class AuthController extends Controller
         if (session()->has('token') && $role == 0) {
             return redirect()->intended('/');
         }
+
         return view('auth.login')->with('error', 'You must login to continue');
     }
 
@@ -45,11 +47,14 @@ class AuthController extends Controller
                 session()->put('token', $data['access_token']);
                 session()->put('user', $user);
                 session()->put('role_id', $user['role_id']);
+                Log::info('User: ' . $request->email . ' login');
                 return redirect()->intended('/');
             } else {
+                Log::error('User: ' . $request->email . ' login failed');
                 return redirect()->back()->with('error', 'Wrong email or password')->withInput();
             }
         } catch (\Exception $e) {
+            Log::error('Error: ' . $e->getMessage());
             return redirect()->back()->with('error', 'Wrong email or password')->withInput();
         }
     }
@@ -67,8 +72,10 @@ class AuthController extends Controller
             session()->forget('user');
             session()->forget('role_id');
             Auth::logout();
+            Log::info('User: ' . session('user')['email'] . ' logout');
             return redirect()->route('login')->with('message', 'Logout successful');
         } catch (\Exception $e) {
+            Log::error('Error: ' . $e->getMessage());
             return redirect()->route('login')->with('error', 'Logout failed');
         }
     }
@@ -89,11 +96,14 @@ class AuthController extends Controller
             ]);
             $data = json_decode((string) $response->getBody(), true);
             if (isset($data['message'])) {
+                Log::info('User: ' . $request->email . ' request reset password');
                 return redirect()->back()->with('message', $data['message']);
             } else {
+                Log::error('User: ' . $request->email . ' request reset password failed');
                 return redirect()->back()->with('error', $data['error'])->withInput();
             }
         } catch (\Exception $e) {
+            Log::error('User: ' . $request->email . ' request reset password failed because email does not exist');
             return redirect()->back()->with('error', 'Email does not exist')->withInput();
         }
     }

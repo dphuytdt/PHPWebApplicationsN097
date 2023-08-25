@@ -43,12 +43,12 @@
                             <tbody>
                             @php $total = 0; @endphp @if(session()->has('user')) @php $user = session()->get('user'); @endphp
                             <input type="hidden" name="userName" value="{{$user['fullname']}}" />
-                            <input type="hidden" name="useId" value="{{$user['id']}}" />
+                            <input type="hidden" name="useId" value="{{$user['id'   ]}}" />
                             @endif @foreach($cart as $item) @php $total += $item->price; @endphp
                             <tr>
                                 <td>{{$item->title}}</td>
                                 <td>
-                                    <img src="data:image/{{$item->image_extension}};base64,{{ $item->cover_image }}" alt="{{$item->title}}" width="50px" height="50px" />
+                                    <img src="{{$item->cover_image }}" alt="{{$item->title}}" width="50px" height="50px" />
                                 </td>
                                 <td>{{$item->price}} $</td>
                             </tr>

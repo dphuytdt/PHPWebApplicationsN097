@@ -80,7 +80,7 @@
         </div>
         <div class="mb-3">
             <label for="content" class="form-label">Content: <color style="color: red;">*</color></label>
-            <input type="file" class="form-control" id="content" name="content" accept="application/pdf">
+            <input type="file" class="form-control" id="content" name="contentPdf" accept="application/pdf">
         </div>
         <div class="mb-3">
             <label for="author" class="form-label">Author: <color style="color: red;">*</color></label>
@@ -130,7 +130,7 @@
             <select id="is_vip_valid" class="form-select" name="is_vip_valid">
                 <option selected>Select Status</option>
                 <option value="1">Yes</option>
-                <option value="2">No</option>
+                <option value="0">No</option>
             </select>
         </div>
         <div class="mb-3 contentType">
@@ -138,7 +138,7 @@
             <select id="contentType" class="form-select" name="status">
                 <option selected>Select Status</option>
                 <option value="1">Active</option>
-                <option value="2">Inactive</option>
+                <option value="1">Inactive</option>
             </select>
         </div>
         <button type="submit" class="btn btn-primary">Create</button>

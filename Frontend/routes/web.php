@@ -18,6 +18,8 @@ Route::group(['middleware' => 'locale'], function() {
 
     Route::get('book-details/{id}' , [BookController::class, 'bookDetails'])->name('bookDetails');
 
+    Route::get('read-book/{id}', [BookController::class, 'readBook'])->name('readBook');
+
     Route::get('search/{page?}', [BookController::class, 'search'])->name('search');
 
     Route::get('category/{id}', [BookController::class, 'getBookByCategory'])->name('getBookByCategory');

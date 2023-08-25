@@ -39,25 +39,40 @@ class HomeController extends Controller
             $categories = json_decode($req2->getBody(), true);
             return view('main.home.index')->with('books', $books)->with('categories', $categories);
         } catch (\Exception $e) {
+            $categories = [];
             return view('errors.404')->with('categories', $categories);
         }
     }
 
     public function about()
     {
-        $categories = $this->categoryService->getCategory();
+        $httpService = app(HttpService::class);
+        $client = $httpService->getClient();
+
+        $req2 = $client->get($this->bookService . 'category');
+        $categories = json_decode($req2->getBody(), true);
         return view('main.home.about')->with('categories', $categories);
     }
 
     public function contact()
     {
-        $categories = $this->categoryService->getCategory();
+        $httpService = app(HttpService::class);
+        $client = $httpService->getClient();
+
+        $req2 = $client->get($this->bookService . 'category');
+        $categories = json_decode($req2->getBody(), true);
+
         return view('main.home.contact')->with('categories', $categories);
     }
 
     public function handleError()
     {
-        $categories = $this->categoryService->getCategory();
+        $httpService = app(HttpService::class);
+        $client = $httpService->getClient();
+
+        $req2 = $client->get($this->bookService . 'category');
+        $categories = json_decode($req2->getBody(), true);
+
         return view('errors.404')->with('categories', $categories);
     }
 
@@ -65,8 +80,12 @@ class HomeController extends Controller
     {
         $httpService = app(HttpService::class);
         $client = $httpService->getClient();
+
         try {
             $response = $client->get($this->contentService.'news/latest', ['timeout' => 60]);
+
+            $req2 = $client->get($this->bookService . 'category');
+            $categories = json_decode($req2->getBody(), true);
 
             return json_decode($response->getBody(), true);
         } catch (\Exception $e) {
@@ -76,7 +95,11 @@ class HomeController extends Controller
 
     public function thankYou()
     {
-        $categories = $this->categoryService->getCategory();
+        $httpService = app(HttpService::class);
+        $client = $httpService->getClient();
+
+        $req2 = $client->get($this->bookService . 'category');
+        $categories = json_decode($req2->getBody(), true);
         return view('main.cart.thankYou')->with('categories', $categories);
     }
 

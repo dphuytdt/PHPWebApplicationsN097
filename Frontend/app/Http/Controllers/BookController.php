@@ -26,18 +26,31 @@ class BookController extends Controller
     }
     public function bookDetails($id)
     {
-        $categories = $this->categoryService->getCategory();
         $client = new Client();
+
+        $req2 = $client->get($this->bookService . 'category');
+        $categories = json_decode($req2->getBody(), true);
+
         try {
             $response = $client->get($this->bookService.'books/'.$id);
 
-            $user = session()->get('user');
-            $isPaymentResponse = $client->get($this->paymentService.'is-payment/'. $id .'/' . $user['id']);
+            if (isset(session()->get('user')['id'])) {
+                $user = session()->get('user')['id'];
+            } else {
+                $user = -1;
+            }
 
+            $isPaymentResponse = $client->get($this->paymentService.'is-payment/'. $id .'/' . $user);
             $result = json_decode($response->getBody(), true);
+
+            $bookId = $result['book']['id'];
+            $req= $client->get($this->bookService.'books/related/'.$bookId);
+
+            $relatedBooks = json_decode($req->getBody(), true);
+
             $isPayment = json_decode($isPaymentResponse->getBody(), true);
 
-            return view('main.book.book-details', compact('result', 'isPayment', 'categories'));
+            return view('main.book.book-details', compact('result', 'isPayment', 'categories', 'relatedBooks'));
         }
         catch (\Exception|GuzzleException|NotFoundExceptionInterface|ContainerExceptionInterface $e) {
             return view('errors.404')->with('categories', $categories);
@@ -50,7 +63,9 @@ class BookController extends Controller
         $keyword = $request->input('keyword');
         $page = $request->input('page', 1);
         $perPage = $request->input('perPage', 2);
-        $categories = $this->categoryService->getCategory();
+
+        $req2 = $client->get($this->bookService . 'category');
+        $categories = json_decode($req2->getBody(), true);
 
         try {
             $response = $client->get($this->bookService.'books/search/'.$keyword.'?page='.$page);
@@ -83,8 +98,10 @@ class BookController extends Controller
 
     public function viewMore(string $dataType, Request $request)
     {
-        $categories = $this->categoryService->getCategory();
         $client = new Client();
+
+        $req2 = $client->get($this->bookService . 'category');
+        $categories = json_decode($req2->getBody(), true);
 
         try {
             $response = $client->get($this->bookService.'books/view-more/'.$dataType);
@@ -113,7 +130,10 @@ class BookController extends Controller
 
     public function getBookByCategory($id, Request $request)
     {
-        $categories = $this->categoryService->getCategory();
+        $client = new Client();
+
+        $req2 = $client->get($this->bookService . 'category');
+        $categories = json_decode($req2->getBody(), true);
 
         $name = '';
 
@@ -123,7 +143,6 @@ class BookController extends Controller
             }
         }
         $dataType = $name;
-        $client = new Client();
         try {
             $response = $client->get($this->bookService.'books/category/'.$id);
             $responseData = json_decode($response->getBody(), true);
@@ -154,9 +173,10 @@ class BookController extends Controller
 
     public function category(Request $request)
     {
-        $categories = $this->categoryService->getCategory();
-
         $client = new Client();
+
+        $req2 = $client->get($this->bookService . 'category');
+        $categories = json_decode($req2->getBody(), true);
 
         try {
             $response = $client->get($this->bookService.'category/all');
@@ -184,6 +204,35 @@ class BookController extends Controller
         } catch (\Exception|GuzzleException $e) {
             return view('errors.404')->with('categories', $categories);
         }
+    }
+
+    public function readBook($id)
+    {
+        $client = new Client();
+
+        $req2 = $client->get($this->bookService . 'category');
+        $categories = json_decode($req2->getBody(), true);
+
+        try {
+            if (isset(session()->get('user')['id'])) {
+                $user = session()->get('user')['id'];
+            } else {
+                $user = -1;
+            }
+            $isPaymentResponse = $client->get($this->paymentService.'is-payment/'. $id .'/' . $user);
+            $res = json_decode($isPaymentResponse->getBody(), true);
+        }
+        catch (\Exception|GuzzleException|NotFoundExceptionInterface|ContainerExceptionInterface $e) {
+            return view('errors.404')->with('categories', $categories);
+        }
+
+        if($res) {
+            $response = $client->get($this->bookService.'books/'.$id);
+            $result = json_decode($response->getBody(), true);
+            return view('main.book.read-book', compact('result', 'categories'));
+        }
+
+        return view('errors.404')->with('categories', $categories);
     }
 
 }

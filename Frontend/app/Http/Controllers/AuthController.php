@@ -33,7 +33,10 @@ class AuthController extends Controller
             return redirect()->intended('/');
         }
 
-        $categories = $this->categoryService->getCategory();
+        $client = new Client();
+
+        $req2 = $client->get($this->bookService . 'category');
+        $categories = json_decode($req2->getBody(), true);
 
         return view('auth.login')->with('categories', $categories);
     }
@@ -118,7 +121,10 @@ class AuthController extends Controller
 
     public function verifyGet()
     {
-        $categories = $this->categoryService->getCategory();
+        $client = new Client();
+
+        $req2 = $client->get($this->bookService . 'category');
+        $categories = json_decode($req2->getBody(), true);
 
         if (session()->has('token')) {
             return redirect()->intended('/');
@@ -155,7 +161,10 @@ class AuthController extends Controller
 
     public function forgotPassword()
     {
-        $categories = $this->categoryService->getCategory();
+        $client = new Client();
+
+        $req2 = $client->get($this->bookService . 'category');
+        $categories = json_decode($req2->getBody(), true);
 
         if (session()->has('token')) {
             return redirect()->intended('/');
@@ -190,7 +199,10 @@ class AuthController extends Controller
 
     public function inputOtp()
     {
-        $categories = $this->categoryService->getCategory();
+        $client = new Client();
+
+        $req2 = $client->get($this->bookService . 'category');
+        $categories = json_decode($req2->getBody(), true);
 
         if (session()->has('token')) {
             return redirect()->intended('/');
@@ -227,7 +239,10 @@ class AuthController extends Controller
 
     public function resetPassword()
     {
-        $categories = $this->categoryService->getCategory();
+        $client = new Client();
+
+        $req2 = $client->get($this->bookService . 'category');
+        $categories = json_decode($req2->getBody(), true);
 
         if (session()->has('token')) {
             return redirect()->intended('/');

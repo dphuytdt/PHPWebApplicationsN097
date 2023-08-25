@@ -863,6 +863,34 @@
       <excludeFolder url="file://$MODULE_DIR$/Frontend-Admin/vendor/spatie/pdf-to-text" />
       <excludeFolder url="file://$MODULE_DIR$/Frontend/vendor/laravel/prompts" />
       <excludeFolder url="file://$MODULE_DIR$/Frontend/vendor/symfony/polyfill-php83" />
+      <excludeFolder url="file://$MODULE_DIR$/Frontend-Admin/vendor/spatie/laravel-activitylog" />
+      <excludeFolder url="file://$MODULE_DIR$/Frontend-Admin/vendor/spatie/laravel-package-tools" />
+      <excludeFolder url="file://$MODULE_DIR$/BookService/vendor/graham-campbell/guzzle-factory" />
+      <excludeFolder url="file://$MODULE_DIR$/BookService/vendor/spatie/dropbox-api" />
+      <excludeFolder url="file://$MODULE_DIR$/BookService/vendor/spatie/flysystem-dropbox" />
+      <excludeFolder url="file://$MODULE_DIR$/ContentManagementService/vendor/graham-campbell/guzzle-factory" />
+      <excludeFolder url="file://$MODULE_DIR$/ContentManagementService/vendor/spatie/dropbox-api" />
+      <excludeFolder url="file://$MODULE_DIR$/ContentManagementService/vendor/spatie/flysystem-dropbox" />
+      <excludeFolder url="file://$MODULE_DIR$/Frontend-Admin/vendor/graham-campbell/guzzle-factory" />
+      <excludeFolder url="file://$MODULE_DIR$/Frontend-Admin/vendor/spatie/db-dumper" />
+      <excludeFolder url="file://$MODULE_DIR$/Frontend-Admin/vendor/spatie/dropbox-api" />
+      <excludeFolder url="file://$MODULE_DIR$/Frontend-Admin/vendor/spatie/flysystem-dropbox" />
+      <excludeFolder url="file://$MODULE_DIR$/Frontend-Admin/vendor/spatie/laravel-backup" />
+      <excludeFolder url="file://$MODULE_DIR$/Frontend-Admin/vendor/spatie/laravel-signal-aware-command" />
+      <excludeFolder url="file://$MODULE_DIR$/Frontend-Admin/vendor/spatie/temporary-directory" />
+      <excludeFolder url="file://$MODULE_DIR$/Frontend/vendor/graham-campbell/guzzle-factory" />
+      <excludeFolder url="file://$MODULE_DIR$/Frontend/vendor/spatie/dropbox-api" />
+      <excludeFolder url="file://$MODULE_DIR$/Frontend/vendor/spatie/flysystem-dropbox" />
+      <excludeFolder url="file://$MODULE_DIR$/PaymentService/vendor/graham-campbell/guzzle-factory" />
+      <excludeFolder url="file://$MODULE_DIR$/PaymentService/vendor/laravel/prompts" />
+      <excludeFolder url="file://$MODULE_DIR$/PaymentService/vendor/spatie/dropbox-api" />
+      <excludeFolder url="file://$MODULE_DIR$/PaymentService/vendor/spatie/flysystem-dropbox" />
+      <excludeFolder url="file://$MODULE_DIR$/UserService/vendor/graham-campbell/guzzle-factory" />
+      <excludeFolder url="file://$MODULE_DIR$/UserService/vendor/laravel/prompts" />
+      <excludeFolder url="file://$MODULE_DIR$/UserService/vendor/maatwebsite/excel" />
+      <excludeFolder url="file://$MODULE_DIR$/UserService/vendor/spatie/dropbox-api" />
+      <excludeFolder url="file://$MODULE_DIR$/UserService/vendor/spatie/flysystem-dropbox" />
+      <excludeFolder url="file://$MODULE_DIR$/UserService/vendor/symfony/polyfill-php83" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

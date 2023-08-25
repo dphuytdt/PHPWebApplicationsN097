@@ -44,7 +44,7 @@
                                             </td>
                                             <td class="product_thumb">
                                                 <a href="">
-                                                    <img src="data:image/{{ $wishlist->image_extension }};base64,{{$wishlist->cover_image}}" alt="" />
+                                                    <img src="{{ Storage::disk('dropbox')->url($wishlist->cover_image) }}" alt="" />
                                                 </a>
                                             </td>
                                             <td class="product_name"><a href="">{{$wishlist->title}}</a></td>

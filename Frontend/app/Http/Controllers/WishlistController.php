@@ -26,9 +26,10 @@ class WishlistController extends Controller
      */
     public function index($id)
     {
-        $categories = $this->categoryService->getCategory();
-
         $client = new Client();
+
+        $req2 = $client->get($this->bookService . 'category');
+        $categories = json_decode($req2->getBody(), true);
 
         try{
             $response = $client->request('GET', $this->paymentService . 'wishlist/get/' . $id);

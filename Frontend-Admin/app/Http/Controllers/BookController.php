@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Spatie\PdfToText\Pdf;
+use Illuminate\Support\Facades\Log;
 
 class BookController extends Controller
 {
@@ -52,27 +54,14 @@ class BookController extends Controller
      */
     public function store(Request $request)
     {
-        if ($request->hasFile('image')) {
-            try{
-                $imageFile = $request->file('image');
-                $imageContents = file_get_contents($imageFile->getPathname());
-                $imageExtension = $request->file('image')->getClientOriginalExtension();
-                $base64Image = base64_encode($imageContents);
-            } catch (\Exception $e) {
-                return redirect()->route('books.index')->withErrors(['errors' => 'Cannot read file']);
-            }
-        }
+        $image = $request->file('image');
+        $content = $request->file('contentPdf');
+        $client = new Client();
 
-        if ($request->hasFile('content')) {
-            try{
-                $contentFile = $request->file('content');
-                $contentContents = file_get_contents($contentFile->getPathname());
-                $base64Content = base64_encode($contentContents);
-            } catch (\Exception $e) {
-                return redirect()->route('books.index')->withErrors(['errors' => 'Cannot read file']);
-            }
+        $pathImage = Storage::disk('dropbox')->putFile('books/images', $image);
 
-        }
+        $pathContent = Storage::disk('dropbox')->putFile('books/contents', $content);
+
 
         $data = [
             'title' => $request->title,
@@ -81,36 +70,37 @@ class BookController extends Controller
             'category_id' => $request->category_id,
             'price' => $request->price,
             'discount' => $request->discount,
-            'content' => $base64Content ?? '',
             'status' => $request->status,
             'is_vip_valid' => $request->is_vip_valid,
-            'image' => $base64Image ?? '',
-            'image_extension' => $imageExtension ?? '',
+            'image_extension' => $image->getClientOriginalExtension(),
         ];
 
-        $client = new Client();
+        if($pathImage && $pathContent) {
+            try{
+                $client->post($this->bookService.'admin/books', [
+                    'form_params' => [
+                        'title' => $data['title'],
+                        'description' => $data['description'],
+                        'author' => $data['author'],
+                        'category_id' => $data['category_id'],
+                        'price' => $data['price'],
+                        'discount' => $data['discount'],
+                        'contentPdf' => $pathContent,
+                        'status' => $data['status'],
+                        'is_vip_valid' => $data['is_vip_valid'],
+                        'image' => $pathImage,
+                        'image_extension' => $data['image_extension'],
+                    ]
+                ]);
 
-        try{
-            $client->post($this->bookService.'admin/books', [
-                'form_params' => [
-                    'title' => $data['title'],
-                    'description' => $data['description'],
-                    'author' => $data['author'],
-                    'category_id' => $data['category_id'],
-                    'price' => $data['price'],
-                    'discount' => $data['discount'],
-                    'contentPdf' => $data['content'],
-                    'status' => $data['status'],
-                    'is_vip_valid' => $data['is_vip_valid'],
-                    'image' => $data['image'],
-                    'image_extension' => $data['image_extension'],
-                ]
-            ]);
-
-            return redirect()->route('books.index')->with('success', 'Create book successfully');
-        } catch (\Exception|GuzzleException $e) {
-            return redirect()->route('books.index')->withErrors(['errors' => 'Cannot connect to server']);
+                return redirect()->route('books.index')->with('success', 'Create book successfully');
+            } catch (\Exception|GuzzleException $e) {
+                Log::error('Error: ' . $e->getMessage());
+                return redirect()->route('books.index')->withErrors(['errors' => 'Cannot connect to server']);
+            }
         }
+
+        return redirect()->route('books.index')->withErrors(['errors' => 'Cannot upload file']);
     }
 
     /**
@@ -124,6 +114,7 @@ class BookController extends Controller
             $res= json_decode($response->getBody(), true);
             $book = $res['book'];
             $categories = $res['categories'];
+
             return view('home.book.edit', compact('book', 'categories'));
         } catch (\Exception $e) {
             return view('home.book.edit')->withErrors(['errors' => 'Cannot connect to server']);
@@ -133,35 +124,14 @@ class BookController extends Controller
     public function update(Request $request, string $id)
     {
         if ($request->hasFile('image')) {
-            try{
-                $imageFile = $request->file('image');
-                $imageContents = file_get_contents($imageFile->getPathname());
-                $imageExtension = $request->file('image')->getClientOriginalExtension();
-                $base64Image = base64_encode($imageContents);
-                $data['cover_image'] = $base64Image;
-                $data['image_extension'] = $imageExtension;
-            } catch (\Exception $e) {
-
-                return redirect()->route('books.index')->withErrors(['errors' => 'Cannot read file']);
-            }
-        } else {
-            $data['cover_image'] = null;
-            $data['image_extension'] = null;
+            $imageFile = $request->file('image');
+            $imageExtension = $imageFile->getClientOriginalExtension();
+            $imagePath = Storage::disk('dropbox')->putFile('books/images', $imageFile);
         }
 
         if ($request->hasFile('content')) {
-            try{
-                $contentFile = $request->file('content');
-                $contentContents = file_get_contents($contentFile->getPathname());
-                $base64Content = base64_encode($contentContents);
-                $data['content'] = $base64Content;
-            } catch (\Exception $e) {
-
-                return redirect()->route('books.index')->withErrors(['errors' => 'Cannot read file']);
-            }
-
-        } else {
-            $data['content'] = null;
+            $contentFile = $request->file('content');
+            $contentPath = Storage::disk('dropbox')->putFile('books/contents', $contentFile);
         }
 
         $client = new Client();
@@ -173,9 +143,9 @@ class BookController extends Controller
             'category_id' => $request->category_id,
             'price' => $request->price,
             'discount' => $request->discount,
-            'content' => $base64Content ?? '',
+            'content' => $contentPath ?? '',
             'status' => $request->status,
-            'cover_image' => $base64Image ?? '',
+            'cover_image' => $imagePath ?? '',
             'image_extension' => $imageExtension ?? '',
             'is_vip_valid' => $request->is_vip_valid ?? ''
         ];
@@ -215,6 +185,7 @@ class BookController extends Controller
                 return redirect()->route('books.index')->withErrors(['errors' => 'Cannot delete book']);
             }
         } catch (\Exception $e) {
+            Log::error('User: ' . session('user')['email'] . ' delete book failed');
             return redirect()->route('books.index')->withErrors(['errors' => 'Cannot connect to server']);
         }
 

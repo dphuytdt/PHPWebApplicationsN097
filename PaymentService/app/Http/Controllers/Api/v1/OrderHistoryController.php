@@ -20,4 +20,14 @@ class OrderHistoryController extends Controller
         $orderHistory = $this->orderHistoryRepository->getOrderHistory($userID);
         return response()->json(['orderHistory' => $orderHistory], 200);
     }
+
+    public function isPayment(int $bookId, int $userId) {
+        $result = $this->orderHistoryRepository->isPayment($userId, $bookId);
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Payment successfully',
+            'data' => $result,
+            'statusCode' => 200
+        ], 200);
+    }
 }

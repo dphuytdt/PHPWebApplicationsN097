@@ -35,8 +35,12 @@ class CartController extends Controller
         if (!session()->has('token')) {
             return redirect()->route('login');
         }
-        $categories = $this->categoryService->getCategory();
+
         $client = new Client();
+
+        $req2 = $client->get($this->bookService . 'category');
+        $categories = json_decode($req2->getBody(), true);
+
         try {
             $response = $client->get($this->paymentService.'cart/get/'.$id);
             $response = json_decode($response->getBody()->getContents());
@@ -101,8 +105,10 @@ class CartController extends Controller
             return redirect()->route('login');
         }
 
-        $categories = $this->categoryService->getCategory();
         $client = new Client();
+
+        $req2 = $client->get($this->bookService . 'category');
+        $categories = json_decode($req2->getBody(), true);
 
         try {
             $response = $client->get($this->paymentService.'cart/get/'.$id);

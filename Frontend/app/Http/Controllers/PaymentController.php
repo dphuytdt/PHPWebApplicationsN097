@@ -61,11 +61,10 @@ class PaymentController extends Controller
 //                ]
 //            ]);
 
-            $user = session()->get('user');
+            $user = session('user');
             $user['is_vip'] = 1;
 
-            session()->forget('user');
-            session()->put('user', $user);
+            session(['user' => $user]);
 
             if($data['payment'] == self::VN_PAY) {
                 error_reporting(E_ALL & ~E_NOTICE & ~E_DEPRECATED);

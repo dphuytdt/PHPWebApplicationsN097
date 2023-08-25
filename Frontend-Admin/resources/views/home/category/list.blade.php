@@ -44,12 +44,15 @@
                                 <tr>
                                     <td>{{Illuminate\Support\Str::limit($category['name'],  $numberLimit)}}</td>
                                     <td>
-                                        <img src="data:image/{{ $category['image_extension'] }};base64,{{ $category['image'] }}" alt="Image">                                    </td>
+                                        <img src="{{ Storage::disk('dropbox')->url($category['image']) }}" width="100px" height="100px" alt="Image">
+                                    </td>
+                                    <td>
                                     @if($category['status'] == 1)
                                         <span class="badge badge-success">Active</span>
                                     @else
                                         <span class="badge badge-danger">Deactive</span>
                                     @endif
+                                    </td>
                                     <td>{{Illuminate\Support\Str::limit($category['description'],  $numberLimit)}}</td>
                                     <td>{{$category['created_at']}}</td>
                                     @if($category['updated_at'] == null)
@@ -116,7 +119,7 @@
                               <input type="file" class="form-control" id="image" name="image" accept="image/*">
                             </div>
                             <div class="col-md-3">
-                              <img src="data:image/{{ $category['image_extension'] }};base64,{{ $category['image'] }}" alt="{{$category['name']}}" width="100px" height="100px" name="image" class="img-thumbnail" id="uploadedImage">
+                              <img src="{{ Storage::disk('dropbox')->url($category['image']) }}" width="100px" height="100px" name="image" class="img-thumbnail" id="uploadedImage">
                             </div>
                           </div>
                     </div>

@@ -78,7 +78,10 @@ class CategoryRepository implements CategoryRepositoryInterface
             $category->description = $data['description'];
         }
 
-        if (isset($data['image']) && $data['image'] !== $category->image) {
+        if (
+            (isset($data['image']) && $data['image'] !== $category->image)
+            || ($data['image'] !== '' && ($data['image'] !== $category->image))
+        ) {
             $category->image = $data['image'];
             $category->image_extension = $data['image_extension'];
         }

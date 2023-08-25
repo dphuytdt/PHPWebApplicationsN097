@@ -6,6 +6,7 @@ use App\Interfaces\CartRepositoryInterface;
 use App\Models\Cart;
 use App\Models\HistoryPayment;
 use App\Models\UserBooks;
+use Illuminate\Support\Facades\Storage;
 
 class CartRepository implements CartRepositoryInterface
 {
@@ -28,20 +29,21 @@ class CartRepository implements CartRepositoryInterface
         }
     }
 
-    //get user cart
     public function getCart($userID)
     {
         $cart = Cart::where('user_id', $userID)->where('status', 0)->get();
-        if($cart){
-            return $cart;
-        }else{
-            return false;
+
+        foreach ($cart as $key => $value) {
+            $value->cover_image = Storage::disk('dropbox')->url($value->cover_image);
         }
+
+        return $cart ? $cart : false;
     }
 
     public function getCartBook($userID, $bookID)
     {
         $cart = Cart::where('user_id', $userID)->where('book_id', $bookID)->where('status', 0)->first();
+
         if($cart){
             return $cart;
         }else{

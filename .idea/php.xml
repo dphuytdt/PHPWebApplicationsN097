@@ -855,6 +855,34 @@
       <path value="$PROJECT_DIR$/Frontend/vendor/laravel/prompts" />
       <path value="$PROJECT_DIR$/Frontend/vendor/symfony/polyfill-php83" />
       <path value="$PROJECT_DIR$/Frontend/vendor/nunomaduro/collision" />
+      <path value="$PROJECT_DIR$/Frontend-Admin/vendor/spatie/laravel-package-tools" />
+      <path value="$PROJECT_DIR$/Frontend-Admin/vendor/spatie/laravel-activitylog" />
+      <path value="$PROJECT_DIR$/BookService/vendor/spatie/flysystem-dropbox" />
+      <path value="$PROJECT_DIR$/BookService/vendor/spatie/dropbox-api" />
+      <path value="$PROJECT_DIR$/BookService/vendor/graham-campbell/guzzle-factory" />
+      <path value="$PROJECT_DIR$/Frontend-Admin/vendor/spatie/flysystem-dropbox" />
+      <path value="$PROJECT_DIR$/Frontend-Admin/vendor/spatie/dropbox-api" />
+      <path value="$PROJECT_DIR$/Frontend-Admin/vendor/graham-campbell/guzzle-factory" />
+      <path value="$PROJECT_DIR$/Frontend-Admin/vendor/spatie/laravel-signal-aware-command" />
+      <path value="$PROJECT_DIR$/Frontend-Admin/vendor/spatie/temporary-directory" />
+      <path value="$PROJECT_DIR$/Frontend-Admin/vendor/spatie/db-dumper" />
+      <path value="$PROJECT_DIR$/Frontend-Admin/vendor/spatie/laravel-backup" />
+      <path value="$PROJECT_DIR$/PaymentService/vendor/laravel/prompts" />
+      <path value="$PROJECT_DIR$/PaymentService/vendor/spatie/flysystem-dropbox" />
+      <path value="$PROJECT_DIR$/PaymentService/vendor/spatie/dropbox-api" />
+      <path value="$PROJECT_DIR$/PaymentService/vendor/graham-campbell/guzzle-factory" />
+      <path value="$PROJECT_DIR$/Frontend/vendor/spatie/dropbox-api" />
+      <path value="$PROJECT_DIR$/Frontend/vendor/spatie/flysystem-dropbox" />
+      <path value="$PROJECT_DIR$/Frontend/vendor/graham-campbell/guzzle-factory" />
+      <path value="$PROJECT_DIR$/UserService/vendor/graham-campbell/guzzle-factory" />
+      <path value="$PROJECT_DIR$/UserService/vendor/laravel/prompts" />
+      <path value="$PROJECT_DIR$/UserService/vendor/symfony/polyfill-php83" />
+      <path value="$PROJECT_DIR$/UserService/vendor/spatie/dropbox-api" />
+      <path value="$PROJECT_DIR$/UserService/vendor/spatie/flysystem-dropbox" />
+      <path value="$PROJECT_DIR$/UserService/vendor/maatwebsite/excel" />
+      <path value="$PROJECT_DIR$/ContentManagementService/vendor/graham-campbell/guzzle-factory" />
+      <path value="$PROJECT_DIR$/ContentManagementService/vendor/spatie/flysystem-dropbox" />
+      <path value="$PROJECT_DIR$/ContentManagementService/vendor/spatie/dropbox-api" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="8.1" />

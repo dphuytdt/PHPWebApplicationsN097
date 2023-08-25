@@ -28,7 +28,10 @@ class UserController extends Controller
             return redirect()->route('login');
         }
 
-        $categories = $this->categoryService->getCategory();
+        $client = new Client();
+
+        $req2 = $client->get($this->bookService . 'category');
+        $categories = json_decode($req2->getBody(), true);
 
         return view('main.user.profile')->with('categories', $categories);
     }
@@ -48,7 +51,10 @@ class UserController extends Controller
             return redirect()->route('login');
         }
 
-        $categories = $this->categoryService->getCategory();
+        $client = new Client();
+
+        $req2 = $client->get($this->bookService . 'category');
+        $categories = json_decode($req2->getBody(), true);
 
         return view('main.user.upgrade')->with('categories', $categories);
     }
@@ -59,7 +65,10 @@ class UserController extends Controller
             return redirect()->route('login');
         }
 
-        $categories = $this->categoryService->getCategory();
+        $client = new Client();
+
+        $req2 = $client->get($this->bookService . 'category');
+        $categories = json_decode($req2->getBody(), true);
 
         return view('main.user.vip-benefits')->with('categories', $categories);
     }

@@ -201,4 +201,8 @@ class UserController extends Controller
             return response()->json(['message' => 'User not found']);
         }
     }
+
+    public function updateProfile($userId, Request $request){
+
+    }
 }
