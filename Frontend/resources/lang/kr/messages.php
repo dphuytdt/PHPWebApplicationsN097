@@ -150,5 +150,6 @@
         'Verify' => '확인',
         'Verify OTP' => 'OTP 확인',
         '404 Not Found' => '404 페이지를 찾을 수 없습니다',
+        'readBook' => '책 읽기',
     ];
 

@@ -150,4 +150,5 @@
         'Verify' => 'Xác minh',
         'Verify OTP' => 'Xác minh OTP',
         '404 Not Found' => '404 Không tìm thấy',
+        'readBook' => 'Đọc sách',
     ];

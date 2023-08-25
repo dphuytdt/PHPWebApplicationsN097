@@ -150,4 +150,5 @@
             'Verify' => '確認する',
             'Verify OTP' => 'OTPを確認する',
             '404 Not Found' => '404ページが見つかりません',
+            'readBook' => '本を読む',
         ];

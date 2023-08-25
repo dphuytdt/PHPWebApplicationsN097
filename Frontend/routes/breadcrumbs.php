@@ -92,3 +92,8 @@ use DaveJamesMiller\Breadcrumbs\Facades\Breadcrumbs;
         $trail->parent('home');
         $trail->push('Login', route('login'));
     });
+
+    Breadcrumbs::for('readBook', function ($trail, $book) {
+        $trail->parent('bookDetails', $book);
+        $trail->push('Read Book', route('readBook', $book['id']));
+    });

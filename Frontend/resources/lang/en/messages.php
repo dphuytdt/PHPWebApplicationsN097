@@ -150,4 +150,5 @@
         'Verify' => 'Verify',
         'Verify OTP' => 'Verify OTP',
         '404 Not Found' => '404 Not Found',
+        'readBook' => 'Read Book',
     ];
