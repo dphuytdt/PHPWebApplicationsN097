@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\v1\NewsController;
+use App\Http\Controllers\Api\v1\SlideShowController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -23,6 +24,14 @@ Route::prefix('admin')->group(function () {
         Route::get('{id}', [NewsController::class, 'show']);
         Route::post('/{id}', [NewsController::class, 'update']);
         Route::post('delete/{id}', [NewsController::class, 'delete']);
+    });
+
+    Route::prefix('slide-show')->group(function () {
+        Route::get('/', [SlideShowController::class, 'index']);
+        Route::post('/', [SlideShowController::class, 'store']);
+        Route::get('{id}', [SlideShowController::class, 'show']);
+        Route::post('{id}', [SlideShowController::class, 'update']);
+        Route::post('delete/{id}', [SlideShowController::class, 'delete']);
     });
 });
 

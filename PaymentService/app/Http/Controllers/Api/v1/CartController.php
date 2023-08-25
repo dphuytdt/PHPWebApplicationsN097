@@ -19,9 +19,6 @@ class CartController extends Controller
     public function add(Request $request)
     {
         $cart = $this->cartRepository->getCartBook($request->userID, $request->bookID);
-        $bookImage = $request->bookImage;
-        $imagePath = Storage::disk('dropbox')->putFile('cart/images', $bookImage);
-        $request->bookImage = $imagePath;
 
         if($cart){
             return response()->json([
@@ -29,6 +26,9 @@ class CartController extends Controller
                 'message' => 'Book already in cart'
             ], 400);
         }else{
+            $bookImage = $request->bookImage;
+            $imagePath = Storage::disk('dropbox')->putFile('cart/images', $bookImage);
+            $request->bookImage = $imagePath;
             $result = $this->cartRepository->add($request);
 
             if($result){

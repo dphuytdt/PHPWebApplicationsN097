@@ -15,42 +15,58 @@ class SlideShowRepository implements SlideShowRepositoryInterfaces
         $this->slideShow = $slideShow;
     }
 
-    public function index()
+    public function getAllSlideShows(): JsonResponse
     {
-        return $this->slideShow->all();
+        $result = $this->slideShow->all();
+
+        return response()->json($result, 200);
     }
 
-    public function create($request): JsonResponse
+    public function create($data): JsonResponse
     {
-        $slideShow = $this->slideShow->create($request->all());
-        return response()->json($slideShow);
+        $result = $this->slideShow->create($data);
+
+        return response()->json($result, 200);
     }
 
-    public function show($id): JsonResponse
+    public function getSlideShow($id): JsonResponse
+    {
+        $result = $this->slideShow->find($id);
+
+        return response()->json($result, 200);
+    }
+
+    public function update($data, $id): JsonResponse
     {
         $slideShow = $this->slideShow->find($id);
-        return response()->json($slideShow);
-    }
-
-    public function update($request, $id): JsonResponse
-{
-        $slideShow = $this->slideShow->find($id);
-        try {
-            $slideShow->update($request->all());
-            return response()->json($slideShow, 200);
-        } catch (\Exception $e) {
-            return response()->json($e->getMessage(), 500);
+        if (
+            (isset($data['image']) && ($data['image']  !== $slideShow->image))
+            || (($data['image'] != '') && ($data['image']  !== $slideShow->_image))
+        ) {
+            //Storage::disk('dropbox')->delete($book->cover_image);
+            $slideShow->image = $data['image'];
         }
+
+        if (isset($data['title']) && ($data['title']  !== $slideShow->title)) {
+            $slideShow->title = $data['title'];
+        }
+
+        $slideShow->save();
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Slide Show updated successfully',
+            'data' => $slideShow
+        ], 200);
     }
 
-    public function destroy($id): JsonResponse
+    public function delete($id): JsonResponse
     {
-        $slideShow = $this->slideShow->find($id);
-        try {
-            $slideShow->delete();
-            return response()->json($slideShow, 200);
-        } catch (\Exception $e) {
-            return response()->json($e->getMessage(), 500);
-        }
+        $result = SlideShow::where('id', $id);
+
+        $result->is_active = 0;
+        $result->save();
+
+        return response()->json($result, 200);
     }
 }

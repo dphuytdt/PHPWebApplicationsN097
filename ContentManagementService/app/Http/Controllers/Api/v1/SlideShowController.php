@@ -13,20 +13,12 @@ class SlideShowController extends Controller
     {
         $this->slideShowRepository = $slideShowRepository;
     }
-    /**
-     * Display a listing of the resource.
-     */
+
     public function index()
     {
-        //
-    }
+        $result = $this->slideShowRepository->getAllSlideShows();
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
+        return response()->json($result, 200);
     }
 
     /**
@@ -34,7 +26,15 @@ class SlideShowController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->all();
+
+        $result = $this->slideShowRepository->create($data);
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Slide Show created successfully',
+            'data' => $result
+        ], 200);
     }
 
     /**
@@ -42,15 +42,9 @@ class SlideShowController extends Controller
      */
     public function show(string $id)
     {
-        //
-    }
+        $result = $this->slideShowRepository->getSlideShow($id);
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
+        return response()->json($result, 200);
     }
 
     /**
@@ -58,14 +52,28 @@ class SlideShowController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $data = $request->all();
+
+        $result = $this->slideShowRepository->update($data, $id);
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Slide Show updated successfully',
+            'data' => $result
+        ], 200);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function delete(string $id)
     {
-        //
+        $result = $this->slideShowRepository->delete($id);
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Slide Show deleted successfully',
+            'data' => $result
+        ], 200);
     }
 }

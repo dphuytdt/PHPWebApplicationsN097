@@ -19,10 +19,6 @@ class WishlistController extends Controller
     public function add(Request $request)
     {
         $wishlist = $this->wishlistRepository->getWishlistBook($request->userID, $request->bookID);
-        $bookImage = $request->bookImage;
-
-        $imagePath = Storage::disk('dropbox')->putFile('wishlist/images', $bookImage);
-        $request->bookImage = $imagePath;
 
         if($wishlist){
             return response()->json([
@@ -31,6 +27,10 @@ class WishlistController extends Controller
             ], 400);
         }else{
             $result = $this->wishlistRepository->add($request);
+            $bookImage = $request->bookImage;
+
+            $imagePath = Storage::disk('dropbox')->putFile('wishlist/images', $bookImage);
+            $request->bookImage = $imagePath;
             if($result){
                 return response()->json([
                     'status' => 'success',

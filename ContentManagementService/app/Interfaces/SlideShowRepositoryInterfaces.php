@@ -5,13 +5,13 @@ namespace App\Interfaces;
 
 interface SlideShowRepositoryInterfaces
 {
-    public function index();
+    public function getAllSlideShows();
 
-    public function create($request);
+    public function create($data);
 
-    public function show($id);
+    public function getSlideShow($id);
 
-    public function update($request, $id);
+    public function update($data, $id);
 
-    public function destroy($id);
+    public function delete($id);
 }

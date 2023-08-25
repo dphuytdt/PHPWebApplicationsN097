@@ -17,10 +17,7 @@ class SlideShow extends Model
 
     protected $fillable = [
         'title',
-        'sub_title',
         'image',
-        'link',
-        'link_text',
         'is_active',
     ];
 }
