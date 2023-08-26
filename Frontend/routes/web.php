@@ -30,6 +30,8 @@ Route::group(['middleware' => 'locale'], function() {
 
     Route::get('contact', [HomeController::class, 'contact'])->name('contact');
 
+    Route::get('faq', [HomeController::class, 'faq'])->name('faq');
+
 
     Route::group(['prefix' => 'wishlist'], function () {
         Route::post('add', [CartController::class, 'addToCartFromWishlist'])->name('wishlist.add');

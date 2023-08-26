@@ -47,8 +47,8 @@
                         @if(isset($paginator))
                             @foreach($paginator as $category)
                                 <tr>
-                                    <td>{{$category['name']}}</td>
-                                    <td><img src="{{$category['image']}}" alt="{{$category['name']}}" width="100px" height="100px"></td>
+                                    <td></td>
+                                    <td><img src="" alt="{{$category['name']}}" width="100px" height="100px"></td>
                                     @if($category['status'] == 1)
                                         <td>Active</td>
                                     @else

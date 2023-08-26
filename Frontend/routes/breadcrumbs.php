@@ -110,3 +110,8 @@ use DaveJamesMiller\Breadcrumbs\Facades\Breadcrumbs;
         $trail->parent('news');
         $trail->push('Search', route('news.search'));
     });
+
+    Breadcrumbs::for('faq', function ($trail) {
+        $trail->parent('home');
+        $trail->push('FAQ', route('faq'));
+    });

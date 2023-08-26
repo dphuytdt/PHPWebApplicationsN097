@@ -26,10 +26,10 @@
 
 </div>
 <div class="container">
-    <form action="process_form.php" method="POST" enctype="multipart/form-data">
+    <form action="" method="POST" enctype="multipart/form-data">
         @csrf
         <div class="mb-3">
-            <label for="name" class="form-label">Name:</label>
+            <label for="name" class="form-label">Title:</label>
             <input type="text" class="form-control" id="name" name="name" required>
         </div>
         <div class="mb-3">
@@ -60,7 +60,7 @@
         </div>
         <div class="mb-3">
             <label for="description" class="form-label">Description:</label>
-            <textarea class="form-control" id="description" name="description" rows="3" required></textarea>
+            <textarea class="form-control" id="description" name="description" rows="3"></textarea>
         </div>
         <button type="submit" class="btn btn-primary">Create</button>
     </form>

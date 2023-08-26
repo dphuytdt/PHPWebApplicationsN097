@@ -1,6 +1,15 @@
 @extends('layouts.main')
 @section('content')
-    @section('title', 'About')
+@section('title', 'About')
+    <style>
+        .justified {
+            text-align: justify;
+        }
+        .same-size-image {
+            width: 50px; /* Adjust the width as needed */
+            height: 150px; /* Adjust the height as needed */
+        }
+    </style>
 
     <div class="breadcrumb-section">
         <div class="breadcrumb-wrapper">
@@ -39,15 +48,6 @@
                     </div>
                 </div>
             </div>
-            <style>
-                .justified {
-                    text-align: justify;
-                }
-                .same-size-image {
-                    width: 50px; /* Adjust the width as needed */
-                    height: 150px; /* Adjust the height as needed */
-                }
-            </style>
             <div class="row">
                 <div class="col-lg-4 col-md-6">
                     <div class="about-promo-single-item">

@@ -108,4 +108,14 @@ class HomeController extends Controller
         return view('main.cart.thankYou')->with('categories', $categories);
     }
 
+    public function faq()
+    {
+        $httpService = app(HttpService::class);
+        $client = $httpService->getClient();
+
+        $req2 = $client->get($this->bookService . 'category');
+        $categories = json_decode($req2->getBody(), true);
+        return view('main.home.faq')->with('categories', $categories);
+    }
+
 }

@@ -249,7 +249,7 @@
             <div class="row">
                 <div class="col-12">
                     <div class="banner-single">
-                        <a href="" class="banner-img-link">
+                        <a href="{{route('home')}}" class="banner-img-link">
                             <img class="banner-img banner-img-big" src="{{asset('assets/images/banner/6781341.jpg')}}" alt="" />
                         </a>
                     </div>

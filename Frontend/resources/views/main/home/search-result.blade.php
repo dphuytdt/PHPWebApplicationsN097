@@ -51,7 +51,7 @@
     <div class="row">
         <div class="col-12">
             <div class="alert alert-danger" role="alert">
-                No products found
+                {{__('messages.No products found')}}
             </div>
         </div>
     </div>

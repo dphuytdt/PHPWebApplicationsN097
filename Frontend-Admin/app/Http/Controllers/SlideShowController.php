@@ -28,7 +28,7 @@ class SlideShowController extends Controller
         try {
             $response = $client->get($this->contentService.'admin/slide-show');
             $paginator = json_decode($response->getBody(), true);
-            return view('home.slide.list', compact('paginator'));
+            return view('home.slideShow.list', compact('paginator'));
         } catch (\Exception|GuzzleException $e) {
             return view('home.slide.list')->withErrors(['errors' => 'Cannot connect to server']);
         }
@@ -36,7 +36,7 @@ class SlideShowController extends Controller
 
     public function create()
     {
-        return view('home.slide.add');
+        return view('home.slideShow.create');
     }
 
     public function edit($id)

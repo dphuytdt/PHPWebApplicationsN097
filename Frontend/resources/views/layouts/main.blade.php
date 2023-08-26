@@ -177,6 +177,9 @@
                                     <a href="{{route('about')}}">{{ __('messages.about') }}</a>
                                 </li>
                                 <li>
+                                    <a href="{{route('faq')}}">{{ __('messages.FAQ') }}</a>
+                                </li>
+                                <li>
                                     <a href="{{route('contact')}}"> {{ __('messages.contact') }}</a>
                                 </li>
                             </ul>

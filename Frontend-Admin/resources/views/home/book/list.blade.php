@@ -96,11 +96,8 @@
                                                 </button>
                                             </div>
 
-                                            <div class="modal-body">
-                                                <div id="pdf-wrapper">
-                                                    <iframe src="data:application/pdf;base64,{{base64_encode(Storage::disk('dropbox')->get($book['content']))}}#toolbar=0" width="100%" height="100%" frameborder="0"></iframe>
-                                                </div>
-                                            </div>
+                                            <iframe class="iframe" src="https://docs.google.com/gview?url={{Storage::disk('dropbox')->url($book['content'])}}&embedded=true" frameborder="0"  sandbox="allow-scripts allow-same-origin"></iframe>
+
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                                             </div>

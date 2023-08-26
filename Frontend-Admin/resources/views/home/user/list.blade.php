@@ -23,10 +23,13 @@
                     </thead>
                     <tbody>
                         @if(isset($users))
+                            @php
+                                $numberLimit = 30;
+                            @endphp
                             @foreach($user_infor as $user)
                                 <tr>
-                                    <td>{{$user['fullname']}}</td>
-                                    <td>{{$user['email']}}</td>
+                                    <td>{{Illuminate\Support\Str::limit($user['fullname'], $numberLimit)}}</td>
+                                    <td>{{Illuminate\Support\Str::limit($user['email'], $numberLimit)}}</td>
                                     <td>{{$user['user_detail']['wallet'] ?? 'N/A'}}</td>
                                     <td>
                                         @if($user['role'] == "ROLE_USER")
