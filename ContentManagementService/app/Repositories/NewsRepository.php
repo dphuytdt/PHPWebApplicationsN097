@@ -144,4 +144,9 @@ class NewsRepository implements NewsRepositoryInterfaces
     {
         return $this->tag->all();
     }
+
+    public function newsDetail($id)
+    {
+        return $this->news->find($id);
+    }
 }

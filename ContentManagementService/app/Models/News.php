@@ -48,4 +48,9 @@ class News extends Model
         'is_hot' => 'integer',
         'creadted_by' => 'string',
     ];
+
+    public function tags()
+    {
+        return $this->belongsToMany(Tag::class, 'news_tags', 'news_id', 'tag_id');
+    }
 }

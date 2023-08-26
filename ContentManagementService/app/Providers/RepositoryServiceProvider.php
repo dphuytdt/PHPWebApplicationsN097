@@ -19,6 +19,10 @@ class RepositoryServiceProvider extends ServiceProvider
             'App\Interfaces\SlideShowRepositoryInterfaces',
             'App\Repositories\SlideShowRepository'
         );
+        $this->app->bind(
+            'App\Interfaces\CommentsRepositoryInterfaces',
+            'App\Repositories\CommentsRepository'
+        );
     }
 
     /**

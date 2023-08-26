@@ -181,5 +181,6 @@
         'Recent Posts' => '최근 게시물',
         'Tag News' => '태그 뉴스',
         'No News available!' => '사용 가능한 뉴스가 없습니다!',
+        'newsSearchResult' => '뉴스 검색 결과',
     ];
 

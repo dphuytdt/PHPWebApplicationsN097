@@ -73,33 +73,69 @@ class NewsController extends Controller
     {
         $client = new Client();
 
+        $keyword = $request->input('keyword');
+        $page = $request->input('page', 1);
+        $perPage = $request->input('perPage', 2);
+
         $req2 = $client->get($this->bookService . 'category');
         $categories = json_decode($req2->getBody(), true);
 
-        $search = $request->input('search');
-        $response = $client->request('GET', $this->contentService . 'user/news/search?search=' . $search);
-        $data = json_decode($response->getBody()->getContents());
+        try {
+            $req = $client->get($this->contentService.'user/news/search/'.$keyword.'?page='.$page);
 
-        if($data) {
-            $res = json_decode($response->getBody(), true);
+            if(json_decode($req->getBody(), true)){
+                $news = json_decode($req->getBody(), true);
+
+                $response = $client->request('GET', $this->contentService . 'user/news');
+                $res = json_decode($response->getBody(), true);
+                $recentNews = $res['newsRecent'];
+                $tags = $res['tags'];
+
+                $perPage = 8;
+                $currentPage = $request->query('page', 1);
+
+                $paginator = new LengthAwarePaginator(
+                    $news['data'],
+                    $news['total'],
+                    $perPage,
+                    $currentPage,
+                    ['path' => $request->url(), 'query' => $request->query()]
+                );
+                return view('main.news.search-result', compact('paginator', 'categories', 'recentNews', 'tags', 'keyword'));
+            }
+            else{
+                $paginator = [];
+                return view('main.news.search-result')->with('error', 'No result found')->with('categories', $categories)->with('paginator', $paginator);
+            }
+        }
+        catch (\Exception|GuzzleException $e) {
+            $paginator = [];
+            return view('main.news.search-result')->with('error', 'No result found')->with('categories', $categories)->with('paginator', $paginator);
+        }
+    }
+
+    public function newsDetail($id)
+    {
+        $client = new Client();
+
+        $req2 = $client->get($this->bookService . 'category');
+        $categories = json_decode($req2->getBody(), true);
+
+        try {
+            $req = $client->get($this->contentService.'user/news/'.$id);
+            $res = json_decode($req->getBody(), true);
             $news = $res['news'];
-            $perPage = 8;
-            $currentPage = $request->query('page', 1);
-            $paginator = new LengthAwarePaginator(
-                $news['data'],
-                $news['total'],
-                $perPage,
-                $currentPage,
-                ['path' => $request->url(), 'query' => $request->query()]
-            );
+            $comment = $res['comment'];
 
+            $response = $client->request('GET', $this->contentService . 'user/news');
+            $res = json_decode($response->getBody(), true);
             $recentNews = $res['newsRecent'];
             $tags = $res['tags'];
 
-            return view('main.news.index')->with('paginator', $paginator)->with('categories', $categories)
-                ->with('recentNews', $recentNews)->with('tags', $tags);
+            return view('main.news.news-detail', compact('news', 'categories', 'recentNews', 'tags', 'comment'));
         }
-
-        return view('main.news.index')->with('categories', $categories);
+        catch (\Exception|GuzzleException $e) {
+            return view('errors.404')->with('categories', $categories);
+        }
     }
 }

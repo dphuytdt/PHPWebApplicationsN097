@@ -95,3 +95,18 @@ use DaveJamesMiller\Breadcrumbs\Facades\Breadcrumbs;
         $trail->parent('home');
         $trail->push('About', route('about'));
     });
+
+    Breadcrumbs::for('news', function ($trail) {
+        $trail->parent('home');
+        $trail->push('News', route('news'));
+    });
+
+    Breadcrumbs::for('newsDetail', function ($trail, $news) {
+        $trail->parent('news');
+        $trail->push($news['title'], route('newsDetail', $news['id']));
+    });
+
+    Breadcrumbs::for('news.search', function ($trail) {
+        $trail->parent('news');
+        $trail->push('Search', route('news.search'));
+    });

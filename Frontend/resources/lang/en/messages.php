@@ -181,4 +181,5 @@
         'Recent Posts' => 'Recent Posts',
         'Tag News' => 'Tag News',
         'No News available!' => 'No News available!',
+        'newsSearchResult' => 'Search Result of News',
     ];

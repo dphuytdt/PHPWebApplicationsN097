@@ -72,7 +72,7 @@
         </div>
         <div class="mb-3">
             <label for="slug" class="form-label">Slug: (Optional)</label>
-            <input type="text" class="form-control" id="slug" name="slug" required />
+            <input type="text" class="form-control" id="slug" name="slug" />
         </div>
         <div class="mb-3">
             <label for="description" class="form-label">Description: (Optional)</label>

@@ -181,4 +181,5 @@
             'Recent Posts' => '最近の投稿',
             'Tag News' => 'タグニュース',
             'No News available!' => '利用可能なニュースはありません！',
+            'newsSearchResult' => 'ニュース検索結果',
         ];

@@ -23,4 +23,6 @@ interface NewsRepositoryInterfaces
     public function userLatest();
 
     public function tags();
+
+    public function newsDetail($id);
 }

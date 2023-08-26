@@ -33,8 +33,8 @@
         <div class="container">
             <div class="row">
                 <div class="col-12 d-flex justify-content-between justify-content-md-between align-items-center flex-md-row flex-column">
-                    <h3 class="breadcrumb-title">{{__('messages.news')}}</h3>
-                    {{ Breadcrumbs::render('news') }}
+                    <h3 class="breadcrumb-title">{{__('messages.newsSearchResult')}} "{{ $keyword }}"</h3>
+                    {{ Breadcrumbs::render('news.search') }}
                 </div>
             </div>
         </div>
@@ -98,44 +98,45 @@
             <div class="col-lg-9">
                 <div class="blog-grid-wrapper">
                     <div class="row">
-                    @if($paginator->count() == 0)
-                        <style type="text/css">
-                            .alert-danger {
-                                text-align: center;
-                                color: red;
-                            }
-                        </style>
-                        <div class="container">
-                            <div class="row">
-                                <div class="col-12">
-                                    <div class="alert alert-danger" role="alert">
-                                        {{__('messages.No News available!')}}
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        @else
-                        @foreach($paginator as $article)
-                            <div class="col-md-6 col-12">
-                                <div class="blog-feed-single">
-                                    <a href="{{route('newsDetail' , $article['id'])}}" class="blog-feed-img-link">
-                                        <img src="{{ Storage::disk('dropbox')->url($article['image']) }}" alt="" class="blog-feed-img" />
-                                    </a>
-                                    <div class="blog-feed-content">
-                                        <div class="blog-feed-post-meta">
-                                            <span>{{__('messages.By:')}}</span>
-                                            <a href="{{route('newsDetail' , $article['id'])}}" class="blog-feed-post-meta-author">{{$article['creadted_by']}}</a> -
-                                            @php
-                                                $date = date_create($article['created_at']);
-                                                $date = date_format($date,"M d, Y");
-                                            @endphp
-                                            <a href="{{route('newsDetail' , $article['id'])}}" class="blog-feed-post-meta-date">{{ $date }}</a>
+                        @if($paginator->count() == 0)
+                            <style type="text/css">
+                                .alert-danger {
+                                    text-align: center;
+                                    color: red;
+                                }
+                            </style>
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="alert alert-danger" role="alert">
+                                            {{__('messages.No News available!')}}
                                         </div>
-                                        <h5 class="blog-feed-link"><a href="{{route('newsDetail' , $article['id'])}}">{{$article['title']}}</a></h5>
                                     </div>
                                 </div>
                             </div>
-                        @endforeach
+                        @else
+                            @foreach($paginator as $article)
+                                <div class="col-md-6 col-12">
+                                    <div class="blog-feed-single">
+                                        <a href="{{route('newsDetail' , $article['id'])}}" class="blog-feed-img-link">
+                                            <img src="{{ Storage::disk('dropbox')->url($article['image']) }}" alt="" class="blog-feed-img" />
+                                        </a>
+                                        <div class="blog-feed-content">
+                                            <div class="blog-feed-post-meta">
+                                                <span>{{__('messages.By:')}}</span>
+                                                <a href="{{route('newsDetail' , $article['id'])}}" class="blog-feed-post-meta-author">{{$article['creadted_by']}}</a> -
+                                                @php
+                                                    $date = date_create($article['created_at']);
+                                                    $date = date_format($date,"M d, Y");
+                                                @endphp
+                                                <a href="{{route('newsDetail' , $article['id'])}}" class="blog-feed-post-meta-date">{{ $date }}</a>
+                                            </div>
+                                            <h5 class="blog-feed-link"><a href="{{route('newsDetail' , $article['id'])}}">{{$article['title']}}</a></h5>
+                                        </div>
+                                    </div>
+                                </div>
+                            @endforeach
+
                     </div>
 
                     <div class="pagination-container">

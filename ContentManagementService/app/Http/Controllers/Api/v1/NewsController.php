@@ -3,6 +3,10 @@
 namespace App\Http\Controllers\Api\v1;
 
 use App\Http\Controllers\Controller;
+use App\Interfaces\CommentsRepositoryInterfaces;
+use App\Models\Book;
+use App\Models\News;
+use App\Repositories\CommentsRepository;
 use Illuminate\Http\Request;
 use App\Interfaces\NewsRepositoryInterfaces;
 
@@ -10,9 +14,12 @@ class NewsController extends Controller
 {
     protected NewsRepositoryInterfaces $newsRepository;
 
-    public function __construct(NewsRepositoryInterfaces $newsRepository)
+    protected CommentsRepositoryInterfaces $commentsRepository;
+
+    public function __construct(NewsRepositoryInterfaces $newsRepository, CommentsRepositoryInterfaces $commentsRepository)
     {
         $this->newsRepository = $newsRepository;
+        $this->commentsRepository = $commentsRepository;
     }
 
     public function index()
@@ -108,5 +115,29 @@ class NewsController extends Controller
     {
         $news = $this->newsRepository->userLatest();
         return response()->json($news);
+    }
+
+    public function search(string $keyword)
+    {
+        $news = News::where('title', 'like', "%{$keyword}%")
+            ->orWhere('description', 'like', "%{$keyword}%")
+            ->orWhere('content', 'like', "%{$keyword}%")
+            ->orWhere('is_active', 'like', "%{$keyword}%")
+            ->orWhere('creadted_by', 'like', "%{$keyword}%")->paginate(8);
+
+        return response()->json($news);
+    }
+
+    public function newsDetail($id)
+    {
+        $news = $this->newsRepository->newsDetail($id);
+        $comment = $this->commentsRepository->getComments($id);
+
+        $new= [
+            'news' => $news,
+            'comment' => $comment,
+        ];
+
+        return response()->json($new);
     }
 }

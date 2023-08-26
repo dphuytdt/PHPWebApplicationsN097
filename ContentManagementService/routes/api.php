@@ -38,7 +38,8 @@ Route::prefix('admin')->group(function () {
 Route::prefix('user')->group(function () {
     Route::prefix('news')->group(function () {
         Route::get('/', [NewsController::class, 'userIndex']);
-        Route::get('/latest', [NewsController::class, 'userLatest']);
-        Route::get('/{id}', [NewsController::class, 'userShow']);
+        Route::get('latest', [NewsController::class, 'userLatest']);
+        Route::get('search/{keyword}', [NewsController::class, 'search']);
+        Route::get('{id}', [NewsController::class, 'newsDetail']);
     });
 });

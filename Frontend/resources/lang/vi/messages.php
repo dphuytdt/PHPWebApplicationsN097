@@ -181,4 +181,5 @@
         'Recent Posts' => 'Bài đăng gần đây',
         'Tag News' => 'Thẻ tin tức',
         'No News available!' => 'Không có tin tức nào!',
+        'newsSearchResult' => 'Kết quả tìm kiếm tin tức',
     ];
