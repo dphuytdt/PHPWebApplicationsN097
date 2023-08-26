@@ -47,8 +47,10 @@ class NewsController extends Controller
                 );
 
                 $recentNews = $res['newsRecent'];
+                $tags = $res['tags'];
 
-                return view('main.news.index')->with('paginator', $paginator)->with('categories', $categories)->with('recentNews', $recentNews);
+                return view('main.news.index')->with('paginator', $paginator)->with('categories', $categories)
+                    ->with('recentNews', $recentNews)->with('tags', $tags);
             }
 
             return view('main.news.index')->with('categories', $categories);
@@ -65,5 +67,39 @@ class NewsController extends Controller
         $categories = json_decode($req2->getBody(), true);
 
         return view('main.news.show')->with('categories', $categories);
+    }
+
+    public function searchNews(Request $request)
+    {
+        $client = new Client();
+
+        $req2 = $client->get($this->bookService . 'category');
+        $categories = json_decode($req2->getBody(), true);
+
+        $search = $request->input('search');
+        $response = $client->request('GET', $this->contentService . 'user/news/search?search=' . $search);
+        $data = json_decode($response->getBody()->getContents());
+
+        if($data) {
+            $res = json_decode($response->getBody(), true);
+            $news = $res['news'];
+            $perPage = 8;
+            $currentPage = $request->query('page', 1);
+            $paginator = new LengthAwarePaginator(
+                $news['data'],
+                $news['total'],
+                $perPage,
+                $currentPage,
+                ['path' => $request->url(), 'query' => $request->query()]
+            );
+
+            $recentNews = $res['newsRecent'];
+            $tags = $res['tags'];
+
+            return view('main.news.index')->with('paginator', $paginator)->with('categories', $categories)
+                ->with('recentNews', $recentNews)->with('tags', $tags);
+        }
+
+        return view('main.news.index')->with('categories', $categories);
     }
 }

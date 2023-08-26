@@ -139,4 +139,9 @@ class NewsRepository implements NewsRepositoryInterfaces
     {
         return $this->news->orderBy('created_at', 'desc')->take(3)->get();
     }
+
+    public function tags()
+    {
+        return $this->tag->all();
+    }
 }

@@ -249,8 +249,8 @@
             <div class="row">
                 <div class="col-12">
                     <div class="banner-single">
-                        <a href="product-details-default.html" class="banner-img-link">
-                            <img class="banner-img banner-img-big" src="https://img.freepik.com/premium-photo/row-old-books-blue-shelf-horizontal-background-banner_118047-9024.jpg" alt="" />
+                        <a href="" class="banner-img-link">
+                            <img class="banner-img banner-img-big" src="{{asset('assets/images/banner/6781341.jpg')}}" alt="" />
                         </a>
                     </div>
                 </div>
@@ -716,19 +716,19 @@
                 <div class="col-lg-4 col-md-6 col-12">
                     <div class="blog-feed-single">
                         <a href="" class="blog-feed-img-link">
-                            <img src="{{ Storage::disk('dropbox')->url($news['image']) }}" alt="" class="blog-feed-img">
+                            <img src="{{ Storage::disk('dropbox')->url($latestNew['image']) }}" alt="" class="blog-feed-img">
                         </a>
                         @php
-                            $date = date_create($news['created_at']);
+                            $date = date_create($latestNew['created_at']);
                             $date = date_format($date,"M d, Y");
                         @endphp
                         <div class="blog-feed-content">
                             <div class="blog-feed-post-meta">
-                                <span>{{__('messages.By')}}</span>
-                                <a href="" class="blog-feed-post-meta-author">{{$news['created_by']}}</a> -
+                                <span>{{__('messages.By:')}}</span>
+                                <a href="" class="blog-feed-post-meta-author">{{$latestNew['creadted_by']}}</a> -
                                 <a href="" class="blog-feed-post-meta-date">{{$date}}</a>
+                                <h5 class="blog-feed-link"><a href="">{{$latestNew['title']}}</a></h5>
                             </div>
-                            <h5 class="blog-feed-link"><a href="">{{$news['title']}}</a></h5>
                         </div>
                     </div>
                 </div>

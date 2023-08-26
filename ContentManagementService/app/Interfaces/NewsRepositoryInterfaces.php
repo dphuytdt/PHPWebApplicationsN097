@@ -21,4 +21,6 @@ interface NewsRepositoryInterfaces
     public function newRecent();
 
     public function userLatest();
+
+    public function tags();
 }

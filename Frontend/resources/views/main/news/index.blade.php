@@ -84,15 +84,9 @@
                         <h6 class="sidebar-title">{{__('messages.Tag News')}}</h6>
                         <div class="sidebar-content">
                             <div class="tag-link">
-                                <a href="">asian</a>
-                                <a href="">brown</a>
-                                <a href="">euro</a>
-                                <a href="">fashion</a>
-                                <a href="">hat</a>
-                                <a href="">t-shirt</a>
-                                <a href="">teen</a>
-                                <a href="">travel</a>
-                                <a href="">white</a>
+                                @foreach($tags as $tag)
+                                    <a href="">{{ $tag['tag_name'] }}</a>
+                                @endforeach
                             </div>
                         </div>
                     </div>
@@ -126,7 +120,7 @@
                                     </a>
                                     <div class="blog-feed-content">
                                         <div class="blog-feed-post-meta">
-                                            <span>{{__('messages.By')}}</span>
+                                            <span>{{__('messages.By:')}}</span>
                                             <a href="" class="blog-feed-post-meta-author">{{$article['creadted_by']}}</a> -
                                             @php
                                                 $date = date_create($article['created_at']);

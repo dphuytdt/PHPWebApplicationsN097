@@ -94,10 +94,12 @@ class NewsController extends Controller
     {
         $news = $this->newsRepository->userIndex();
         $newRecent = $this->newsRepository->newRecent();
+        $tags = $this->newsRepository->tags();
 
         $new= [
             'news' => $news,
-            'newsRecent' => $newRecent
+            'newsRecent' => $newRecent,
+            'tags' => $tags,
         ];
         return response()->json($new);
     }
