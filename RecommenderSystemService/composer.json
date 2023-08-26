@@ -1,25 +1,15 @@
 {
     "name": "laravel/laravel",
     "type": "project",
-    "description": "The Laravel Framework.",
-    "keywords": ["framework", "laravel"],
+    "description": "The skeleton application for the Laravel framework.",
+    "keywords": ["laravel", "framework"],
     "license": "MIT",
     "require": {
         "php": "^8.1",
-        "amranidev/laracombee": "^0.2.1",
-        "fabpot/goutte": "^4.0",
-        "guzzlehttp/guzzle": "^7.7",
+        "guzzlehttp/guzzle": "^7.2",
         "laravel/framework": "^10.10",
         "laravel/sanctum": "^3.2",
-        "laravel/tinker": "^2.8",
-        "maatwebsite/excel": "^3.1",
-        "phpoffice/phpspreadsheet": "^1.18",
-        "phpoffice/phpword": "*",
-        "spatie/flysystem-dropbox": "^3.0",
-        "spatie/pdf-to-text": "^1.52",
-        "symfony/dom-crawler": "^6.3",
-        "tymon/jwt-auth": "^2.0",
-        "weidner/goutte": "^2.3"
+        "laravel/tinker": "^2.8"
     },
     "require-dev": {
         "fakerphp/faker": "^1.9.1",
@@ -63,7 +53,6 @@
         }
     },
     "config": {
-        "platform-check": false,
         "optimize-autoloader": true,
         "preferred-install": "dist",
         "sort-packages": true,

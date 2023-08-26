@@ -40,6 +40,8 @@
       <sourceFolder url="file://$MODULE_DIR$/PaymentService/database/factories" isTestSource="false" packagePrefix="Database\Factories\" />
       <sourceFolder url="file://$MODULE_DIR$/PaymentService/database/seeders" isTestSource="false" packagePrefix="Database\Seeders\" />
       <sourceFolder url="file://$MODULE_DIR$/PaymentService/tests" isTestSource="true" packagePrefix="Tests\" />
+      <sourceFolder url="file://$MODULE_DIR$/spec" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/tests" isTestSource="true" />
       <excludeFolder url="file://$MODULE_DIR$/BookService/vendor/brick/math" />
       <excludeFolder url="file://$MODULE_DIR$/BookService/vendor/composer" />
       <excludeFolder url="file://$MODULE_DIR$/BookService/vendor/dflydev/dot-access-data" />
@@ -911,6 +913,8 @@
       <excludeFolder url="file://$MODULE_DIR$/UserService/vendor/spatie/dropbox-api" />
       <excludeFolder url="file://$MODULE_DIR$/UserService/vendor/spatie/flysystem-dropbox" />
       <excludeFolder url="file://$MODULE_DIR$/UserService/vendor/symfony/polyfill-php83" />
+      <excludeFolder url="file://$MODULE_DIR$/BookService/vendor/amranidev/laracombee" />
+      <excludeFolder url="file://$MODULE_DIR$/BookService/vendor/recombee/php-api-client" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

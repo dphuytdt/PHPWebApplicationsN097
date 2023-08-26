@@ -168,8 +168,6 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
-        App\Providers\RepositoryServiceProvider::class,
-        Amranidev\Laracombee\Providers\LaracombeeServiceProvider::class,
     ])->toArray(),
 
     /*
@@ -185,7 +183,6 @@ return [
 
     'aliases' => Facade::defaultAliases()->merge([
         // 'Example' => App\Facades\Example::class,
-        'Laracombee' => Amranidev\Laracombee\Facades\LaracombeeFacade::class,
     ])->toArray(),
 
 ];
