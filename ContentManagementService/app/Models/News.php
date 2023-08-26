@@ -30,6 +30,7 @@ class News extends Model
         'share',
         'type',
         'is_hot',
+        'tags',
         'creadted_by',
         'created_at',
         'updated_at',

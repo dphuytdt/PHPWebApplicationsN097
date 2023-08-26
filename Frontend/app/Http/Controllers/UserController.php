@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Http\Request;
 use App\Services\CategoryService;
 use GuzzleHttp\Client;
@@ -30,10 +31,22 @@ class UserController extends Controller
 
         $client = new Client();
 
-        $req2 = $client->get($this->bookService . 'category');
-        $categories = json_decode($req2->getBody(), true);
+        $userId = session()->get('user')['id'];
 
-        return view('main.user.profile')->with('categories', $categories);
+        try{
+            $req = $client->get($this->bookService . 'category');
+            $categories = json_decode($req->getBody(), true);
+
+            $req1 = $client->post($this->userService . 'auth/user-detail/' . $userId);
+            $user = json_decode($req1->getBody(), true);
+
+            $req2 = $client->get($this->paymentService . 'order-history/' . $userId);
+            $orderHistory = json_decode($req2->getBody(), true);
+
+            return view('main.user.profile')->with('categories', $categories)->with('user', $user)->with('orderHistory', $orderHistory['orderHistory']);
+        } catch (\Exception|\Throwable|GuzzleException $e) {
+            return redirect()->back()->with('error', 'Something went wrong!');
+        }
     }
 
     public function postProfile(Request $request) {

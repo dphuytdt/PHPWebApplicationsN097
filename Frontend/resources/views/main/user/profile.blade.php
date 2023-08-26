@@ -66,47 +66,6 @@
         </div>
     </div>
 </div>
-<script type="text/javascript">
-    document.addEventListener("DOMContentLoaded", function () {
-        const userData = JSON.parse(localStorage.getItem("userProfile"));
-        const orderHistory = JSON.parse(localStorage.getItem("orderHistory"));
-
-        $("#fullname").val(userData.user.fullname);
-
-        if (null === userData.user.user_detail.avatar) {
-            $("#imageAvatar").attr("src", "https://static.thenounproject.com/png/5034901-200.png");
-        } else {
-            $("#imageAvatar").attr("src", "data:image/" + userData.user.user_detail.image_extension + ";base64," + userData.user.user_detail.avatar);
-        }
-
-        $("#email").val(userData.user.email);
-        $("#birthday").val(userData.user.user_detail.birthday);
-        $("#phone").val(userData.user.user_detail.phone);
-        $("#address").val(userData.user.user_detail.address);
-        $("#wallet").val(userData.user.user_detail.wallet);
-
-        if (orderHistory) {
-            for (let i = 0; i < orderHistory.length; i++) {
-                $("#order").append(orderHistory.orderHistory[i].order_id + "<br />");
-                $("#date").append(orderHistory.orderHistory[i].created_at + "<br />");
-                $("#status").append(orderHistory.orderHistory[i].status + "<br />");
-                $("#total").append(orderHistory.orderHistory[i].total + "<br />");
-                $("#action").append("<a href='/order/" + orderHistory.orderHistory[i].book_id + "'>View</a><br />");
-            }
-        }
-
-        if (userData && userData.user.user_detail.gender !== null) {
-            const maleRadio = document.getElementById("male");
-            const femaleRadio = document.getElementById("female");
-
-            if (userData.user.user_detail.gender === 0) {
-                maleRadio.checked = true;
-            } else if (userData.user.user_detail.gender === 1) {
-                femaleRadio.checked = true;
-            }
-        }
-    });
-</script>
 <div class="account_dashboard">
     <div class="container">
         <div class="row">
@@ -138,19 +97,21 @@
                                 <tr>
                                     <th>{{__('messages.Order')}}</th>
                                     <th>{{__('messages.Date')}}</th>
-                                    <th>{{__('messages.Status')}}</th>
+                                    <th>{{__('messages.PaymentMethod')}}</th>
                                     <th>{{__('messages.Total')}}</th>
                                     <th>{{__('messages.Actions')}}</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr>
-                                    <td id="order"></td>
-                                    <td id="date"></td>
-                                    <td id="status"><span class="success"></span></td>
-                                    <td id="total"></td>
-                                    <td id="action"><a id="view" class="view">View</a></td>
-                                </tr>
+                                @foreach($orderHistory as $order)
+                                    <tr>
+                                        <td>{{$order['id']}}</td>
+                                        <td>{{$order['created_at']}}</td>
+                                        <td><span class="success">{{$order['payment_method']}}</span></td>
+                                        <td>{{$order['total_price']}}</td>
+                                        <td><a href="{{URL::to('/book-details/'.$order['book_id'])}}">{{__('messages.View')}}</a></td>
+                                    </tr>
+                                @endforeach
                                 </tbody>
                             </table>
                         </div>
@@ -164,8 +125,12 @@
                                     <form action="{{route('profile.update' , $user_id)}}" method="POST">
                                         @csrf
                                         <div class="input-radio">
-                                            <span class="custom-radio"><label for="male"></label><input type="radio" value="0" id="male" name="gender" /> Mr.</span>
-                                            <span class="custom-radio"><label for="female"></label><input type="radio" value="1" id="female" name="gender" /> Mrs.</span>
+                                            <span class="custom-radio">
+                                                <label for="male"></label>
+                                                <input type="radio" value="0" id="male" name="gender" @if($user['user']['user_detail']['gender'] === 1) @endif /> Mr.</span>
+                                            <span class="custom-radio">
+                                                <label for="female"></label>
+                                                <input type="radio" value="0" id="female" name="gender" @if($user['user']['user_detail']['gender'] === 0) @endif /> Mrs.</span>
                                         </div>
                                         <br />
 
@@ -173,7 +138,7 @@
                                             <div class="col-md-6 col-12">
                                                 <div class="default-form-box mb-20">
                                                     <label for="fullname">{{__('messages.Full Name')}}</label>
-                                                    <input type="text" name="fullname" id="fullname" data-label="Full Name" placeholder="Full Name" required />
+                                                    <input type="text" name="fullname" id="fullname" data-label="Full Name" placeholder="Full Name" value="{{$user['user']['fullname']}}" required />
                                                 </div>
                                             </div>
                                             <div class="col-md-6 col-12">
@@ -181,7 +146,11 @@
                                                     <label class="label">
                                                         <input type="file" accept="image/*" />
                                                         <figure class="personal-figure">
-                                                            <img src="https://static.thenounproject.com/png/5034901-200.png" class="personal-avatar" id="imageAvatar" name="image" alt="avatar" />
+                                                            @if($user['user']['user_detail']['avatar'] === null)
+                                                                <img src="https://static.thenounproject.com/png/5034901-200.png" class="personal-avatar" id="imageAvatar" name="image" alt="avatar" />
+                                                            @else
+                                                                <img src="{{ Storage::disk('dropbox')->url($user['user']['user_detail']['avatar']) }}" class="personal-avatar" id="imageAvatar" name="image" alt="avatar" />
+                                                            @endif
                                                             <figcaption class="personal-figcaption">
                                                                 <img src="https://raw.githubusercontent.com/ThiagoLuizNunes/angular-boilerplate/master/src/assets/imgs/camera-white.png" id="imageUpload" alt="camera" />
                                                             </figcaption>
@@ -192,27 +161,23 @@
                                         </div>
                                         <div class="default-form-box mb-20">
                                             <label>{{__('messages.Email')}}</label>
-                                            <input type="text" id="email" name="email" disabled />
+                                            <input type="text" id="email" name="email" data-label="Email" placeholder="Email" value="{{$user['user']['email']}}" disabled />
                                         </div>
                                         <div class="default-form-box mb-20">
                                             <label>{{__('messages.Birthday')}}</label>
-                                            <input type="date" name="birthday" id="birthday" data-label="Birthday" required />
+                                            <input type="date" name="birthday" id="birthday" data-label="Birthday" value="{{$user['user']['user_detail']['birthday']}}" required />
                                         </div>
                                         <span class="example">
                                             (E.g.: 05/31/1970)
                                         </span>
                                         <br />
                                         <div class="default-form-box mb-20">
-                                            <label>{{__('messages.Wallet')}}</label>
-                                            <input type="text" id="wallet" name="wallet" disabled />
-                                        </div>
-                                        <div class="default-form-box mb-20">
                                             <label>{{__('messages.Address')}}</label>
-                                            <input type="text" id="address" name="address" data-label="Address" required />
+                                            <input type="text" id="address" name="address" data-label="Address" value="{{$user['user']['user_detail']['address']}}" required />
                                         </div>
                                         <div class="default-form-box mb-20">
                                             <label for="phone">{{__('messages.Phone')}}</label>
-                                            <input type="text" name="phone" id="phone" data-label="Phone" required />
+                                            <input type="text" name="phone" id="phone" data-label="Phone" placeholder="Phone" value="{{$user['user']['user_detail']['phone']}}" required />
                                         </div>
                                         <div class="save_button primary_btn default_button">
                                             <button type="submit">{{__('messages.Save')}}</button>

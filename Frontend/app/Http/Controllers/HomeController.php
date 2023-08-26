@@ -33,11 +33,16 @@ class HomeController extends Controller
         $client = $httpService->getClient();
 
         try {
-            $req1 = $client->get($this->bookService .'books/homepage', ['timeout' => 60]);
+            $req1 = $client->get($this->bookService .'books/homepage');
             $books = json_decode($req1->getBody(), true);
+
             $req2 = $client->get($this->bookService . 'category');
             $categories = json_decode($req2->getBody(), true);
-            return view('main.home.index')->with('books', $books)->with('categories', $categories);
+
+            $req3 = $client->get($this->contentService . 'user/news/latest');
+            $latestNews = json_decode($req3->getBody(), true);
+
+            return view('main.home.index')->with('books', $books)->with('categories', $categories)->with('latestNews', $latestNews);
         } catch (\Exception $e) {
             $categories = [];
             return view('errors.404')->with('categories', $categories);

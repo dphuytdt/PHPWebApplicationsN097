@@ -1,7 +1,11 @@
 @extends('layouts.admin')
 @section('content')
     @section('title', 'News List')
-     <script src="https://code.jquery.com/jquery-2.2.4.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.5/dist/jquery.validate.js" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tagsinput/0.8.0/bootstrap-tagsinput.css" rel="stylesheet" />
     <script>
        $(document).ready(function() {
          $("#exampleInputPassword1").on("change", function() {
@@ -16,6 +20,14 @@
          });
        });
     </script>
+    <style type="text/css">
+        .bootstrap-tagsinput .tag {
+            margin-right: 2px;
+            color: white !important;
+            background-color: #0d6efd;
+            padding: 0.2rem;
+        }
+    </style>
     <div class="container-fluid">
         <h1 class="h3 mb-2 text-gray-800">{{ Breadcrumbs::render('news.index') }}</h1>
         <!-- DataTales Example -->
@@ -32,6 +44,7 @@
                             <th>Image</th>
                             <th>Content</th>
                             <th>Status</th>
+                            <th>Tags</th>
                             <th>Create Date</th>
                             <th>Update Date</th>
                             <th>Delete Date</th>
@@ -49,7 +62,10 @@
                                     <td>{{Illuminate\Support\Str::limit($new['title'], $numberLimit)}}</td>
                                     <td>{{Illuminate\Support\Str::limit($new['slug'], $numberLimit)}}</td>
                                     <td>{{Illuminate\Support\Str::limit($new['description'], $numberLimit)}}</td>
-                                    <td><img src="data:image/{{$new['image_extension']}};base64,{{ $new['image'] }}" alt="" width="100px" height="100px"></td>
+                                    <td><img src="{{ Storage::disk('dropbox')->url($new['image']) }}" alt="" width="100px" height="100px"></td>
+                                    <td>
+                                        <a  class="btn btn-info btn-sm" data-target=".bd-example-modal-lg-{{$new['id']}}" data-toggle="modal">View</a>
+                                    </td>
                                     <td>
                                         @if($new['is_active'] == 0)
                                             <span class="badge badge-danger">Inactive</span>
@@ -58,10 +74,19 @@
                                         @endif
                                     </td>
                                     <td>
-                                        <a  class="btn btn-info btn-sm" data-target=".bd-example-modal-lg-{{$new['id']}}" data-toggle="modal">View</a>
+                                        @php
+                                            $tagsNews = explode(',', $new['tags']);
+                                        @endphp
+                                        @foreach($tags as $tag)
+                                            @foreach($tagsNews as $tagsNew)
+                                                @if($tag['tag_name'] == $tagsNew)
+                                                    <span class="badge badge-info">{{$tag['tag_name']}}</span>
+                                                @endif
+                                            @endforeach
+                                        @endforeach
                                     </td>
-                                    <td>{{$new['created_at']}}</td>
-                                    <td>{{$new['updated_at']}}</td>
+                                    <td>{{$new['created_at'] ?? 'N/A'}}</td>
+                                    <td>{{$new['updated_at'] ?? 'N/A'}}</td>
                                     <td>
                                         @if($new['deleted_at'] == null)
                                             <span class="badge badge-success">N/A</span>
@@ -162,9 +187,28 @@
                                             <input type="file" class="form-control" id="exampleInputPassword1" name="image" accept="image/*">
                                         </div>
                                         <div class="col-md-3">
-                                            <img src="data:image/{{$new['image_extension']}};base64,{{ $new['image'] }}" alt="{{$new['title']}}" width="100px" height="100px" class="img-thumbnail" id="uploadedImage">
+                                            <img src="{{ Storage::disk('dropbox')->url($new['image']) }}" alt="{{$new['title']}}" width="100px" height="100px" class="img-thumbnail" id="uploadedImage">
                                         </div>
                                     </div>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="tags" class="form-label">Tags: <color style="color: red;">*</color></label>
+                                    <br>
+
+                                    @php
+                                        $tagsNews = explode(',', $new['tags']);
+                                        $temp = '';
+                                    @endphp
+                                    @foreach($tags as $tag)
+                                        @foreach($tagsNews as $tagsNew)
+                                            @if($tag['tag_name'] == $tagsNew)
+                                                @php
+                                                    $temp .= $tag['tag_name'].',';
+                                                @endphp
+                                            @endif
+                                        @endforeach
+                                    @endforeach
+                                    <input type="text" id="tags"  name="tags" class="form-control" data-role="tagsinput" value="{{$temp}}" required/>
                                 </div>
                                 <div class="">
                                     <label class="form-check-label" for="inputState">
@@ -195,6 +239,27 @@
     <script>
         $(document).ready(function() {
             $('#listNews').DataTable();
+        });
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.0/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tagsinput/0.8.0/bootstrap-tagsinput.min.js"></script>
+    <script>
+        $(function () {
+            $("input")
+                .on("change", function (event) {
+                    var $element = $(event.target);
+                    var $container = $element.closest(".example");
+
+                    if (!$element.data("tagsinput")) return;
+
+                    var val = $element.val();
+                    if (val === null) val = "null";
+                    var items = $element.tagsinput("items");
+
+                    $("code", $("pre.val", $container)).html($.isArray(val) ? JSON.stringify(val) : '"' + val.replace('"', '\\"') + '"');
+                    $("code", $("pre.items", $container)).html(JSON.stringify($element.tagsinput("items")));
+                })
+                .trigger("change");
         });
     </script>
 @endsection

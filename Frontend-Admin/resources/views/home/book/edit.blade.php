@@ -107,15 +107,28 @@
                     </select>
                 </div>
                 <div class="mb-3 contentType">
+                    <label for="contentType" class="form-label">Is Featured <color style="color: red;">*</color></label>
+                    <select id="contentType" class="form-select" name="is_featured">
+                        <option selected>Select Status</option>
+                        @if($book['is_featured'] == 0)
+                            <option value="1" selected>Yes</option>
+                            <option value="0">No</option>
+                        @else
+                            <option value="1">Yes</option>
+                            <option value="0" selected>No</option>
+                        @endif
+                    </select>
+                </div>
+                <div class="mb-3 contentType">
                     <label for="is_vip_valid" class="form-label">Is Valid For Vip <color style="color: red;">*</color></label>
                     <select id="is_vip_valid" class="form-select" name="is_vip_valid">
                         <option selected>Select Status</option>
                         @if($book['is_vip_valid'] == 1)
                             <option value="1" selected>Yes</option>
-                            <option value="2">No</option>
+                            <option value="0">No</option>
                         @else
                             <option value="1">Yes</option>
-                            <option value="2" selected>No</option>
+                            <option value="0" selected>No</option>
                         @endif
                     </select>
                 </div>

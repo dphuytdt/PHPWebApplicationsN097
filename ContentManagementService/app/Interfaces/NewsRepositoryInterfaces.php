@@ -8,7 +8,7 @@ interface NewsRepositoryInterfaces
 
     public function destroy($id);
 
-    public function update($request, $id);
+    public function update(array $data, $id);
 
     public function show($id);
 
@@ -19,4 +19,6 @@ interface NewsRepositoryInterfaces
     public function userIndex();
 
     public function newRecent();
+
+    public function userLatest();
 }

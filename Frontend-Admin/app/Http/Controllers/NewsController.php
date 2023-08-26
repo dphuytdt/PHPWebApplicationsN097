@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class NewsController extends Controller
 {
@@ -23,10 +24,13 @@ class NewsController extends Controller
     {
         $client = new Client();
         try {
-            $response = $client->get($this->contentService.'admin/news');
-            $news = json_decode($response->getBody(), true);
+            $req= $client->get($this->contentService.'admin/news');
+            $res= json_decode($req->getBody(), true);
 
-            return view('home.news.list', compact('news'));
+            $news = $res['news'];
+            $tags = $res['tags'];
+
+            return view('home.news.list', compact('news', 'tags'));
         } catch (\Exception|GuzzleException $e) {
             return view('home.category.list')->withErrors(['errors' => 'Cannot connect to server']);
         }
@@ -41,10 +45,8 @@ class NewsController extends Controller
     {
         if ($request->hasFile('image')) {
             try{
-                $imageFile = $request->file('image');
-                $imageContents = file_get_contents($imageFile->getPathname());
-                $imageExtension = $request->file('image')->getClientOriginalExtension();
-                $base64Image = base64_encode($imageContents);
+                $image = $request->file('image');
+                $pathImage = Storage::disk('dropbox')->putFile('news/images', $image);
             } catch (\Exception $e) {
                 return redirect()->route('books.index')->withErrors(['errors' => 'Cannot read file']);
             }
@@ -55,13 +57,14 @@ class NewsController extends Controller
         try {
             $client->post($this->contentService.'admin/news', [
                 'form_params' => [
-                    'title' => $request->title,
-                    'slug' => $request->slug,
-                    'description' => $request->description,
-                    'contents' => $request->contents,
-                    'image' => $base64Image,
-                    'image_extension' => $imageExtension,
-                    'is_active' => $request->is_active,
+                    'title' => $request->title ?? '',
+                    'slug' => $request->slug ?? '',
+                    'description' => $request->description ?? '',
+                    'contents' => $request->contents ?? '',
+                    'image' => $pathImage ?? '',
+                    'image_extension' => 'jpg', // TODO: get extension from file
+                    'is_active' => $request->is_active ?? 1,
+                    'tags' => $request->tags ?? '',
                     'creadted_by' => $request->creadted_by,
                 ]
             ]);
@@ -74,16 +77,41 @@ class NewsController extends Controller
 
     public function update(Request $request, $id)
     {
-        $data = $request->all();
+        if ($request->hasFile('image')) {
+            try{
+                $image = $request->file('image');
+                $pathImage = Storage::disk('dropbox')->putFile('news/images', $image);
+            } catch (\Exception $e) {
+                return redirect()->route('news.index')->withErrors(['errors' => 'Cannot read file']);
+            }
+        }
+
+        $data = [
+            'title' => $request->title ?? '',
+            'slug' => $request->slug ?? '',
+            'description' => $request->description ?? '',
+            'contents' => $request->contents ?? '',
+            'image' => $pathImage ?? '',
+            'is_active' => $request->is_active ?? 1,
+            'tags' => $request->tags ?? '',
+            'creadted_by' => $request->creadted_by ?? '',
+        ];
         $client = new Client();
 
         try {
-            $client->put($this->contentService.'admin/news/'.$id, [
+            $client->post($this->contentService.'admin/news/'.$id, [
                 'json' => $data
             ]);
-            return redirect()->route('news.index')->with('success', 'Update news successfully');
+
+            $req= $client->get($this->contentService.'admin/news');
+            $res= json_decode($req->getBody(), true);
+
+            $news = $res['news'];
+            $tags = $res['tags'];
+
+            return redirect()->back()->with(compact('news', 'tags'));
         } catch (\Exception|GuzzleException $e) {
-            return redirect()->route('news.edit', $id)->withErrors(['errors' => 'Cannot connect to server']);
+            return redirect()->route(handleError)->withErrors(['errors' => 'Cannot connect to server']);
         }
     }
 

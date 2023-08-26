@@ -86,6 +86,10 @@ class BookRepository implements BookRepositoryInterface
             $book->is_vip_valid = $data['is_vip_valid'];
         }
 
+        if (isset($data['is_featured']) && ($data['is_featured']  !== $book->is_featured)) {
+            $book->is_featured = $data['is_featured'];
+        }
+
         return $book->save();
     }
 

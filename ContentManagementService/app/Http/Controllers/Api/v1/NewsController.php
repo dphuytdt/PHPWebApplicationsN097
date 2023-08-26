@@ -17,8 +17,8 @@ class NewsController extends Controller
 
     public function index()
     {
-        $news = $this->newsRepository->index();
-        return response()->json($news);
+        $result = $this->newsRepository->index();
+        return response()->json($result);
     }
 
 
@@ -38,12 +38,14 @@ class NewsController extends Controller
             'image' => $request->image ?? '',
             'image_extension' => $request->image_extension ?? '',
             'is_active' => $request->is_active ?? 1,
+            'tags' => $request->tags ?? '',
             'creadted_by' => $request->creadted_by ?? '',
             'created_at' => now()
         ];
 
         try {
-            $news = $this->newsRepository->store($data);
+            $this->newsRepository->store($data);
+            return response()->json($data, 200);
         } catch (\Exception $e) {
             return response()->json($e->getMessage(), 500);
         }
@@ -61,8 +63,20 @@ class NewsController extends Controller
 
     public function update(Request $request, $id)
     {
+        $data = [
+            'title' => $request->title,
+            'slug' => $request->slug,
+            'description' => $request->description ?? '',
+            'content' => $request->contents ?? '',
+            'image' => $request->image ?? '',
+            'is_active' => $request->is_active ?? 1,
+            'tags' => $request->tags ?? '',
+            'creadted_by' => $request->creadted_by ?? '',
+            'created_at' => now()
+        ];
+
         try {
-            $news = $this->newsRepository->update($request, $id);
+            $news = $this->newsRepository->update($data, $id);
             return response()->json($news, 200);
         } catch (\Exception $e) {
             return response()->json($e->getMessage(), 500);
@@ -86,5 +100,11 @@ class NewsController extends Controller
             'newsRecent' => $newRecent
         ];
         return response()->json($new);
+    }
+
+    public function userLatest()
+    {
+        $news = $this->newsRepository->userLatest();
+        return response()->json($news);
     }
 }

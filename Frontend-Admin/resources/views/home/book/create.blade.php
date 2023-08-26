@@ -126,6 +126,14 @@
             });
         </script>
         <div class="mb-3 contentType">
+            <label for="contentType" class="form-label">Is Featured <color style="color: red;">*</color></label>
+            <select id="contentType" class="form-select" name="is_featured">
+                <option selected>Select Status</option>
+                <option value="1">Yes</option>
+                <option value="0">No</option>
+            </select>
+        </div>
+        <div class="mb-3 contentType">
             <label for="is_vip_valid" class="form-label">Is Valid For Vip <color style="color: red;">*</color></label>
             <select id="is_vip_valid" class="form-select" name="is_vip_valid">
                 <option selected>Select Status</option>
@@ -138,7 +146,7 @@
             <select id="contentType" class="form-select" name="status">
                 <option selected>Select Status</option>
                 <option value="1">Active</option>
-                <option value="1">Inactive</option>
+                <option value="0">Inactive</option>
             </select>
         </div>
         <button type="submit" class="btn btn-primary">Create</button>

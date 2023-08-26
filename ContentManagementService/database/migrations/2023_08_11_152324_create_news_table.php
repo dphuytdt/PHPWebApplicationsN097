@@ -28,6 +28,7 @@ return new class extends Migration
             $table->integer('type')->nullable(true);
             $table->integer('is_hot')->nullable(true);
             $table->string('creadted_by', 255)->nullable(true);
+            $table->longText('tags')->nullable(true);
             $table->dateTime('created_at');
             $table->dateTime('updated_at')->nullable();
             $table->dateTime('deleted_at')->nullable();

@@ -116,7 +116,7 @@
                                     <i class="icon-user has-user-dropdow"></i>
                                     <ul class="user-sub-menu">
                                         <li>
-                                            <a id="callMicroservicesLink" href="#">
+                                            <a id="callMicroservicesLink" href="{{route('profile')}}">
                                                 {{__('messages.myAccount')}}
                                             </a>
                                         </li>
@@ -628,47 +628,6 @@
         const wishlistItems = document.querySelectorAll('.offcanvas-wishlist-item-single');
         wishlistCount.textContent = wishlistItems.length;
     }
-</script>
-<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const callMicroservicesLink = document.getElementById('callMicroservicesLink');
-
-        if (callMicroservicesLink) {
-            callMicroservicesLink.addEventListener('click', function(event) {
-                event.preventDefault();
-                let userID = @json(session('user_id'));
-                axios.all([
-                    axios.post('http://127.0.0.1:8082/api/auth/user-detail/' + userID),
-                    axios.get('http://127.0.0.1:8085/api/order-history/' + userID)
-                ])
-                    .then(axios.spread(function (userProfileResponse, orderHistoryResponse) {
-                        const userProfile = JSON.stringify(userProfileResponse.data);
-                        const orderHistory = JSON.stringify(orderHistoryResponse.data);
-                        const data = {
-                            userProfile: userProfile,
-                            orderHistory: orderHistory
-                        };
-
-                        const userProfileData = JSON.parse(userProfile);
-                        const orderHistoryData = JSON.parse(orderHistory);
-
-                        localStorage.setItem('userProfile', userProfile);
-                        localStorage.setItem('orderHistory', orderHistory);
-
-                        axios.get('{{route('profile')}}', {
-                            params: data
-                        })
-                        .then(function (response) {
-                            window.location.href = '{{route('profile')}} ';
-                        })
-                        .catch(function (error) {
-                            console.log(error);
-                        });
-                    }));
-            });
-        }
-    });
 </script>
 </body>
 </html>

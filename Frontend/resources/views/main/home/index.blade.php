@@ -503,7 +503,6 @@
             </div>
         </div>
     </div>
-    <!-- End Modal Quickview cart -->
 
     <div class="modal fade" id="modalAddcartNewBook-{{$book['id']}}" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
@@ -699,6 +698,46 @@
         </div>
     </div>
 @endforeach
+
+<div class="blog-feed-section section-top-gap-100">
+    <div class="section-content-gap">
+        <div class="container">
+            <div class="row">
+                <div class="section-content">
+                    <h3 class="section-title">{{__('messages.Latest News')}}</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="blog-feed-wrapper">
+        <div class="container">
+            <div class="row">
+                @foreach($latestNews as $latestNew)
+                <div class="col-lg-4 col-md-6 col-12">
+                    <div class="blog-feed-single">
+                        <a href="" class="blog-feed-img-link">
+                            <img src="{{ Storage::disk('dropbox')->url($news['image']) }}" alt="" class="blog-feed-img">
+                        </a>
+                        @php
+                            $date = date_create($news['created_at']);
+                            $date = date_format($date,"M d, Y");
+                        @endphp
+                        <div class="blog-feed-content">
+                            <div class="blog-feed-post-meta">
+                                <span>{{__('messages.By')}}</span>
+                                <a href="" class="blog-feed-post-meta-author">{{$news['created_by']}}</a> -
+                                <a href="" class="blog-feed-post-meta-date">{{$date}}</a>
+                            </div>
+                            <h5 class="blog-feed-link"><a href="">{{$news['title']}}</a></h5>
+                        </div>
+                    </div>
+                </div>
+                @endforeach
+            </div>
+        </div>
+    </div>
+</div>
+
 <script
     src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"
     integrity="sha512-3gJwYpMe3QewGELv8k/BX9vcqhryRdzRMxVfq6ngyWXwo03GFEzjsUm8Q7RZcHPHksttq7/GFoxjCVUjkjvPdw=="

@@ -1,35 +1,24 @@
 @extends('layouts.main') @section('content') @section('title', 'Contact Us')
-
-<!-- ...:::: Start Breadcrumb Section:::... -->
 <div class="breadcrumb-section">
     <div class="breadcrumb-wrapper">
         <div class="container">
             <div class="row">
                 <div class="col-12 d-flex justify-content-between justify-content-md-between align-items-center flex-md-row flex-column">
-                    <h3 class="breadcrumb-title">Contact Us</h3>
-                    <div class="breadcrumb-nav">
-                        <nav aria-label="breadcrumb">
-                            <ul>
-                                <li><a href="{{route('home')}}">Home</a></li>
-                                <li class="active" aria-current="page">Contact Us</li>
-                            </ul>
-                        </nav>
+                    <h3 class="breadcrumb-title">{{__('messages.Contact Us')}}</h3>
+                    {{ Breadcrumbs::render('contact') }}
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-<!-- ...:::: End Breadcrumb Section:::... -->
-
-<!-- ...::::Start Map Section:::... -->
 <div class="map-section">
     <div class="container">
         <div class="row">
             <div class="col-12">
                 <div class="mapouter">
                     <div class="gmap_canvas">
-                        <iframe id="gmap_canvas" src="https://maps.google.com/maps?q=121%20King%20St%2C%20Melbourne%20VIC%203000%2C%20Australia&t=&z=13&ie=UTF8&iwloc=&output=embed"></iframe>
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d501726.54073011904!2d106.36556425709519!3d10.754618132789961!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x317529292e8d3dd1%3A0xf15f5aad773c112b!2sHo%20Chi%20Minh%20City%2C%20Vietnam!5e0!3m2!1sen!2s!4v1693032300510!5m2!1sen!2s" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
                     </div>
                 </div>
             </div>
@@ -48,8 +37,7 @@
                                 <i class="fa fa-phone"></i>
                             </div>
                             <div class="contact-details-content contact-phone">
-                                <a href="tel:+012345678102">+012 345 678 102</a>
-                                <a href="tel:+012345678102">+012 345 678 102</a>
+                                <a href="tel:+033 242 0477">033 242 0477</a>
                             </div>
                         </div>
 
@@ -58,8 +46,8 @@
                                 <i class="fa fa-globe"></i>
                             </div>
                             <div class="contact-details-content contact-phone">
-                                <a href="mailto:urname@email.com">urname@email.com</a>
-                                <a href="http://www.yourwebsite.com">www.yourwebsite.com</a>
+                                <a href="mailto:ebookn097@gmail.com">ebookn097@gmail.com</a>
+                                <a href="http://127.0.0.1:8080/">http://127.0.0.1:8080</a>
                             </div>
                         </div>
 
@@ -68,65 +56,45 @@
                                 <i class="fa fa-map-marker"></i>
                             </div>
                             <div class="contact-details-content contact-phone">
-                                <span>Address goes here,</span>
-                                <span>street, Crossroad 123.</span>
+                                <span>Vietnam</span>
+                                <span>Ho Chi Minh City</span>
                             </div>
                         </div>
-                    </div>
-                    <div class="contact-social">
-                        <h4>Follow Us</h4>
-                        <ul>
-                            <li>
-                                <a href=""><i class="fa fa-facebook"></i></a>
-                            </li>
-                            <li>
-                                <a href=""><i class="fa fa-twitter"></i></a>
-                            </li>
-                            <li>
-                                <a href=""><i class="fa fa-youtube"></i></a>
-                            </li>
-                            <li>
-                                <a href=""><i class="fa fa-google-plus"></i></a>
-                            </li>
-                            <li>
-                                <a href=""><i class="fa fa-instagram"></i></a>
-                            </li>
-                        </ul>
                     </div>
                 </div>
 
             </div>
             <div class="col-lg-8">
                 <div class="contact-form section-top-gap-100">
-                    <h3>Get In Touch</h3>
-                    <form action="https://htmlmail.hasthemes.com/jaber/mail/contact.php" method="POST">
+                    <h3>{{__('messages.Get In Touch')}}</h3>
+                    <form action="" method="POST">
                         <div class="row">
                             <div class="col-lg-6">
                                 <div class="default-form-box mb-20">
-                                    <label for="contact-name">Name</label>
+                                    <label for="contact-name">{{__('messages.Name')}}</label>
                                     <input type="text" id="contact-name" required />
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="default-form-box mb-20">
-                                    <label for="contact-email">Email</label>
+                                    <label for="contact-email">{{__('messages.Email address')}}</label>
                                     <input type="email" id="contact-email" required />
                                 </div>
                             </div>
                             <div class="col-lg-12">
                                 <div class="default-form-box mb-20">
-                                    <label for="contact-subject">Subject</label>
+                                    <label for="contact-subject">{{__('messages.Subject')}}</label>
                                     <input type="text" id="contact-subject" required />
                                 </div>
                             </div>
                             <div class="col-lg-12">
                                 <div class="default-form-box mb-20">
-                                    <label for="contact-message">Your Message</label>
+                                    <label for="contact-message">{{__('messages.Your Message')}}</label>
                                     <textarea id="contact-message" cols="30" rows="10"></textarea>
                                 </div>
                             </div>
                             <div class="col-lg-12">
-                                <button class="contact-submit-btn" type="submit">SEND</button>
+                                <button class="contact-submit-btn" type="submit">{{__('messages.SEND MESSAGE')}}</button>
                             </div>
                         </div>
                     </form>

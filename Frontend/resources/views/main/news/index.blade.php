@@ -33,7 +33,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-12 d-flex justify-content-between justify-content-md-between align-items-center flex-md-row flex-column">
-                    <h3 class="breadcrumb-title">News</h3>
+                    <h3 class="breadcrumb-title">{{__('messages.news')}}</h3>
                 </div>
             </div>
         </div>
@@ -46,7 +46,7 @@
             <div class="col-lg-3">
                 <div class="siderbar-section">
                     <div class="sidebar-single-widget">
-                        <h6 class="sidebar-title">Search</h6>
+                        <h6 class="sidebar-title">{{__('messages.Search')}}</h6>
                         <div class="sidebar-content">
                             <div class="search-bar">
                                 <div class="default-search-style d-flex">
@@ -57,17 +57,17 @@
                         </div>
                     </div>
                     <div class="sidebar-single-widget">
-                        <h6 class="sidebar-title">Recent Post</h6>
+                        <h6 class="sidebar-title">{{__('messages.Recent Posts')}}</h6>
                         <div class="sidebar-content">
                             <div class="recent-post">
                                 <ul>
                                     @foreach($recentNews as $news)
                                     <li class="recent-post-list">
-                                        <a href="blog-single-sidebar-left.html" class="post-image">
-                                            <img src="data:image/{{ $news['image_extension'] }};base64,{{ $news['image'] }}" alt="" />
+                                        <a href="" class="post-image">
+                                            <img src="{{ Storage::disk('dropbox')->url($news['image']) }}" alt="" />
                                         </a>
                                         <div class="post-content">
-                                            <a class="post-link" href="blog-single-sidebar-left.html">{{ $news['title'] }}</a>
+                                            <a class="post-link" href="">{{ $news['title'] }}</a>
                                             @php
                                                 $date = date_create($news['created_at']);
                                                 $date = date_format($date,"M d, Y");
@@ -81,7 +81,7 @@
                         </div>
                     </div>
                     <div class="sidebar-single-widget">
-                        <h6 class="sidebar-title">Tag News</h6>
+                        <h6 class="sidebar-title">{{__('messages.Tag News')}}</h6>
                         <div class="sidebar-content">
                             <div class="tag-link">
                                 <a href="">asian</a>
@@ -112,7 +112,7 @@
                             <div class="row">
                                 <div class="col-12">
                                     <div class="alert alert-danger" role="alert">
-                                        No News available!
+                                        {{__('messages.No News available!')}}
                                     </div>
                                 </div>
                             </div>
@@ -122,11 +122,11 @@
                             <div class="col-md-6 col-12">
                                 <div class="blog-feed-single">
                                     <a href="" class="blog-feed-img-link">
-                                        <img src="data:image/{{ $article['image_extension'] }};base64,{{ $article['image'] }}" alt="" class="blog-feed-img" />
+                                        <img src="{{ Storage::disk('dropbox')->url($article['image']) }}" alt="" class="blog-feed-img" />
                                     </a>
                                     <div class="blog-feed-content">
                                         <div class="blog-feed-post-meta">
-                                            <span>By:</span>
+                                            <span>{{__('messages.By')}}</span>
                                             <a href="" class="blog-feed-post-meta-author">{{$article['creadted_by']}}</a> -
                                             @php
                                                 $date = date_create($article['created_at']);
@@ -134,10 +134,9 @@
                                             @endphp
                                             <a href="" class="blog-feed-post-meta-date">{{ $date }}</a>
                                         </div>
-                                        <h5 class="blog-feed-link"><a href="blog-single-sidebar-left.html">{{$article['title']}}</a></h5>
+                                        <h5 class="blog-feed-link"><a href="">{{$article['title']}}</a></h5>
                                     </div>
                                 </div>
-                                <!-- End Blog Grid Single -->
                             </div>
                         @endforeach
 

@@ -12,8 +12,6 @@ interface BookRepositoryInterface
 
     public function getBookPaid();
 
-    // public function getBookByAuthor($author_id);
-
     public function getBookByCategory($category_id);
 
     public function updateBook($id, $data);

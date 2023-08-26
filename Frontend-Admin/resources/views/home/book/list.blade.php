@@ -34,6 +34,8 @@
                             <th>Content</th>
                             <th>Price</th>
                             <th>Status</th>
+                            <th>Is Vip Valid</th>
+                            <th>Is Featured</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -59,6 +61,20 @@
                                     <input type="hidden" name="id" value="{{ $book['id'] }}">
                                     <td>
                                         @if($book['status'] == 0)
+                                            <span class="badge badge-danger">No</span>
+                                        @else
+                                            <span class="badge badge-success">Yes</span>
+                                        @endif
+                                    </td>
+                                    <td>
+                                        @if($book['is_vip_valid'] == 0)
+                                            <span class="badge badge-danger">No</span>
+                                        @else
+                                            <span class="badge badge-success">Yes</span>
+                                        @endif
+                                    </td>
+                                    <td>
+                                        @if($book['is_featured'] == 0)
                                             <span class="badge badge-danger">No</span>
                                         @else
                                             <span class="badge badge-success">Yes</span>

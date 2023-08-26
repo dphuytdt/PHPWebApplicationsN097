@@ -21,73 +21,61 @@ use DaveJamesMiller\Breadcrumbs\Facades\Breadcrumbs;
         $trail->push('404', route('handleError', 404));
     });
 
-    //forgot password
     Breadcrumbs::for('forgotPassword', function ($trail) {
         $trail->parent('home');
         $trail->push('Forgot Password', route('forgotPassword'));
     });
 
-    //input otp
     Breadcrumbs::for('inputOtp', function ($trail) {
         $trail->parent('forgotPassword');
         $trail->push('Input OTP', route('inputOtp'));
     });
 
-    //reset password
     Breadcrumbs::for('resetPassword', function ($trail) {
         $trail->parent('inputOtp');
         $trail->push('Reset Password', route('resetPassword'));
     });
 
-    //profile
     Breadcrumbs::for('profile', function ($trail) {
         $trail->parent('home');
         $trail->push('Profile', route('profile'));
     });
 
-    //upgrade
     Breadcrumbs::for('upgrade', function ($trail) {
         $trail->parent('home');
         $trail->push('Upgrade', route('upgrade'));
     });
 
-    //vip benefits
     Breadcrumbs::for('vipBenefits', function ($trail) {
         $trail->parent('home');
         $trail->push('VIP Benefits', route('vipBenefits'));
     });
 
-    //wishlist
     Breadcrumbs::for('wishlist', function ($trail) {
         $trail->parent('home');
         $trail->push('Wishlist', route('wishlist.index', session()->get('user')['id']));
     });
 
-    //cart
     Breadcrumbs::for('cart', function ($trail) {
         $trail->parent('home');
         $trail->push('Your Cart', route('cart.getUserCart', session()->get('user')['id']));
     });
 
-    //checkout
     Breadcrumbs::for('checkOut', function ($trail) {
         $trail->parent('cart');
         $trail->push('Checkout', route('cart.checkOut', session()->get('user')['id']));
     });
 
-    //thanksyou
     Breadcrumbs::for('thankYou', function ($trail) {
         $trail->parent('home');
         $trail->push('Thanks You', route('thankYou'));
     });
 
-    //view-more
     Breadcrumbs::for('viewMore', function ($trail, $dataType) {
         $trail->parent('home');
         $trail->push($dataType, route('view.more', $dataType));
     });
 
-    //login
     Breadcrumbs::for('login', function ($trail) {
         $trail->parent('home');
         $trail->push('Login', route('login'));
@@ -96,4 +84,14 @@ use DaveJamesMiller\Breadcrumbs\Facades\Breadcrumbs;
     Breadcrumbs::for('readBook', function ($trail, $book) {
         $trail->parent('bookDetails', $book);
         $trail->push('Read Book', route('readBook', $book['id']));
+    });
+
+    Breadcrumbs::for('contact', function ($trail) {
+        $trail->parent('home');
+        $trail->push('Contact', route('contact'));
+    });
+
+    Breadcrumbs::for('about', function ($trail) {
+        $trail->parent('home');
+        $trail->push('About', route('about'));
     });

@@ -72,6 +72,7 @@ class BookController extends Controller
             'discount' => $request->discount,
             'status' => $request->status,
             'is_vip_valid' => $request->is_vip_valid,
+            'is_featured' => $request->is_featured,
             'image_extension' => $image->getClientOriginalExtension(),
         ];
 
@@ -88,6 +89,7 @@ class BookController extends Controller
                         'contentPdf' => $pathContent,
                         'status' => $data['status'],
                         'is_vip_valid' => $data['is_vip_valid'],
+                        'is_featured' => $data['is_featured'],
                         'image' => $pathImage,
                         'image_extension' => $data['image_extension'],
                     ]
@@ -147,7 +149,8 @@ class BookController extends Controller
             'status' => $request->status,
             'cover_image' => $imagePath ?? '',
             'image_extension' => $imageExtension ?? '',
-            'is_vip_valid' => $request->is_vip_valid ?? ''
+            'is_vip_valid' => $request->is_vip_valid ?? '',
+            'is_featured' => $request->is_featured ?? ''
         ];
 
         try{
@@ -164,6 +167,7 @@ class BookController extends Controller
                     'cover_image' => $data['cover_image'],
                     'image_extension' => $data['image_extension'],
                     'is_vip_valid' => $data['is_vip_valid'],
+                    'is_featured' => $data['is_featured'],
                 ]
             ]);
 
