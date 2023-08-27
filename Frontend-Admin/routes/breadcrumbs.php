@@ -60,3 +60,18 @@ use DaveJamesMiller\Breadcrumbs\Facades\Breadcrumbs;
         $trail->parent('home');
         $trail->push('Create News', route('news.create'));
     });
+
+    Breadcrumbs::for('profile', function ($trail) {
+        $trail->parent('home');
+        $trail->push('My Profile', route('profile' , session('user')['id']));
+    });
+
+    Breadcrumbs::for('setting', function ($trail) {
+        $trail->parent('home');
+        $trail->push('Setting', route('setting'));
+    });
+
+    Breadcrumbs::for('checkLog', function ($trail) {
+        $trail->parent('home');
+        $trail->push('Check Log', route('checkLog'));
+    });

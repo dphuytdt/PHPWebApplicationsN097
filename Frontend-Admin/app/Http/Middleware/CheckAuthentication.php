@@ -10,9 +10,7 @@ class CheckAuthentication
 {
     public function handle($request, Closure $next)
     {
-        // Kiểm tra xem người dùng đã đăng nhập hay chưa
-        if (!session()->has('token')) {
-            // Người dùng chưa đăng nhập, chuyển hướng đến trang đăng nhập
+        if (!session()->has('adminToken')) {
             return redirect()->route('login')->with('error', 'Please login');
         }
 

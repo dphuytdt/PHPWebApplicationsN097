@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Http\Request;
 use GuzzleHttp\Client;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 
 class CategoryController extends Controller
@@ -28,17 +29,17 @@ class CategoryController extends Controller
             $response = $client->get($this->bookService.'category/admin');
             $paginator = json_decode($response->getBody(), true);
 
+            Log::channel('admin_log')->info('User: ' .  session('admin')['email'] . ' view category list' );
             return view('home.category.list')->with('paginator', $paginator);
         } catch (\Exception $e) {
+            Log::channel('admin_log')->error('User: ' .  session('admin')['email'] . ' cannot view category list' );
             return view('home.category.list')->withErrors(['errors' => 'Cannot connect to server']);
         }
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
+        Log::channel('admin_log')->info('User: ' .  session('admin')['email'] . ' view create category page' );
         return view('home.category.create');
     }
 
@@ -68,8 +69,10 @@ class CategoryController extends Controller
                     'image_extension' => $data['image_extension'],
                 ]
             ]);
+            Log::channel('admin_log')->info('Admin: ' .  session('admin')['email'] . ' create category successfully' );
             return redirect()->route('category.index')->with('success', 'Create category successfully');
         } catch (\Exception|GuzzleException $e) {
+            Log::channel('admin_log')->error('Admin: ' .  session('admin')['email'] . ' cannot create category' );
             return view('home.category.list')->withErrors(['errors' => 'Cannot connect to server']);
         }
     }
@@ -102,8 +105,11 @@ class CategoryController extends Controller
                     $data
                 ]
             ]);
+
+            Log::channel('admin_log')->info('Admin: ' .  session('admin')['email'] . ' update category successfully' );
             return redirect()->route('category.index')->with('success', 'Update category successfully');
         } catch (\Exception|GuzzleException $e) {
+            Log::channel('admin_log')->error('Admin: ' .  session('admin')['email'] . ' cannot update category' );
             return view('home.category.list')->withErrors(['errors' => 'Cannot connect to server']);
         }
     }
@@ -114,8 +120,12 @@ class CategoryController extends Controller
 
         try {
             $client->post($this->bookService.'admin/categories/delete'.$id);
+
+            Log::channel('admin_log')->info('Admin: ' .  session('admin')['email'] . ' delete category successfully' );
             return redirect()->route('category.index')->with('success', 'Delete category successfully');
         } catch (\Exception $e) {
+
+            Log::channel('admin_log')->error('Admin: ' .  session('admin')['email'] . ' cannot delete category' );
             return view('category.index')->withErrors(['errors' => 'Cannot connect to server']);
         }
     }

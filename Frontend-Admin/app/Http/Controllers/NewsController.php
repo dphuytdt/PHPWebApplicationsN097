@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 
 class NewsController extends Controller
@@ -30,8 +31,10 @@ class NewsController extends Controller
             $news = $res['news'];
             $tags = $res['tags'];
 
+            Log::channel('admin_log')->info('Admin: ' .  session('admin')['email'] . ' view news list' );
             return view('home.news.list', compact('news', 'tags'));
         } catch (\Exception|GuzzleException $e) {
+            Log::channel('admin_log')->error('Admin: ' .  session('admin')['email'] . ' cannot view news list' );
             return view('home.category.list')->withErrors(['errors' => 'Cannot connect to server']);
         }
     }
@@ -48,6 +51,7 @@ class NewsController extends Controller
                 $image = $request->file('image');
                 $pathImage = Storage::disk('dropbox')->putFile('news/images', $image);
             } catch (\Exception $e) {
+                Log::channel('admin_log')->error('Admin: ' .  session('admin')['email'] . ' cannot read file' );
                 return redirect()->route('books.index')->withErrors(['errors' => 'Cannot read file']);
             }
         }
@@ -69,9 +73,11 @@ class NewsController extends Controller
                 ]
             ]);
 
+            Log::channel('admin_log')->info('Admin: ' .  session('admin')['email'] . ' create news successfully' );
             return redirect()->route('news.index')->with('success', 'Create news successfully');
         } catch (\Exception|GuzzleException $e) {
-            dd($e);
+            Log::channel('admin_log')->error('Admin: ' .  session('admin')['email'] . ' cannot create news' );
+            return redirect()->route('news.index')->withErrors(['errors' => 'Cannot connect to server']);
         }
     }
 
@@ -109,9 +115,11 @@ class NewsController extends Controller
             $news = $res['news'];
             $tags = $res['tags'];
 
+            Log::channel('admin_log')->info('Admin: ' .  session('admin')['email'] . ' update news successfully' );
             return redirect()->back()->with(compact('news', 'tags'));
         } catch (\Exception|GuzzleException $e) {
-            return redirect()->route(handleError)->withErrors(['errors' => 'Cannot connect to server']);
+            Log::channel('admin_log')->error('Admin: ' .  session('admin')['email'] . ' cannot update news' );
+            return redirect()->back()->withErrors(['errors' => 'Cannot connect to server']);
         }
     }
 
@@ -124,8 +132,11 @@ class NewsController extends Controller
             $client->post($this->contentService.'admin/news/import', [
                 'json' => $data
             ]);
+
+            Log::channel('admin_log')->info('Admin: ' .  session('admin')['email'] . ' import news successfully' );
             return redirect()->route('news.index')->with('success', 'Import news successfully');
         } catch (\Exception|GuzzleException $e) {
+            Log::channel('admin_log')->error('Admin: ' .  session('admin')['email'] . ' cannot import news' );
             return redirect()->route('news.index')->withErrors(['errors' => 'Cannot connect to server']);
         }
     }

@@ -18,8 +18,7 @@
         <hr>
     </form>
     <div class="text-center">
-        <a class="small" href="{{URL::to('http://frontend-admin.test:8080/auth/login')}}">Back</a>
+        <a class="small" href="{{route('login')}}">Back</a>
     </div>
     <script type="text/javascript" src="{{asset('admin/js/auth/request.js')}}"></script>
 @endsection
-                              

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 
 class SlideShowController extends Controller
@@ -28,14 +29,18 @@ class SlideShowController extends Controller
         try {
             $response = $client->get($this->contentService.'admin/slide-show');
             $paginator = json_decode($response->getBody(), true);
+
+            Log::channel('admin_log')->info('Admin: ' .  session('admin')['email'] . ' view slide show list' );
             return view('home.slideShow.list', compact('paginator'));
         } catch (\Exception|GuzzleException $e) {
+            Log::channel('admin_log')->error('Admin: ' .  session('admin')['email'] . ' cannot view slide show list' );
             return view('home.slide.list')->withErrors(['errors' => 'Cannot connect to server']);
         }
     }
 
     public function create()
     {
+        Log::channel('admin_log')->info('Admin: ' .  session('admin')['email'] . ' view create slide show' );
         return view('home.slideShow.create');
     }
 
@@ -45,8 +50,11 @@ class SlideShowController extends Controller
         try {
             $response = $client->get($this->contentService.'admin/slide-show/'.$id);
             $slide = json_decode($response->getBody(), true);
+
+            Log::channel('admin_log')->info('Admin: ' .  session('admin')['email'] . ' view edit slide show' );
             return view('home.slide.edit', compact('slide'));
         } catch (\Exception|GuzzleException $e) {
+            Log::channel('admin_log')->error('Admin: ' .  session('admin')['email'] . ' cannot view edit slide show' );
             return view('home.slide.edit')->withErrors(['errors' => 'Cannot connect to server']);
         }
     }
@@ -67,8 +75,11 @@ class SlideShowController extends Controller
                     'is_active' => $request->is_active,
                 ]
             ]);
+
+            Log::channel('admin_log')->info('Admin: ' .  session('admin')['email'] . ' update slide show successfully' );
             return redirect()->route('slides.index')->with('success', 'Update slide show successfully');
         } catch (\Exception|GuzzleException $e) {
+            Log::channel('admin_log')->error('Admin: ' .  session('admin')['email'] . ' cannot update slide show' );
             return redirect()->route('slides.index')->withErrors(['errors' => 'Cannot connect to server']);
         }
     }
@@ -87,8 +98,11 @@ class SlideShowController extends Controller
                     'is_active' => $request->is_active,
                 ]
             ]);
+
+            Log::channel('admin_log')->info('Admin: ' .  session('admin')['email'] . ' create slide show successfully' );
             return redirect()->route('slides.index')->with('success', 'Create slide show successfully');
         } catch (\Exception|GuzzleException $e) {
+            Log::channel('admin_log')->error('Admin: ' .  session('admin')['email'] . ' cannot create slide show' );
             return redirect()->route('slides.index')->withErrors(['errors' => 'Cannot connect to server']);
         }
     }
@@ -98,8 +112,11 @@ class SlideShowController extends Controller
         $client = new Client();
         try {
             $client->post($this->contentService.'admin/slide-show/delete/'.$id);
+
+            Log::channel('admin_log')->info('Admin: ' .  session('admin')['email'] . ' delete slide show successfully' );
             return redirect()->route('slides.index')->with('success', 'Delete slide show successfully');
         } catch (\Exception|GuzzleException $e) {
+            Log::channel('admin_log')->error('Admin: ' .  session('admin')['email'] . ' cannot delete slide show' );
             return redirect()->route('slides.index')->withErrors(['errors' => 'Cannot connect to server']);
         }
     }

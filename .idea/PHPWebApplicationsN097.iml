@@ -915,6 +915,9 @@
       <excludeFolder url="file://$MODULE_DIR$/UserService/vendor/symfony/polyfill-php83" />
       <excludeFolder url="file://$MODULE_DIR$/BookService/vendor/amranidev/laracombee" />
       <excludeFolder url="file://$MODULE_DIR$/BookService/vendor/recombee/php-api-client" />
+      <excludeFolder url="file://$MODULE_DIR$/PaymentService/vendor/psr/clock" />
+      <excludeFolder url="file://$MODULE_DIR$/Frontend/storage/app" />
+      <excludeFolder url="file://$MODULE_DIR$/Frontend/storage/framework" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

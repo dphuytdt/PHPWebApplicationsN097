@@ -16,18 +16,10 @@
       });
     });
 </script>
-<!-- Begin Page Content -->
 <div class="container-fluid">
-
-    <!-- Page Heading -->
     <h1 class="h3 mb-2 text-gray-800">{{ Breadcrumbs::render('category.index') }}</h1>
-    {{-- <p class="mb-4">List of all categories</p> --}}
 
-    <!-- DataTales Example -->
     <div class="card shadow mb-4">
-        {{-- <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary">DataTables Example</h6>
-        </div> --}}
         <div class="card-body">
             <div class="table-responsive">
                 <table id="listCategory" class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
@@ -91,54 +83,6 @@
                         @endif
                     </tbody>
                 </table>
-                {{-- <style >
-                    .pagination-container {
-                        text-align: center;
-                    }
-
-                    .pagination {
-                        display: inline-block;
-                        margin-top: 10px;
-                    }
-
-                    .pagination a, .pagination span {
-                        display: inline-block;
-                        padding: 5px 10px;
-                        margin-right: 5px;
-                        border: 1px solid #ccc;
-                        text-decoration: none;
-                        color: #333;
-                    }
-
-                    .pagination a:hover {
-                        background-color: #f5f5f5;
-                    }
-
-                    .pagination .current {
-                        background-color: #ccc;
-                        color: #fff;
-                    }
-
-                </style> --}}
-                {{-- <div class="pagination">
-                    @if ($paginator->onFirstPage())
-                        <span class="disabled">Previous</span>
-                    @else
-                        <a href="{{ $paginator->previousPageUrl() }}">Previous</a>
-                    @endif
-                    @for ($i = 1; $i <= $paginator->lastPage(); $i++)
-                    @if ($i === $paginator->currentPage())
-                        <span class="current">{{ $i }}</span>
-                    @else
-                        <a href="{{ $paginator->url($i) }}">{{ $i }}</a>
-                    @endif
-                    @endfor
-                    @if ($paginator->hasMorePages())
-                        <a href="{{ $paginator->nextPageUrl() }}">Next</a>
-                    @else
-                        <span class="disabled">Next</span>
-                    @endif
-                </div> --}}
             </div>
         </div>
     </div>

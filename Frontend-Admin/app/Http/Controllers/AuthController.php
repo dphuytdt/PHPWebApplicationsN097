@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Http\Request;
 use GuzzleHttp\Client;
 use Illuminate\Support\Facades\Auth;
@@ -21,9 +22,9 @@ class AuthController extends Controller
 
     public function login()
     {
-        $role = session()->get('role_id');
+        $role = session()->get('adminRole');
 
-        if (session()->has('token') && $role == 0) {
+        if (session()->has('adminToken') && $role ==  'ROLE_ADMIN') {
             return redirect()->intended('/');
         }
 
@@ -32,7 +33,8 @@ class AuthController extends Controller
 
     public function postLogin(Request $request)
     {
-        $http = new Client;
+        $http = new Client();
+
         try {
             $response = $http->post($this->userService . 'auth/admin/login', [
                 'json' => [
@@ -44,17 +46,17 @@ class AuthController extends Controller
 
             if (isset($data['access_token'])) {
                 $user = $data['user'];
-                session()->put('token', $data['access_token']);
-                session()->put('user', $user);
-                session()->put('role_id', $user['role_id']);
-                Log::info('User: ' . $request->email . ' login');
+                session()->put('adminToken', $data['access_token']);
+                session()->put('admin', $user);
+                session()->put('adminRole', $user['role']);
+                Log::channel('admin_log')->info('Admin: ' . $request->email . ' login success' );
                 return redirect()->intended('/');
             } else {
-                Log::error('User: ' . $request->email . ' login failed');
+                Log::channel('admin_log')->error('Admin: ' . $request->email . ' login failed' );
                 return redirect()->back()->with('error', 'Wrong email or password')->withInput();
             }
-        } catch (\Exception $e) {
-            Log::error('Error: ' . $e->getMessage());
+        } catch (\Exception|GuzzleException $e) {
+            Log::channel('admin_log')->error('Admin: ' . $request->email . ' login failed' );
             return redirect()->back()->with('error', 'Wrong email or password')->withInput();
         }
     }
@@ -62,20 +64,20 @@ class AuthController extends Controller
     public function logout()
     {
         $http = new Client();
+
         try {
             $http->post($this->userService. 'auth/admin/logout', [
                 'headers' => [
-                    'Authorization' => 'Bearer ' . session('token'),
+                    'Authorization' => 'Bearer ' . session('adminToken'),
                 ],
             ]);
-            session()->forget('token');
-            session()->forget('user');
-            session()->forget('role_id');
-            Auth::logout();
-            Log::info('User: ' . session('user')['email'] . ' logout');
+            Log::channel('admin_log')->info('Admin: ' . session('admin')['email'] . ' logout success' );
+
+            session()->forget('adminToken');
+            session()->forget('admin');
+            session()->forget('adminRole');
             return redirect()->route('login')->with('message', 'Logout successful');
-        } catch (\Exception $e) {
-            Log::error('Error: ' . $e->getMessage());
+        } catch (\Exception|GuzzleException $e) {
             return redirect()->route('login')->with('error', 'Logout failed');
         }
     }
@@ -96,14 +98,14 @@ class AuthController extends Controller
             ]);
             $data = json_decode((string) $response->getBody(), true);
             if (isset($data['message'])) {
-                Log::info('User: ' . $request->email . ' request reset password');
+                Log::channel('admin_log')->info('Admin: ' . $request->email . ' request reset password success' );
                 return redirect()->back()->with('message', $data['message']);
             } else {
-                Log::error('User: ' . $request->email . ' request reset password failed');
+                Log::channel('admin_log')->error('Admin: ' . $request->email . ' request reset password failed because email does not exist' );
                 return redirect()->back()->with('error', $data['error'])->withInput();
             }
         } catch (\Exception $e) {
-            Log::error('User: ' . $request->email . ' request reset password failed because email does not exist');
+            Log::channel('admin_log')->error('Admin: ' . $request->email . ' request reset password failed because email does not exist' );
             return redirect()->back()->with('error', 'Email does not exist')->withInput();
         }
     }

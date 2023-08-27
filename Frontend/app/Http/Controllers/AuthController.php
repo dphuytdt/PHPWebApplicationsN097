@@ -77,7 +77,7 @@ class AuthController extends Controller
         $client = new Client();
 
         try {
-            $response = $client->post($this->userService . 'auth/logout', [
+            $client->post($this->userService . 'auth/logout', [
                 'headers' => [
                     'Authorization' => 'Bearer ' . session('token'),
                 ],

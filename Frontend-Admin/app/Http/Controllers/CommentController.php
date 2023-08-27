@@ -24,8 +24,11 @@ class CommentController extends Controller
         try {
             $response = $client->get($this->bookService.'admin/comments');
             $paginator = json_decode($response->getBody(), true);
+
+            Log::channel('admin_log')->info('Admin: ' .  session('admin')['email'] . ' view comment list' );
             return view('home.comment.list', compact('paginator'));
         } catch (\Exception $e) {
+            Log::channel('admin_log')->error('Admin: ' .  session('admin')['email'] . ' cannot view comment list' );
             return view('home.comment.list')->withErrors(['errors' => 'Cannot connect to server']);
         }
     }

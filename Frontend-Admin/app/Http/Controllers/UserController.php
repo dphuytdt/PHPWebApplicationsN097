@@ -8,6 +8,7 @@ use GuzzleHttp\Client;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Maatwebsite\Excel\Facades\Excel;
 
 class UserController extends Controller
@@ -64,8 +65,11 @@ class UserController extends Controller
                     'role' => $data['role'],
                 ]
             ]);
+
+            Log::channel('admin_log')->info('Admin: ' .  session('admin')['email'] . ' create user successfully' );
             return view('home.user.create');
-        } catch (\Exception $e) {
+        } catch (\Exception|GuzzleException $e) {
+            Log::channel('admin_log')->error('Admin: ' .  session('admin')['email'] . ' cannot create user' );
             return view('home.user.list')->withErrors(['errors' => 'Cannot connect to server']);
         }
     }
@@ -83,8 +87,12 @@ class UserController extends Controller
             ]);
 
             $res = json_decode($req->getBody(), true);
+
+            Log::channel('admin_log')->info('Admin: ' .  session('admin')['email'] . ' view user' );
+
             return view('home.user.edit', compact('res'));
         } catch (\Exception|GuzzleException $e) {
+            Log::channel('admin_log')->error('Admin: ' .  session('admin')['email'] . ' cannot view user' );
             return view('home.user.list')->withErrors(['errors' => 'Cannot connect to server']);
         }
     }
@@ -109,8 +117,11 @@ class UserController extends Controller
 
             $users = json_decode($req->getBody(), true);
             $user_infor = $users['users'];
+            Log::channel('admin_log')->info('Admin: ' .  session('admin')['email'] . ' update user successfully' );
+
             return view('home.user.list', compact('users', 'user_infor'));
         } catch (\Exception|GuzzleException $e) {
+            Log::channel('admin_log')->error('Admin: ' .  session('admin')['email'] . ' cannot update user' );
             return view('home.user.list')->withErrors(['errors' => 'Cannot connect to server']);
         }
     }
@@ -128,8 +139,10 @@ class UserController extends Controller
             ]);
 
             $res = json_decode($req->getBody(), true);
+            Log::channel('admin_log')->info('Admin: ' .  session('admin')['email'] . ' delete user successfully' );
             return view('home.user.list', compact('res'));
         } catch (\Exception|GuzzleException $e) {
+            Log::channel('admin_log')->error('Admin: ' .  session('admin')['email'] . ' cannot delete user' );
             return view('home.user.list')->withErrors(['errors' => 'Cannot connect to server']);
         }
     }
@@ -147,11 +160,18 @@ class UserController extends Controller
                 ],
             ]);
 
+            Log::channel('admin_log')->info('Admin: ' .  session('admin')['email'] . ' import user successfully' );
             return response()->json([
                 'message' => 'Import success',
             ]);
         } catch (\Exception|GuzzleException $e) {
+            Log::channel('admin_log')->error('Admin: ' .  session('admin')['email'] . ' cannot import user' );
             return view('home.user.list')->withErrors(['errors' => 'Cannot connect to server']);
         }
+    }
+
+    public function profile($userId){
+        Log::channel('admin_log')->info('Admin: ' .  session('admin')['email'] . ' view profile' );
+        return view('home.self.profile');
     }
 }

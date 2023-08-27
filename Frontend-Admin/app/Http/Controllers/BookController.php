@@ -28,8 +28,10 @@ class BookController extends Controller
         try {
             $response = $client->get($this->bookService.'admin/books');
             $paginator = json_decode($response->getBody(), true);
+            Log::channel('admin_log')->info('User: ' .  session('admin')['email'] . ' view book list' );
             return view('home.book.list', compact('paginator'));
         } catch (\Exception $e) {
+            Log::channel('admin_log')->error('User: ' .  session('admin')['email'] . ' cannot view book list' );
             return view('home.category.list')->withErrors(['errors' => 'Cannot connect to server']);
         }
     }
@@ -43,8 +45,10 @@ class BookController extends Controller
         try {
             $response = $client->get($this->bookService.'category/admin');
             $categories = json_decode($response->getBody(), true);
+            Log::channel('admin_log')->info('User: ' .  session('admin')['email'] . ' view create book page' );
             return view('home.book.create', compact('categories'));
         } catch (\Exception $e) {
+            Log::channel('admin_log')->error('User: ' .  session('admin')['email'] . ' cannot view create book page' );
             return view('home.book.create')->withErrors(['errors' => 'Cannot connect to server']);
         }
     }
@@ -95,13 +99,15 @@ class BookController extends Controller
                     ]
                 ]);
 
+                Log::channel('admin_log')->info('User: ' .  session('admin')['email'] . ' create book success' );
                 return redirect()->route('books.index')->with('success', 'Create book successfully');
             } catch (\Exception|GuzzleException $e) {
-                Log::error('Error: ' . $e->getMessage());
+                Log::channel('admin_log')->error('User: ' .  session('admin')['email'] . ' create book failed' );
                 return redirect()->route('books.index')->withErrors(['errors' => 'Cannot connect to server']);
             }
         }
 
+        Log::channel('admin_log')->error('User: ' .  session('admin')['email'] . ' create book failed' );
         return redirect()->route('books.index')->withErrors(['errors' => 'Cannot upload file']);
     }
 
@@ -117,8 +123,10 @@ class BookController extends Controller
             $book = $res['book'];
             $categories = $res['categories'];
 
+            Log::channel('admin_log')->info('Admin: ' .  session('admin')['email'] . ' view edit book page' );
             return view('home.book.edit', compact('book', 'categories'));
         } catch (\Exception $e) {
+            Log::channel('admin_log')->error('Admin: ' .  session('admin')['email'] . ' cannot view edit book page' );
             return view('home.book.edit')->withErrors(['errors' => 'Cannot connect to server']);
         }
     }
@@ -171,8 +179,10 @@ class BookController extends Controller
                 ]
             ]);
 
+            Log::channel('admin_log')->info('Admin: ' .  session('admin')['email'] . ' update book success' );
             return redirect()->route('books.index')->with('success', 'Update book successfully');
         } catch (\Exception|GuzzleException $e) {
+            Log::channel('admin_log')->error('Admin: ' .  session('admin')['email'] . ' update book failed' );
             return redirect()->route('books.index')->withErrors(['errors' => 'Cannot connect to server']);
         }
     }
@@ -184,12 +194,14 @@ class BookController extends Controller
             $response = $client->delete($this->bookService.'admin/books/'.$id);
             $result = json_decode($response->getBody(), true);
             if ($result['status'] == 200) {
+                Log::channel('admin_log')->info('Admin: ' .  session('admin')['email'] . ' delete book success');
                 return redirect()->route('books.index')->with('success', 'Delete book successfully');
             } else {
+                Log::channel('admin_log')->error('Admin: ' .  session('admin')['email'] . ' delete book failed' );
                 return redirect()->route('books.index')->withErrors(['errors' => 'Cannot delete book']);
             }
         } catch (\Exception $e) {
-            Log::error('User: ' . session('user')['email'] . ' delete book failed');
+            Log::channel('admin_log')->error('Admin: ' .  session('admin')['email'] . ' delete book failed' );
             return redirect()->route('books.index')->withErrors(['errors' => 'Cannot connect to server']);
         }
 
