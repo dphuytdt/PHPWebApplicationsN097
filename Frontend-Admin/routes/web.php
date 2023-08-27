@@ -23,7 +23,7 @@ use App\Http\Controllers\CommentController;
 Route::prefix('auth')->group(function () {
     Route::get('login', [AuthController::class, 'login'])->name('login');
     Route::post('login', [AuthController::class, 'postLogin'])->name('postLogin');
-    Route::get('logout', [AuthController::class, 'logout'])->name('logout');
+    Route::get('logout', [AuthController::class, 'logout'])->name('adminLogout');
     Route::get('request-reset-password', [AuthController::class, 'requestResetPassword'])->name('requestResetPassword');
     Route::post('request-reset-password', [AuthController::class, 'postRequestResetPassword'])->name('postRequestResetPassword');
 });

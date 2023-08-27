@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Http\Request;
 use GuzzleHttp\Client;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 class AuthController extends Controller
 {
@@ -45,17 +44,22 @@ class AuthController extends Controller
             $data = json_decode((string) $response->getBody(), true);
 
             if (isset($data['access_token'])) {
+
                 $user = $data['user'];
                 session()->put('adminToken', $data['access_token']);
                 session()->put('admin', $user);
                 session()->put('adminRole', $user['role']);
+
                 Log::channel('admin_log')->info('Admin: ' . $request->email . ' login success' );
+
                 return redirect()->intended('/');
             } else {
+
                 Log::channel('admin_log')->error('Admin: ' . $request->email . ' login failed' );
                 return redirect()->back()->with('error', 'Wrong email or password')->withInput();
             }
         } catch (\Exception|GuzzleException $e) {
+            dd($e);
             Log::channel('admin_log')->error('Admin: ' . $request->email . ' login failed' );
             return redirect()->back()->with('error', 'Wrong email or password')->withInput();
         }
@@ -71,11 +75,13 @@ class AuthController extends Controller
                     'Authorization' => 'Bearer ' . session('adminToken'),
                 ],
             ]);
+
             Log::channel('admin_log')->info('Admin: ' . session('admin')['email'] . ' logout success' );
 
             session()->forget('adminToken');
             session()->forget('admin');
             session()->forget('adminRole');
+
             return redirect()->route('login')->with('message', 'Logout successful');
         } catch (\Exception|GuzzleException $e) {
             return redirect()->route('login')->with('error', 'Logout failed');

@@ -17,7 +17,7 @@ use App\Interfaces\OTPRepositoryInterface;
 
 class AdminAuthController extends Controller
 {
-    
+
     private UserRepositoryInterface $userRepository;
     private OTPRepositoryInterface $otpRepository;
 
@@ -53,9 +53,10 @@ class AdminAuthController extends Controller
         if (! $token = auth()->attempt($validator->validated())) {
             return response()->json(['error' => 'Unauthorized'], 401);
         }
-        
+
         $user = auth()->user();
         $role = $user->role;
+
         if($role === 'ROLE_ADMIN') {
             if ($user->is_active == 0) {
                 return response()->json(['error' => 'Please verify your email'], 401);

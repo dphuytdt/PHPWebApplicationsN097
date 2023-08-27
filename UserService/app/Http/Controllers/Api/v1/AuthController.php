@@ -31,10 +31,8 @@ class AuthController extends Controller
         try {
             $user = JWTAuth::parseToken()->authenticate();
 
-            // Người dùng đã xác thực thành công
             return response()->json(['message' => 'Authenticated']);
         } catch (JWTException $e) {
-            // Lỗi xác thực token
             return response()->json(['error' => 'Unauthorized'], 401);
         }
     }
@@ -79,7 +77,7 @@ class AuthController extends Controller
             $otp = rand(100000, 999999);
             $user_id = $user->id;
             $userCheck = $this->otpRepository->checkUserExistInOTP($email, $user_id, 0);
-            if ($userCheck == true) {
+            if ($userCheck) {
                 $this->otpRepository->updateOTP($email, $otp, $user->id, 0);
                 $user = [
                     'email' => $email,
@@ -129,11 +127,14 @@ class AuthController extends Controller
         if ($user) {
             $user_id = $user->id;
             $userCheck = $this->otpRepository->checkUserExistInOTP($email, $user_id, 0);
-            if ($userCheck == true) {
+
+            if ($userCheck) {
+
                 $otpCheck = $this->otpRepository->checkOTP($email, $otp, $user_id, 0);
-                if ($otpCheck == true) {
+                if ($otpCheck) {
                     $this->userRepository->updateUser($email);
                     $this->otpRepository->deleteOTP($email, $user_id, $otp, 0);
+
                     return response()->json([
                         'message' => 'User successfully verified',
                     ], 200);
@@ -222,7 +223,7 @@ class AuthController extends Controller
             $otp = rand(100000, 999999);
             $user_id = $user->id;
             $userCheck = $this->otpRepository->checkUserExistInOTP($email, $user_id, 1);
-            if ($userCheck == true) {
+            if ($userCheck) {
                 $this->otpRepository->updateOTP($email, $otp, $user->id, 1);
                 $user = [
                     'email' => $email,
@@ -276,7 +277,7 @@ class AuthController extends Controller
         if ($user) {
             $user_id = $user->id;
             $otp = $this->otpRepository->checkOTP($email, $otp, $user_id, 1);
-            if ($otp == true) {
+            if ($otp) {
                 $this->otpRepository->deleteOTP($email, $otp, $user_id, 1);
                 return response()->json([
                     'status' => true,
@@ -340,21 +341,19 @@ class AuthController extends Controller
             $otp = rand(100000, 999999);
             $user_id = $user->id;
             $userCheck = $this->otpRepository->checkUserExistInOTP($email, $user_id, 1);
-            if ($userCheck == true) {
+
+            if ($userCheck) {
                 $this->otpRepository->updateOTP($email, $otp, $user->id, 1);
-                $user = [
-                    'email' => $email,
-                    'name' => $user->fullname,
-                    'otp' => $otp,
-                ];
             } else {
                 $this->otpRepository->createOTP($email, $otp, $user_id, 1);
-                $user = [
-                    'email' => $email,
-                    'name' => $user->fullname,
-                    'otp' => $otp,
-                ];
             }
+
+            $user = [
+                'email' => $email,
+                'name' => $user->fullname,
+                'otp' => $otp,
+            ];
+
             if (SendEmailOTP::dispatch($user)) {
                 return response()->json([
                     'status' => true,
@@ -364,6 +363,7 @@ class AuthController extends Controller
                 ], 200);
             } else {
                 $this->otpRepository->deleteOTP($email, $user_id, $otp, 1);
+
                 return response()->json([
                     'status' => false,
                     'message' => 'Email not sent',

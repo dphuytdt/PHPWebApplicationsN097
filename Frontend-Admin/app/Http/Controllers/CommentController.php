@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use GuzzleHttp\Client;
+use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class CommentController extends Controller
 {
@@ -26,9 +28,11 @@ class CommentController extends Controller
             $paginator = json_decode($response->getBody(), true);
 
             Log::channel('admin_log')->info('Admin: ' .  session('admin')['email'] . ' view comment list' );
+
             return view('home.comment.list', compact('paginator'));
-        } catch (\Exception $e) {
+        } catch (\Exception|GuzzleException $e) {
             Log::channel('admin_log')->error('Admin: ' .  session('admin')['email'] . ' cannot view comment list' );
+
             return view('home.comment.list')->withErrors(['errors' => 'Cannot connect to server']);
         }
     }
