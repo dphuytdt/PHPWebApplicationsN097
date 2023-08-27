@@ -50,17 +50,15 @@ class PaymentController extends Controller
                 ]
             ]);
 
-            // add payment history later
-
-//            $client->post($this->paymentService . 'add-payment-history', [
-//                'form_params' => [
-//                    "userId" => $data['userId'],
-//                    "bookId" => $data['bookId'],
-//                    "totalPrice" => $data['totalPrice'],
-//                    "payment" => $data['payment'],
-//                    "date" => $data['currentTimestamp']
-//                ]
-//            ]);
+            $client->post($this->paymentService . 'add-payment-history', [
+                'form_params' => [
+                    "userId" => $data['userId'],
+                    "bookId" => 0,
+                    "totalPrice" => $data['total'],
+                    "payment" => $data['payment'],
+                    "date" => $data['currentTimestamp']
+                ]
+            ]);
 
             if(session()->has('user')){
                 $user = session('user');

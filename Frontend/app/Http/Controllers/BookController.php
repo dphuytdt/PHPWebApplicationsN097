@@ -7,7 +7,6 @@ use Illuminate\Http\Request;
 use GuzzleHttp\Client;
 use App\Services\CategoryService;
 use Illuminate\Pagination\LengthAwarePaginator;
-use Illuminate\Support\Collection;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\NotFoundExceptionInterface;
 

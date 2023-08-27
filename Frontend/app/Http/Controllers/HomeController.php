@@ -5,14 +5,7 @@ namespace App\Http\Controllers;
 use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Http\Request;
 use GuzzleHttp\Client;
-use GuzzleHttp\Exception\RequestException;
-use GuzzleHttp\Promise;
-use Illuminate\Support\Facades\Http;
 use App\Services\CategoryService;
-use Illuminate\Support\Facades\Config;
-use React\Http\Browser;
-use GuzzleHttp\Promise\Utils;
-use Illuminate\Pagination\Paginator;
 use App\Services\HttpService;
 
 class HomeController extends Controller
