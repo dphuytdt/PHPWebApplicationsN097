@@ -33,6 +33,7 @@ class UserController extends Controller
     public function userDetail($id): \Illuminate\Http\JsonResponse
     {
         $user_detail = $this->userRepository->getUserDetail($id);
+
         if($user_detail) {
             return response()->json(['user' => $user_detail]);
         } else {

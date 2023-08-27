@@ -185,4 +185,13 @@ class BookRepository implements BookRepositoryInterface
     {
         return Book::where('category_id', $category_id)->where('id', '!=', $id)->get();
     }
+
+    public function booksToJson()
+    {
+        $books = Book::all();
+        foreach ($books as $book) {
+            $book->category_name = Category::find($book->category_id)->name;
+        }
+        return $books;
+    }
 }

@@ -15,11 +15,9 @@ class SlideShowRepository implements SlideShowRepositoryInterfaces
         $this->slideShow = $slideShow;
     }
 
-    public function getAllSlideShows(): JsonResponse
+    public function getAllSlideShows()
     {
-        $result = $this->slideShow->all();
-
-        return response()->json($result, 200);
+        return  $this->slideShow->all();
     }
 
     public function create($data): JsonResponse

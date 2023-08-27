@@ -32,7 +32,7 @@
                         @csrf
                         <input type="hidden" name="userName" value="{{$user['fullname']}}">
                         <input type="hidden" name="userId" value="{{$user['id']}}">
-                        <input type="hidden" name="total" value="199.99">
+                        <input type="hidden" name="total" value="35">
                         <input type="hidden" name="plan" value="1">
                         <input type="hidden" name="currentTimestamp" value="{{date('dmYHis')}}">
                         <input type="hidden" name="payment" value="vnpay">
@@ -63,7 +63,7 @@
                         @csrf
                         <input type="hidden" name="userName" value="{{$user['fullname']}}">
                         <input type="hidden" name="userId" value="{{$user['id']}}">
-                        <input type="hidden" name="total" value="199.99">
+                        <input type="hidden" name="total" value="99">
                         <input type="hidden" name="plan" value="6">
                         <input type="hidden" name="currentTimestamp" value="{{date('dmYHis')}}">
                         <input type="hidden" name="payment" value="vnpay">
@@ -94,7 +94,7 @@
                         @csrf
                         <input type="hidden" name="userName" value="{{$user['fullname']}}">
                         <input type="hidden" name="userId" value="{{$user['id']}}">
-                        <input type="hidden" name="total" value="199.99">
+                        <input type="hidden" name="total" value="199">
                         <input type="hidden" name="plan" value="12">
                         <input type="hidden" name="currentTimestamp" value="{{date('dmYHis')}}">
                         <input type="hidden" name="payment" value="vnpay">

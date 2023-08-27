@@ -90,6 +90,7 @@ class AuthController extends Controller
 
             return redirect()->intended('/')->with('message', 'Logout successful');
         } catch (\Exception|GuzzleException $e) {
+            dd($e);
             return redirect()->intended('/')->with('error', 'Logout failed');
         }
     }

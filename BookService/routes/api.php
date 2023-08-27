@@ -17,6 +17,7 @@ Route::prefix('books')->group(function () {
     Route::get('/', [BookController::class, 'index']);
     Route::get('/{id}', [BookController::class, 'show']);
     Route::get('search/{keyword}', [BookController::class, 'search']);
+    Route::get('books-to-json', [BookController::class, 'booksToJson']);
 });
 
 Route::prefix('category')->group(function () {

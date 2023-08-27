@@ -17,7 +17,7 @@
     });
 </script>
 <div class="container-fluid">
-    <h1 class="h3 mb-2 text-gray-800">{{ Breadcrumbs::render('category.index') }}</h1>
+    <h1 class="h3 mb-2 text-gray-800">{{ Breadcrumbs::render('slides.index') }}</h1>
 
     <div class="card shadow mb-4">
         <div class="card-body">
@@ -28,7 +28,6 @@
                             <th>Name</th>
                             <th>Cover Image</th>
                             <th>Status</th>
-                            <th>Description</th>
                             <th>Create Date</th>
                             <th>Update Date</th>
                             <th>Delete Date</th>
@@ -37,29 +36,28 @@
                     </thead>
                     <tbody>
                         @if(isset($paginator))
-                            @foreach($paginator as $category)
+                            @foreach($paginator as $slide)
                                 <tr>
-                                    <td></td>
-                                    <td><img src="" alt="{{$category['name']}}" width="100px" height="100px"></td>
-                                    @if($category['status'] == 1)
+                                    <td>{{$slide['title']}}</td>
+                                    <td><img src="" alt="{{$slide['name']}}" width="100px" height="100px"></td>
+                                    @if($slide['status'] == 1)
                                         <td>Active</td>
                                     @else
                                         <td>Deactive</td>
                                     @endif
-                                    <td>{{$category['description']}}</td>
-                                    <td>{{$category['created_at']}}</td>
-                                    @if($category['updated_at'] == null)
+                                    <td>{{$slide['created_at']}}</td>
+                                    @if($slide['updated_at'] == null)
                                         <td>Not Updated</td>
                                     @else
-                                        <td>{{$category['updated_at']}}</td>
+                                        <td>{{$slide['updated_at']}}</td>
                                     @endif
-                                    @if($category['deleted_at'] == null)
+                                    @if($slide['deleted_at'] == null)
                                         <td>Not Deleted</td>
                                     @else
-                                        <td>{{$category['deleted_at']}}</td>
+                                        <td>{{$slide['deleted_at']}}</td>
                                     @endif
                                     <td>
-                                        <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#exampleModalCenter-{{$category['id']}}">
+                                        <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#exampleModalCenter-{{$slide['id']}}">
                                             Edit
                                         </button>
                                         <button type="button" class="btn btn-danger btn-sm">
@@ -90,14 +88,14 @@
 </div>
 
 @if(isset($paginator))
-    @foreach($paginator as $category)
-    <form class="form-edit-category" method="POST" action="{{route('category.update', $category['id'])}}" enctype="multipart/form-data">
+    @foreach($paginator as $slide)
+    <form class="form-edit-category" method="POST" action="{{route('category.update', $slide['id'])}}" enctype="multipart/form-data">
         @csrf
-        <div class="modal fade" id="exampleModalCenter-{{$category['id']}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle-{{$category['id']}}" aria-hidden="true">
+        <div class="modal fade" id="exampleModalCenter-{{$slide['id']}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle-{{$slide['id']}}" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLongTitle">Edit Category [ {{$category['name']}} ]</h5>
+                <h5 class="modal-title" id="exampleModalLongTitle">Edit Category [ {{$slide['name']}} ]</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
                 </button>
@@ -105,7 +103,7 @@
             <div class="modal-body">
                     <div class="mb-3">
                         <label for="exampleInputEmail1" class="form-label">Name Category</label>
-                        <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="name" value="{{$category['name']}}">
+                        <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="name" value="{{$slide['name']}}">
                     </div>
                     <div class="mb-3">
                         <label for="exampleInputPassword1" class="form-label">Cover Image</label>
@@ -114,14 +112,14 @@
                               <input type="file" class="form-control" id="exampleInputPassword1" name="image" accept="image/*">
                             </div>
                             <div class="col-md-3">
-                              <img src="{{$category['image']}}" alt="{{$category['name']}}" width="100px" height="100px" class="img-thumbnail" id="uploadedImage">
+                              <img src="{{$slide['image']}}" alt="{{$slide['name']}}" width="100px" height="100px" class="img-thumbnail" id="uploadedImage">
                             </div>
                           </div>
                     </div>
                     <div class="">
                         <label class="form-check-label" for="exampleCheck1">Status</label>
                         <select id="inputState" class="form-control" name="status">
-                            @if($category['status'] == 1)
+                            @if($slide['status'] == 1)
                                 <option value="1" selected>Active</option>
                                 <option value="0">Deactive</option>
                             @else
@@ -132,7 +130,7 @@
                       </div>
                       <div class="mb-3">
                         <label for="exampleInputPassword1" class="form-label">Description</label>
-                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="description" >{{$category['description']}}</textarea>
+                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="description" >{{$slide['description']}}</textarea>
                     </div>
             </div>
             <div class="modal-footer">

@@ -29,12 +29,13 @@ class SlideShowController extends Controller
         try {
             $response = $client->get($this->contentService.'admin/slide-show');
             $paginator = json_decode($response->getBody(), true);
-
             Log::channel('admin_log')->info('Admin: ' .  session('admin')['email'] . ' view slide show list' );
+
             return view('home.slideShow.list', compact('paginator'));
         } catch (\Exception|GuzzleException $e) {
             Log::channel('admin_log')->error('Admin: ' .  session('admin')['email'] . ' cannot view slide show list' );
-            return view('home.slide.list')->withErrors(['errors' => 'Cannot connect to server']);
+
+            return view('home.slideShow.list')->withErrors(['errors' => 'Cannot connect to server']);
         }
     }
 

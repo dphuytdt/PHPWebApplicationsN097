@@ -206,6 +206,7 @@ class CartController extends Controller
                 }
             }
         } catch (\Exception| GuzzleException $e) {
+            dd($e->getMessage());
             print_r($e->getMessage());
         }
         return redirect()->back();

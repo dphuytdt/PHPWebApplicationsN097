@@ -26,6 +26,7 @@ class PaymentController extends Controller
         $this->userService = env('USER_SERVICE_HOST', null);
         $this->paymentService = env('PAYMENT_SERVICE_HOST', null);
         $this->interactionService = env('INTERACTION_SERVICE_HOST', null);
+        $this->redirectUrl = env('REDIRECT_URL', null);
     }
 
     public function payment(Request $request)
@@ -61,24 +62,26 @@ class PaymentController extends Controller
 //                ]
 //            ]);
 
-            $user = session('user');
-            $user['is_vip'] = 1;
+            if(session()->has('user')){
+                $user = session('user');
+                $user['is_vip'] = 1;
 
-            session(['user' => $user]);
+                session()->put('user', $user);
+            }
 
             if($data['payment'] == self::VN_PAY) {
                 error_reporting(E_ALL & ~E_NOTICE & ~E_DEPRECATED);
                 date_default_timezone_set('Asia/Ho_Chi_Minh');
 
                 $vnp_Url = "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html";
-                $vnp_Returnurl = $this->redriectUrl;
+                $vnp_Returnurl = $this->redirectUrl;
                 $vnp_TmnCode = "1ACLHH74";
                 $vnp_HashSecret = "TMEVRTPDXCOKQKXQLZFNKDROUCTMWXHS";
 
-                $vnp_TxnRef = rand(1000000,999999999) . now()->timestamp;
-                $vnp_OrderInfo = "User Name: " . $request->userName . " - Payment for order: " . $vnp_TxnRef;
+                $vnp_TxnRef = now()->timestamp;
+                $vnp_OrderInfo = "User Name: " . $request->userName . " - Payment for order Vip package";
                 $vnp_OrderType = 'billpayment';
-                $vnp_Amount = $request->total * self::DOLLAR_RATE * 100;
+                $vnp_Amount = (int)$request->total * 100;
                 $vnp_Locale = 'vn';
                 $vnp_BankCode = 'NCB';
                 $vnp_IpAddr = $_SERVER['REMOTE_ADDR'];

@@ -63,7 +63,7 @@ use DaveJamesMiller\Breadcrumbs\Facades\Breadcrumbs;
 
     Breadcrumbs::for('profile', function ($trail) {
         $trail->parent('home');
-        $trail->push('My Profile', route('profile' , session('user')['id']));
+        $trail->push('My Profile', route('profile' , session('admin')['id']));
     });
 
     Breadcrumbs::for('setting', function ($trail) {
@@ -74,4 +74,9 @@ use DaveJamesMiller\Breadcrumbs\Facades\Breadcrumbs;
     Breadcrumbs::for('checkLog', function ($trail) {
         $trail->parent('home');
         $trail->push('Check Log', route('checkLog'));
+    });
+
+    Breadcrumbs::for('slides.create', function ($trail) {
+        $trail->parent('home');
+        $trail->push('Create Slide', route('slides.create'));
     });

@@ -107,10 +107,6 @@
                             </a>
                         </li>
                         @if(session()->has('user'))
-                            @php
-                                $user = session()->get('user');
-                                $is_vip = $user['is_vip'];
-                            @endphp
                             <li class="has-user-dropdown">
                                 <a href="">
                                     <i class="icon-user has-user-dropdow"></i>
@@ -123,7 +119,7 @@
                                         @php
                                             $user_id = session()->get('user')['id'];
                                         @endphp
-                                        @if($is_vip == 1)
+                                        @if(session()->get('user')['is_vip'] === 1)
                                             <li><a href="{{route('vipBenefits')}}">{{__('messages.vipMember')}}</a></li>
                                         @else
                                             <li><a href="{{route('upgrade')}}">{{__('messages.upgradeVip')}}</a></li>
@@ -229,7 +225,7 @@
                             @php
                                 $user_id = session()->get('user')['id'];
                             @endphp
-                            @if($is_vip == 1)
+                            @if(session()->get('user')['is_vip'] === 1)
                                 <li><a href="{{route('vipBenefits')}}">{{__('messages.vipMember')}}</a></li>
                             @else
                                 <li><a href="{{route('upgrade')}}">{{__('messages.upgradeVip')}}</a></li>

@@ -30,21 +30,26 @@ class UserController extends Controller
         try {
             $response = $client->get($this->userService.'auth/admin/user', [
                 'headers' => [
-                    'Authorization' => 'Bearer ' . session('token'),
+                    'Authorization' => 'Bearer ' . session('adminToken'),
                     "Accept"=>"application/json"
                 ],
 
             ]);
             $users = json_decode($response->getBody(), true);
             $user_infor = $users['users'];
+            Log::channel('admin_log')->info('Admin: ' .  session('admin')['email'] . ' view user list' );
+
             return view('home.user.list', compact('users', 'user_infor'));
         } catch (\Exception $e) {
+            Log::channel('admin_log')->info('Admin: ' .  session('admin')['email'] . ' cannot view user list' );
+
             return view('home.user.list')->withErrors(['errors' => 'Cannot connect to server']);
         }
     }
 
     public function create()
     {
+        Log::channel('admin_log')->info('Admin: ' .  session('admin')['email'] . ' view create user' );
         return view('home.user.create');
     }
 
@@ -56,7 +61,7 @@ class UserController extends Controller
         try {
             $client->post($this->userService.'auth/admin/user', [
                 'headers' => [
-                    'Authorization' => 'Bearer ' . session('token'),
+                    'Authorization' => 'Bearer ' . session('adminToken'),
                     "Accept"=>"application/json"
                 ],
                 'json' => [
@@ -67,9 +72,11 @@ class UserController extends Controller
             ]);
 
             Log::channel('admin_log')->info('Admin: ' .  session('admin')['email'] . ' create user successfully' );
+
             return view('home.user.create');
         } catch (\Exception|GuzzleException $e) {
             Log::channel('admin_log')->error('Admin: ' .  session('admin')['email'] . ' cannot create user' );
+
             return view('home.user.list')->withErrors(['errors' => 'Cannot connect to server']);
         }
     }
@@ -81,7 +88,7 @@ class UserController extends Controller
         try {
             $req = $client->get($this->userService.'auth/admin/user/'.$id, [
                 'headers' => [
-                    'Authorization' => 'Bearer ' . session('token'), // Truyền token từ session
+                    'Authorization' => 'Bearer ' . session('adminToken'), // Truyền token từ session
                     "Accept"=>"application/json"
                 ],
             ]);
@@ -105,7 +112,7 @@ class UserController extends Controller
         try {
             $req = $client->post($this->userService.'auth/admin/user/'.$id, [
                 'headers' => [
-                    'Authorization' => 'Bearer ' . session('token'), // Truyền token từ session
+                    'Authorization' => 'Bearer ' . session('adminToken'),
                     "Accept"=>"application/json"
                 ],
                 'json' => [
@@ -133,7 +140,7 @@ class UserController extends Controller
         try {
             $req = $client->post($this->userService.'auth/admin/user/in-active/'.$id, [
                 'headers' => [
-                    'Authorization' => 'Bearer ' . session('token'), // Truyền token từ session
+                    'Authorization' => 'Bearer ' . session('adminToken'),
                     "Accept"=>"application/json"
                 ],
             ]);

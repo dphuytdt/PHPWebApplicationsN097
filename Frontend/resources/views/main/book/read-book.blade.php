@@ -1,4 +1,5 @@
 @extends('layouts.main') @section('title', 'Read Book ' . $result['book']['title']) @section('content')
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.11.338/pdf.min.js"></script>
     <style>
         .container {
             width: 100%;
@@ -23,14 +24,8 @@
     </div>
     <div class="container">
         <div class="container">
-            <iframe onchange="getCurrentPage()" class="iframe" src="https://docs.google.com/gview?url={{Storage::disk('dropbox')->url($result['book']['content'])}}&embedded=true" frameborder="0"  sandbox="allow-scripts allow-same-origin"></iframe>
+            <iframe  class="iframe" src="https://docs.google.com/gview?url={{Storage::disk('dropbox')->url($result['book']['content'])}}&embedded=true" frameborder="0" sandbox="allow-scripts allow-same-origin"></iframe>
         </div>
     </div>
-    <script>
-        function getCurrentPage() {
-            var iframe = document.getElementsByClassName('iframe')[0];
-            var iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
-            return iframeDoc.getElementsByClassName('page')[0].innerHTML;
-        }
-    </script>
+
 @endsection
