@@ -25,7 +25,7 @@
                 <table id="listCategory" class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                     <thead>
                         <tr>
-                            <th>Name</th>
+                            <th>Title</th>
                             <th>Cover Image</th>
                             <th>Status</th>
                             <th>Create Date</th>
@@ -39,8 +39,8 @@
                             @foreach($paginator as $slide)
                                 <tr>
                                     <td>{{$slide['title']}}</td>
-                                    <td><img src="" alt="{{$slide['name']}}" width="100px" height="100px"></td>
-                                    @if($slide['status'] == 1)
+                                    <td><img src="{{ Storage::disk('dropbox')->url($slide['image']) }}" alt="{{$slide['title']}}" width="100px" height="100px"></td>
+                                    @if($slide['is_active'] == 1)
                                         <td>Active</td>
                                     @else
                                         <td>Deactive</td>
@@ -95,7 +95,7 @@
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLongTitle">Edit Category [ {{$slide['name']}} ]</h5>
+                <h5 class="modal-title" id="exampleModalLongTitle">Edit Slide [ {{$slide['title']}} ]</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
                 </button>
@@ -103,7 +103,7 @@
             <div class="modal-body">
                     <div class="mb-3">
                         <label for="exampleInputEmail1" class="form-label">Name Category</label>
-                        <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="name" value="{{$slide['name']}}">
+                        <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="name" value="{{$slide['title']}}">
                     </div>
                     <div class="mb-3">
                         <label for="exampleInputPassword1" class="form-label">Cover Image</label>
@@ -112,14 +112,14 @@
                               <input type="file" class="form-control" id="exampleInputPassword1" name="image" accept="image/*">
                             </div>
                             <div class="col-md-3">
-                              <img src="{{$slide['image']}}" alt="{{$slide['name']}}" width="100px" height="100px" class="img-thumbnail" id="uploadedImage">
+                              <img src="{{ Storage::disk('dropbox')->url($slide['image']) }}" alt="{{$slide['title']}}" width="100px" height="100px" class="img-thumbnail" id="uploadedImage">
                             </div>
                           </div>
                     </div>
                     <div class="">
                         <label class="form-check-label" for="exampleCheck1">Status</label>
                         <select id="inputState" class="form-control" name="status">
-                            @if($slide['status'] == 1)
+                            @if($slide['is_active'] == 1)
                                 <option value="1" selected>Active</option>
                                 <option value="0">Deactive</option>
                             @else
@@ -128,10 +128,7 @@
                             @endif
                         </select>
                       </div>
-                      <div class="mb-3">
-                        <label for="exampleInputPassword1" class="form-label">Description</label>
-                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="description" >{{$slide['description']}}</textarea>
-                    </div>
+
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

@@ -103,6 +103,7 @@ class SlideShowController extends Controller
             Log::channel('admin_log')->info('Admin: ' .  session('admin')['email'] . ' create slide show successfully' );
             return redirect()->route('slides.index')->with('success', 'Create slide show successfully');
         } catch (\Exception|GuzzleException $e) {
+            dd($e);
             Log::channel('admin_log')->error('Admin: ' .  session('admin')['email'] . ' cannot create slide show' );
             return redirect()->route('slides.index')->withErrors(['errors' => 'Cannot connect to server']);
         }

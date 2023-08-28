@@ -1,4 +1,5 @@
 @extends('layouts.main') @section('title', $result['book']['title']) @section('content')
+<link rel="stylesheet" href="{{asset('assets/css/rate.css')}}" />
 <style>
     .highlight {
         background-color: yellow;
@@ -56,15 +57,22 @@
                         <h4 class="title">{{$result['book']['title']}}</h4>
                         <div class="d-flex align-items-center">
                             <div class="product-review">
-                                @php $rating = $result['book']['rating']; $rating = round($rating); @endphp @if($rating == 0)
+                                @if($totalRate == 0)
                                 <span class="review-none">No review (Review now)</span>
                                 <br />
-                                @else for ($i = 1; $i <= 5; $i++) { if ($i <= $rating) { echo ' <span class="review-fill"><i class="fa fa-star"></i></span>'; } else { echo '<span class=""><i class="fa fa-star"></i></span>'; } } @endif
-                                <span class=""><i class="fa fa-star"></i></span>
-                                <span class=""><i class="fa fa-star"></i></span>
-                                <span class=""><i class="fa fa-star"></i></span>
-                                <span class=""><i class="fa fa-star"></i></span>
-                                <span class=""><i class="fa fa-star"></i></span>
+                                @else
+                                    @for($i = 1; $i <= 5; $i++)
+                                        @if ($i <= $totalRate)
+                                            @php
+                                                echo ' <span class="review-fill"><i class="fa fa-star"></i></span>';
+                                            @endphp
+                                        @else
+                                            @php
+                                                echo '<span class=""><i class="fa fa-star"></i></span>';
+                                            @endphp
+                                        @endif
+                                    @endfor
+                                @endif
                             </div>
                         </div>
                         @if($result['book']['price'] == 0)
@@ -87,7 +95,7 @@
                             </div>
                             @else @if ($isReadNow)
                             <div class="product-add-to-cart-btn">
-                                <a href="{{route('readBook', $result['book']['id'])}}">{{__('messages.readNow')}}</a>
+                                <a href="{{route('readBook', $result['book']['id'])}}" target="_blank">{{__('messages.readNow')}}</a>
                             </div>
                             @else
                             <div class="product-add-to-cart-btn">
@@ -120,7 +128,7 @@
                 <div class="product-details-content-tab-wrapper">
                     <ul class="nav tablist product-details-content-tab-btn d-flex justify-content-center">
                         <li>
-                            <a class="nav-link active" data-toggle="tab" href="#description">
+                            <a class="nav-link" data-toggle="tab" href="#description">
                                 <h5>{{__('messages.Description')}}</h5>
                             </a>
                         </li>
@@ -130,14 +138,14 @@
                             </a>
                         </li>
                         <li>
-                            <a class="nav-link" data-toggle="tab" href="#review">
+                            <a class="nav-link active" data-toggle="tab" href="#review">
                                 <h5>{{__('messages.Reviews')}}</h5>
                             </a>
                         </li>
                     </ul>
                     <div class="product-details-content-tab">
                         <div class="tab-content">
-                            <div class="tab-pane active show" id="description">
+                            <div class="tab-pane" id="description">
                                 <div class="single-tab-content-item">
                                     <p>{{$result['book']['description']}}</p>
                                 </div>
@@ -168,90 +176,177 @@
                                     </p>
                                 </div>
                             </div>
-                            <div class="tab-pane" id="review">
+                            <div class="tab-pane active show" id="review">
                                 <div class="single-tab-content-item">
-                                    <ul class="comment">
-                                        <li class="comment-list">
-                                            @foreach ($result['comments'] as $comment) @if(null === $comment['comment_parent_id'])
-                                            <div class="comment-wrapper">
-                                                <div class="comment-img">
-                                                    <img src="{{asset('assets/images/user/image-1.png')}}" alt="" />
+                                    @if(session()->has('user') && ($isPayment['data'] || $result['book']['price'] == 0))
+                                        @if(!isset($yourComment) && $user['role'] != 'ROLE_ADMIN')
+                                            <div class="review-form">
+                                                <div class="review-form-text-top">
+                                                    <h5>{{__('messages.ADDAREVIEW')}}</h5>
                                                 </div>
-                                                <div class="comment-content">
-                                                    <div class="comment-content-top">
-                                                        <div class="comment-content-left">
-                                                            <h6 class="comment-name">Kaedyn Fraser</h6>
-                                                            <div class="product-review">
-                                                                <span class="review-fill"><i class="fa fa-star"></i></span>
-                                                                <span class="review-fill"><i class="fa fa-star"></i></span>
-                                                                <span class="review-fill"><i class="fa fa-star"></i></span>
-                                                                <span class="review-fill"><i class="fa fa-star"></i></span>
-                                                                <span class="review-empty"><i class="fa fa-star"></i></span>
+                                                <form action="{{route("review")}}" method="post">
+                                                    @csrf
+                                                    <input type="hidden" name="book_id" value="{{$result['book']['id']}}">
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <div class="default-form-box mb-20">
+                                                                <div class="rate">
+                                                                    <input type="radio" id="star5" name="rate" value="5" required />
+                                                                    <label for="star5" title="text">5 stars</label>
+                                                                    <input type="radio" id="star4" name="rate" value="4" required />
+                                                                    <label for="star4" title="text">4 stars</label>
+                                                                    <input type="radio" id="star3" name="rate" value="3" required />
+                                                                    <label for="star3" title="text">3 stars</label>
+                                                                    <input type="radio" id="star2" name="rate" value="2" required />
+                                                                    <label for="star2" title="text">2 stars</label>
+                                                                    <input type="radio" id="star1" name="rate" value="1" required />
+                                                                    <label for="star1">1 star</label>
+                                                                </div>
                                                             </div>
                                                         </div>
-                                                        <div class="comment-content-right">
-                                                            <a href="#"><i class="fa fa-reply"></i>{{__('messages.Reply')}}</a>
+                                                        <div class="col-12">
+                                                            <div class="default-form-box mb-20">
+                                                                <label for="comment-review-text">Your review <span>*</span></label>
+                                                                <textarea id="comment-review-text" placeholder="Write a review" name="comment" required></textarea>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-12">
+                                                            <button class="form-submit-btn" type="submit">Submit</button>
                                                         </div>
                                                     </div>
-
-                                                    <div class="para-content">
-                                                        <p>
-                                                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Tempora inventore dolorem a unde modi iste odio amet, fugit fuga aliquam, voluptatem maiores animi dolor nulla magnam ea!
-                                                            Dignissimos aspernatur cumque nam quod sint provident modi alias culpa, inventore deserunt accusantium amet earum soluta consequatur quasi eum eius laboriosam, maiores praesentium
-                                                            explicabo enim dolores quaerat! Voluptas ad ullam quia odio sint sunt. Ipsam officia, saepe repellat.
-                                                        </p>
-                                                    </div>
-                                                </div>
+                                                </form>
                                             </div>
-                                            @endif @endforeach
-                                        </li>
-                                    </ul>
-                                    <div class="review-form">
-                                        @if(session()->has('user'))
-                                        <div class="review-form-text-top">
-                                            <h5>{{__('messages.ADDAREVIEW')}}</h5>
-                                            <p>{{__('messages.emailNotPublish')}}</p>
-                                        </div>
-
-                                        <form action="#" method="post">
-                                            <div class="row">
-                                                <div class="col-md-6">
-                                                    <div class="default-form-box mb-20">
-                                                        <label for="comment-name">{{__('messages.Yourname')}}<span>*</span></label>
-                                                        <input id="comment-name" type="text" placeholder="Enter your name" required />
+                                        @endif
+                                        <ul class="comment">
+                                            @if(isset($yourComment))
+                                                <li class="comment-list">
+                                                    <div class="comment-wrapper">
+                                                        <div class="comment-img">
+                                                            <img src="{{asset('assets/images/user/image-1.png')}}" alt="">
+                                                        </div>
+                                                        <div class="comment-content">
+                                                            <div class="comment-content-top">
+                                                                <div class="comment-content-left">
+                                                                    <h6 class="comment-name">{{$yourComment[0]['comment_name']}}</h6>
+                                                                    <div class="product-review">
+                                                                        <span class="review-fill"><i class="fa fa-star"></i></span>
+                                                                        <span class="review-fill"><i class="fa fa-star"></i></span>
+                                                                        <span class="review-fill"><i class="fa fa-star"></i></span>
+                                                                        <span class="review-fill"><i class="fa fa-star"></i></span>
+                                                                        <span class="review-empty"><i class="fa fa-star"></i></span>
+                                                                    </div>
+                                                                </div>
+                                                                @if(!isset($yourComment[1]) && (isset($user['role']) && $user['role'] == 'ROLE_ADMIN'))
+                                                                    <div class="comment-content-right" id="reply-parent-comment">
+                                                                        <button>
+                                                                            <i class="fa fa-reply"
+                                                                               onclick="replyComment('<?php echo $yourComment[0]['id'] . '\', \'' . $result['book']['id'] ?>', this);"
+                                                                            >  {{__('messages.Reply')}}</i>
+                                                                        </button>
+                                                                    </div>
+                                                                @endif
+                                                            </div>
+                                                            <div class="para-content">
+                                                                <p>{{$yourComment[0]['content']}}</p>
+                                                            </div>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <div class="default-form-box mb-20">
-                                                        <label for="comment-email">Your Email <span>*</span></label>
-                                                        <input id="comment-email" type="email" placeholder="Enter your email" required />
+                                                    @if(isset($yourComment[1]))
+                                                        <!-- Start - Review Comment Reply-->
+                                                        <ul class="comment-reply">
+                                                            <li class="comment-reply-list">
+                                                                <div class="comment-wrapper">
+                                                                    <div class="comment-img">
+                                                                        <img src="{{asset('assets/images/user/image-2.png')}}" alt="">
+                                                                    </div>
+                                                                    <div class="comment-content">
+                                                                        <div class="comment-content-top">
+                                                                            <div class="comment-content-left">
+                                                                                <h6 class="comment-name">{{$yourComment[1]['comment_name']}}</h6>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="para-content">
+                                                                            <p>{{$yourComment[1]['content']}}</p>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </li>
+                                                        </ul> <!-- End - Review Comment Reply-->
+                                                    @endif
+                                                </li> <!-- End - Review Comment list-->
+                                            @endif
+                                            <!-- Start - Review Comment list-->
+                                            @foreach ($comments as $comment)
+                                                <li class="comment-list">
+                                                    <div class="comment-wrapper">
+                                                        <div class="comment-img">
+                                                            <img src="{{asset('assets/images/user/image-1.png')}}" alt="">
+                                                        </div>
+                                                        <div class="comment-content">
+                                                            <div class="comment-content-top">
+                                                                <div class="comment-content-left">
+                                                                    <h6 class="comment-name">{{$comment[0]['comment_name']}}</h6>
+                                                                    <div class="product-review">
+                                                                        <span class="review-fill"><i class="fa fa-star"></i></span>
+                                                                        <span class="review-fill"><i class="fa fa-star"></i></span>
+                                                                        <span class="review-fill"><i class="fa fa-star"></i></span>
+                                                                        <span class="review-fill"><i class="fa fa-star"></i></span>
+                                                                        <span class="review-empty"><i class="fa fa-star"></i></span>
+                                                                    </div>
+                                                                </div>
+                                                                @if(!isset($comment[1]) && (isset($user['role']) && $user['role'] == 'ROLE_ADMIN'))
+                                                                    <div class="comment-content-right" id="reply-parent-comment">
+                                                                        <button>
+                                                                            <i class="fa fa-reply"
+                                                                               onclick="replyComment('<?php echo $comment[0]['id'] . '\', \'' . $result['book']['id'] ?>', this);"
+                                                                            >  {{__('messages.Reply')}}</i>
+                                                                        </button>
+                                                                    </div>
+                                                                @endif
+                                                            </div>
+                                                            <div class="para-content">
+                                                                <p>{{$comment[0]['content']}}</p>
+                                                            </div>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                                <div class="col-12">
-                                                    <div class="default-form-box mb-20">
-                                                        <label for="comment-review-text">Your review <span>*</span></label>
-                                                        <textarea id="comment-review-text" placeholder="Write a review" required></textarea>
-                                                    </div>
-                                                </div>
-                                                <div class="col-12">
-                                                    <button class="form-submit-btn" type="submit">Submit</button>
-                                                </div>
-                                            </div>
-                                        </form>
-                                        @else
+                                                    @if(isset($comment[1]))
+                                                        <!-- Start - Review Comment Reply-->
+                                                        <ul class="comment-reply">
+                                                            <li class="comment-reply-list">
+                                                                <div class="comment-wrapper">
+                                                                    <div class="comment-img">
+                                                                        <img src="{{asset('assets/images/user/image-2.png')}}" alt="">
+                                                                    </div>
+                                                                    <div class="comment-content">
+                                                                        <div class="comment-content-top">
+                                                                            <div class="comment-content-left">
+                                                                                <h6 class="comment-name">{{$comment[1]['comment_name']}}</h6>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="para-content">
+                                                                            <p>{{$comment[1]['content']}}</p>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </li>
+                                                        </ul> <!-- End - Review Comment Reply-->
+                                                    @endif
+                                                </li> <!-- End - Review Comment list-->
+                                            @endforeach
+                                        </ul> <!-- End - Review Comment -->
+                                    @else
                                         <div class="review-form-text-top">
                                             <h5>ADD A REVIEW</h5>
-                                            <p>Only logged in customers who have purchased this product may leave a review.</p>
+                                            <p>Only logged in customers who have purchased this product may leave a review. </p>
                                         </div>
                                         <div class="row">
                                             <div class="col-12">
                                                 <a href="{{ route('login') }}" class="btn btn-lg btn-block btn-primary">{{__('messages.LoginNow')}}</a>
                                             </div>
                                         </div>
-                                        @endif
-                                    </div>
+                                    @endif
                                 </div>
-                            </div>
+                            </div> <!-- End Product Details Tab Content Singel -->
                         </div>
                     </div>
                 </div>
@@ -305,46 +400,6 @@
     </div>
 </div>
 
-<div class="product-section section-top-gap-100">
-    <div class="section-content-gap">
-        <div class="container">
-            <div class="row">
-                <div class="section-content">
-                    <h3 class="section-title">Upsell Products</h3>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="product-wrapper">
-        <div class="container">
-            <div class="row">
-                <div class="col-12">
-                    <div class="product-default-slider product-default-slider-4grids-1row">
-                        <div class="product-default-single border-around">
-                            <div class="product-img-warp">
-                                <a href="product-details-default.html" class="product-default-img-link">
-                                    <img src="assets/images/products_images/aments_products_image_1.jpg" alt="" class="product-default-img img-fluid">
-                                </a>
-                                <div class="product-action-icon-link">
-                                    <ul>
-                                        <li><a href="wishlist.html"><i class="icon-heart"></i></a></li>
-                                        <li><a href="compare.html"><i class="icon-repeat"></i></a></li>
-                                        <li><a href="#" data-toggle="modal" data-target="#modalQuickview"><i class="icon-eye"></i></a></li>
-                                        <li><a href="#" data-toggle="modal" data-target="#modalAddcart"><i class="icon-shopping-cart"></i></a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="product-default-content">
-                                <h6 class="product-default-link"><a href="product-details-default.html">New Balance Fresh Foam Kaymin Car Purts</a></h6>
-                                <span class="product-default-price"><del class="product-default-price-off">$30.12</del> $25.12</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.11.338/pdf.min.js"></script>
 
 <script type="text/javascript">
@@ -405,6 +460,88 @@
             });
         });
     });
+</script>
+
+<script type="text/javascript">
+    function replyComment(id, bookId, element) {
+        var parent = element.closest(".comment-wrapper");
+
+        // Create the new reply container
+        var replyContainer = document.createElement("ul");
+        replyContainer.className = "comment-reply";
+
+        var replyListItem = document.createElement("li");
+        replyListItem.className = "comment-reply-list";
+
+        var newCommentWrapper = document.createElement("div");
+        newCommentWrapper.className = "comment-wrapper";
+
+        var commentContentDiv = document.createElement("div");
+        commentContentDiv.className = "comment-content";
+
+        var paraContentDiv = document.createElement("div");
+        paraContentDiv.className = "para-content";
+
+        var form = document.createElement("form");
+        form.action = "#";
+        form.onsubmit = function() {
+            onSubmitReplyReview(this);
+            return false;
+        };
+
+        var hiddenInput = document.createElement("input");
+        hiddenInput.type = "hidden";
+        hiddenInput.name = "parent_id";
+        hiddenInput.value = id; // Use the parent comment's ID
+
+        var hiddenInputBookId = document.createElement("input");
+        hiddenInputBookId.type = "hidden";
+        hiddenInputBookId.name = "book_id";
+        hiddenInputBookId.value = bookId; // Use the parent comment's ID
+
+        var col12Div = document.createElement("div");
+        col12Div.className = "col-12";
+
+        var defaultFormBoxDiv = document.createElement("div");
+        defaultFormBoxDiv.className = "default-form-box mb-20";
+
+        var label = document.createElement("label");
+        label.setAttribute("for", "comment-review-text");
+        label.innerHTML = "Your review <span>*</span>";
+
+        var textarea = document.createElement("textarea");
+        textarea.id = "comment-review-text";
+        textarea.placeholder = "Write a review";
+        textarea.name = "comment";
+        textarea.required = true;
+
+        var submitButton = document.createElement("button");
+        submitButton.className = "form-submit-btn";
+        submitButton.type = "submit";
+        submitButton.innerHTML = "Submit";
+
+        defaultFormBoxDiv.appendChild(label);
+        defaultFormBoxDiv.appendChild(textarea);
+        col12Div.appendChild(defaultFormBoxDiv);
+        col12Div.appendChild(submitButton);
+        form.appendChild(hiddenInput);
+        form.appendChild(hiddenInputBookId);
+        form.appendChild(col12Div);
+        paraContentDiv.appendChild(form);
+        commentContentDiv.appendChild(paraContentDiv);
+        newCommentWrapper.appendChild(commentContentDiv);
+        replyListItem.appendChild(newCommentWrapper);
+        replyContainer.appendChild(replyListItem);
+
+        parent.parentNode.insertBefore(replyContainer, parent.nextSibling);
+    }
+
+    function onSubmitReplyReview(form) {
+        const formData = new FormData(form);
+        alert(formData.get('parent_id'));
+        alert(formData.get('comment'));
+        alert(formData.get('book_id'));
+    }
 </script>
 
 @if(session()->has('user'))

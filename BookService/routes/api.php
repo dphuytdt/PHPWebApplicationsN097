@@ -9,6 +9,7 @@ use App\Http\Controllers\Api\v1\CommentController;
 
 Route::prefix('books')->group(function () {
     Route::get('is_free', [BookController::class, 'getFreeBook']);
+    Route::get('all', [BookController::class, 'getAll']);
     Route::get('related/{id}', [BookController::class, 'getRelatedBooks']);
     Route::get('homepage', [BookController::class, 'getHomepageBooks']);
     Route::get('read/{id}', [BookController::class, 'readBook']);
@@ -35,13 +36,6 @@ Route::prefix('admin')->group(function () {
         Route::post('/', [AdminBookController::class, 'store']);
         Route::post('delete/{id}', [AdminBookController::class, 'delete']);
         Route::post('/{id}', [AdminBookController::class, 'update']);
-    });
-    Route::prefix('comments')->group(function () {
-        Route::get('/', [CommentController::class, 'getAllComment']);
-        Route::get('/{id}', [CommentController::class, 'getComment']);
-        Route::post('/', [CommentController::class, 'storeComment']);
-        Route::post('/{id}', [CommentController::class, 'updateComment']);
-        Route::post('delete/{id}', [CommentController::class, 'deleteComment']);
     });
     Route::prefix('categories')->group(function () {
         Route::post('/', [AdminCategoryController::class, 'store']);

@@ -11,7 +11,7 @@ class BookRepository implements BookRepositoryInterface
 {
     public function getAllBooks()
     {
-        return Book::all();
+        return Book::where('status', 1)->paginate(8);
     }
 
     public function getBookById($id)

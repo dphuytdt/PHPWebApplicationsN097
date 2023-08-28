@@ -21,25 +21,17 @@ class SlideShowController extends Controller
         return response()->json($result, 200);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
         $data = $request->all();
+        $createdAt = date('Y-m-d H:i:s');
+        $data['created_at'] = $createdAt;
 
         $result = $this->slideShowRepository->create($data);
 
-        return response()->json([
-            'status' => 'success',
-            'message' => 'Slide Show created successfully',
-            'data' => $result
-        ], 200);
+        return response()->json([], 200);
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(string $id)
     {
         $result = $this->slideShowRepository->getSlideShow($id);
@@ -47,9 +39,6 @@ class SlideShowController extends Controller
         return response()->json($result, 200);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, string $id)
     {
         $data = $request->all();
@@ -63,9 +52,6 @@ class SlideShowController extends Controller
         ], 200);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function delete(string $id)
     {
         $result = $this->slideShowRepository->delete($id);

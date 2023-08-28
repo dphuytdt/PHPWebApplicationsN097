@@ -7,7 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class SlideShow extends Model
 {
-    use HasFactory;
 
     protected $table = 'slide_shows';
 
@@ -19,5 +18,8 @@ class SlideShow extends Model
         'title',
         'image',
         'is_active',
+        'created_at',
+        'updated_at',
+        'deleted_at',
     ];
 }

@@ -49,9 +49,27 @@ class BookController extends Controller
 
             $isPayment = json_decode($isPaymentResponse->getBody(), true);
 
-            return view('main.book.book-details', compact('result', 'isPayment', 'categories', 'relatedBooks'));
+            $comments = $client->get($this->interactionService.'comment/'.$id);
+            $comments = json_decode($comments->getBody(), true);
+            $yourComment = null;
+            foreach ($comments as $key => $value) {
+                if ($value[0]['user_id'] == $user) {
+                    unset($comments[$key]);
+                    $yourComment = $value;
+                    break;
+                }
+            }
+
+            $totalRate = 0;
+            foreach ($comments as $key => $value) {
+                $totalRate += $value[0]['rate'];
+                $totalRate = $totalRate / count($comments);
+            }
+
+            return view('main.book.book-details', compact('result', 'isPayment', 'categories', 'relatedBooks', 'comments', 'yourComment', 'totalRate'));
         }
         catch (\Exception|GuzzleException|NotFoundExceptionInterface|ContainerExceptionInterface $e) {
+            dd($e);
             return view('errors.404')->with('categories', $categories);
         }
     }
@@ -182,7 +200,9 @@ class BookController extends Controller
             $responseData = json_decode($response->getBody(), true);
 
             if($responseData) {
-                $books = json_decode($response->getBody(), true);
+                $req = $client->get($this->bookService.'books/all');
+
+                $books = json_decode($req->getBody(), true);
 
                 $perPage = 8;
 
@@ -234,4 +254,82 @@ class BookController extends Controller
         return view('errors.404')->with('categories', $categories);
     }
 
+    /**
+     * @throws GuzzleException
+     */
+    public function bookByCategory($id, Request $request)
+    {
+        $client = new Client();
+
+        $req2 = $client->get($this->bookService . 'category');
+        $categories = json_decode($req2->getBody(), true);
+
+        try {
+            $response = $client->get($this->bookService.'category/all');
+            $responseData = json_decode($response->getBody(), true);
+
+            if($responseData) {
+                $req = $client->get($this->bookService.'books/all');
+
+                $books = json_decode($req->getBody(), true);
+
+                $perPage = 8;
+
+                $currentPage = $request->query('page', 1);
+
+                $paginator = new LengthAwarePaginator(
+                    $books['data'],
+                    $books['total'],
+                    $perPage,
+                    $currentPage,
+                    ['path' => $request->url(), 'query' => $request->query()]
+                );
+            } else {
+                $paginator = [];
+            }
+
+            return view('main.category.index', compact('paginator', 'categories'));
+        } catch (\Exception|GuzzleException $e) {
+            return view('errors.404')->with('categories', $categories);
+        }
+    }
+
+    /**
+     * @throws GuzzleException
+     */
+    public function booksByCategory($id, Request $request) {
+        $client = new Client();
+
+        $req2 = $client->get($this->bookService . 'category');
+        $categories = json_decode($req2->getBody(), true);
+
+        try {
+            $response = $client->get($this->bookService.'category/all');
+            $responseData = json_decode($response->getBody(), true);
+
+            if($responseData) {
+                $req = $client->get($this->bookService.'books/category/'.$id);
+
+                $books = json_decode($req->getBody(), true);
+
+                $perPage = 8;
+
+                $currentPage = $request->query('page', 1);
+
+                $paginator = new LengthAwarePaginator(
+                    $books['data'],
+                    $books['total'],
+                    $perPage,
+                    $currentPage,
+                    ['path' => $request->url(), 'query' => $request->query()]
+                );
+            } else {
+                $paginator = [];
+            }
+
+            return view('main.category.index', compact('paginator', 'categories'));
+        } catch (\Exception|GuzzleException $e) {
+            return view('errors.404')->with('categories', $categories);
+        }
+    }
 }

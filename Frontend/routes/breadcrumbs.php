@@ -115,3 +115,8 @@ use DaveJamesMiller\Breadcrumbs\Facades\Breadcrumbs;
         $trail->parent('home');
         $trail->push('FAQ', route('faq'));
     });
+
+    Breadcrumbs::for('category', function ($trail) {
+        $trail->parent('home');
+        $trail->push('All Category', route('category'));
+    });

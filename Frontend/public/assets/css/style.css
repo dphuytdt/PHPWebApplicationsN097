@@ -13474,7 +13474,7 @@ Base - Utilities
 }
 
 /***************************
-    Page section padding 
+    Page section padding
 ****************************/
 .ptb-0 {
   padding: 0;
@@ -13589,7 +13589,7 @@ Base - Utilities
 }
 
 /***************************
-    Page section margin 
+    Page section margin
 ****************************/
 .mtb-0 {
   margin: 0;
@@ -14979,6 +14979,10 @@ Components - Comment
 
 .comment-content-right a i {
   padding-right: 10px;
+}
+
+.comment-content {
+    width: 100%;
 }
 
 /*****************************

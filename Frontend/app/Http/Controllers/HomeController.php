@@ -36,9 +36,6 @@ class HomeController extends Controller
             $req3 = $client->get($this->contentService . 'user/news/latest');
             $latestNews = json_decode($req3->getBody(), true);
 
-
-            $this->extracted($client);
-
             return view('main.home.index')->with('books', $books)->with('categories', $categories)->with('latestNews', $latestNews);
         } catch (\Exception|GuzzleException $e) {
             $categories = [];

@@ -20,11 +20,9 @@ class SlideShowRepository implements SlideShowRepositoryInterfaces
         return  $this->slideShow->all();
     }
 
-    public function create($data): JsonResponse
+    public function create($data)
     {
-        $result = $this->slideShow->create($data);
-
-        return response()->json($result, 200);
+        return $this->slideShow->create($data);
     }
 
     public function getSlideShow($id): JsonResponse

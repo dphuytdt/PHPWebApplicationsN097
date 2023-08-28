@@ -15,13 +15,12 @@ return new class extends Migration
             $table->id();
             $table->string('comment_name');
             $table->text('content');
-            $table->string('image')->nullable();
+            $table->integer('rate')->nullable();
             $table->unsignedBigInteger('user_id');
-            $table->string('user_name');
             $table->unsignedBigInteger('book_id');
             $table->unsignedBigInteger('comment_parent_id')->nullable();
             $table->boolean('status')->default(1);
-            $table->dateTime('created_at');
+            $table->dateTime('created_at')->useCurrent();
             $table->dateTime('updated_at')->nullable();
             $table->dateTime('deleted_at')->nullable();
         });

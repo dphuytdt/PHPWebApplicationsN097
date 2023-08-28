@@ -16,13 +16,10 @@ class BookController extends Controller
 
     protected CategoryRepositoryInterface $categoryRepository;
 
-    protected CommentRepositoryInterface $commentRepository;
-
-    public function __construct(BookRepositoryInterface $bookRepository, CategoryRepositoryInterface $categoryRepository, CommentRepositoryInterface $commentRepository)
+    public function __construct(BookRepositoryInterface $bookRepository, CategoryRepositoryInterface $categoryRepository)
     {
         $this->bookRepository = $bookRepository;
         $this->categoryRepository = $categoryRepository;
-        $this->commentRepository = $commentRepository;
     }
 
     public function index(Request $request)
@@ -41,10 +38,8 @@ class BookController extends Controller
     public function show(string $id)
     {
         $book = $this->bookRepository->getBookById($id);
-        $comments = $this->commentRepository->getCommentByBookId($id);
         $result = [
             'book' => $book,
-            'comments' => $comments
         ];
 
         return response()->json($result, 200);
@@ -106,6 +101,12 @@ class BookController extends Controller
     public function booksToJson()
     {
         $books = $this->bookRepository->booksToJson();
+        return response()->json($books, 200);
+    }
+
+    public function getAll()
+    {
+        $books = $this->bookRepository->getAllBooks();
         return response()->json($books, 200);
     }
 }

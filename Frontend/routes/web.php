@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\InteractionController;
 use App\Http\Controllers\LocaleController;
 use App\Http\Controllers\NewsController;
 use App\Http\Controllers\ProccessController;
@@ -24,6 +25,8 @@ Route::group(['middleware' => 'locale'], function() {
 
     Route::get('category/{id}', [BookController::class, 'getBookByCategory'])->name('getBookByCategory');
 
+    Route::get('books/category/{id}', [BookController::class, 'booksByCategory'])->name('booksByCategory');
+
     Route::get('category', [BookController::class, 'category'])->name('category');
 
     Route::get('about', [HomeController::class, 'about'])->name('about');
@@ -31,6 +34,11 @@ Route::group(['middleware' => 'locale'], function() {
     Route::get('contact', [HomeController::class, 'contact'])->name('contact');
 
     Route::get('faq', [HomeController::class, 'faq'])->name('faq');
+
+    Route::post('review', [InteractionController::class, 'review'])->name('review');
+
+    Route::post('reply-review', [InteractionController::class, 'replyReview'])->name('replyReview');
+
 
 
     Route::group(['prefix' => 'wishlist'], function () {

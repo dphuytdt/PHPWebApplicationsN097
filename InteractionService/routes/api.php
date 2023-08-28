@@ -1,6 +1,6 @@
 <?php
 
-use Illuminate\Http\Request;
+use App\Http\Controllers\Api\v1\InteractionController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,6 +14,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+Route::post('comment', [InteractionController::class, 'comment'])->name('comment');
+Route::get('comment/{id}', [InteractionController::class, 'show'])->name('show');
+Route::post("/reply", [InteractionController::class, "reply"])->name("reply");

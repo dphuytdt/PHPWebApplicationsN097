@@ -14,7 +14,7 @@
         </div>
     </div>
 </div>
-@if($paginator->count() == 0)
+
 <style type="text/css">
     .alert-danger {
         text-align: center;
@@ -48,6 +48,7 @@
         color: #fff;
     }
 </style>
+@if($paginator->count() == 0)
 <div class="container">
     <div class="row">
         <div class="col-12">
@@ -78,7 +79,6 @@
                                     </div>
 
                                     <div class="page-amount">
-                                        {{-- use paigante to get the number of pages --}}
                                         <span>@if($paginator->total() > 0) Showing {{ $paginator->firstItem() }}–{{ $paginator->lastItem() }} of {{ $paginator->total() }} results @endif</span>
                                     </div>
                                 </div>
@@ -91,7 +91,6 @@
                             <div class="row">
                                 <div class="col-12">
                                     <div class="tab-content tab-animate-zoom">
-                                        <!-- Start Grid View Product -->
                                         <div class="tab-pane active show sort-layout-single" id="layout-4-grid">
                                             <div class="row">
                                                 @foreach($paginator as $book)
