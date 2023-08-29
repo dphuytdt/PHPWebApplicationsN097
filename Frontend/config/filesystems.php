@@ -62,7 +62,6 @@ return [
             'secret' => env('DROPBOX_APP_SECRET'),
             'authorization_token' => env('DROPBOX_AUTH_TOKEN'),
         ],
-
     ],
 
     /*

@@ -31,17 +31,37 @@ class InteractionController extends Controller
             ]);
             $responseData = json_decode($response->getBody(), true);
             if($responseData) {
-                return redirect()->back()->with('success', 'Review successfully!');
+                return $responseData;
             } else {
                 return redirect()->back()->with('error', 'Review failed!');
             }
         } catch (\Exception|GuzzleException $e) {
-            dd($e);
             return redirect()->back()->with('error', 'Review failed!');
         }
     }
 
     public function replyReview(Request $request) {
-
+        $data = $request->all();
+        $client = new Client();
+        $user = session()->get('user');
+        try {
+            $response = $client->post($this->interactionService.'reply', [
+                'form_params' => [
+                    'comment_name' => $user['fullname'],
+                    'content' => $data['comment'],
+                    'book_id' => $data['book_id'],
+                    'user_id' => $user['id'],
+                    'comment_parent_id' => $data['parent_id'],
+                ]
+            ]);
+            $responseData = json_decode($response->getBody(), true);
+            if($responseData) {
+                return $responseData;
+            } else {
+                return view('errors.404')->with('categories', $responseData);
+            }
+        } catch (\Exception|GuzzleException $e) {
+            return view('errors.404')->with('categories', $responseData);
+        }
     }
 }

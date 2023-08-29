@@ -69,7 +69,6 @@ class BookController extends Controller
             return view('main.book.book-details', compact('result', 'isPayment', 'categories', 'relatedBooks', 'comments', 'yourComment', 'totalRate'));
         }
         catch (\Exception|GuzzleException|NotFoundExceptionInterface|ContainerExceptionInterface $e) {
-            dd($e);
             return view('errors.404')->with('categories', $categories);
         }
     }

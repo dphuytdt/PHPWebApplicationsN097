@@ -184,7 +184,7 @@
                                                 <div class="review-form-text-top">
                                                     <h5>{{__('messages.ADDAREVIEW')}}</h5>
                                                 </div>
-                                                <form action="{{route("review")}}" method="post">
+                                                <form onsubmit="onSubmitReview(this); return false;">
                                                     @csrf
                                                     <input type="hidden" name="book_id" value="{{$result['book']['id']}}">
                                                     <div class="row">
@@ -252,7 +252,6 @@
                                                         </div>
                                                     </div>
                                                     @if(isset($yourComment[1]))
-                                                        <!-- Start - Review Comment Reply-->
                                                         <ul class="comment-reply">
                                                             <li class="comment-reply-list">
                                                                 <div class="comment-wrapper">
@@ -271,9 +270,9 @@
                                                                     </div>
                                                                 </div>
                                                             </li>
-                                                        </ul> <!-- End - Review Comment Reply-->
+                                                        </ul>
                                                     @endif
-                                                </li> <!-- End - Review Comment list-->
+                                                </li>
                                             @endif
                                             <!-- Start - Review Comment list-->
                                             @foreach ($comments as $comment)
@@ -499,6 +498,11 @@
         hiddenInputBookId.name = "book_id";
         hiddenInputBookId.value = bookId; // Use the parent comment's ID
 
+        var hiddenCsrfToken = document.createElement("input");
+        hiddenCsrfToken.type = "hidden";
+        hiddenCsrfToken.name = "_token";
+        hiddenCsrfToken.value = "{{csrf_token()}}";
+
         var col12Div = document.createElement("div");
         col12Div.className = "col-12";
 
@@ -526,6 +530,7 @@
         col12Div.appendChild(submitButton);
         form.appendChild(hiddenInput);
         form.appendChild(hiddenInputBookId);
+        form.appendChild(hiddenCsrfToken);
         form.appendChild(col12Div);
         paraContentDiv.appendChild(form);
         commentContentDiv.appendChild(paraContentDiv);
@@ -534,13 +539,171 @@
         replyContainer.appendChild(replyListItem);
 
         parent.parentNode.insertBefore(replyContainer, parent.nextSibling);
+        element.remove();
     }
 
     function onSubmitReplyReview(form) {
         const formData = new FormData(form);
-        alert(formData.get('parent_id'));
-        alert(formData.get('comment'));
-        alert(formData.get('book_id'));
+
+        $.ajax({
+            url: "{{route('replyReview')}}",
+            type: "POST",
+            data: formData,
+            processData: false,
+            contentType: false,
+
+            success: function(response){
+                if(response){
+                    var generatedReply = generateNewReply(response);
+                    var newReplyPosition = form.closest(".comment-wrapper");
+                    var replyPosition =
+                        form.closest(".comment-reply").previousElementSibling.querySelector(".comment-content-right");
+                    newReplyPosition.replaceWith(generatedReply);
+                    replyPosition.remove();
+                } else {
+                    swal({
+                        title: "Error!",
+                        text: "Reply review failed!",
+                        icon: "error",
+                        button: "OK",
+                    });
+                }
+            }
+        });
+    }
+
+    function generateNewReply(response) {
+        // Create the main div element with class "comment-wrapper"
+        const commentWrapper = document.createElement("div");
+        commentWrapper.classList.add("comment-wrapper");
+
+        // Create the div element with class "comment-img" and an img element inside
+        const commentImgDiv = document.createElement("div");
+        commentImgDiv.classList.add("comment-img");
+        const commentImg = document.createElement("img");
+        commentImg.src = "{{asset('assets/images/user/image-2.png')}}";
+        commentImg.alt = "";
+        commentImgDiv.appendChild(commentImg);
+
+        // Create the div element with class "comment-content"
+        const commentContentDiv = document.createElement("div");
+        commentContentDiv.classList.add("comment-content");
+
+        // Create the div element with class "comment-content-top"
+        const commentContentTopDiv = document.createElement("div");
+        commentContentTopDiv.classList.add("comment-content-top");
+
+        // Create the div element with class "comment-content-left" and the h6 element inside
+        const commentContentLeftDiv = document.createElement("div");
+        commentContentLeftDiv.classList.add("comment-content-left");
+        const commentName = document.createElement("h6");
+        commentName.classList.add("comment-name");
+        commentName.textContent = response['comment_name'];
+        commentContentLeftDiv.appendChild(commentName);
+
+        commentContentTopDiv.appendChild(commentContentLeftDiv);
+
+        // Create the div element with class "para-content" and a p element inside
+        const paraContentDiv = document.createElement("div");
+        paraContentDiv.classList.add("para-content");
+        const para = document.createElement("p");
+        para.textContent = response['content'];
+        paraContentDiv.appendChild(para);
+
+        commentContentDiv.appendChild(commentContentTopDiv);
+        commentContentDiv.appendChild(paraContentDiv);
+
+        // Append all the created elements to the main commentWrapper element
+        commentWrapper.appendChild(commentImgDiv);
+        commentWrapper.appendChild(commentContentDiv);
+
+        return commentWrapper;
+    }
+
+    function onSubmitReview(form) {
+        const formData = new FormData(form);
+        var submitBtn = form.querySelector(".form-submit-btn");
+        submitBtn.disabled = true;
+        $.ajax({
+            url: "{{route('review')}}",
+            type: "POST",
+            data: formData,
+            processData: false,
+            contentType: false,
+
+            success: function(response){
+                if(response){
+                    var formPosition = form.closest(".review-form");
+                    var newReviewPosition = formPosition.nextElementSibling;
+                    var generatedReview = generateNewReview(response);
+                    newReviewPosition.insertBefore(generatedReview, newReviewPosition.firstChild);
+                    formPosition.remove();
+                }
+            }
+        });
+    }
+
+    function generateNewReview(response) {
+        var liElement = document.createElement('li');
+        liElement.className = 'comment-list';
+
+        var commentWrapperDiv = document.createElement('div');
+        commentWrapperDiv.className = 'comment-wrapper';
+
+        var commentImgDiv = document.createElement('div');
+        commentImgDiv.className = 'comment-img';
+
+        var imgElement = document.createElement('img');
+        imgElement.src = '{{asset("assets/images/user/image-1.png")}}';
+        imgElement.alt = '';
+
+        commentImgDiv.appendChild(imgElement);
+
+        var commentContentDiv = document.createElement('div');
+        commentContentDiv.className = 'comment-content';
+
+        var commentContentTopDiv = document.createElement('div');
+        commentContentTopDiv.className = 'comment-content-top';
+
+        var commentContentLeftDiv = document.createElement('div');
+        commentContentLeftDiv.className = 'comment-content-left';
+
+        var h6Element = document.createElement('h6');
+        h6Element.className = 'comment-name';
+        h6Element.textContent = response['comment_name'];
+        var productReviewDiv = document.createElement('div');
+        productReviewDiv.className = 'product-review';
+
+        for (var i = 0; i < 5; i++) {
+            var spanElement = document.createElement('span');
+            spanElement.className = (i < response['rate']) ? 'review-fill' : 'review-empty';
+            var iconElement = document.createElement('i');
+            iconElement.className = 'fa fa-star';
+            spanElement.appendChild(iconElement);
+            productReviewDiv.appendChild(spanElement);
+        }
+
+        commentContentLeftDiv.appendChild(h6Element);
+        commentContentLeftDiv.appendChild(productReviewDiv);
+
+        commentContentTopDiv.appendChild(commentContentLeftDiv);
+
+        var paraContentDiv = document.createElement('div');
+        paraContentDiv.className = 'para-content';
+
+        var pElement = document.createElement('p');
+        pElement.textContent = response['content'];
+
+        paraContentDiv.appendChild(pElement);
+
+        commentContentDiv.appendChild(commentContentTopDiv);
+        commentContentDiv.appendChild(paraContentDiv);
+
+        commentWrapperDiv.appendChild(commentImgDiv);
+        commentWrapperDiv.appendChild(commentContentDiv);
+
+        liElement.appendChild(commentWrapperDiv);
+        return liElement;
     }
 </script>
 
