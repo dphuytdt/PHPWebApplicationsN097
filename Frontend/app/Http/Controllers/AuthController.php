@@ -281,40 +281,4 @@ class AuthController extends Controller
         }
     }
 
-    public function postProfile(Request $request, $id)
-    {
-        $token = session('token');
-        $request->merge(['token' => $token]);
-
-        $client = new Client();
-
-        if ($request->hasFile('image')) {
-            try{
-                $imageFile = $request->file('image');
-                $imageContents = file_get_contents($imageFile->getPathname());
-                $imageExtension = $request->file('image')->getClientOriginalExtension();
-                $base64Image = base64_encode($imageContents);
-                $data['cover_image'] = $base64Image;
-                $data['image_extension'] = $imageExtension;
-            } catch (\Exception|GuzzleException $e) {
-
-                return redirect()->route('profile')->with('error', 'Update profile failed');
-            }
-        } else {
-            $data['cover_image'] = null;
-            $data['image_extension'] = null;
-        }
-
-        $request->merge(['data' => $data]);
-        try {
-            $client->post($this->userService . 'auth/profile' . $id, [
-                'json' => $request->all(),
-            ]);
-
-           return redirect()->route('profile')->with('message', 'Update profile successful');
-        } catch (\Exception|GuzzleException $e) {
-            return redirect()->route('profile')->with('error', 'Update profile failed');
-        }
-    }
-
 }

@@ -89,10 +89,6 @@
                     <label for="price" class="form-label">Price</label>
                     <input type="number" class="form-control" id="price" name="price" value="{{$book['price']}}">
                 </div>
-                <div class="mb-3">
-                    <label for="discount" class="form-label">Discount</label>
-                    <input type="number" name="discount" class="form-control" id="discount" value="{{$book['discount'] ?? 0}}">
-                </div>
                 <div class="mb-3 contentType">
                     <label for="is_vip_valid" class="form-label">Is Valid For Vip</label>
                     <select id="is_vip_valid" class="form-select" name="is_vip_valid">
@@ -110,7 +106,7 @@
                     <label for="contentType" class="form-label">Is Featured <color style="color: red;">*</color></label>
                     <select id="contentType" class="form-select" name="is_featured">
                         <option selected>Select Status</option>
-                        @if($book['is_featured'] == 0)
+                        @if($book['is_featured'] == 1)
                             <option value="1" selected>Yes</option>
                             <option value="0">No</option>
                         @else

@@ -204,6 +204,21 @@ class UserController extends Controller
     }
 
     public function updateProfile($userId, Request $request){
+        $created_at = date('Y-m-d H:i:s');
+        $request->merge(['created_at' => $created_at]);
 
+        $user = $this->userRepository->getUserById($userId);
+
+        if($user) {
+            $result = $this->userRepository->updateProfile($userId, $request->all());
+
+            if($result) {
+                return response()->json(['message' => 'Update user successfully']);
+            } else {
+                return response()->json(['message' => 'Update user failed']);
+            }
+        } else {
+            return response()->json(['message' => 'User not found']);
+        }
     }
 }

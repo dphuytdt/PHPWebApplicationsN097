@@ -377,25 +377,4 @@ class AuthController extends Controller
             ], 400);
         }
     }
-
-    public function profile(Request $request, $id) {
-        $user = $this->userRepository->getUserById($id);
-        if ($user) {
-            $user = $this->userRepository->updateProfile($request, $id);
-            if ($user) {
-                return response()->json([
-                    'status' => true,
-                    'message' => 'Profile updated successfully',
-                    'user' => $user,
-                ], 200);
-            }
-        }
-
-        return response()->json([
-            'status' => false,
-            'error' => 'Profile not updated',
-            'user' => $user,
-        ], 400);
-    }
-
 }

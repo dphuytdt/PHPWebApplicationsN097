@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
 use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Http\Request;
 use App\Services\CategoryService;
@@ -50,12 +51,31 @@ class UserController extends Controller
     }
 
     public function postProfile(Request $request) {
-        $validator = Validator::make($request->all(), [
-            'name' => 'required',
-            'phone' => 'required|numeric',
-            'birthday' => 'required|date',
-            'address' => 'required',
-        ]);
+        if ($request->hasFile('avatar')) {
+            $imageFile = $request->file('avatar');
+            $imagePath = Cloudinary::upload($imageFile->getRealPath())->getSecurePath();
+            dd($imagePath);
+        }
+
+        $data = [
+            'gender' => $request->gender ?? null,
+            'fullname' => $request->fullname ?? null,
+            'birthday' => $request->birthday ?? null,
+            'address' => $request->address ?? null,
+            'phone' => $request->phone ?? null,
+            'avatar' => $imagePath ?? null,
+        ];
+
+        $client = new Client();
+
+        try {
+            $client->post($this->userService.'update-profile/'.session()->get('user')['id'], [
+                'form_params' => $data
+            ]);
+
+        } catch (\Exception|\Throwable|GuzzleException $e) {
+            return redirect()->back()->with('error', 'Something went wrong!');
+        }
     }
 
     public function upgrade()

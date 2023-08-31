@@ -86,7 +86,7 @@ class AdminBookController extends Controller
             'discount' => $request->discount,
             'content' => $request->contentPdf,
             'cover_image' => $request->cover_image,
-            'image_extension' => $request->image_extension,
+            'image_extension' => 'png',
             'is_vip_valid' => $request->is_vip_valid,
             'is_featured' => $request->is_featured,
         ];
@@ -105,12 +105,11 @@ class AdminBookController extends Controller
      */
     public function delete(string $id)
     {
-        //find book by id
         $book = $this->bookRepository->getBookById($id);
         if (is_null($book)) {
             return response()->json(['message' => 'Book not found'], 404);
         }
-        //delete book
+
         $this->bookRepository->deleteBookById($id);
         return response()->json(null, 204);
     }

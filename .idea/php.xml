@@ -910,6 +910,9 @@
       <path value="$PROJECT_DIR$/UserService/vendor/teapot/status-code" />
       <path value="$PROJECT_DIR$/UserService/vendor/cloudinary/cloudinary_php" />
       <path value="$PROJECT_DIR$/UserService/vendor/cloudinary/transformation-builder-sdk" />
+      <path value="$PROJECT_DIR$/BookService/vendor/zircote/swagger-php" />
+      <path value="$PROJECT_DIR$/BookService/vendor/psr/cache" />
+      <path value="$PROJECT_DIR$/BookService/vendor/doctrine/annotations" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="8.1" />

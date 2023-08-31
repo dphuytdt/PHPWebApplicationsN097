@@ -21,17 +21,17 @@ class BookRepository implements BookRepositoryInterface
 
     public function getBookFree()
     {
-        return Book::where('is_free', 1)->get();
+        return Book::where('is_free', 1)->where('status', 1)->get();
     }
 
     public function getBookPaid()
     {
-        return Book::where('is_free', 0)->get();
+        return Book::where('is_free', 0)->where('status', 1)->get();
     }
 
     public function getBookByCategory($category_id)
     {
-        return Book::where('category_id', $category_id)->paginate(8);
+        return Book::where('category_id', $category_id)->where('status', 1)->paginate(8);
     }
 
     public function updateBook($id, $data)
@@ -45,7 +45,6 @@ class BookRepository implements BookRepositoryInterface
             (isset($data['cover_image']) && ($data['cover_image']  !== $book->cover_image))
             || (($data['cover_image'] != '') && ($data['cover_image']  !== $book->cover_image))
         ) {
-            //Storage::disk('dropbox')->delete($book->cover_image);
             $book->cover_image = $data['cover_image'];
             $book->image_extension = $data['image_extension'];
         }
@@ -70,7 +69,6 @@ class BookRepository implements BookRepositoryInterface
             isset($data['content']) && ($data['content']  !== $book->content)
             || (($data['content'] != '') && ($data['content']  !== $book->content))
         ) {
-            //Storage::disk('dropbox')->delete($book->content);
             $book->content = $data['content'];
         }
 
@@ -101,7 +99,7 @@ class BookRepository implements BookRepositoryInterface
     public function searchBook($keyword)
     {
         $query = Book::query();
-        $query->where('title', 'LIKE', '%' . $keyword . '%');
+        $query->where('title', 'LIKE', '%' . $keyword . '%')->where('status', 1);
         $query->orWhere('description', 'LIKE', '%' . $keyword . '%');
         $query->orWhere('content', 'LIKE', '%' . $keyword . '%');
         return $query->get();
@@ -129,7 +127,7 @@ class BookRepository implements BookRepositoryInterface
 
     public function getFreeBook()
     {
-        return Book::where('price', 0)->get();
+        return Book::where('price', 0)->where('status', 1)->get();
     }
 
     public function getAllBooksForAdmin()
@@ -144,9 +142,9 @@ class BookRepository implements BookRepositoryInterface
     public function getHomepageBooks()
     {
         $books = [];
-        $books['free'] = Book::where('price', 0)->orderBy('created_at', 'desc')->get();
-        $books['featured'] = Book::where('is_featured', 1)->orderBy('updated_at', 'desc')->get();
-        $books['new'] = Book::where('created_at', '>=', now()->subDays(7))->orWhere('updated_at', '>=', now()->subDays(7))->get();
+        $books['free'] = Book::where('price', 0)->where('status', 1)->orderBy('created_at', 'desc')->get();
+        $books['featured'] = Book::where('is_featured', 1)->where('status', 1)->orderBy('updated_at', 'desc')->get();
+        $books['new'] = Book::where('created_at', '>=', now()->subDays(7))->where('status', 1)->orWhere('updated_at', '>=', now()->subDays(7))->get();
 
         if (count($books['new']) == 0) {
             $books['new'] = Book::orderBy('updated_at', 'desc')->take(10)->get();
@@ -165,11 +163,12 @@ class BookRepository implements BookRepositoryInterface
         $dataType = strtolower($dataType);
 
         if ($dataType == 'free') {
-            return Book::where('price', 0)->orderBy('created_at', 'desc')->paginate(8);
+            return Book::where('price', 0)->where('status', 1)->orderBy('created_at', 'desc')->paginate(8);
         } else if ($dataType == 'featured') {
-            return Book::where('is_featured', 1)->orderBy('updated_at', 'desc')->paginate(8);
+            return Book::where('is_featured', 1)->where('status', 1)->orderBy('updated_at', 'desc')->paginate(8);
         } else if ($dataType == 'new') {
             $news = Book::where('created_at', '>=', now()->subDays(7))
+                ->where('status', 1)
                 ->orWhere('updated_at', '>=', now()->subDays(7))
                 ->paginate(8);
             if (count($news) == 0) {

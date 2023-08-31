@@ -107,20 +107,54 @@ class UserRepository implements UserRepositoryInterface
         $user->role = $data['role'];
         return $user->save();
     }
-    public function updateProfile($request, $id)
+    public function updateProfile($id, $data)
     {
-        $user = $this->user->where('id', $id)->first();
-        $user->fullname = $request->fullname ?? $user->fullname;
+        $user =User::where('id', $id)->first();
 
-        $userDetail = UserDetail::where('user_id', $id)->first();
-        $userDetail->phone = $request->phone ?? $userDetail->phone;
-        $userDetail->address = $request->address ?? $userDetail->address;
-        $userDetail->birthday = $request->birthday ?? $userDetail->birthday;
-        $userDetail->gender = $request->gender ?? $userDetail->gender;
+        if($user){
 
-        $userDetail->save();
+            $userDetail = UserDetail::where('user_id', $user->id)->first();
 
-        return $user->save();
+            if (
+                (($data['fullname']  !== $user->fullname))
+            ) {
+                $user->fullname = $data['fullname'];
+            }
+
+            if (
+                (($data['phone']  !== $userDetail->phone))
+            ) {
+                $userDetail->phone = $data['phone'];
+            }
+
+            if (
+                (($data['address']  !== $userDetail->address))
+            ) {
+                $userDetail->address = $data['address'];
+            }
+
+            if (
+                (($data['birthday']  !== $userDetail->birthday))
+            ) {
+                $userDetail->birthday = $data['birthday'];
+            }
+
+            if (
+                (($data['phone']  !== $userDetail->phone))
+            ) {
+                $userDetail->phone = $data['phone'];
+            }
+
+            if (
+                (($data['avatar']  !== $userDetail->avatar))
+            ) {
+                $userDetail->avatar = $data['avatar'];
+            }
+
+            return $user->save() && $userDetail->save();
+        }
+
+        return false;
     }
 
     public function upgradeUser($userId, $dateStart, $plan)

@@ -68,7 +68,7 @@ Route::group(['middleware' => 'locale'], function() {
 
         Route::group(['prefix' => 'profile'], function () {
             Route::get('/', [UserController::class, 'profile'])->name('profile');
-            Route::post('/{id}', [AuthController::class, 'postProfile'])->name('profile.update');
+            Route::post('{id}', [UserController::class, 'postProfile'])->name('profile.update');
         });
 
         Route::group(['prefix' => 'upgrade'], function () {

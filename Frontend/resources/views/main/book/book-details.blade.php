@@ -316,7 +316,6 @@
                                                         </div>
                                                     </div>
                                                     @if(isset($comment[1]))
-                                                        <!-- Start - Review Comment Reply-->
                                                         <ul class="comment-reply">
                                                             <li class="comment-reply-list">
                                                                 <div class="comment-wrapper">
@@ -339,20 +338,10 @@
                                                     @endif
                                                 </li> <!-- End - Review Comment list-->
                                             @endforeach
-                                        </ul> <!-- End - Review Comment -->
-                                    @else
-                                        <div class="review-form-text-top">
-                                            <h5>ADD A REVIEW</h5>
-                                            <p>Only logged in customers who have purchased this product may leave a review. </p>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-12">
-                                                <a href="{{ route('login') }}" class="btn btn-lg btn-block btn-danger">{{__('messages.LoginNow')}}</a>
-                                            </div>
-                                        </div>
+                                        </ul>
                                     @endif
                                 </div>
-                            </div> <!-- End Product Details Tab Content Singel -->
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -580,11 +569,9 @@
     }
 
     function generateNewReply(response) {
-        // Create the main div element with class "comment-wrapper"
         const commentWrapper = document.createElement("div");
         commentWrapper.classList.add("comment-wrapper");
 
-        // Create the div element with class "comment-img" and an img element inside
         const commentImgDiv = document.createElement("div");
         commentImgDiv.classList.add("comment-img");
         const commentImg = document.createElement("img");
@@ -592,15 +579,12 @@
         commentImg.alt = "";
         commentImgDiv.appendChild(commentImg);
 
-        // Create the div element with class "comment-content"
         const commentContentDiv = document.createElement("div");
         commentContentDiv.classList.add("comment-content");
 
-        // Create the div element with class "comment-content-top"
         const commentContentTopDiv = document.createElement("div");
         commentContentTopDiv.classList.add("comment-content-top");
 
-        // Create the div element with class "comment-content-left" and the h6 element inside
         const commentContentLeftDiv = document.createElement("div");
         commentContentLeftDiv.classList.add("comment-content-left");
         const commentName = document.createElement("h6");
@@ -610,7 +594,6 @@
 
         commentContentTopDiv.appendChild(commentContentLeftDiv);
 
-        // Create the div element with class "para-content" and a p element inside
         const paraContentDiv = document.createElement("div");
         paraContentDiv.classList.add("para-content");
         const para = document.createElement("p");
@@ -620,7 +603,6 @@
         commentContentDiv.appendChild(commentContentTopDiv);
         commentContentDiv.appendChild(paraContentDiv);
 
-        // Append all the created elements to the main commentWrapper element
         commentWrapper.appendChild(commentImgDiv);
         commentWrapper.appendChild(commentContentDiv);
 

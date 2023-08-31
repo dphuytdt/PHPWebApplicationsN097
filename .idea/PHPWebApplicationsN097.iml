@@ -42,10 +42,11 @@
       <sourceFolder url="file://$MODULE_DIR$/PaymentService/tests" isTestSource="true" packagePrefix="Tests\" />
       <sourceFolder url="file://$MODULE_DIR$/spec" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/tests" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/BookService/spec" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/ContentManagementService/spec" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/Frontend-Admin/spec" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/Frontend/spec" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/PaymentService/spec" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/UserService/spec" isTestSource="true" />
       <excludeFolder url="file://$MODULE_DIR$/BookService/vendor/brick/math" />
       <excludeFolder url="file://$MODULE_DIR$/BookService/vendor/composer" />
       <excludeFolder url="file://$MODULE_DIR$/BookService/vendor/dflydev/dot-access-data" />
@@ -925,7 +926,10 @@
       <excludeFolder url="file://$MODULE_DIR$/BookService/vendor/cloudinary-labs/cloudinary-laravel" />
       <excludeFolder url="file://$MODULE_DIR$/BookService/vendor/cloudinary/cloudinary_php" />
       <excludeFolder url="file://$MODULE_DIR$/BookService/vendor/cloudinary/transformation-builder-sdk" />
+      <excludeFolder url="file://$MODULE_DIR$/BookService/vendor/doctrine/annotations" />
+      <excludeFolder url="file://$MODULE_DIR$/BookService/vendor/psr/cache" />
       <excludeFolder url="file://$MODULE_DIR$/BookService/vendor/teapot/status-code" />
+      <excludeFolder url="file://$MODULE_DIR$/BookService/vendor/zircote/swagger-php" />
       <excludeFolder url="file://$MODULE_DIR$/ContentManagementService/vendor/cloudinary-labs/cloudinary-laravel" />
       <excludeFolder url="file://$MODULE_DIR$/ContentManagementService/vendor/cloudinary/cloudinary_php" />
       <excludeFolder url="file://$MODULE_DIR$/ContentManagementService/vendor/cloudinary/transformation-builder-sdk" />

@@ -108,22 +108,6 @@
             <label for="price" class="form-label">Price: <color style="color: red;">*</color></label>
             <input type="number" class="form-control" id="price" name="price">
         </div>
-        <div class="mb-3 quantiy">
-        </div>
-        <div class="mb-3 discount">
-        </div>
-        <script type="text/javascript">
-            $(document).ready(function(){
-                $('#price').keyup(function(){
-                    var price = $('#price').val();
-                    if(price > 0){
-                        $('.discount').html('<label for="image" class="form-label">Discount: % (Optional%)</label><input type="number" name="discount" class="form-control" id="discount" name="discount">');
-                    }else{
-                        $('.discount').html('');
-                    }
-                });
-            });
-        </script>
         <div class="mb-3 contentType">
             <label for="contentType" class="form-label">Is Featured <color style="color: red;">*</color></label>
             <select id="contentType" class="form-select" name="is_featured">

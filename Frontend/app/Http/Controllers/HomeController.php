@@ -22,23 +22,25 @@ class HomeController extends Controller
         $this->interactionService = env('INTERACTION_SERVICE_HOST', null);
     }
 
+    /**
+     * @throws GuzzleException
+     */
     public function index(Request $request){
         $httpService = app(HttpService::class);
         $client = $httpService->getClient();
 
+        $req2 = $client->get($this->bookService . 'category');
+        $categories = json_decode($req2->getBody(), true);
+
         try {
             $req1 = $client->get($this->bookService .'books/homepage');
             $books = json_decode($req1->getBody(), true);
-
-            $req2 = $client->get($this->bookService . 'category');
-            $categories = json_decode($req2->getBody(), true);
 
             $req3 = $client->get($this->contentService . 'user/news/latest');
             $latestNews = json_decode($req3->getBody(), true);
 
             return view('main.home.index')->with('books', $books)->with('categories', $categories)->with('latestNews', $latestNews);
         } catch (\Exception|GuzzleException $e) {
-            $categories = [];
             return view('errors.404')->with('categories', $categories);
         }
     }

@@ -20,7 +20,8 @@
         "spatie/pdf-to-text": "^1.52",
         "symfony/dom-crawler": "^6.3",
         "tymon/jwt-auth": "^2.0",
-        "weidner/goutte": "^2.3"
+        "weidner/goutte": "^2.3",
+        "zircote/swagger-php": "^4.7"
     },
     "require-dev": {
         "fakerphp/faker": "^1.9.1",

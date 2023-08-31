@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('phone')->nullable();
             $table->tinyInteger('gender')->default(0);
             $table->date('birthday')->nullable();
-            $table->string('avatar')->nullable();
+            $table->string('avatar')->default('https://static.thenounproject.com/png/5034901-200.png'); // default avatar
             $table->string('image_extension', 255)->nullable();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
         });

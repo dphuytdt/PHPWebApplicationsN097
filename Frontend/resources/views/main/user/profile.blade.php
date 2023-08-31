@@ -122,7 +122,7 @@
                             <div class="login_form_container">
                                 <div class="account_login_form">
                                     @if(session()->has('user')) @php $user_id = session()->get('user')['id']; @endphp @endif
-                                    <form action="{{route('profile.update' , $user_id)}}" method="POST">
+                                    <form action="{{route('profile.update' , $user_id)}}" method="POST" enctype="multipart/form-data" id="formProfile">
                                         @csrf
                                         <div class="input-radio">
                                             <span class="custom-radio">
@@ -144,12 +144,12 @@
                                             <div class="col-md-6 col-12">
                                                 <div class="personal-image">
                                                     <label class="label">
-                                                        <input type="file" accept="image/*" />
+                                                        <input type="file" accept="image/*" name="avatar" />
                                                         <figure class="personal-figure">
                                                             @if($user['user']['user_detail']['avatar'] === null)
                                                                 <img src="https://static.thenounproject.com/png/5034901-200.png" class="personal-avatar" id="imageAvatar" name="image" alt="avatar" />
                                                             @else
-                                                                <img src="{{ Storage::disk('dropbox')->url($user['user']['user_detail']['avatar']) }}" class="personal-avatar" id="imageAvatar" name="image" alt="avatar" />
+                                                                <img src="{{ $user['user']['user_detail']['avatar'] }}" class="personal-avatar" id="imageAvatar" name="image" alt="avatar" />
                                                             @endif
                                                             <figcaption class="personal-figcaption">
                                                                 <img src="https://raw.githubusercontent.com/ThiagoLuizNunes/angular-boilerplate/master/src/assets/imgs/camera-white.png" id="imageUpload" alt="camera" />
@@ -195,6 +195,7 @@
 <script type="text/javascript" src="{{asset('js/auth/profile.js')}}"></script>
 <script type="text/javascript">
     const fileInput = document.querySelector('input[type="file"]');
+
     fileInput.addEventListener("change", function () {
         const file = fileInput.files[0];
 
