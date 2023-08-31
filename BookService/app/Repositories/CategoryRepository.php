@@ -83,7 +83,6 @@ class CategoryRepository implements CategoryRepositoryInterface
             || ($data['image'] !== '' && ($data['image'] !== $category->image))
         ) {
             $category->image = $data['image'];
-            $category->image_extension = $data['image_extension'];
         }
 
         $category->updated_at = date('Y-m-d H:i:s');

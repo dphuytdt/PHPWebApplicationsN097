@@ -7,6 +7,7 @@
     "require": {
         "php": "^8.1",
         "amranidev/laracombee": "^0.2.1",
+        "cloudinary-labs/cloudinary-laravel": "^2.0",
         "fabpot/goutte": "^4.0",
         "guzzlehttp/guzzle": "^7.7",
         "laravel/framework": "^10.10",

@@ -52,10 +52,10 @@
                     border: 1px solid #ced4da;
                 }
             </style>
-            <select id="disabledSelect" class="form-select">
+            <select id="disabledSelect" name="status" class="form-select">
                 <option selected disabled>Select Status</option>
-                <option>Active</option>
-                <option>Deactivate</option>
+                <option value="1">Active</option>
+                <option value="0">Deactivate</option>
             </select>
         </div>
         <div class="mb-3">

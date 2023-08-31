@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
 use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Http\Request;
 use GuzzleHttp\Client;
@@ -49,13 +50,14 @@ class CategoryController extends Controller
     public function store(Request $request)
     {
         $imageFile = $request->file('image');
-        $pathImage = Storage::disk('dropbox')->putFile('categories/images', $imageFile);
+        $pathImage = Cloudinary::upload($imageFile->getRealPath())->getSecurePath();
 
         $data = [
             'name' => $request->name,
             'description' => $request->description,
             'image' => $pathImage,
             'image_extension' => $imageFile->getClientOriginalExtension(),
+            'status' => $request->status,
         ];
 
         $client = new Client();
@@ -67,6 +69,7 @@ class CategoryController extends Controller
                     'description' => $data['description'],
                     'image' => $data['image'],
                     'image_extension' => $data['image_extension'],
+                    'status' => $data['status'],
                 ]
             ]);
             Log::channel('admin_log')->info('Admin: ' .  session('admin')['email'] . ' create category successfully' );
@@ -82,33 +85,34 @@ class CategoryController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $data = $request->all();
+        $imageFile = $request->file('image');
+        $pathImage = Cloudinary::upload($imageFile->getRealPath())->getSecurePath();
 
-        if ($request->hasFile('image')) {
-            $imageFile = $request->file('image');
-            $imageContents = file_get_contents($imageFile->getPathname());
-            $base64Image = base64_encode($imageContents);
-            $imageExtension = $request->file('image')->getClientOriginalExtension();
-            $data['image'] = $base64Image;
-            $data['image_extension'] = $imageExtension;
-        }
+        $data = [
+            'name' => $request->name,
+            'description' => $request->description,
+            'image' => $pathImage,
+            'image_extension' => 'jpg', // TODO: get extension from file
+            'status' => $request->status,
+        ];
 
         $client = new Client();
 
         try {
             $client->post($this->bookService.'admin/categories/'.$id, [
-                'headers' => [
-                    'Accept' => 'application/json',
-                    'Content-Type' => 'application/json',
-                ],
                 'form_params' => [
-                    $data
+                    'name' => $data['name'] ?? '',
+                    'description' => $data['description'] ?? '',
+                    'image' => $data['image'] ?? '',
+                    'image_extension' => $data['image_extension'] ?? '',
+                    'status' => $data['status'] ?? 1,
                 ]
             ]);
 
             Log::channel('admin_log')->info('Admin: ' .  session('admin')['email'] . ' update category successfully' );
             return redirect()->route('category.index')->with('success', 'Update category successfully');
         } catch (\Exception|GuzzleException $e) {
+            dd($e);
             Log::channel('admin_log')->error('Admin: ' .  session('admin')['email'] . ' cannot update category' );
             return view('home.category.list')->withErrors(['errors' => 'Cannot connect to server']);
         }

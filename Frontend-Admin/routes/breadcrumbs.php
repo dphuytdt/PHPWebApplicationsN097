@@ -80,3 +80,8 @@ use DaveJamesMiller\Breadcrumbs\Facades\Breadcrumbs;
         $trail->parent('home');
         $trail->push('Create Slide', route('slides.create'));
     });
+
+    Breadcrumbs::for('getBilling', function ($trail) {
+        $trail->parent('home');
+        $trail->push('Statistical', route('getBilling'));
+    });

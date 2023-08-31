@@ -1,21 +1,6 @@
 @extends('layouts.admin')
 @section('content')
 @section('title', 'Category List')
-{{-- <script src="https://code.jquery.com/jquery-2.2.4.js"></script> --}}
-<script>
-    $(document).ready(function() {
-      $("#image").on("change", function() {
-          const input = this;
-          if (input.files && input.files[0]) {
-              const reader = new FileReader();
-              reader.onload = function(e) {
-                $('#uploadedImage').attr('src', e.target.result);
-          }
-          reader.readAsDataURL(input.files[0]);
-        }
-      });
-    });
-</script>
 @php
     $numberLimit = 30;
 @endphp
@@ -44,7 +29,7 @@
                                 <tr>
                                     <td>{{Illuminate\Support\Str::limit($category['name'],  $numberLimit)}}</td>
                                     <td>
-                                        <img src="{{ Storage::disk('dropbox')->url($category['image']) }}" width="100px" height="100px" alt="Image">
+                                        <img src="{{ $category['image'] }}" width="100px" height="100px" alt="Image">
                                     </td>
                                     <td>
                                     @if($category['status'] == 1)
@@ -119,7 +104,7 @@
                               <input type="file" class="form-control" id="image" name="image" accept="image/*">
                             </div>
                             <div class="col-md-3">
-                              <img src="{{ Storage::disk('dropbox')->url($category['image']) }}" width="100px" height="100px" name="image" class="img-thumbnail" id="uploadedImage">
+                              <img src="{{ $category['image'] }}" width="100px" height="100px" name="image" class="img-thumbnail" id="uploadedImage">
                             </div>
                           </div>
                     </div>
@@ -137,7 +122,7 @@
                       </div>
                       <div class="mb-3">
                         <label for="description" class="form-label">Description</label>
-                        <textarea class="form-control" id="description" rows="3" style="resize: none;" name="description" >{{Illuminate\Support\Str::limit($category['description'],  $numberLimit)}}</textarea>
+                        <textarea class="form-control" id="description" rows="6" style="resize: none;" name="description" >{{$category['description']}}</textarea>
                     </div>
             </div>
             <div class="modal-footer">
@@ -153,10 +138,23 @@
 
 <script>
     $(document).ready(function() {
-        //custom 5 row per page
         $('#listCategory').dataTable( {
             "pageLength": 3,
         } );
+    });
+</script>
+<script>
+    $(document).ready(function() {
+        $("#image").on("change", function() {
+            const input = this;
+            if (input.files && input.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    $('#uploadedImage').attr('src', e.target.result);
+                }
+                reader.readAsDataURL(input.files[0]);
+            }
+        });
     });
 </script>
 @endsection

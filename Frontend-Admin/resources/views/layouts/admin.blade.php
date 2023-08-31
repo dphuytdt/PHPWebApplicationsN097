@@ -137,10 +137,9 @@
                     <span>Comment</span></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="">
-                    <i class="fas fa-file-signature"></i>
-                    <span>Customer Feedback</span>
-                </a>
+                <a class="nav-link" href="{{ route('getBilling')}}">
+                    <i class="fas fa-chart-bar"></i>
+                    <span>Statistical</span></a>
             </li>
             <hr class="sidebar-divider d-none d-md-block">
             <div class="text-center d-none d-md-inline">

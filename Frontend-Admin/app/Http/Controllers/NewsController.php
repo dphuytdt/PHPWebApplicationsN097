@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Http\Request;
@@ -49,7 +50,7 @@ class NewsController extends Controller
         if ($request->hasFile('image')) {
             try{
                 $image = $request->file('image');
-                $pathImage = Storage::disk('dropbox')->putFile('news/images', $image);
+                $pathImage = Cloudinary::upload($image->getRealPath())->getSecurePath();
             } catch (\Exception $e) {
                 Log::channel('admin_log')->error('Admin: ' .  session('admin')['email'] . ' cannot read file' );
                 return redirect()->route('books.index')->withErrors(['errors' => 'Cannot read file']);
@@ -86,7 +87,7 @@ class NewsController extends Controller
         if ($request->hasFile('image')) {
             try{
                 $image = $request->file('image');
-                $pathImage = Storage::disk('dropbox')->putFile('news/images', $image);
+                $pathImage = Cloudinary::upload($image->getRealPath())->getSecurePath();
             } catch (\Exception $e) {
                 return redirect()->route('news.index')->withErrors(['errors' => 'Cannot read file']);
             }

@@ -81,6 +81,10 @@ Route::group(['middleware' => 'check.auth'] , function(){
         Route::post('delete/{id}', [NewsController::class, 'delete'])->name('news.delete');
 
     });
+
+    Route::get('get-billing', [SystemController::class, 'getBilling'])->name('getBilling');
+    Route::get('export-statistical', [SystemController::class, 'exportStatistical'])->name('exportStatistical');
+
     Route::get('profile/{id}', [UserController::class, 'profile'])->name('profile');
     Route::get('setting', [SystemController::class, 'setting'])->name('setting');
     Route::get('check-log', [SystemController::class, 'checkLog'])->name('checkLog');

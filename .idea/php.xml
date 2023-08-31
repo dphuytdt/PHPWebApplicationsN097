@@ -886,6 +886,30 @@
       <path value="$PROJECT_DIR$/BookService/vendor/symfony/process" />
       <path value="$PROJECT_DIR$/BookService/vendor/spatie/laravel-ignition" />
       <path value="$PROJECT_DIR$/PaymentService/vendor/psr/clock" />
+      <path value="$PROJECT_DIR$/BookService/vendor/teapot/status-code" />
+      <path value="$PROJECT_DIR$/BookService/vendor/cloudinary-labs/cloudinary-laravel" />
+      <path value="$PROJECT_DIR$/BookService/vendor/cloudinary/cloudinary_php" />
+      <path value="$PROJECT_DIR$/BookService/vendor/cloudinary/transformation-builder-sdk" />
+      <path value="$PROJECT_DIR$/ContentManagementService/vendor/cloudinary-labs/cloudinary-laravel" />
+      <path value="$PROJECT_DIR$/ContentManagementService/vendor/cloudinary/transformation-builder-sdk" />
+      <path value="$PROJECT_DIR$/ContentManagementService/vendor/cloudinary/cloudinary_php" />
+      <path value="$PROJECT_DIR$/ContentManagementService/vendor/teapot/status-code" />
+      <path value="$PROJECT_DIR$/Frontend/vendor/cloudinary-labs/cloudinary-laravel" />
+      <path value="$PROJECT_DIR$/Frontend/vendor/teapot/status-code" />
+      <path value="$PROJECT_DIR$/Frontend/vendor/cloudinary/cloudinary_php" />
+      <path value="$PROJECT_DIR$/Frontend/vendor/cloudinary/transformation-builder-sdk" />
+      <path value="$PROJECT_DIR$/Frontend-Admin/vendor/cloudinary/cloudinary_php" />
+      <path value="$PROJECT_DIR$/Frontend-Admin/vendor/cloudinary-labs/cloudinary-laravel" />
+      <path value="$PROJECT_DIR$/Frontend-Admin/vendor/cloudinary/transformation-builder-sdk" />
+      <path value="$PROJECT_DIR$/Frontend-Admin/vendor/teapot/status-code" />
+      <path value="$PROJECT_DIR$/PaymentService/vendor/cloudinary/cloudinary_php" />
+      <path value="$PROJECT_DIR$/PaymentService/vendor/cloudinary-labs/cloudinary-laravel" />
+      <path value="$PROJECT_DIR$/PaymentService/vendor/cloudinary/transformation-builder-sdk" />
+      <path value="$PROJECT_DIR$/PaymentService/vendor/teapot/status-code" />
+      <path value="$PROJECT_DIR$/UserService/vendor/cloudinary-labs/cloudinary-laravel" />
+      <path value="$PROJECT_DIR$/UserService/vendor/teapot/status-code" />
+      <path value="$PROJECT_DIR$/UserService/vendor/cloudinary/cloudinary_php" />
+      <path value="$PROJECT_DIR$/UserService/vendor/cloudinary/transformation-builder-sdk" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="8.1" />
@@ -895,6 +919,7 @@
   <component name="PhpUnit">
     <phpunit_settings>
       <PhpUnitSettings configuration_file_path="$PROJECT_DIR$/ContentManagementService/phpunit.xml" custom_loader_path="$PROJECT_DIR$/ContentManagementService/vendor/autoload.php" use_configuration_file="true" />
+      <PhpUnitSettings configuration_file_path="$PROJECT_DIR$/UserService/phpunit.xml" custom_loader_path="$PROJECT_DIR$/UserService/vendor/autoload.php" use_configuration_file="true" />
       <PhpUnitSettings configuration_file_path="$PROJECT_DIR$/BookService/phpunit.xml" custom_loader_path="$PROJECT_DIR$/BookService/vendor/autoload.php" use_configuration_file="true" />
       <PhpUnitSettings configuration_file_path="$PROJECT_DIR$/Frontend-Admin/phpunit.xml" custom_loader_path="$PROJECT_DIR$/Frontend-Admin/vendor/autoload.php" use_configuration_file="true" />
       <PhpUnitSettings configuration_file_path="$PROJECT_DIR$/Frontend/phpunit.xml" custom_loader_path="$PROJECT_DIR$/Frontend/vendor/autoload.php" use_configuration_file="true" />

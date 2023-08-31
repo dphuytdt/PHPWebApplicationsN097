@@ -69,7 +69,7 @@
                                     @foreach ($categories as $category)
                                     <li class="recent-post-list">
                                         <a href="{{URL::to('/books/category/'.$category['id'])}}" class="post-image">
-                                            <img src="{{ Storage::disk('dropbox')->url($category['image']) }}" alt="" />
+                                            <img src="{{ $category['image'] }}" alt="" />
                                         </a>
                                         <div class="post-content">
                                             <a class="post-link" href="#"> {{$category['name']}}</a>
@@ -105,7 +105,7 @@
                         <div class="col-md-6 col-12">
                             <div class="blog-feed-single">
                                 <a href="{{URL::to('/book-details/'.$item['id'])}}" class="blog-feed-img-link">
-                                    <img src="{{ Storage::disk('dropbox')->url($item['cover_image']) }}" alt="" class="blog-feed-img" />
+                                    <img src="{{ $item['cover_image'] }}" alt="" class="blog-feed-img" />
                                 </a>
                                 <div class="blog-feed-content">
                                     <div class="blog-feed-post-meta">

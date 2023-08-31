@@ -45,7 +45,7 @@
                                 <tr>
                                     <td>{{ ++$key }}</td>
                                     <td>{{ $book['title'] }}</td>
-                                    <td><img src="{{ Storage::disk('dropbox')->url($book['cover_image']) }}" alt="" width="100px" height="100px"></td>
+                                    <td><img src="{{ $book['cover_image'] }}" alt="" width="100px" height="100px"></td>
                                     <td>{{ Illuminate\Support\Str::limit($book['author'], $numberLimit) }}</td>
                                    <td>{{ Illuminate\Support\Str::limit($book['category_name'], $numberLimit) }}</td>
                                     <td>
@@ -96,7 +96,7 @@
                                                 </button>
                                             </div>
 
-                                            <iframe class="iframe" src="https://docs.google.com/gview?url={{Storage::disk('dropbox')->url($book['content'])}}&embedded=true" frameborder="0"  sandbox="allow-scripts allow-same-origin"></iframe>
+                                            <iframe class="iframe" src="https://docs.google.com/gview?url={{$book['content']}}&embedded=true" frameborder="0"  sandbox="allow-scripts allow-same-origin"></iframe>
 
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

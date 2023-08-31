@@ -17,4 +17,6 @@ interface CartRepositoryInterface
 
     public function addPaymentHistory(Request $request);
 
+    public function getTotalPayment();
+
 }

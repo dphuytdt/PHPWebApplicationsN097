@@ -66,6 +66,8 @@ class BookController extends Controller
                 $totalRate = $totalRate / count($comments);
             }
 
+            $result['book']['price'] = number_format($result['book']['price'], 0, ',', '.');
+
             return view('main.book.book-details', compact('result', 'isPayment', 'categories', 'relatedBooks', 'comments', 'yourComment', 'totalRate'));
         }
         catch (\Exception|GuzzleException|NotFoundExceptionInterface|ContainerExceptionInterface $e) {

@@ -29,6 +29,7 @@ class Book extends Model
         'is_featured',
         'status',
         'rating',
+        'is_vip_valid',
         'created_at',
         'updated_at',
         'deleted_at',

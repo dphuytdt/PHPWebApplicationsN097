@@ -24,7 +24,7 @@
     </div>
     <div class="container">
         <div class="container">
-            <iframe  class="iframe" src="https://docs.google.com/gview?url={{Storage::disk('dropbox')->url($result['book']['content'])}}&embedded=true" frameborder="0" sandbox="allow-scripts allow-same-origin"></iframe>
+            <iframe  class="iframe" src="https://docs.google.com/gview?url={{$result['book']['content']}}&embedded=true" frameborder="0" sandbox="allow-scripts allow-same-origin"></iframe>
         </div>
     </div>
 

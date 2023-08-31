@@ -67,7 +67,7 @@
                                     @foreach($recentNews as $news)
                                         <li class="recent-post-list">
                                             <a href="{{route('newsDetail' , $news['id'])}}" class="post-image">
-                                                <img src="{{ Storage::disk('dropbox')->url($news['image']) }}" alt="" />
+                                                <img src="{{ $news['image'] }}" alt="" />
                                             </a>
                                             <div class="post-content">
                                                 <a class="post-link" href="{{route('newsDetail' , $news['id'])}}">{{ $news['title'] }}</a>
@@ -119,7 +119,7 @@
                             <div class="col-md-6 col-12">
                                 <div class="blog-feed-single">
                                     <a href="{{route('newsDetail' , $article['id'])}}" class="blog-feed-img-link">
-                                        <img src="{{ Storage::disk('dropbox')->url($article['image']) }}" alt="" class="blog-feed-img" />
+                                        <img src="{{ $article['image'] }}" alt="" class="blog-feed-img" />
                                     </a>
                                     <div class="blog-feed-content">
                                         <div class="blog-feed-post-meta">

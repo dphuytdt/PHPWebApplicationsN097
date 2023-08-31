@@ -32,10 +32,6 @@ class WishlistRepository implements WishlistRepositoryInterface
     {
         $wishlist = Wishlist::where('user_id', $userID)->where('status', 0)->get();
 
-        foreach ($wishlist as $key => $value) {
-            $value->cover_image = Storage::disk('dropbox')->url($value->cover_image);
-        }
-
         return $wishlist ? $wishlist : false;
     }
 

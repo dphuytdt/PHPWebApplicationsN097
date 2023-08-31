@@ -62,7 +62,7 @@
                                     <td>{{Illuminate\Support\Str::limit($new['title'], $numberLimit)}}</td>
                                     <td>{{Illuminate\Support\Str::limit($new['slug'], $numberLimit)}}</td>
                                     <td>{{Illuminate\Support\Str::limit($new['description'], $numberLimit)}}</td>
-                                    <td><img src="{{ Storage::disk('dropbox')->url($new['image']) }}" alt="" width="100px" height="100px"></td>
+                                    <td><img src="{{ $new['image'] }}" alt="" width="100px" height="100px"></td>
                                     <td>
                                         <a  class="btn btn-info btn-sm" data-target=".bd-example-modal-lg-{{$new['id']}}" data-toggle="modal">View</a>
                                     </td>
@@ -160,22 +160,22 @@
                                         New Title
                                         <color style="color: red">*</color>
                                     </label>
-                                    <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="title" value="{{Illuminate\Support\Str::limit($new['title'], $numberLimit) ?? ''}}">
+                                    <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="title" value="{{$new['title']}}">
                                 </div>
                                 <div class="mb-3">
                                     <label for="exampleInputEmail1" class="form-label">New Slug (Optional)</label>
-                                    <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="slug" value="{{Illuminate\Support\Str::limit($new['slug'], $numberLimit) ?? ''}}">
+                                    <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="slug" value="{{$new['slug']}}">
                                 </div>
                                 <div class="mb-3">
                                     <label for="exampleFormControlTextarea1" class="form-label">Description (Optional)</label>
-                                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="4" name="description" >{{Illuminate\Support\Str::limit($new['description'], $numberLimit) ?? ''}}</textarea>
+                                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="4" name="description" >{{$new['description'], $numberLimit}}</textarea>
                                 </div>
                                 <div class="mb-3">
                                     <label for="exampleFormControlTextarea1" class="form-label">
                                         Content
                                         <color style="color: red">*</color>
                                     </label>
-                                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="7" name="content" >{{Illuminate\Support\Str::limit($new['content'], $numberLimit) ?? ''}}</textarea>
+                                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="7" name="content" >{{$new['content']}}</textarea>
                                 </div>
                                 <div class="mb-3">
                                     <label for="exampleInputPassword1" class="form-label">
@@ -187,7 +187,7 @@
                                             <input type="file" class="form-control" id="exampleInputPassword1" name="image" accept="image/*">
                                         </div>
                                         <div class="col-md-3">
-                                            <img src="{{ Storage::disk('dropbox')->url($new['image']) }}" alt="{{$new['title']}}" width="100px" height="100px" class="img-thumbnail" id="uploadedImage">
+                                            <img src="{{ $new['image'] }}" alt="{{$new['title']}}" width="100px" height="100px" class="img-thumbnail" id="uploadedImage">
                                         </div>
                                     </div>
                                 </div>

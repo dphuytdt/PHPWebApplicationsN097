@@ -43,3 +43,5 @@ Route::get('is-payment/{bookId}/{userId}', [OrderHistoryController::class, 'isPa
 Route::post('add-payment-history', [CartController::class, 'addPaymentHistory']);
 
 Route::get('get-payment-history/{userId}', [CartController::class, 'getPaymentHistory']);
+
+Route::get('get-total-payment', [CartController::class, 'getTotalPayment']);

@@ -1,10 +1,9 @@
 @extends('layouts.admin')
 @section('content')
-@section('title', 'Category List')
+@section('title', 'Create Book')
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.5/dist/jquery.validate.js" crossorigin="anonymous"></script>
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-
 <script>
     $(document).ready(function() {
       $("#exampleInputPassword1").on("change", function() {
@@ -80,7 +79,7 @@
         </div>
         <div class="mb-3">
             <label for="content" class="form-label">Content: <color style="color: red;">*</color></label>
-            <input type="file" class="form-control" id="content" name="contentPdf" accept="application/pdf">
+            <input type="file" class="form-control" id="contentPdf" name="contentPdf" accept="application/pdf">
         </div>
         <div class="mb-3">
             <label for="author" class="form-label">Author: <color style="color: red;">*</color></label>

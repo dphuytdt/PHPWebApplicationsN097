@@ -33,10 +33,6 @@ class CartRepository implements CartRepositoryInterface
     {
         $cart = Cart::where('user_id', $userID)->where('status', 0)->get();
 
-        foreach ($cart as $key => $value) {
-            $value->cover_image = Storage::disk('dropbox')->url($value->cover_image);
-        }
-
         return $cart ? $cart : false;
     }
 
@@ -90,5 +86,12 @@ class CartRepository implements CartRepositoryInterface
         $paymentHistory->save();
 
         return true;
+    }
+
+    public function getTotalPayment()
+    {
+        $historyPayemnt = new HistoryPayment();
+
+        return $historyPayemnt->all();
     }
 }

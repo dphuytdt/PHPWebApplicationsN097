@@ -26,9 +26,7 @@ class CartController extends Controller
                 'message' => 'Book already in cart'
             ], 400);
         }else{
-            $bookImage = $request->bookImage;
-            $imagePath = Storage::disk('dropbox')->putFile('cart/images', $bookImage);
-            $request->bookImage = $imagePath;
+            $request->bookImage = $request->bookImage;
             $result = $this->cartRepository->add($request);
 
             if($result){
@@ -110,5 +108,10 @@ class CartController extends Controller
             'message' => 'Payment successfully',
             'data' => $result
         ], 200);
+    }
+
+    public function getTotalPayment() {
+        $result = $this->cartRepository->getTotalPayment();
+        return response()->json($result, 200);
     }
 }

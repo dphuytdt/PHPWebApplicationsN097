@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Http\Request;
@@ -58,13 +59,11 @@ class BookController extends Controller
      */
     public function store(Request $request)
     {
-        $image = $request->file('image');
-        $content = $request->file('contentPdf');
-        $client = new Client();
+        $imageFile = $request->file('image');
+        $contentFile = $request->file('contentPdf');
 
-        $pathImage = Storage::disk('dropbox')->putFile('books/images', $image);
-
-        $pathContent = Storage::disk('dropbox')->putFile('books/contents', $content);
+        $imagePath = Cloudinary::upload($imageFile->getRealPath())->getSecurePath();
+        $contentPath = Cloudinary::uploadFile($contentFile->getRealPath())->getSecurePath();
 
 
         $data = [
@@ -77,10 +76,12 @@ class BookController extends Controller
             'status' => $request->status,
             'is_vip_valid' => $request->is_vip_valid,
             'is_featured' => $request->is_featured,
-            'image_extension' => $image->getClientOriginalExtension(),
+            'image_extension' => 'jpg',
         ];
 
-        if($pathImage && $pathContent) {
+        if($imagePath && $contentPath) {
+
+            $client = new Client();
             try{
                 $client->post($this->bookService.'admin/books', [
                     'form_params' => [
@@ -90,11 +91,11 @@ class BookController extends Controller
                         'category_id' => $data['category_id'],
                         'price' => $data['price'],
                         'discount' => $data['discount'],
-                        'contentPdf' => $pathContent,
+                        'contentPdf' => $contentPath,
                         'status' => $data['status'],
                         'is_vip_valid' => $data['is_vip_valid'],
                         'is_featured' => $data['is_featured'],
-                        'image' => $pathImage,
+                        'image' => $imagePath,
                         'image_extension' => $data['image_extension'],
                     ]
                 ]);
@@ -136,12 +137,12 @@ class BookController extends Controller
         if ($request->hasFile('image')) {
             $imageFile = $request->file('image');
             $imageExtension = $imageFile->getClientOriginalExtension();
-            $imagePath = Storage::disk('dropbox')->putFile('books/images', $imageFile);
+            $imagePath = Cloudinary::upload($imageFile->getRealPath())->getSecurePath();
         }
 
         if ($request->hasFile('content')) {
             $contentFile = $request->file('content');
-            $contentPath = Storage::disk('dropbox')->putFile('books/contents', $contentFile);
+            $contentPath = Cloudinary::uploadFile($contentFile->getRealPath())->getSecurePath();
         }
 
         $client = new Client();

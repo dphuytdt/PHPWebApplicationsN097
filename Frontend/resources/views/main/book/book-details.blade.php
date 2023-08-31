@@ -46,7 +46,7 @@
                 <div class="product-details-gallery-area">
                     <div class="product-large-image product-large-image-horaizontal">
                         <div class="product-image-large-single zoom-image-hover">
-                            <img src="{{ Storage::disk('dropbox')->url($result['book']['cover_image']) }}" alt="" />
+                            <img src="{{ $result['book']['cover_image'] }}" alt="" />
                         </div>
                     </div>
                 </div>
@@ -88,23 +88,30 @@
                         <span class="badge badge-success">Is valid for VIP</span>
                         @endif
                         <div class="d-flex align-items-center">
-                            @php $user = session()->get('user'); $vip_expired_date = isset($user) ? date("d-m-Y", strtotime($user['valid_vip'])) : date("d-m-Y", strtotime(date("Y-m-d"))); $today = date("d-m-Y", strtotime(date("Y-m-d")));
-                            $isReadNow = ($result['book']['price'] == 0) || (($vip_expired_date > $today) && ($result['book']['is_vip_valid'] == 1)) || ($isPayment['data']) || $user['role'] === 'ROLE_ADMIN'; @endphp @if(!session()->has('user'))
+                            @php $bookPrice = $result['book']['price'];  $user = session()->get('user'); $vip_expired_date = isset($user) ? date("d-m-Y", strtotime($user['valid_vip'])) : date("d-m-Y", strtotime(date("Y-m-d"))); $today = date("d-m-Y", strtotime(date("Y-m-d")));@endphp
+                            @if(!session()->has('user'))
                             <div class="product-add-to-cart-btn">
                                 <a href="{{route('login')}}">{{__('messages.plsLogin')}}</a>
                             </div>
-                            @else @if ($isReadNow)
-                            <div class="product-add-to-cart-btn">
-                                <a href="{{route('readBook', $result['book']['id'])}}" target="_blank">{{__('messages.readNow')}}</a>
-                            </div>
                             @else
-                            <div class="product-add-to-cart-btn">
-                                <a id="addCartDetails" href="{{route('cart.add')}}" data-toggle="modal" data-target="#modalAddcart">{{__('messages.addToCart')}}</a>
-                            </div>
-                            @endif @endif
+                                @php
+                                    $isReadNow =
+                                    ($bookPrice == 0)
+                                    || (($vip_expired_date > $today) && ($result['book']['is_vip_valid'] == 1))
+                                    || ($isPayment['data']) || $user['role'] === 'ROLE_ADMIN';
+                                @endphp
+                                @if ($isReadNow)
+                                    <div class="product-add-to-cart-btn">
+                                        <a href="{{route('readBook', $result['book']['id'])}}" target="_blank">{{__('messages.readNow')}}</a>
+                                    </div>
+                                @else
+                                    <div class="product-add-to-cart-btn">
+                                        <a id="addCartDetails" href="{{route('cart.add')}}" data-toggle="modal" data-target="#modalAddcart">{{__('messages.addToCart')}}</a>
+                                    </div>
+                                @endif
+                            @endif
                             <input type="hidden" name="_token" value="{{csrf_token()}}" />
                         </div>
-
                     </div>
                     <br />
                     <div class="product-details-meta mb-20">
@@ -178,7 +185,7 @@
                             </div>
                             <div class="tab-pane active show" id="review">
                                 <div class="single-tab-content-item">
-                                    @if(session()->has('user') && ($isPayment['data'] || $result['book']['price'] == 0))
+                                    @if(session()->has('user') && ($isPayment['data'] || $result['book']['price'] === 0))
                                         @if(!isset($yourComment) && $user['role'] != 'ROLE_ADMIN')
                                             <div class="review-form">
                                                 <div class="review-form-text-top">
@@ -340,7 +347,7 @@
                                         </div>
                                         <div class="row">
                                             <div class="col-12">
-                                                <a href="{{ route('login') }}" class="btn btn-lg btn-block btn-primary">{{__('messages.LoginNow')}}</a>
+                                                <a href="{{ route('login') }}" class="btn btn-lg btn-block btn-danger">{{__('messages.LoginNow')}}</a>
                                             </div>
                                         </div>
                                     @endif
@@ -374,7 +381,7 @@
                         <div class="product-default-single border-around">
                             <div class="product-img-warp">
                                 <a href="{{route('bookDetails', $book['id'])}}" class="product-default-img-link">
-                                    <img src="{{ Storage::disk('dropbox')->url($book['cover_image']) }}" alt="" class="product-default-img img-fluid">
+                                    <img src="{{ $book['cover_image'] }}" alt="" class="product-default-img img-fluid">
                                 </a>
                                 <div class="product-action-icon-link">
                                     <ul>

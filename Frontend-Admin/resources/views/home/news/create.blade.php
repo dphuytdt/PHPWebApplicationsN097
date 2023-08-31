@@ -1,6 +1,4 @@
-@extends('layouts.admin') @section('content') @section('title', 'Create News') {{--
-<script src="https://code.jquery.com/jquery-2.2.4.js"></script>
---}}
+@extends('layouts.admin') @section('content') @section('title', 'Create News')
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.5/dist/jquery.validate.js" crossorigin="anonymous"></script>
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>

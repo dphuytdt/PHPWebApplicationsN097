@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Http\Request;
@@ -64,7 +65,7 @@ class SlideShowController extends Controller
     {
         if ($request->hasFile('image')) {
             $image = $request->file('image');
-            $pathImage = Storage::disk('dropbox')->putFile('slideShow/images', $image);
+            $pathImage = Cloudinary::upload($image->getRealPath())->getSecurePath();
         }
 
         $client = new Client();
@@ -88,7 +89,7 @@ class SlideShowController extends Controller
     public function store(Request $request)
     {
         $image = $request->file('image');
-        $pathImage = Storage::disk('dropbox')->putFile('slideShow/images', $image);
+        $pathImage = Cloudinary::upload($image->getRealPath())->getSecurePath();
 
         $client = new Client();
         try {
