@@ -54,24 +54,27 @@ class UserController extends Controller
         if ($request->hasFile('avatar')) {
             $imageFile = $request->file('avatar');
             $imagePath = Cloudinary::upload($imageFile->getRealPath())->getSecurePath();
-            dd($imagePath);
         }
 
         $data = [
-            'gender' => $request->gender ?? null,
-            'fullname' => $request->fullname ?? null,
-            'birthday' => $request->birthday ?? null,
-            'address' => $request->address ?? null,
-            'phone' => $request->phone ?? null,
+            'gender' => $request->gender ?? '',
+            'fullname' => $request->fullname ?? '',
+            'birthday' => $request->birthday ?? '',
+            'address' => $request->address ?? '',
+            'phone' => $request->phone ?? '',
             'avatar' => $imagePath ?? null,
         ];
-
         $client = new Client();
 
         try {
-            $client->post($this->userService.'update-profile/'.session()->get('user')['id'], [
+            $client->post($this->userService.'auth/update-profile/'.session()->get('user')['id'], [
+                'headers' => [
+                    'Authorization' => 'Bearer ' . session('token'),
+                ],
                 'form_params' => $data
             ]);
+
+            return redirect()->back()->with('success', 'Update profile successfully!');
 
         } catch (\Exception|\Throwable|GuzzleException $e) {
             return redirect()->back()->with('error', 'Something went wrong!');

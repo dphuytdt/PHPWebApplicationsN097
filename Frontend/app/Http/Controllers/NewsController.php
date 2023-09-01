@@ -138,4 +138,43 @@ class NewsController extends Controller
             return view('errors.404')->with('categories', $categories);
         }
     }
+
+    public function viewMore(Request $request)
+    {
+        $client = new Client();
+
+        $req2 = $client->get($this->bookService . 'category');
+        $categories = json_decode($req2->getBody(), true);
+
+
+        try {
+            $req = $client->get($this->contentService.'user/news/view-more');
+
+            if(json_decode($req->getBody(), true)){
+                $news = json_decode($req->getBody(), true);
+                $recentNews = $news['newsRecent'];
+                $tags = $news['tags'];
+
+                $perPage = 8;
+                $currentPage = $request->query('page', 1);
+
+                $paginator = new LengthAwarePaginator(
+                    $news['data'],
+                    $news['total'],
+                    $perPage,
+                    $currentPage,
+                    ['path' => $request->url(), 'query' => $request->query()]
+                );
+                return view('main.news.view-more', compact('paginator', 'recentNews', 'tags', 'categories'));
+            }
+            else{
+                $paginator = [];
+                return view('main.news.view-more')->with('error', 'No result found')->with('paginator', $paginator)->with('categories', $categories);
+            }
+        }
+        catch (\Exception|GuzzleException $e) {
+            $paginator = [];
+            return view('main.news.view-more')->with('error', 'No result found')->with('paginator', $paginator)->with('categories', $categories);
+        }
+    }
 }

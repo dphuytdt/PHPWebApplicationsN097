@@ -913,6 +913,8 @@
       <path value="$PROJECT_DIR$/BookService/vendor/zircote/swagger-php" />
       <path value="$PROJECT_DIR$/BookService/vendor/psr/cache" />
       <path value="$PROJECT_DIR$/BookService/vendor/doctrine/annotations" />
+      <path value="$PROJECT_DIR$/BookService/vendor/swagger-api/swagger-ui" />
+      <path value="$PROJECT_DIR$/BookService/vendor/darkaonline/l5-swagger" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="8.1" />
@@ -921,7 +923,6 @@
   </component>
   <component name="PhpUnit">
     <phpunit_settings>
-      <PhpUnitSettings configuration_file_path="$PROJECT_DIR$/ContentManagementService/phpunit.xml" custom_loader_path="$PROJECT_DIR$/ContentManagementService/vendor/autoload.php" use_configuration_file="true" />
       <PhpUnitSettings configuration_file_path="$PROJECT_DIR$/UserService/phpunit.xml" custom_loader_path="$PROJECT_DIR$/UserService/vendor/autoload.php" use_configuration_file="true" />
       <PhpUnitSettings configuration_file_path="$PROJECT_DIR$/BookService/phpunit.xml" custom_loader_path="$PROJECT_DIR$/BookService/vendor/autoload.php" use_configuration_file="true" />
       <PhpUnitSettings configuration_file_path="$PROJECT_DIR$/Frontend-Admin/phpunit.xml" custom_loader_path="$PROJECT_DIR$/Frontend-Admin/vendor/autoload.php" use_configuration_file="true" />

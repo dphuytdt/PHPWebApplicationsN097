@@ -125,12 +125,25 @@
                                     <form action="{{route('profile.update' , $user_id)}}" method="POST" enctype="multipart/form-data" id="formProfile">
                                         @csrf
                                         <div class="input-radio">
-                                            <span class="custom-radio">
-                                                <label for="male"></label>
-                                                <input type="radio" value="0" id="male" name="gender" @if($user['user']['user_detail']['gender'] === 1) @endif /> Mr.</span>
-                                            <span class="custom-radio">
-                                                <label for="female"></label>
-                                                <input type="radio" value="0" id="female" name="gender" @if($user['user']['user_detail']['gender'] === 0) @endif /> Mrs.</span>
+                                            @if($user['user']['user_detail']['gender'] === 1)
+                                                <span class="custom-radio">
+                                                    <label for="male"></label>
+                                                    <input type="radio" value="0" id="male" name="gender"  checked/> Mr.
+                                                </span>
+                                                <span class="custom-radio">
+                                                    <label for="female"></label>
+                                                    <input type="radio" value="1" id="female" name="gender"/> Mrs.
+                                                </span>
+                                            @else
+                                                <span class="custom-radio">
+                                                    <label for="male"></label>
+                                                    <input type="radio" value="0" id="male" name="gender" /> Mr.
+                                                </span>
+                                                <span class="custom-radio">
+                                                    <label for="female"></label>
+                                                    <input type="radio" value="1" id="female" checked name="gender"/> Mrs.
+                                                </span>
+                                            @endif
                                         </div>
                                         <br />
 

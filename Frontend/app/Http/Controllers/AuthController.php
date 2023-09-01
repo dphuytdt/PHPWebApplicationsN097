@@ -76,17 +76,17 @@ class AuthController extends Controller
     {
         $client = new Client();
 
+        session()->forget('token');
+        session()->forget('user');
+        session()->forget('role');
+        session()->forget('user_id');
+
         try {
             $client->post($this->userService . 'auth/logout', [
                 'headers' => [
                     'Authorization' => 'Bearer ' . session('token'),
                 ],
             ]);
-
-            session()->forget('token');
-            session()->forget('user');
-            session()->forget('role');
-            session()->forget('user_id');
 
             return redirect()->intended('/')->with('message', 'Logout successful');
         } catch (\Exception|GuzzleException $e) {
@@ -113,6 +113,7 @@ class AuthController extends Controller
             }
 
         } catch (\Exception|GuzzleException $e) {
+            dd($e);
             return redirect()->route('login')->with('error', 'Register failed')->withInput();
         }
     }

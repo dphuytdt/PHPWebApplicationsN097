@@ -13,7 +13,10 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "api" middleware group. Make something great!
 |
 */
+Route::prefix('comment')->group(function () {
+    Route::post('/', [InteractionController::class, 'comment'])->name('comment');
+    Route::get('{id}', [InteractionController::class, 'show'])->name('show');
+});
 
-Route::post('comment', [InteractionController::class, 'comment'])->name('comment');
-Route::get('comment/{id}', [InteractionController::class, 'show'])->name('show');
-Route::post("/reply", [InteractionController::class, "reply"])->name("reply");
+Route::post("reply", [InteractionController::class, "reply"])->name("reply");
+

@@ -60,19 +60,16 @@ class AuthController extends Controller
     }
 
     public function register(Request $request) {
-        $validator = Validator::make($request->all(), [
-            'fullname' => 'required|string|between:2,100',
-            'email' => 'required|string|email|max:100|unique:users',
-            'passwordRe' => 'required|string|min:6',
-        ]);
+        $data = [
+            'fullname' => $request->fullname,
+            'email' => $request->email,
+            'password' => Hash::make($request->passwordRe),
+            'created_at' => date('Y-m-d H:i:s')
+        ];
 
-        if($validator->fails()){
-            return response()->json($validator->errors()->toJson(), 400);
-        }
-        $created_at = date('Y-m-d H:i:s');
-        $request = $request->merge(['created_at' => $created_at]);
-        $user = $this->userRepository->createUser($request->all());
+        $user = $this->userRepository->createUser($data);
         $email = $request->email;
+
         if ($user) {
             $otp = rand(100000, 999999);
             $user_id = $user->id;

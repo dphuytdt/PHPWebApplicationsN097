@@ -69,6 +69,11 @@ class AuthController extends Controller
     {
         $http = new Client();
 
+
+        session()->forget('adminToken');
+        session()->forget('admin');
+        session()->forget('adminRole');
+
         try {
             $http->post($this->userService. 'auth/admin/logout', [
                 'headers' => [
@@ -77,10 +82,6 @@ class AuthController extends Controller
             ]);
 
             Log::channel('admin_log')->info('Admin: ' . session('admin')['email'] . ' logout success' );
-
-            session()->forget('adminToken');
-            session()->forget('admin');
-            session()->forget('adminRole');
 
             return redirect()->route('login')->with('message', 'Logout successful');
         } catch (\Exception|GuzzleException $e) {

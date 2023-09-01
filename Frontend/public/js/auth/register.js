@@ -18,7 +18,7 @@ $("#registerForm").validate({
         },
         password_confirmation: {
             required: true,
-            equalTo: "#password"
+            equalTo: "#passwordRe"
         },
 
     },

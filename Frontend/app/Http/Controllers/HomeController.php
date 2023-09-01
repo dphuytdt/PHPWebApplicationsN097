@@ -102,23 +102,6 @@ class HomeController extends Controller
         }
     }
 
-    private function getLatestNews()
-    {
-        $httpService = app(HttpService::class);
-        $client = $httpService->getClient();
-
-        try {
-            $response = $client->get($this->contentService.'news/latest', ['timeout' => 60]);
-
-            $req2 = $client->get($this->bookService . 'category');
-            $categories = json_decode($req2->getBody(), true);
-
-            return json_decode($response->getBody(), true);
-        } catch (\Exception|GuzzleException $e) {
-            return null;
-        }
-    }
-
     /**
      * @throws GuzzleException
      */
@@ -128,10 +111,9 @@ class HomeController extends Controller
         $client = $httpService->getClient();
 
         $req2 = $client->get($this->bookService . 'category');
-
         $this->extracted($client);
-
         $categories = json_decode($req2->getBody(), true);
+
         return view('main.cart.thankYou')->with('categories', $categories);
     }
 
@@ -145,7 +127,7 @@ class HomeController extends Controller
 
         $req2 = $client->get($this->bookService . 'category');
         $categories = json_decode($req2->getBody(), true);
+
         return view('main.home.faq')->with('categories', $categories);
     }
-
 }

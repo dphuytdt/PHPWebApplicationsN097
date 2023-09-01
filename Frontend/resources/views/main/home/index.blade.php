@@ -1,4 +1,7 @@
 @extends('layouts.main') @section('content') @section('title', 'Book Store') @php $free = $books['free']; $new = $books['new']; $featured = $books['featured']; @endphp
+@php
+    $numberLimit = 12;
+@endphp
 <div class="hero-area">
     <div class="hero-area-wrapper hero-slider-dots fix-slider-dots">
         <div class="hero-area-single">
@@ -50,7 +53,8 @@
     <div class="product-catagory-wrapper">
         <div class="container">
             <div class="row">
-                @php foreach ($categories as $key => $value) { if ($key == 4) { break; } $category_selected[] = $value; } @endphp @if(count($category_selected) == 0 || $category_selected == null)
+                @if(isset($categories) && count($categories) > 0)
+                @php foreach ($categories as $key => $value) { if ($key == 4) { break; } $category_selected[] = $value; } @endphp @endif @if(count($category_selected) == 0 || $category_selected == null)
                     <div class="col-lg-3 col-md-4 col-sm-6 col-12">
                         <a href="#" class="product-catagory-single">
                             <div class="product-catagory-img">
@@ -69,7 +73,7 @@
                                     <img src="{{ $category['image'] }}" alt="" />
                                 </div>
                                 <div class="product-catagory-content">
-                                    <h5 class="product-catagory-title">{{ $category['name'] }}</h5>
+                                    <h5 class="product-catagory-title">{{ Illuminate\Support\Str::limit($category['name'], $numberLimit) }}</h5>
                                 </div>
                             </a>
                         </div>
@@ -145,7 +149,7 @@
                                             <div class="product-action-icon-link">
                                                 <ul>
                                                     <input type="hidden" id="bookID" value="{{$news['id']}}" />
-                                                    <input type="hidden" id="bookTitle" value="{{$news['title']}}" />
+                                                    <input type="hidden" id="bookTitle" value="{{ Illuminate\Support\Str::limit($news['title'], $numberLimit) }}" />
                                                     <input type="hidden" id="bookImage" value="{{$news['cover_image']}}" />
                                                     <input type="hidden" id="bookPrice" value="{{$news['price']}}" />
                                                     <input type="hidden" id="image-{{$news['id']}}" value="{{$news['cover_image']}}" />
@@ -164,7 +168,7 @@
                                             </div>
                                         </div>
                                         <div class="product-default-content">
-                                            <h6 class="product-default-link"><a href="{{URL::to('/book-details/'.$news['id'])}}">{{$news['title']}}</a></h6>
+                                            <h6 class="product-default-link"><a href="{{URL::to('/book-details/'.$news['id'])}}">{{Illuminate\Support\Str::limit($news['title'], $numberLimit)}}</a></h6>
                                             <input type="text" disabled hidden value="{{$news['title']}}" id="name-{{$news['id']}}" />
                                             <input type="hidden" id="image-{{$news['id']}}" value="{{$news['cover_image']}}" />
                                             @if($news['price'] != 0)
@@ -229,7 +233,7 @@
                                             </div>
                                         </div>
                                         <div class="product-default-content">
-                                            <h6 class="product-default-link"><a href="{{URL::to('/book-details/'.$book['id'])}}">{{$book['title']}}</a></h6>
+                                            <h6 class="product-default-link"><a href="{{URL::to('/book-details/'.$book['id'])}}">{{Illuminate\Support\Str::limit($book['title'], $numberLimit)}}</a></h6>
                                             <input type="text" disabled hidden value="{{$book['title']}}" id="name-{{$book['id']}}" />
                                             <input type="hidden" id="image-{{$news['id']}}" value="{{$news['cover_image']}}" />
                                             <span class="product-default-price">Free for now</span>
@@ -292,7 +296,7 @@
                                             <div class="product-action-icon-link">
                                                 <ul>
                                                     <input type="hidden" id="bookID" value="{{$news['id']}}" />
-                                                    <input type="hidden" id="bookTitle" value="{{$news['title']}}" />
+                                                    <input type="hidden" id="bookTitle" value="{{Illuminate\Support\Str::limit($news['title'], $numberLimit)}}" />
                                                     <input type="hidden" id="bookImage" value="{{$news['cover_image']}}" />
                                                     <input type="hidden" id="image-{{$news['id']}}" value="{{$news['cover_image']}}" />
                                                     <input type="hidden" id="bookPrice" value="{{$news['price']}}" />
@@ -314,7 +318,7 @@
                                             </div>
                                         </div>
                                         <div class="product-default-content">
-                                            <h6 class="product-default-link"><a href="{{URL::to('/book-details/'.$news['id'])}}">{{$news['title']}}</a></h6>
+                                            <h6 class="product-default-link"><a href="{{URL::to('/book-details/'.$news['id'])}}">{{Illuminate\Support\Str::limit($news['title'], $numberLimit)}}</a></h6>
                                             <input type="text" disabled hidden value="{{$news['title']}}" id="name-{{$news['id']}}" />
                                             <input type="hidden" id="image-{{$news['id']}}" value="{{$news['cover_image']}}" />
                                             @if($news['price'] != 0)
@@ -361,7 +365,7 @@
                             <div class="col-md-6">
                                 <div class="product-details-content-area">
                                     <div class="product-details-text">
-                                        <h4 class="title">{{$book['title']}}</h4>
+                                        <h4 class="title">{{Illuminate\Support\Str::limit($book['title'], $numberLimit)}}</h4>
                                         @if($book['price'] == 0)
                                             <div class="price">Free for now</div>
                                         @else
@@ -427,7 +431,7 @@
                             <div class="col-md-6">
                                 <div class="product-details-content-area">
                                     <div class="product-details-text">
-                                        <h4 class="title">{{$book['title']}}</h4>
+                                        <h4 class="title">{{Illuminate\Support\Str::limit($book['title'], $numberLimit)}}</h4>
                                         @if($book['price'] == 0)
                                             <div class="price">Free for now</div>
                                         @else
@@ -560,7 +564,7 @@
                             <div class="col-md-6">
                                 <div class="product-details-content-area">
                                     <div class="product-details-text">
-                                        <h4 class="title">{{$book['title']}}</h4>
+                                        <h4 class="title">{{Illuminate\Support\Str::limit($book['title'], $numberLimit)}}</h4>
                                         @if($book['price'] == 0)
                                             <div class="price">Free for now</div>
                                         @else
@@ -623,10 +627,6 @@
                                     </div>
                                     <div class="col-md-8">
                                         <div class="modal-add-cart-info"><i class="fa fa-check-square"></i>Added to cart successfully!</div>
-{{--                                        <div class="modal-add-cart-product-cart-buttons">--}}
-{{--                                            <a href="{{}}">View Cart</a>--}}
-{{--                                            <a href="{{}}">Checkout</a>--}}
-{{--                                        </div>--}}
                                     </div>
                                 </div>
                             </div>
@@ -647,8 +647,11 @@
     <div class="section-content-gap">
         <div class="container">
             <div class="row">
-                <div class="section-content">
+                <div class="section-content d-flex justify-content-between align-items-md-center align-items-start flex-md-row flex-column">
                     <h3 class="section-title">{{__('messages.Latest News')}}</h3>
+{{--                    <ul class="tablist nav product-tab-btn">--}}
+{{--                        <li><a class="nav-link active" href="">{{__('messages.Viewmore')}}</a></li>--}}
+{{--                    </ul>--}}
                 </div>
             </div>
         </div>
@@ -659,7 +662,7 @@
                 @foreach($latestNews as $latestNew)
                 <div class="col-lg-4 col-md-6 col-12">
                     <div class="blog-feed-single">
-                        <a href="" class="blog-feed-img-link">
+                        <a href="{{route('newsDetail' , $latestNew['id'])}}" class="blog-feed-img-link">
                             <img src="{{ $latestNew['image'] }}" alt="" class="blog-feed-img">
                         </a>
                         @php
@@ -669,9 +672,9 @@
                         <div class="blog-feed-content">
                             <div class="blog-feed-post-meta">
                                 <span>{{__('messages.By:')}}</span>
-                                <a href="" class="blog-feed-post-meta-author">{{$latestNew['creadted_by']}}</a> -
-                                <a href="" class="blog-feed-post-meta-date">{{$date}}</a>
-                                <h5 class="blog-feed-link"><a href="">{{$latestNew['title']}}</a></h5>
+                                <a href="{{route('newsDetail' , $latestNew['id'])}}" class="blog-feed-post-meta-author">{{$latestNew['creadted_by']}}</a> -
+                                <a href="{{route('newsDetail' , $latestNew['id'])}}" class="blog-feed-post-meta-date">{{$date}}</a>
+                                <h5 class="blog-feed-link"><a href="{{route('newsDetail' , $latestNew['id'])}}">{{Illuminate\Support\Str::limit($latestNew['title'], $numberLimit)}}</a></h5>
                             </div>
                         </div>
                     </div>

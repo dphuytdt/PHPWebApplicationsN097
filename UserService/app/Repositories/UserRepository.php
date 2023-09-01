@@ -109,11 +109,12 @@ class UserRepository implements UserRepositoryInterface
     }
     public function updateProfile($id, $data)
     {
-        $user =User::where('id', $id)->first();
+        $userModel = new User();
+        $user = $userModel->where('id', $id)->first();
 
         if($user){
-
-            $userDetail = UserDetail::where('user_id', $user->id)->first();
+            $userDetailModel = new UserDetail();
+            $userDetail = $userDetailModel->where('user_id', $user->id)->first();
 
             if (
                 (($data['fullname']  !== $user->fullname))
@@ -134,19 +135,19 @@ class UserRepository implements UserRepositoryInterface
             }
 
             if (
-                (($data['birthday']  !== $userDetail->birthday))
+                (($data['birthday'] !== $userDetail->birthday))
             ) {
                 $userDetail->birthday = $data['birthday'];
             }
 
             if (
-                (($data['phone']  !== $userDetail->phone))
+                (($data['gender'] !== $userDetail->gender))
             ) {
-                $userDetail->phone = $data['phone'];
+                $userDetail->gender = $data['gender'];
             }
 
             if (
-                (($data['avatar']  !== $userDetail->avatar))
+                ((null !== $data['avatar']) && ($data['avatar'] !== $userDetail->avatar))
             ) {
                 $userDetail->avatar = $data['avatar'];
             }

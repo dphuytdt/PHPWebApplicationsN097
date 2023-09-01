@@ -207,10 +207,12 @@ class UserController extends Controller
         $created_at = date('Y-m-d H:i:s');
         $request->merge(['created_at' => $created_at]);
 
+        $data = $request->all();
+
         $user = $this->userRepository->getUserById($userId);
 
         if($user) {
-            $result = $this->userRepository->updateProfile($userId, $request->all());
+            $result = $this->userRepository->updateProfile($userId, $data);
 
             if($result) {
                 return response()->json(['message' => 'Update user successfully']);
