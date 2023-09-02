@@ -186,11 +186,19 @@ class AuthController extends Controller
     }
 
     public function changePassWord($id, Request $request) {
-        User::where('id', $id)->update(
-                    ['password' => Hash::make($request->password)]
-                );
+        $userProvidedPassword = $request->oldpassword;
+        $result = User::where('id', $id);
+        $hashedPasswordFromDatabase = $result->first()->password;
 
-        return response()->json([], 201);
+        if(Hash::check($userProvidedPassword, $hashedPasswordFromDatabase))
+        {
+            $result->update([
+                'password' => Hash::make($request->password),
+            ]);
+            return response()->json([], 200);
+        } else {
+            return response()->json([], 400);
+        }
     }
 
     public function forgotPassword(Request $request) {

@@ -200,4 +200,5 @@
         'While we encourage you to share your enthusiasm for reading' => 'Mặc dù chúng tôi khuyến khích bạn chia sẻ niềm đam mê đọc sách của mình nhưng liên kết đọc sách điện tử trực tuyến thường dành cho mục đích sử dụng cá nhân. Nếu bạn muốn giới thiệu một cuốn sách điện tử cụ thể cho ai đó, chúng tôi khuyên bạn nên hướng họ đến trang web của chúng tôi nơi họ có thể tự khám phá và truy cập cuốn sách điện tử đó.',
         'ChangePass' => 'Đổi mật khẩu',
         'Change' => 'Thay đổi',
+        'Old Password' => 'Mật khẩu cũ',
     ];

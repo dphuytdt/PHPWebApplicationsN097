@@ -20,7 +20,7 @@ return new class extends Migration
             $table->unsignedBigInteger('news_id');
             $table->unsignedBigInteger('comment_parent_id')->nullable();
             $table->boolean('status')->default(1);
-            $table->dateTime('created_at');
+            $table->dateTime('created_at')->useCurrent();
             $table->dateTime('updated_at')->nullable();
             $table->dateTime('deleted_at')->nullable();
         });

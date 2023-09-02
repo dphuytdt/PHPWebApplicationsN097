@@ -915,6 +915,23 @@
       <path value="$PROJECT_DIR$/BookService/vendor/doctrine/annotations" />
       <path value="$PROJECT_DIR$/BookService/vendor/swagger-api/swagger-ui" />
       <path value="$PROJECT_DIR$/BookService/vendor/darkaonline/l5-swagger" />
+      <path value="$PROJECT_DIR$/UserService/vendor/darkaonline/l5-swagger" />
+      <path value="$PROJECT_DIR$/UserService/vendor/swagger-api/swagger-ui" />
+      <path value="$PROJECT_DIR$/UserService/vendor/psr/cache" />
+      <path value="$PROJECT_DIR$/UserService/vendor/doctrine/annotations" />
+      <path value="$PROJECT_DIR$/UserService/vendor/zircote/swagger-php" />
+      <path value="$PROJECT_DIR$/ContentManagementService/vendor/dompdf/dompdf" />
+      <path value="$PROJECT_DIR$/ContentManagementService/vendor/masterminds/html5" />
+      <path value="$PROJECT_DIR$/ContentManagementService/vendor/sabberworm/php-css-parser" />
+      <path value="$PROJECT_DIR$/ContentManagementService/vendor/barryvdh/laravel-dompdf" />
+      <path value="$PROJECT_DIR$/ContentManagementService/vendor/phenx/php-svg-lib" />
+      <path value="$PROJECT_DIR$/ContentManagementService/vendor/phenx/php-font-lib" />
+      <path value="$PROJECT_DIR$/Frontend-Admin/vendor/masterminds/html5" />
+      <path value="$PROJECT_DIR$/Frontend-Admin/vendor/dompdf/dompdf" />
+      <path value="$PROJECT_DIR$/Frontend-Admin/vendor/sabberworm/php-css-parser" />
+      <path value="$PROJECT_DIR$/Frontend-Admin/vendor/barryvdh/laravel-dompdf" />
+      <path value="$PROJECT_DIR$/Frontend-Admin/vendor/phenx/php-svg-lib" />
+      <path value="$PROJECT_DIR$/Frontend-Admin/vendor/phenx/php-font-lib" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="8.1" />
@@ -924,6 +941,7 @@
   <component name="PhpUnit">
     <phpunit_settings>
       <PhpUnitSettings configuration_file_path="$PROJECT_DIR$/ContentManagementService/phpunit.xml" custom_loader_path="$PROJECT_DIR$/ContentManagementService/vendor/autoload.php" use_configuration_file="true" />
+      <PhpUnitSettings configuration_file_path="$PROJECT_DIR$/UserService/phpunit.xml" custom_loader_path="$PROJECT_DIR$/UserService/vendor/autoload.php" use_configuration_file="true" />
       <PhpUnitSettings configuration_file_path="$PROJECT_DIR$/BookService/phpunit.xml" custom_loader_path="$PROJECT_DIR$/BookService/vendor/autoload.php" use_configuration_file="true" />
       <PhpUnitSettings configuration_file_path="$PROJECT_DIR$/Frontend-Admin/phpunit.xml" custom_loader_path="$PROJECT_DIR$/Frontend-Admin/vendor/autoload.php" use_configuration_file="true" />
       <PhpUnitSettings configuration_file_path="$PROJECT_DIR$/Frontend/phpunit.xml" custom_loader_path="$PROJECT_DIR$/Frontend/vendor/autoload.php" use_configuration_file="true" />

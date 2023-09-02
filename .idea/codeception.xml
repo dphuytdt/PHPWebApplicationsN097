@@ -7,22 +7,22 @@
           <option name="path" value="$PROJECT_DIR$/tests" />
         </Configuration>
         <Configuration>
-          <option name="path" value="$PROJECT_DIR$/ContentManagementService/tests" />
-        </Configuration>
-        <Configuration>
           <option name="path" value="$PROJECT_DIR$/Frontend/tests" />
-        </Configuration>
-        <Configuration>
-          <option name="path" value="$PROJECT_DIR$/Frontend-Admin/tests" />
         </Configuration>
         <Configuration>
           <option name="path" value="$PROJECT_DIR$/PaymentService/tests" />
         </Configuration>
         <Configuration>
+          <option name="path" value="$PROJECT_DIR$/BookService/tests" />
+        </Configuration>
+        <Configuration>
           <option name="path" value="$PROJECT_DIR$/UserService/tests" />
         </Configuration>
         <Configuration>
-          <option name="path" value="$PROJECT_DIR$/BookService/tests" />
+          <option name="path" value="$PROJECT_DIR$/ContentManagementService/tests" />
+        </Configuration>
+        <Configuration>
+          <option name="path" value="$PROJECT_DIR$/Frontend-Admin/tests" />
         </Configuration>
       </list>
     </option>

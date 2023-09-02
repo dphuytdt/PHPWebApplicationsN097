@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Exports\StatisticalExport;
+use Barryvdh\DomPDF\PDF;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Http\Request;
@@ -12,6 +13,10 @@ use Maatwebsite\Excel\Facades\Excel;
 class SystemController extends Controller
 {
     protected $bookService, $contentService, $userService, $paymentService, $interactionService;
+
+    private const CSV_TYPE = 'csv';
+
+    private const PDF_TYPE = 'pdf';
 
     public function __construct()
     {
@@ -51,7 +56,21 @@ class SystemController extends Controller
             $req = $client->get($this->paymentService . 'get-total-payment');
             $totalPayment = json_decode($req->getBody(), true);
 
-            return view('home.system.statistical')->with('totalPayment', $totalPayment);
+             $response = $client->get($this->userService.'auth/admin/user', [
+                 'headers' => [
+                     'Authorization' => 'Bearer ' . session('adminToken'),
+                     "Accept"=>"application/json"
+                 ],
+
+             ]);
+
+             $users = json_decode($response->getBody(), true);
+             $user_infor = $users['users'];
+
+             $req1 = $client->get($this->bookService.'admin/books');
+             $books = json_decode($req1->getBody(), true);
+
+            return view('home.system.statistical')->with('totalPayment', $totalPayment)->with('user_infor', $user_infor)->with('book_infor', $books);
          } catch (\Throwable|\Exception|GuzzleException $e) {
              dd($e->getMessage());
              Log::channel('admin_log')->error('Admin: ' .  session('admin')['email'] . ' view system billing error: ' . $e->getMessage());
@@ -59,7 +78,7 @@ class SystemController extends Controller
          }
     }
 
-    public function exportStatistical()
+    public function exportStatistical($type)
     {
         Log::channel('admin_log')->info('Admin: ' . session('admin')['email'] . ' export system billing');
 
@@ -69,14 +88,44 @@ class SystemController extends Controller
             $req = $client->get($this->paymentService . 'get-total-payment');
             $totalPayment = json_decode($req->getBody(), true);
 
+            $response = $client->get($this->userService . 'auth/admin/user', [
+                'headers' => [
+                    'Authorization' => 'Bearer ' . session('adminToken'),
+                    "Accept" => "application/json"
+                ],
+
+            ]);
+            $users = json_decode($response->getBody(), true);
+            $user_infor = $users['users'];
+
+            $req1 = $client->get($this->bookService . 'admin/books');
+            $books = json_decode($req1->getBody(), true);
+
         } catch (\Throwable|\Exception|GuzzleException $e) {
             Log::channel('admin_log')->error('Admin: ' . session('admin')['email'] . ' export system billing error: ' . $e->getMessage());
             return redirect()->back()->with('error', 'Lỗi hệ thống');
         }
 
+        foreach ($totalPayment as $key => $value) {
+            foreach ($user_infor as $key1 => $value1) {
+                if ($value['user_id'] == $value1['id']) {
+                    $totalPayment[$key]['user_id'] = $value1['fullname'];
+                }
+            }
+
+            foreach ($books as $key2 => $value2) {
+                if ($value['book_id'] == $value2['id']) {
+                    $totalPayment[$key]['book_id'] = $value2['title'];
+                }
+            }
+        }
 
         $now = date('Y-m-d H:i:s');
 
-        return Excel::download(new StatisticalExport($totalPayment), 'statistical ' . $now . '.csv', \Maatwebsite\Excel\Excel::CSV);
+        if ($type === self::CSV_TYPE) {
+            return Excel::download(new StatisticalExport($totalPayment), 'statistical ' . $now . '.csv', \Maatwebsite\Excel\Excel::CSV);
+        }
+
+        return Excel::download(new StatisticalExport($totalPayment), 'statistical ' . $now . '.pdf', \Maatwebsite\Excel\Excel::DOMPDF);
     }
 }

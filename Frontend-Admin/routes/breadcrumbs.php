@@ -85,3 +85,8 @@ use DaveJamesMiller\Breadcrumbs\Facades\Breadcrumbs;
         $trail->parent('home');
         $trail->push('Statistical', route('getBilling'));
     });
+
+    Breadcrumbs::for('get.changePassword', function ($trail) {
+        $trail->parent('home');
+        $trail->push('Change Password', route('get.changePassword' , session('admin')['id']));
+    });

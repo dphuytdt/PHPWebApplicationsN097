@@ -127,12 +127,25 @@ class NewsController extends Controller
             $news = $res['news'];
             $comment = $res['comment'];
 
+            $totalComment = 0;
+            $user = session()->get('user')['id'];
+            $yourComment = [];
+            foreach ($comment as $key => $value) {
+                $totalComment += count($value);
+                if ($value[0]['user_id'] == $user) {
+                    unset($comment[$key]);
+                    $yourComment[$key] = $value;
+                }
+            }
+
+            $finalComment = $yourComment + $comment;
+
             $response = $client->request('GET', $this->contentService . 'user/news');
             $res = json_decode($response->getBody(), true);
             $recentNews = $res['newsRecent'];
             $tags = $res['tags'];
 
-            return view('main.news.news-detail', compact('news', 'categories', 'recentNews', 'tags', 'comment'));
+            return view('main.news.news-detail', compact('news', 'categories', 'recentNews', 'tags', 'finalComment', 'totalComment'));
         }
         catch (\Exception|GuzzleException $e) {
             return view('errors.404')->with('categories', $categories);
@@ -175,6 +188,100 @@ class NewsController extends Controller
         catch (\Exception|GuzzleException $e) {
             $paginator = [];
             return view('main.news.view-more')->with('error', 'No result found')->with('paginator', $paginator)->with('categories', $categories);
+        }
+    }
+
+    public function comment(Request $request) {
+        $data = $request->all();
+        $client = new Client();
+        $user = session()->get('user');
+        try {
+            $response = $client->post($this->contentService.'comment', [
+                'form_params' => [
+                    'news_id' => $data['news_id'],
+                    'user_id' => $user['id'],
+                    'comment_name' => $user['fullname'],
+                    'content' => $data['comment'],
+                ]
+            ]);
+            $responseData = json_decode($response->getBody(), true);
+            if($responseData) {
+                return $responseData;
+            } else {
+                return redirect()->back()->with('error', 'Review failed!');
+            }
+        } catch (\Exception|GuzzleException $e) {
+            return redirect()->back()->with('error', 'Review failed!');
+        }
+    }
+
+    public function replyComment(Request $request) {
+        $data = $request->all();
+        $client = new Client();
+        $user = session()->get('user');
+        try {
+            $response = $client->post($this->contentService.'comment/reply', [
+                'form_params' => [
+                    'news_id' => $data['news_id'],
+                    'user_id' => $user['id'],
+                    'comment_parent_id' => $data['parent_id'],
+                    'comment_name' => $user['fullname'],
+                    'content' => $data['comment'],
+                ]
+            ]);
+            $responseData = json_decode($response->getBody(), true);
+            if($responseData) {
+                return $responseData;
+            } else {
+                return redirect()->back()->with('error', 'Review failed!');
+            }
+        } catch (\Exception|GuzzleException $e) {
+            return redirect()->back()->with('error', 'Review failed!');
+        }
+    }
+
+    public function deleteComment(Request $request) {
+        $data = $request->all();
+        $client = new Client();
+        try {
+            $response = $client->post($this->contentService.'comment/delete/', [
+                'form_params' => [
+                    'news_id' => $data['news_id'],
+                    'comment_id' => $data['comment_id'],
+                    'is_reply' => $data['is_reply'],
+                ]
+            ]);
+            $responseData = json_decode($response->getBody(), true);
+
+            if($responseData) {
+                return $responseData;
+            } else {
+                return redirect()->back()->with('error', 'Delete failed!');
+            }
+        } catch (\Exception|GuzzleException $e) {
+            return redirect()->back()->with('error', 'Delete failed!');
+        }
+    }
+
+    public function updateComment(Request $request) {
+        $data = $request->all();
+        $client = new Client();
+        try {
+            $response = $client->put($this->contentService.'comment/'.$data['comment_id'], [
+                'form_params' => [
+                    'news_id' => $data['news_id'],
+                    'content' => $data['comment'],
+                ]
+            ]);
+            $responseData = json_decode($response->getBody(), true);
+
+            if($responseData) {
+                return $responseData;
+            } else {
+                return redirect()->back()->with('error', 'Update failed!');
+            }
+        } catch (\Exception|GuzzleException $e) {
+            return redirect()->back()->with('error', 'Update failed!');
         }
     }
 }

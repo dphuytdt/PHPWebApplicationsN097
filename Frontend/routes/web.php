@@ -93,6 +93,10 @@ Route::group(['middleware' => 'locale'], function() {
         Route::get('view-more', [NewsController::class, 'viewMore'])->name('news.viewMore');
         Route::get('search/{page?}', [NewsController::class, 'searchNews'])->name('news.search');
         Route::get('{id}', [NewsController::class, 'newsDetail'])->name('newsDetail');
+        Route::post('/comment', [NewsController::class, 'comment'])->name('news.comment');
+        Route::post('/reply', [NewsController::class, 'replyComment'])->name('news.replyComment');
+        Route::post('/update', [NewsController::class, 'updateComment'])->name('news.updateComment');
+        Route::post('/delete', [NewsController::class, 'deleteComment'])->name('news.deleteComment');
     });
 
     Route::get('view-more/{dataType}', [BookController::class, 'viewMore'])->name('view.more');

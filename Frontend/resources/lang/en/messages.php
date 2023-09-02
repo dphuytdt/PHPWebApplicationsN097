@@ -198,4 +198,5 @@
         'While we encourage you to share your enthusiasm for reading' => 'While we encourage you to share your enthusiasm for reading, the online ebook reading link is typically meant for personal use. If you would like to recommend a specific ebook to someone, we suggest directing them to our website where they can explore and access the ebook themselves.',
         'ChangePass' => 'Change Password',
         'Change' => 'Change',
+        'Old Password' => 'Old Password',
     ];

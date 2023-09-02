@@ -17,7 +17,7 @@
     <h1 class="h3 mb-4 text-gray-800">{{ Breadcrumbs::render('profile') }}</h1>
 </div>
 <div class="container">
-    <form action="{{route('slides.store')}}" method="POST" enctype="multipart/form-data">
+    <form action="{{route('changePassword', session('admin')['id'])}}" method="POST">
         @csrf
         <div class="mb-3">
             <label for="name" class="form-label">Fullname</label>

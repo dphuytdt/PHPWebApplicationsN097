@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\v1\CommentController;
 use App\Http\Controllers\Api\v1\NewsController;
 use App\Http\Controllers\Api\v1\SlideShowController;
 use Illuminate\Http\Request;
@@ -42,4 +43,11 @@ Route::prefix('user')->group(function () {
         Route::get('search/{keyword}', [NewsController::class, 'search']);
         Route::get('{id}', [NewsController::class, 'newsDetail']);
     });
+});
+
+Route::prefix('comment')->group(function () {
+    Route::post('/', [CommentController::class, 'commentStore']);
+    Route::post('delete', [CommentController::class, 'commentDelete']);
+    Route::post('reply', [CommentController::class, 'replyComment']);
+    Route::put('/{id}', [CommentController::class, 'commentUpdate']);
 });

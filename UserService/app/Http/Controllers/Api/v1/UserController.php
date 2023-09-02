@@ -3,15 +3,12 @@
 namespace App\Http\Controllers\Api\v1;
 
 use App\Http\Controllers\Controller;
-use App\Imports\UserImport;
 use App\Jobs\AdminSendMailCreateUser;
 use Illuminate\Http\Request;
 use App\Interfaces\UserRepositoryInterface;
 use App\Interfaces\OTPRepositoryInterface;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
-use Maatwebsite\Excel\Facades\Excel;
 
 class UserController extends Controller
 {
@@ -118,9 +115,10 @@ class UserController extends Controller
 
     public function import(Request $request)
     {
-        $data = $request->all();
+        $data = $request->get('file');
 
         foreach ($data as $key => $value) {
+            dd($value[2]);
             $user = $this->userRepository->getUserByEmail($value[2]);
             if($user) {
                 return response()->json(['message' => 'User is exist at row ' . ($key + 1)]);
@@ -133,7 +131,15 @@ class UserController extends Controller
                 $created_at = date('Y-m-d H:i:s');
                 $value[3] = $password;
                 $value[4] = $created_at;
-                $action = $this->userRepository->createUser($value);
+                $adapter = [
+                    'fullname' => $value[0],
+                    'email' => $value[1],
+                    'password' => $value[3],
+                    'role' => $value[2],
+                    'created_at' => $value[4],
+                ];
+
+                $action = $this->userRepository->createUser($adapter);
 
                 if($action) {
                     if(AdminSendMailCreateUser::dispatch($action->email, $passwordGenerate)) {

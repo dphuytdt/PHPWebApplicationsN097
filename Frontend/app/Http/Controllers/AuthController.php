@@ -113,7 +113,6 @@ class AuthController extends Controller
             }
 
         } catch (\Exception|GuzzleException $e) {
-            dd($e);
             return redirect()->route('login')->with('error', 'Register failed')->withInput();
         }
     }

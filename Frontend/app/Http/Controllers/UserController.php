@@ -111,6 +111,7 @@ class UserController extends Controller
 
     public function changePassword($id, Request $request) {
         $data = [
+            'oldpassword' => $request->oldpassword ?? '',
             'password' => $request->password ?? '',
         ];
 

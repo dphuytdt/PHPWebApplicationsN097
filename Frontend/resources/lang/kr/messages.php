@@ -200,5 +200,6 @@
         'While we encourage you to share your enthusiasm for reading' => '독서에 대한 열정을 공유하도록 권장하지만 온라인 전자책 읽기 링크는 일반적으로 개인적인 용도로 사용됩니다. 특정 전자책을 누군가에게 추천하고 싶다면 그들이 직접 전자책을 탐색하고 액세스할 수 있는 우리 웹사이트로 안내하는 것이 좋습니다.',
         'ChangePass' => '비밀번호 변경',
         'Change' => '변화',
+        'Old Password' => '기존 비밀번호',
     ];
 

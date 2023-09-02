@@ -115,4 +115,27 @@ class AuthController extends Controller
             return redirect()->back()->with('error', 'Email does not exist')->withInput();
         }
     }
+
+    public function changePassword($id, Request $request) {
+        $data = [
+            'oldpassword' => $request->oldpassword ?? '',
+            'password' => $request->password ?? '',
+        ];
+
+        $client = new Client();
+
+        try {
+            $client->post($this->userService.'auth/change-pass/'.$id, [
+                'headers' => [
+                    'Authorization' => 'Bearer ' . session('adminToken'),
+                ],
+                'form_params' => $data
+            ]);
+
+            return redirect()->back()->with('success', 'Change password successfully!');
+
+        } catch (\Exception|\Throwable|GuzzleException $e) {
+            return redirect()->back()->with('error', 'Something went wrong!');
+        }
+    }
 }

@@ -183,20 +183,21 @@ class UserController extends Controller
         unset($file[0][0]);
 
         $client = new Client();
-
+        dd($file[0]);
         try{
             $client->post($this->userService.'auth/admin/user/import', [
                 'headers' => [
                     'Authorization' => 'Bearer ' . session('adminToken'),
                 ],
                 'form-param' => [
-                    'file' => $file,
+                    'file' => $file[0],
                 ],
             ]);
 
             Log::channel('admin_log')->info('Admin: ' .  session('admin')['email'] . ' import user successfully' );
             return redirect()->back()->with('success', 'Import user successfully');
         } catch (\Exception|GuzzleException $e) {
+            dd($e);
             Log::channel('admin_log')->error('Admin: ' .  session('admin')['email'] . ' cannot import user' );
             return view('home.user.list')->withErrors(['errors' => 'Cannot connect to server']);
         }
@@ -205,5 +206,32 @@ class UserController extends Controller
     public function profile($userId){
         Log::channel('admin_log')->info('Admin: ' .  session('admin')['email'] . ' view profile' );
         return view('home.self.profile');
+    }
+
+    public function getChangePassword($userId){
+        Log::channel('admin_log')->info('Admin: ' .  session('admin')['email'] . ' view change password' );
+        return view('home.self.change-password');
+    }
+
+    public function changePassword($id, Request $request) {
+        $data = [
+            'password' => $request->password ?? '',
+        ];
+
+        $client = new Client();
+
+        try {
+            $client->post($this->userService.'auth/change-pass/'.$id, [
+                'headers' => [
+                    'Authorization' => 'Bearer ' . session('adminToken'),
+                ],
+                'form_params' => $data
+            ]);
+
+            return redirect()->back()->with('success', 'Change password successfully!');
+
+        } catch (\Exception|\Throwable|GuzzleException $e) {
+            return redirect()->back()->with('error', 'Something went wrong!');
+        }
     }
 }

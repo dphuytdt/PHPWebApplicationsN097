@@ -224,6 +224,12 @@
                                         @csrf
                                         <div class="row">
                                             <div class="default-form-box mb-20">
+                                                <label for="oldpassword">{{__('messages.Old Password')}}</label>
+                                                <input type="password" name="oldpassword" id="oldpassword" data-label="Old Password" placeholder="{{__('messages.Old Password')}}"/>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="default-form-box mb-20">
                                                 <label for="password">{{__('messages.New Password')}}</label>
                                                 <input type="password" name="password" id="password" data-label="New Password" placeholder="{{__('messages.New Password')}}"/>
                                             </div>

@@ -131,11 +131,16 @@ class NewsController extends Controller
     public function newsDetail($id)
     {
         $news = $this->newsRepository->newsDetail($id);
-        $comment = $this->commentsRepository->getComments($id);
+        $comments = $this->commentsRepository->getComments($id);
+
+        $commentFilters = [];
+        for ($i = 0; $i < count($comments); $i++) {
+            $commentFilters[$comments[$i]['comment_parent_id'] ?? $comments[$i]['id']][] = $comments[$i];;
+        }
 
         $new= [
             'news' => $news,
-            'comment' => $comment,
+            'comment' => $commentFilters,
         ];
 
         return response()->json($new);
