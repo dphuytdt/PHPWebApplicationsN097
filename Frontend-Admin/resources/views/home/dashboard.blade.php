@@ -18,14 +18,14 @@
                         <div class="row">
                             <div class="col-md-6 text-center">
                                 <form action="{{route('exportStatistical', 'csv')}}" method="GET">
-                                    <button type="submit" class="btn btn-secondary">
+                                    <button type="submit" formtarget="_blank" class="btn btn-secondary">
                                         Export with CSV Format
                                     </button>
                                 </form>
                             </div>
                             <div class="col-md-6 text-center">
                                 <form action="{{route('exportStatistical', 'pdf')}}" method="GET">
-                                    <button type="submit" class="btn btn-success">
+                                    <button formtarget="_blank" type="submit" class="btn btn-success">
                                         Export with PDF Format
                                     </button>
                                 </form>
