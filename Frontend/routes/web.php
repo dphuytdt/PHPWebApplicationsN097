@@ -68,6 +68,7 @@ Route::group(['middleware' => 'locale'], function() {
 
         Route::group(['prefix' => 'profile'], function () {
             Route::get('/', [UserController::class, 'profile'])->name('profile');
+            Route::post('change-password/{id}', [UserController::class, 'changePassword'])->name('changePassword');
             Route::post('{id}', [UserController::class, 'postProfile'])->name('profile.update');
         });
 

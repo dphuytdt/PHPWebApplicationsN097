@@ -65,7 +65,7 @@ class UserController extends Controller
                     "Accept"=>"application/json"
                 ],
                 'json' => [
-                    'fullname' => $data['fullname'],
+                    'fullname' => $data['fullname'] ?? '',
                     'email' => $data['email'],
                     'role' => $data['role'],
                 ]
@@ -155,22 +155,47 @@ class UserController extends Controller
     }
 
     public function import(Request $request){
-        $data = $request->all();
-        $file = $data['file'];
+        $csvFile = $request->file('file');
+
+        $file = Excel::toArray((object)[], $csvFile);
+
+        if(count($file[0][0]) != 3){
+            return redirect()->back()->with('error', 'File is not valid format with 3 columns');
+        }
+
+        if($file[0][0][0] != 'fullname' || $file[0][0][1] != 'email' || $file[0][0][2] != 'role'){
+            return redirect()->back()->with('error', 'File is not valid. Column must be contain [fullname, email, role]');
+        }
+
+        foreach ($file[0] as $key => $value) {
+            if($key == 0){
+                continue;
+            }
+            if($value[2] != 'ROLE_USER' && $value[2] != 'ROLE_ADMIN'){
+                return redirect()->back()->with('error', 'File is not valid. Role must be contain [ROLE_USER, ROLE_ADMIN]');
+            }
+
+            if(!filter_var($value[1], FILTER_VALIDATE_EMAIL)){
+                return redirect()->back()->with('error', 'File is not valid. Email must be contain @');
+            }
+        }
+
+        unset($file[0][0]);
 
         $client = new Client();
 
         try{
             $client->post($this->userService.'auth/admin/user/import', [
+                'headers' => [
+                    'Authorization' => 'Bearer ' . session('adminToken'),
+                ],
                 'form-param' => [
                     'file' => $file,
                 ],
             ]);
 
             Log::channel('admin_log')->info('Admin: ' .  session('admin')['email'] . ' import user successfully' );
-            return response()->json([
-                'message' => 'Import success',
-            ]);
+            return redirect()->back()->with('success', 'Import user successfully');
         } catch (\Exception|GuzzleException $e) {
             Log::channel('admin_log')->error('Admin: ' .  session('admin')['email'] . ' cannot import user' );
             return view('home.user.list')->withErrors(['errors' => 'Cannot connect to server']);

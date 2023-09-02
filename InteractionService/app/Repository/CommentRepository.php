@@ -15,4 +15,9 @@ class CommentRepository
     {
         return Comment::where('book_id', $id)->get();
     }
+
+    public function getAllCommentForAdmin()
+    {
+        return Comment::all();
+    }
 }

@@ -27,6 +27,12 @@
                     <div class="alert alert-danger">
                         {{ session('error') }}
                     </div>
+                @else
+                    @if (session('success'))
+                        <div class="alert alert-success">
+                            {{ session('success') }}
+                        </div>
+                    @endif
                 @endif
                 <div class="account_form">
                     <h3>{{__('messages.Login')}}</h3>

@@ -41,26 +41,6 @@ class UserController extends Controller
         }
     }
 
-    public function importUser(Request $request): \Illuminate\Http\JsonResponse
-    {
-        $validator = Validator::make($request->all(), [
-            'file' => 'required|mimes:xlsx,xls,csv'
-        ]);
-
-        if ($validator->fails()) {
-            return response()->json($validator->errors(), 422);
-        }
-
-        $file = $request->file('file');
-
-        try {
-            Excel::import(new UserImport, $file);
-            return response()->json(['message' => 'Import user successfully']);
-        } catch (\Exception|\Error $e) {
-            return response()->json(['message' => $e->getMessage()]);
-        }
-    }
-
     public function store(Request $request): \Illuminate\Http\JsonResponse{
         $validator = Validator::make($request->all(), [
             'fullname' => 'required',
@@ -136,45 +116,37 @@ class UserController extends Controller
         }
     }
 
-    public function import(Request $request): \Illuminate\Http\JsonResponse
+    public function import(Request $request)
     {
-        DB::beginTransaction();
+        $data = $request->all();
 
-        if ($request->hasFile('file')) {
-            $file = $request->file('file');
-        } else {
-            return response()->json(['message' => 'No file selected']);
-        }
+        foreach ($data as $key => $value) {
+            $user = $this->userRepository->getUserByEmail($value[2]);
+            if($user) {
+                return response()->json(['message' => 'User is exist at row ' . ($key + 1)]);
+            }
 
-        try {
-            $userImport = new UserImport();
-            $userImport->import($file);
-            DB::commit();
-
-            foreach ($userImport->getUsers() as $user) {
+            try {
                 $passwordGenerate = $this->otpRepository->generatePassword();
                 $password = Hash::make($passwordGenerate);
+
                 $created_at = date('Y-m-d H:i:s');
-                $is_active = 1;
-                $user['password'] = $password;
-                $user['created_at'] = $created_at;
-                $user['is_active'] = $is_active;
-                $user = $this->userRepository->createUser($user);
-                if($user) {
-                    $req = AdminSendMailCreateUser::dispatch($user->email, $passwordGenerate);
+                $value[3] = $password;
+                $value[4] = $created_at;
+                $action = $this->userRepository->createUser($value);
+
+                if($action) {
+                    if(AdminSendMailCreateUser::dispatch($action->email, $passwordGenerate)) {
+                        return response()->json(['message' => 'Import user successfully']);
+                    } else {
+                        return response()->json(['message' => 'Import user failed']);
+                    }
                 } else {
                     return response()->json(['message' => 'Import user failed']);
                 }
+            } catch (\Exception|\Error|\Throwable $e) {
+                return response()->json(['message' => $e->getMessage()]);
             }
-
-            if($userImport->failures()->count() > 0 || !$req) {
-                return response()->json(['message' => 'Import user failed']);
-            } else {
-                return response()->json(['message' => 'Import user successfully']);
-            }
-
-        } catch (\Exception|\Error|\Throwable $e) {
-            return response()->json(['message' => $e->getMessage()]);
         }
     }
 

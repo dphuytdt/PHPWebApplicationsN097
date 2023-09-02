@@ -24,7 +24,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @if(isset($paginator))
+                        @if(isset($paginator) || count($paginator) > 0)
                             @foreach($paginator as $category)
                                 <tr>
                                     <td>{{Illuminate\Support\Str::limit($category['name'],  $numberLimit)}}</td>

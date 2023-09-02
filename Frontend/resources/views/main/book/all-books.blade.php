@@ -100,24 +100,6 @@
                                                                 <a href="{{URL::to('/book-details/'.$book['id'])}}" class="product-default-img-link">
                                                                     <img src="{{ $book['cover_image'] }}" alt="" class="product-default-img img-fluid" />
                                                                 </a>
-                                                                <div class="product-action-icon-link">
-                                                                    <ul>
-                                                                        <li>
-                                                                            <a href="#"><i class="icon-heart"></i></a>
-                                                                        </li>
-                                                                        <li>
-                                                                            <a href="#"><i class="icon-repeat"></i></a>
-                                                                        </li>
-                                                                        <li>
-                                                                            <a href="#" data-toggle="modal" data-target="#modalQuickview-{{$book['id']}}"><i class="icon-eye"></i></a>
-                                                                        </li>
-                                                                        @if($book['price'] != 0)
-                                                                            <li>
-                                                                                <a href="#" data-toggle="modal" data-target="#modalAddcart-{{$book['id']}}"><i class="icon-shopping-cart"></i></a>
-                                                                            </li>
-                                                                        @endif
-                                                                    </ul>
-                                                                </div>
                                                             </div>
                                                             <div class="product-default-content">
                                                                 <h6 class="product-default-link"><a href="{{URL::to('/book-details/'.$book['id'])}}">{{$book['title']}}</a></h6>
@@ -148,24 +130,6 @@
                                                                     <span class="product-list-price">$ {{$book['price']}}</span>
                                                                 @endif
                                                                 <p>{{$book['description']}}</p>
-                                                                <div class="product-action-icon-link-list">
-                                                                    <ul>
-                                                                        <li>
-                                                                            <a href="wishlist.html"><i class="icon-heart"></i></a>
-                                                                        </li>
-                                                                        <li>
-                                                                            <a href="compare.html"><i class="icon-repeat"></i></a>
-                                                                        </li>
-                                                                        <li>
-                                                                            <a href="#" data-toggle="modal" data-target="#modalQuickview-{{$book['id']}}"><i class="icon-eye"></i></a>
-                                                                        </li>
-                                                                        @if($book['price'] != 0)
-                                                                            <li>
-                                                                                <a href="#" data-toggle="modal" data-target="#modalAddcart-{{$book['id']}}"><i class="icon-shopping-cart"></i></a>
-                                                                            </li>
-                                                                        @endif
-                                                                    </ul>
-                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -259,29 +223,8 @@
                                                 <li>
                                                     <a href=""><i class="icon-heart"></i>{{__('messages.addToWishlist')}}</a>
                                                 </li>
-                                                <li>
-                                                    <a href="#" data-toggle="modal" data-target="#modalQuickview-{{$book['id']}}"><i class="icon-eye"></i>{{__('messages.quickView')}}</a>
-                                                </li>
                                             </ul>
                                         </div>
-
-                                        <ul class="modal-product-details-social">
-                                            <li>
-                                                <a href="#" class="facebook"><i class="fa fa-facebook"></i></a>
-                                            </li>
-                                            <li>
-                                                <a href="#" class="twitter"><i class="fa fa-twitter"></i></a>
-                                            </li>
-                                            <li>
-                                                <a href="#" class="pinterest"><i class="fa fa-pinterest"></i></a>
-                                            </li>
-                                            <li>
-                                                <a href="#" class="google-plus"><i class="fa fa-google-plus"></i></a>
-                                            </li>
-                                            <li>
-                                                <a href="#" class="linkedin"><i class="fa fa-linkedin"></i></a>
-                                            </li>
-                                        </ul>
                                     </div>
                                 </div>
                             </div>

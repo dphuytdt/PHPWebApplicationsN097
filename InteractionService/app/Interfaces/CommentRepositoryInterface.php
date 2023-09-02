@@ -7,4 +7,6 @@ interface CommentRepositoryInterface
     public function getAllComment($id);
 
     public function addComment($data);
+
+    public function getAllCommentForAdmin();
 }

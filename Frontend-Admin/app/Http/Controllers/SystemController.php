@@ -21,13 +21,6 @@ class SystemController extends Controller
         $this->paymentService = env('PAYMENT_SERVICE_HOST', null);
         $this->interactionService = env('INTERACTION_SERVICE_HOST', null);
     }
-
-    public function setting()
-    {
-        Log::channel('admin_log')->info('Admin: ' .  session('admin')['email'] . ' view system setting' );
-        return view('home.system.setting');
-    }
-
     public function checkLog()
     {
         $logs = file_get_contents(storage_path('logs/admin_log.log'));

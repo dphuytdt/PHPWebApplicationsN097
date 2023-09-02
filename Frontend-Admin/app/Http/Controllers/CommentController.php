@@ -23,8 +23,9 @@ class CommentController extends Controller
     public function index()
     {
         $client = new Client();
+
         try {
-            $response = $client->get($this->bookService.'admin/comments');
+            $response = $client->get($this->interactionService . 'comment/admin/manage-comments');
             $paginator = json_decode($response->getBody(), true);
 
             Log::channel('admin_log')->info('Admin: ' .  session('admin')['email'] . ' view comment list' );

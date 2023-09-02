@@ -27,40 +27,11 @@
 </div>
 
 <div class="container">
-
-    <div class="modal fade" id="importNewsModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <form action="{{route('books.import')}}" method="POST" enctype="multipart/form-data">
-            @csrf
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Import Books From CSV File</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <input name="file" type="file" id="file" class="form-control" required>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Import</button>
-                    </div>
-                </div>
-            </div>
-        </form>
-    </div>
-    <br><br>
-<div class="container">
-    <a href="" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm" data-toggle="modal" data-target="#importNewsModal">
-        <i class="fas fa-download fa-sm text-white-50"></i> Import Books
-    </a>
-    <br><br>
     <form action="{{route('books.store')}}" method="POST" enctype="multipart/form-data">
         @csrf
         <div class="mb-3">
             <label for="title" class="form-label">Title: <color style="color: red;">*</color></label>
-            <input type="text" class="form-control" id="title" name="title">
+            <input type="text" class="form-control" id="title" name="title" required>
         </div>
         <div class="mb-3">
             <label for="description" class="form-label">Description: (Optional)</label>
@@ -79,11 +50,11 @@
         </div>
         <div class="mb-3">
             <label for="content" class="form-label">Content: <color style="color: red;">*</color></label>
-            <input type="file" class="form-control" id="contentPdf" name="contentPdf" accept="application/pdf">
+            <input type="file" class="form-control" id="contentPdf" name="contentPdf" accept="application/pdf" required>
         </div>
         <div class="mb-3">
             <label for="author" class="form-label">Author: <color style="color: red;">*</color></label>
-            <input type="text" class="form-control" id="author" name="author">
+            <input type="text" class="form-control" id="author" name="author" required>
         </div>
         <div class="mb-3">
             <label for="disabledSelect" class="form-label">Category menu: <color style="color: red;">*</color></label>
@@ -97,7 +68,7 @@
                     resize: none;
                 }
             </style>
-            <select id="disabledSelect" class="form-select" name="category_id">
+            <select id="disabledSelect" class="form-select" name="category_id" required>
                 <option selected>Select Category:</option>
                 @foreach($categories as $category)
                     <option value="{{$category['id']}}">{{$category['name']}}</option>
@@ -106,11 +77,11 @@
         </div>
         <div class="mb-3">
             <label for="price" class="form-label">Price: <color style="color: red;">*</color></label>
-            <input type="number" class="form-control" id="price" name="price">
+            <input type="number" class="form-control" id="price" name="price" required>
         </div>
         <div class="mb-3 contentType">
             <label for="contentType" class="form-label">Is Featured <color style="color: red;">*</color></label>
-            <select id="contentType" class="form-select" name="is_featured">
+            <select id="contentType" class="form-select" name="is_featured" required>
                 <option selected>Select Status</option>
                 <option value="1">Yes</option>
                 <option value="0">No</option>
@@ -118,7 +89,7 @@
         </div>
         <div class="mb-3 contentType">
             <label for="is_vip_valid" class="form-label">Is Valid For Vip <color style="color: red;">*</color></label>
-            <select id="is_vip_valid" class="form-select" name="is_vip_valid">
+            <select id="is_vip_valid" class="form-select" name="is_vip_valid" required>
                 <option selected>Select Status</option>
                 <option value="1">Yes</option>
                 <option value="0">No</option>
@@ -126,7 +97,7 @@
         </div>
         <div class="mb-3 contentType">
             <label for="contentType" class="form-label">Status <color style="color: red;">*</color></label>
-            <select id="contentType" class="form-select" name="status">
+            <select id="contentType" class="form-select" name="status" required>
                 <option selected>Select Status</option>
                 <option value="1">Active</option>
                 <option value="0">Inactive</option>

@@ -70,7 +70,7 @@
         </div>
         <div class="mb-3">
             <label for="slug" class="form-label">Slug: (Optional)</label>
-            <input type="text" class="form-control" id="slug" name="slug" />
+            <input type="text" class="form-control" id="slug" name="slug"/>
         </div>
         <div class="mb-3">
             <label for="description" class="form-label">Description: (Optional)</label>
@@ -84,7 +84,7 @@
             <label for="exampleInputPassword1" class="form-label">Image <color style="color: red;">*</color></label>
             <div class="row">
                 <div class="col-md-7">
-                    <input type="file" class="form-control" id="image" name="image" accept="image/*" />
+                    <input type="file" class="form-control" id="image" name="image" accept="image/*" required/>
                 </div>
                 <div class="col-md-5">
                     <img
@@ -116,7 +116,7 @@
                     border: 1px solid #ced4da;
                 }
             </style>
-            <select id="is_active" name="is_active" class="form-select">
+            <select id="is_active" name="is_active" class="form-select" required>
                 <option selected>Select Status</option>
                 <option value="1">Active</option>
                 <option value="0">Inactive</option>

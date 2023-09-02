@@ -30,6 +30,16 @@
     </div>
 
     <div class="container">
+        @if(Session::has('error'))
+            <div class="alert alert-danger">
+                {{Session::get('error')}}
+            </div>
+            <br>
+        @elseif(Session::has('success'))
+            <div class="alert alert-success">
+                {{Session::get('success')}}
+            </div>
+        @endif
         <a href="" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm" data-toggle="modal" data-target="#importNewsModal">
             <i class="fas fa-download fa-sm text-white-50"></i> Import Users
         </a>
@@ -46,7 +56,7 @@
                             </button>
                         </div>
                         <div class="modal-body">
-                            <input name="file" type="file" id="file" class="form-control" required>
+                            <input name="file" type="file" id="file" class="form-control" accept="text/csv" required>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -61,7 +71,7 @@
             @csrf
             <div class="mb-3">
                 <label for="fullname" class="form-label">Full name: (Optional)</label>
-                <input type="text" class="form-control" id="fullname" name="fullname" required>
+                <input type="text" class="form-control" id="fullname" name="fullname">
             </div>
             <div class="mb-3">
                 <label for="email" class="form-label">Email: <color style="color: red;">*</color></label>
@@ -76,7 +86,7 @@
                         border: 1px solid #ced4da;
                     }
                 </style>
-                <select id="role" name="role" class="form-select">
+                <select id="role" name="role" class="form-select" required>
                     <option selected disabled>Select Role</option>
                     <option value="ROLE_USER">User</option>
                     <option value="ROLE_ADMIN">Admin</option>

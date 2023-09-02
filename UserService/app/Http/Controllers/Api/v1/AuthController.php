@@ -185,25 +185,12 @@ class AuthController extends Controller
         }
     }
 
-    public function changePassWord(Request $request) {
-        $validator = Validator::make($request->all(), [
-            'old_password' => 'required|string|min:6',
-            'new_password' => 'required|string|confirmed|min:6',
-        ]);
-
-        if($validator->fails()){
-            return response()->json($validator->errors()->toJson(), 400);
-        }
-        $userId = auth()->user()->id;
-
-        $user = User::where('id', $userId)->update(
-                    ['password' => bcrypt($request->new_password)]
+    public function changePassWord($id, Request $request) {
+        User::where('id', $id)->update(
+                    ['password' => Hash::make($request->password)]
                 );
 
-        return response()->json([
-            'message' => 'User successfully changed password',
-            'user' => $user,
-        ], 201);
+        return response()->json([], 201);
     }
 
     public function forgotPassword(Request $request) {

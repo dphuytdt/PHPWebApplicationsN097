@@ -63,4 +63,14 @@ class InteractionController extends Controller
             return response()->json($e->getMessage(), 500);
         }
     }
+
+    public function manageComments()
+    {
+        try {
+            $comments = $this->commentRepository->getAllCommentForAdmin();
+            return response()->json($comments, 200);
+        } catch (\Exception $e) {
+            return response()->json($e->getMessage(), 500);
+        }
+    }
 }

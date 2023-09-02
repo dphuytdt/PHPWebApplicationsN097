@@ -108,4 +108,26 @@ class UserController extends Controller
 
         return view('main.user.vip-benefits')->with('categories', $categories);
     }
+
+    public function changePassword($id, Request $request) {
+        $data = [
+            'password' => $request->password ?? '',
+        ];
+
+        $client = new Client();
+
+        try {
+            $client->post($this->userService.'auth/change-pass/'.$id, [
+                'headers' => [
+                    'Authorization' => 'Bearer ' . session('token'),
+                ],
+                'form_params' => $data
+            ]);
+
+            return redirect()->back()->with('success', 'Change password successfully!');
+
+        } catch (\Exception|\Throwable|GuzzleException $e) {
+            return redirect()->back()->with('error', 'Something went wrong!');
+        }
+    }
 }

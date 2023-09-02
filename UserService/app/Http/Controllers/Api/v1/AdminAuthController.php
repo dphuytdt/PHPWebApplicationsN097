@@ -68,6 +68,7 @@ class AdminAuthController extends Controller
     }
 
     public function logout() {
+
         auth()->logout();
 
         return response()->json(['message' => 'User successfully signed out']);

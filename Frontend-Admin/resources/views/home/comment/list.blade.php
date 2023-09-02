@@ -42,8 +42,6 @@
                                     </td>
                                     <td>
                                         <input type="hidden" name="id" value="{{ $comment['id'] }}">
-                                        {{-- <a href="{{ route('comments.edit', $comment['id']) }}" class="btn btn-primary btn-sm">Reply</a>
-                                            <!-- Button trigger modal --> --}}
                                             <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#exampleModalCenter-{{$comment['id']}}">
                                                 Reply
                                             </button>

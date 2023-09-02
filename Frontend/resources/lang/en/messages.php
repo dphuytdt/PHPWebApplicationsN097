@@ -120,7 +120,6 @@
         'Get plan' => 'Get plan',
         'Choose a Plan' => 'Choose a Plan',
         'Language' => 'Language',
-        'setting' => 'Setting',
         'darkmode' => 'Dark Mode',
         'lightmode' => 'Light Mode',
         'View Wishlist' => 'View Wishlist',
@@ -139,7 +138,6 @@
         'Register' => 'Register',
         'Email address' => 'Email address',
         'Passwords Confirm' => 'Passwords Confirm',
-
         'Forgot Password' => 'Forgot Password',
         'Get OTP' => 'Get OTP',
         'Reset Password' => 'Reset Password',
@@ -197,5 +195,7 @@
         'Are there any restrictions' => 'Are there any restrictions on how long I can read the ebooks online?',
         'We want you to have a great reading experience' => 'We want you to have a great reading experience, so there is no strict time limit for reading our ebooks online. You can access and read the ebooks at your own pace, whenever it is convenient for you. However, please keep in mind that you will need an internet connection to read the ebooks online.',
         'Can I share the online ebook reading link with others?' => 'Can I share the online ebook reading link with others?',
-        'While we encourage you to share your enthusiasm for reading' => 'While we encourage you to share your enthusiasm for reading, the online ebook reading link is typically meant for personal use. If you would like to recommend a specific ebook to someone, we suggest directing them to our website where they can explore and access the ebook themselves.'
+        'While we encourage you to share your enthusiasm for reading' => 'While we encourage you to share your enthusiasm for reading, the online ebook reading link is typically meant for personal use. If you would like to recommend a specific ebook to someone, we suggest directing them to our website where they can explore and access the ebook themselves.',
+        'ChangePass' => 'Change Password',
+        'Change' => 'Change',
     ];

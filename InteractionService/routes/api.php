@@ -14,6 +14,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 Route::prefix('comment')->group(function () {
+    Route::prefix('admin')->group(function () {
+        Route::get('manage-comments', [InteractionController::class, 'manageComments'])->name('manageComments');
+    });
+
     Route::post('/', [InteractionController::class, 'comment'])->name('comment');
     Route::get('{id}', [InteractionController::class, 'show'])->name('show');
 });

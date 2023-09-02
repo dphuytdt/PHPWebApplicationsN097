@@ -198,5 +198,7 @@
         'We want you to have a great reading experience' => '우리는 귀하가 훌륭한 독서 경험을 갖기를 원하므로 온라인에서 전자책을 읽는 데 엄격한 시간 제한이 없습니다. 귀하는 편할 때 언제든지 자신의 속도에 맞춰 전자책에 액세스하고 읽을 수 있습니다. 하지만 온라인으로 전자책을 읽으려면 인터넷 연결이 필요하다는 점을 명심하세요.',
         'Can I share the online ebook reading link with others?' => '다른 사람과 온라인 eBook 읽기 링크를 공유 할 수 있나요?',
         'While we encourage you to share your enthusiasm for reading' => '독서에 대한 열정을 공유하도록 권장하지만 온라인 전자책 읽기 링크는 일반적으로 개인적인 용도로 사용됩니다. 특정 전자책을 누군가에게 추천하고 싶다면 그들이 직접 전자책을 탐색하고 액세스할 수 있는 우리 웹사이트로 안내하는 것이 좋습니다.',
+        'ChangePass' => '비밀번호 변경',
+        'Change' => '변화',
     ];
 

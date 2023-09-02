@@ -304,9 +304,6 @@
                                                         <a id="addWishlist-{{$news['id']}}"> <i class="icon-heart"></i></a>
                                                     </li>
                                                     <li>
-                                                        <a href="#"><i class="icon-repeat"></i></a>
-                                                    </li>
-                                                    <li>
                                                         <a href="#" data-toggle="modal" data-target="#modalQuickviewNewBook-{{$news['id']}}"><i class="icon-eye"></i></a>
                                                     </li>
                                                     @if($news['price'] != 0)
@@ -392,9 +389,6 @@
                                             <li>
                                                 <button id="addWishlist-{{$book['id']}}"><i class="icon-heart"></i>Add to wishlist</button>
                                             </li>
-                                            <li>
-                                                <a href="#" data-toggle="modal" data-target="#modalQuickview-{{$book['id']}}"><i class="icon-eye"></i>Quick view</a>
-                                            </li>
                                         </ul>
                                     </div>
                                 </div>
@@ -458,9 +452,6 @@
                                             <li>
                                                 <button id="addWishlist-{{$book['id']}}"><i class="icon-heart"></i>Add to wishlist</button>
                                             </li>
-                                            <li>
-                                                <a href="#" data-toggle="modal" data-target="#modalQuickview-{{$book['id']}}"><i class="icon-eye"></i>Quick view</a>
-                                            </li>
                                         </ul>
                                     </div>
                                 </div>
@@ -505,10 +496,6 @@
                             </div>
                             <div class="col-md-5 modal-border">
                                 <ul class="modal-add-cart-product-shipping-info">
-                                    <li>
-                                        <strong><i class="icon-shopping-cart"></i> There Are 5 Items In Your Cart.</strong>
-                                    </li>
-                                    <li><strong>TOTAL PRICE: </strong> <span>$187.00</span></li>
                                     <li class="modal-continue-button"><a href="#" data-dismiss="modal">CONTINUE SHOPPING</a></li>
                                 </ul>
                             </div>
@@ -590,9 +577,6 @@
                                         <ul>
                                             <li>
                                                 <button id="addWishlist-{{$book['id']}}"><i class="icon-heart"></i>Add to wishlist</button>
-                                            </li>
-                                            <li>
-                                                <a href="#" data-toggle="modal" data-target="#modalQuickview-{{$book['id']}}"><i class="icon-eye"></i>Quick view</a>
                                             </li>
                                         </ul>
                                     </div>

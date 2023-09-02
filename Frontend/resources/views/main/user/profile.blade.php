@@ -74,6 +74,7 @@
                     <ul role="tablist" class="nav flex-column dashboard-list">
                         <li><a href="#dashboard" data-toggle="tab" class="nav-link active">{{__('messages.Dashboard')}}</a></li>
                         <li><a href="#account-details" data-toggle="tab" class="nav-link">{{__('messages.AccountDetails')}}</a></li>
+                        <li><a href="#changePass" data-toggle="tab" class="nav-link">{{__('messages.ChangePass')}}</a></li>
                         <li><a href="#orders" data-toggle="tab" class="nav-link">{{__('messages.Orders')}}</a></li>
                     </ul>
                 </div>
@@ -200,12 +201,52 @@
                             </div>
                         </div>
                     </div>
+                    <div class="tab-pane fade" id="changePass">
+                        <h3>{{__('messages.ChangePass')}}</h3>
+                        <br>
+                        @if (session('error'))
+                            <div class="alert alert-danger">
+                                {{ session('error') }}
+                            </div>
+                        @else
+                            @if (session('success'))
+                                <div class="alert alert-success">
+                                    {{ session('success') }}
+                                </div>
+                            @endif
+                        @endif
+                        <br>
+                        <div class="login">
+                            <div class="login_form_container">
+                                <div class="account_login_form">
+                                    @if(session()->has('user')) @php $user_id = session()->get('user')['id']; @endphp @endif
+                                    <form id="change-password" action="{{route('changePassword' , $user_id)}}" method="POST" enctype="multipart/form-data" id="formProfile">
+                                        @csrf
+                                        <div class="row">
+                                            <div class="default-form-box mb-20">
+                                                <label for="password">{{__('messages.New Password')}}</label>
+                                                <input type="password" name="password" id="password" data-label="New Password" placeholder="{{__('messages.New Password')}}"/>
+                                            </div>
+                                        </div>
+                                        <div class="default-form-box mb-20">
+                                            <label>{{__('messages.New Passwords Confirmation')}}</label>
+                                            <input type="password" id="password_confirmation" name="password_confirmation" data-label="New Passwords Confirmation" placeholder="{{__('messages.New Passwords Confirmation')}}" />
+                                        </div>
+                                        <div class="save_button primary_btn default_button">
+                                            <button type="submit">{{__('messages.Change')}}</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
 <script type="text/javascript" src="{{asset('js/auth/profile.js')}}"></script>
+<script type="text/javascript" src="{{asset('js/auth/change-password.js')}}"></script>
 <script type="text/javascript">
     const fileInput = document.querySelector('input[type="file"]');
 

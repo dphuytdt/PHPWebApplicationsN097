@@ -55,7 +55,7 @@
                         @php
                             $numberLimit = 30;
                         @endphp
-                        @if(isset($news))
+                        @if(isset($news) || count($news) > 0 || $news != null)
                             @foreach($news as $new)
                                 <tr>
                                     <td>{{$new['id']}}</td>

@@ -197,5 +197,7 @@
         'Are there any restrictions' => 'Có bất kỳ hạn chế nào khi đọc sách điện tử trực tuyến không?',
         'We want you to have a great reading experience' => 'Chúng tôi muốn bạn có trải nghiệm đọc tuyệt vời nên không có giới hạn thời gian nghiêm ngặt cho việc đọc sách điện tử trực tuyến của chúng tôi. Bạn có thể truy cập và đọc sách điện tử theo tốc độ của riêng mình, bất cứ khi nào thuận tiện cho bạn. Tuy nhiên, xin lưu ý rằng bạn cần có kết nối Internet để đọc sách điện tử trực tuyến.',
         'Can I share the online ebook reading link with others?' => 'Tôi có thể chia sẻ liên kết đọc sách điện tử trực tuyến với người khác không?',
-        'While we encourage you to share your enthusiasm for reading' => 'Mặc dù chúng tôi khuyến khích bạn chia sẻ niềm đam mê đọc sách của mình nhưng liên kết đọc sách điện tử trực tuyến thường dành cho mục đích sử dụng cá nhân. Nếu bạn muốn giới thiệu một cuốn sách điện tử cụ thể cho ai đó, chúng tôi khuyên bạn nên hướng họ đến trang web của chúng tôi nơi họ có thể tự khám phá và truy cập cuốn sách điện tử đó.'
+        'While we encourage you to share your enthusiasm for reading' => 'Mặc dù chúng tôi khuyến khích bạn chia sẻ niềm đam mê đọc sách của mình nhưng liên kết đọc sách điện tử trực tuyến thường dành cho mục đích sử dụng cá nhân. Nếu bạn muốn giới thiệu một cuốn sách điện tử cụ thể cho ai đó, chúng tôi khuyên bạn nên hướng họ đến trang web của chúng tôi nơi họ có thể tự khám phá và truy cập cuốn sách điện tử đó.',
+        'ChangePass' => 'Đổi mật khẩu',
+        'Change' => 'Thay đổi',
     ];
