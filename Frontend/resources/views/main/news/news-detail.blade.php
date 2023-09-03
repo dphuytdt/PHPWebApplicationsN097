@@ -629,7 +629,7 @@
         function editComment(commentId, newsId, element, text) {
             var commentPosition = element.closest(".comment-wrapper");
             var form = generateEditForm(text, newsId, commentId);
-            commentPosition.parentNode.appendChild(form);
+            commentPosition.parentNode.insertBefore(form, commentPosition.nextSibling);
             commentPosition.style.display = "none";
         }
 

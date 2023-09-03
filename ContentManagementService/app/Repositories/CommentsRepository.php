@@ -27,7 +27,7 @@ class CommentsRepository implements CommentsRepositoryInterfaces
         return Comment::where('news_id', $news_id)->where('comment_parent_id', $comment_id)->delete();
     }
 
-    public function update($id, $news_id, $content)
+    public function update($id, $news_id, $content, $updated_at)
     {
         return Comment::where('id', $id)->where('news_id', $news_id)->update(['content' => $content]);
     }

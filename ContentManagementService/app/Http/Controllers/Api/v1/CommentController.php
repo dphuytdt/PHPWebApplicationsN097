@@ -60,7 +60,8 @@ class CommentController extends Controller
     public function commentUpdate(Request $request, $id) {
         $data = $request->all();
         try {
-            $comment = $this->commentsRepository->update($id, $data['news_id'], $data['content']);
+            $updated_at = now();
+            $comment = $this->commentsRepository->update($id, $data['news_id'], $data['content'], $updated_at);
             return response()->json($comment, 200);
         } catch (\Exception $e) {
             return response()->json([
