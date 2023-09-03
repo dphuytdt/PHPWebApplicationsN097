@@ -13,4 +13,8 @@ interface CommentsRepositoryInterfaces
     public function deleteReply($news_id, $comment_id);
 
     public function update($id, $news_id, $content, $updated_at);
+
+    public function getAllComments();
+
+    public function getAllCommentReply();
 }

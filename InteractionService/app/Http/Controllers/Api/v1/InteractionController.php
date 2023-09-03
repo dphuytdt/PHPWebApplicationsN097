@@ -68,7 +68,11 @@ class InteractionController extends Controller
     {
         try {
             $comments = $this->commentRepository->getAllCommentForAdmin();
-            return response()->json($comments, 200);
+            $replyComment = $this->commentRepository->getAllCommentReplyForAdmin();
+            return response()->json([
+                'comments' => $comments,
+                'replyComment' => $replyComment
+            ], 200);
         } catch (\Exception $e) {
             return response()->json($e->getMessage(), 500);
         }

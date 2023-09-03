@@ -45,9 +45,7 @@ class CommentController extends Controller
         $data = $request->all();
         try {
             $comment = $this->commentsRepository->delete($data['news_id'], $data['comment_id']);
-            if ($data['is_reply']) {
-                $commentReply = $this->commentsRepository->deleteReply($data['news_id'], $data['comment_id']);
-            }
+            $commentReply = $this->commentsRepository->deleteReply($data['news_id'], $data['comment_id']);
 
             return response()->json($comment + $commentReply, 200);
         } catch (\Exception $e) {
@@ -66,6 +64,21 @@ class CommentController extends Controller
         } catch (\Exception $e) {
             return response()->json([
                 'message' => 'Comment update failed'
+            ], 500);
+        }
+    }
+
+    public function index() {
+        try {
+            $comments = $this->commentsRepository->getAllComments();
+            $coment_reply = $this->commentsRepository->getAllCommentReply();
+            return response()->json([
+                'comments' => $comments,
+                'comment_reply' => $coment_reply
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => 'Comment get failed'
             ], 500);
         }
     }

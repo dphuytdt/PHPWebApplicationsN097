@@ -185,7 +185,7 @@
                             </div>
                             <div class="tab-pane active show" id="review">
                                 <div class="single-tab-content-item">
-                                    @if(session()->has('user') && ($isPayment['data'] || $result['book']['price'] === 0))
+                                    @if(session()->has('user') && $isReadNow)
                                         @if(!isset($yourComment) && $user['role'] != 'ROLE_ADMIN')
                                             <div class="review-form">
                                                 <div class="review-form-text-top">

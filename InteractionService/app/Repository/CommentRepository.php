@@ -18,6 +18,11 @@ class CommentRepository
 
     public function getAllCommentForAdmin()
     {
-        return Comment::all();
+        return Comment::where('comment_parent_id', null)->orderBy('created_at', 'asc')->get();
+    }
+
+    public function getAllCommentReplyForAdmin()
+    {
+        return Comment::where('comment_parent_id', '!=', null)->orderBy('created_at', 'asc')->get();
     }
 }

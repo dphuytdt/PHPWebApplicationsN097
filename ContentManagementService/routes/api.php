@@ -34,6 +34,14 @@ Route::prefix('admin')->group(function () {
         Route::post('{id}', [SlideShowController::class, 'update']);
         Route::post('delete/{id}', [SlideShowController::class, 'delete']);
     });
+
+    Route::prefix('comment')->group(function () {
+        Route::get('/', [CommentController::class, 'index']);
+        Route::get('latest', [CommentController::class, 'latest']);
+        Route::get('{id}', [CommentController::class, 'show']);
+        Route::post('{id}', [CommentController::class, 'update']);
+        Route::post('delete/{id}', [CommentController::class, 'delete']);
+    });
 });
 
 Route::prefix('user')->group(function () {

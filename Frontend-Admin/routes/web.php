@@ -70,7 +70,8 @@ Route::group(['middleware' => 'check.auth'] , function(){
         Route::post('store', [CommentController::class, 'store'])->name('comments.store');
         Route::get('edit/{id}', [CommentController::class, 'edit'])->name('comments.edit');
         Route::post('update/{id}', [CommentController::class, 'update'])->name('comments.update');
-        Route::get('delete/{id}', [CommentController::class, 'delete'])->name('comments.delete');
+        Route::post('delete', [CommentController::class, 'delete'])->name('comments.delete');
+        Route::post('reply', [CommentController::class, 'reply'])->name('comments.reply');
     });
     Route::group(['prefix' => 'news'], function () {
         Route::get('/', [NewsController::class, 'index'])->name('news.index');

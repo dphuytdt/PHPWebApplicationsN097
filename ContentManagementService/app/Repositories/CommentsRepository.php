@@ -31,4 +31,14 @@ class CommentsRepository implements CommentsRepositoryInterfaces
     {
         return Comment::where('id', $id)->where('news_id', $news_id)->update(['content' => $content]);
     }
+
+    public function getAllComments()
+    {
+        return Comment::where('comment_parent_id', null)->orderBy('created_at', 'asc')->get();
+    }
+
+    public function getAllCommentReply()
+    {
+        return Comment::where('comment_parent_id', '!=', null)->orderBy('created_at', 'asc')->get();
+    }
 }
