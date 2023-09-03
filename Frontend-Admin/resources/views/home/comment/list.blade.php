@@ -57,7 +57,7 @@
                                     <td>
                                         <input type="hidden" name="id" value="{{ $comment['id'] }}">
                                         @if(null == $comment['comment_parent_id'])
-                                            <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#exampleModalCenter-{{$comment['id']}}">
+                                            <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#exampleModalCenter-{{$commentReply['id']}}">
                                                 Reply
                                             </button>
                                         @else
@@ -87,7 +87,7 @@
                                     <td>
                                         @foreach($result['booksRepply'] as $key => $commentReply)
                                             @if($comment['id'] == $commentReply['comment_parent_id'])
-                                                <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#exampleModalCenterBooks-{{$comment['id']}}">
+                                                <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#exampleModalCenterBooks-{{$commentReply['id']}}">
                                                     View
                                                 </button>
                                             @else
@@ -168,6 +168,85 @@
     @endforeach
 
     @foreach($result['booksComment'] as $key => $comment)
+        <div class="modal fade" id="exampleModalCenterBooks-{{$comment['id']}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle-{{$comment['id']}}" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <form class="form-edit-category" onsubmit="handleSubmitReplyComment(); return false;">
+                        @csrf
+                        <input type="hidden" name="comment_parent_id" value="{{ $comment['id'] }}" />
+                        <div class="modal-header">
+                            <h4 class="modal-title" id="exampleModalLongTitle">Reply comment of {{$comment['comment_name']}}</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <style type="text/css">
+                            textarea {
+                                resize: none;
+                            }
+                        </style>
+                        <div class="modal-body">
+                            <div class="mb-3">
+                                <label for="exampleInputEmail1" class="form-label">Content</label>
+                                <textarea disabled class="form-control" id="exampleFormControlTextarea1" rows="5" name="content" >{{$comment['content']}}</textarea>
+                            </div>
+                            <div class="mb-3">
+                                <div class="row">
+                                    <label for="exampleFormControlTextarea1" class="form-label">Content reply</label>
+                                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="content" ></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">Reply</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    @endforeach
+
+    @foreach($result['newsRepply'] as $key => $comment)
+        <div class="modal fade" id="exampleModalCenterBooks-{{$comment['id']}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle-{{$comment['id']}}" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <form class="form-edit-category" onsubmit="handleSubmitReplyComment(); return false;">
+                        @csrf
+                        <input type="hidden" name="comment_parent_id" value="{{ $comment['id'] }}" />
+                        <div class="modal-header">
+                            <h4 class="modal-title" id="exampleModalLongTitle">Reply comment of {{$comment['comment_name']}}</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <style type="text/css">
+                            textarea {
+                                resize: none;
+                            }
+                        </style>
+                        <div class="modal-body">
+                            <div class="mb-3">
+                                <label for="exampleInputEmail1" class="form-label">Content</label>
+                                <textarea disabled class="form-control" id="exampleFormControlTextarea1" rows="5" name="content" >{{$comment['content']}}</textarea>
+                            </div>
+                            <div class="mb-3">
+                                <div class="row">
+                                    <label for="exampleFormControlTextarea1" class="form-label">Content reply</label>
+                                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="content" ></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">Reply</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    @endforeach
+    @foreach($result['booksRepply'] as $key => $comment)
         <div class="modal fade" id="exampleModalCenterBooks-{{$comment['id']}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle-{{$comment['id']}}" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
