@@ -3,11 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Exports\StatisticalExport;
-use Barryvdh\DomPDF\PDF;
+use Barryvdh\DomPDF\PDF as PDF;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Str;
 use Maatwebsite\Excel\Facades\Excel;
 
 class SystemController extends Controller

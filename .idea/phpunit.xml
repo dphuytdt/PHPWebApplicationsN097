@@ -7,14 +7,14 @@
         <option value="$PROJECT_DIR$/RecommendationService/tests/Feature" />
         <option value="$PROJECT_DIR$/Frontend/tests/Unit" />
         <option value="$PROJECT_DIR$/Frontend/tests/Feature" />
-        <option value="$PROJECT_DIR$/PaymentService/tests/Unit" />
-        <option value="$PROJECT_DIR$/PaymentService/tests/Feature" />
         <option value="$PROJECT_DIR$/BookService/tests/Unit" />
         <option value="$PROJECT_DIR$/BookService/tests/Feature" />
-        <option value="$PROJECT_DIR$/UserService/tests/Unit" />
-        <option value="$PROJECT_DIR$/UserService/tests/Feature" />
         <option value="$PROJECT_DIR$/ContentManagementService/tests/Unit" />
         <option value="$PROJECT_DIR$/ContentManagementService/tests/Feature" />
+        <option value="$PROJECT_DIR$/UserService/tests/Unit" />
+        <option value="$PROJECT_DIR$/UserService/tests/Feature" />
+        <option value="$PROJECT_DIR$/PaymentService/tests/Unit" />
+        <option value="$PROJECT_DIR$/PaymentService/tests/Feature" />
         <option value="$PROJECT_DIR$/Frontend-Admin/tests/Unit" />
         <option value="$PROJECT_DIR$/Frontend-Admin/tests/Feature" />
       </list>

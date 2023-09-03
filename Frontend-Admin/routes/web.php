@@ -86,6 +86,7 @@ Route::group(['middleware' => 'check.auth'] , function(){
     Route::get('export-statistical/{type}', [SystemController::class, 'exportStatistical'])->name('exportStatistical');
 
     Route::get('profile/{id}', [UserController::class, 'profile'])->name('profile');
+    Route::post('profile/{id}', [UserController::class, 'postProfileAdmin'])->name('profile.update');
     Route::get('change-password/{id}', [UserController::class, 'getChangePassword'])->name('get.changePassword');
     Route::post('change-password/{id}', [UserController::class, 'changePassword'])->name('changePassword');
     Route::get('check-log', [SystemController::class, 'checkLog'])->name('checkLog');

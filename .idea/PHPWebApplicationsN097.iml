@@ -44,7 +44,6 @@
       <sourceFolder url="file://$MODULE_DIR$/tests" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/Frontend/spec" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/PaymentService/spec" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/UserService/spec" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/BookService/spec" isTestSource="true" />
       <excludeFolder url="file://$MODULE_DIR$/BookService/vendor/brick/math" />
       <excludeFolder url="file://$MODULE_DIR$/BookService/vendor/composer" />

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
 use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Http\Request;
 use GuzzleHttp\Client;
@@ -183,7 +184,6 @@ class UserController extends Controller
         unset($file[0][0]);
 
         $client = new Client();
-        dd($file[0]);
         try{
             $client->post($this->userService.'auth/admin/user/import', [
                 'headers' => [
@@ -197,15 +197,23 @@ class UserController extends Controller
             Log::channel('admin_log')->info('Admin: ' .  session('admin')['email'] . ' import user successfully' );
             return redirect()->back()->with('success', 'Import user successfully');
         } catch (\Exception|GuzzleException $e) {
-            dd($e);
             Log::channel('admin_log')->error('Admin: ' .  session('admin')['email'] . ' cannot import user' );
             return view('home.user.list')->withErrors(['errors' => 'Cannot connect to server']);
         }
     }
 
     public function profile($userId){
+        $client = new Client();
+
+        try{
+            $req1 = $client->post($this->userService . 'auth/user-detail/' . $userId);
+            $user = json_decode($req1->getBody(), true);
+        } catch (\Exception|\Throwable|GuzzleException $e) {
+            return redirect()->back()->with('error', 'Something went wrong!');
+        }
+
         Log::channel('admin_log')->info('Admin: ' .  session('admin')['email'] . ' view profile' );
-        return view('home.self.profile');
+        return view('home.self.profile')->with('user', $user['user']);
     }
 
     public function getChangePassword($userId){
@@ -215,6 +223,7 @@ class UserController extends Controller
 
     public function changePassword($id, Request $request) {
         $data = [
+            'oldpassword' => $request->oldpassword ?? '',
             'password' => $request->password ?? '',
         ];
 
@@ -231,6 +240,39 @@ class UserController extends Controller
             return redirect()->back()->with('success', 'Change password successfully!');
 
         } catch (\Exception|\Throwable|GuzzleException $e) {
+            return redirect()->back()->with('error', 'Something went wrong!');
+        }
+    }
+
+    public function postProfileAdmin(Request $request, $id)
+    {
+        if ($request->hasFile('avatar') || $request->avatar != null) {
+            $imageFile = $request->file('avatar');
+            $imagePath = Cloudinary::upload($imageFile->getRealPath())->getSecurePath();
+        }
+
+        $data = [
+            'gender' => $request->gender ?? '',
+            'fullname' => $request->fullname ?? '',
+            'birthday' => $request->birthday ?? '',
+            'address' => $request->address ?? '',
+            'phone' => $request->phone ?? '',
+            'avatar' => $imagePath ?? null,
+        ];
+        $client = new Client();
+
+        try {
+            $client->post($this->userService.'auth/update-profile/'.$id, [
+                'headers' => [
+                    'Authorization' => 'Bearer ' . session('adminToken'),
+                ],
+                'form_params' => $data
+            ]);
+
+            return redirect()->back()->with('success', 'Update profile successfully!');
+
+        } catch (\Exception|\Throwable|GuzzleException $e) {
+            dd($e);
             return redirect()->back()->with('error', 'Something went wrong!');
         }
     }

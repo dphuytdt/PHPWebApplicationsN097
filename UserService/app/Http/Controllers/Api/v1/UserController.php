@@ -9,6 +9,7 @@ use App\Interfaces\UserRepositoryInterface;
 use App\Interfaces\OTPRepositoryInterface;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use OpenApi\Annotations as OA;
 
 class UserController extends Controller
 {
@@ -21,6 +22,32 @@ class UserController extends Controller
         $this->otpRepository = $otpRepository;
     }
 
+    /**
+     * @OA\Get(
+     *     path="/api/admin/user",
+     *     summary="List users",
+     *     tags={"User"},
+     *     security={{"bearerAuth":{}}},
+     *     @OA\Response(
+     *     response=200,
+     *     description="List users",
+     *     @OA\JsonContent(
+     *     type="object",
+     *     @OA\Property(property="users", type="array", @OA\Items(
+     *     @OA\Property(property="id", type="integer"),
+     *     @OA\Property(property="fullname", type="string"),
+     *     @OA\Property(property="email", type="string"),
+     *     @OA\Property(property="role", type="string"),
+     *     @OA\Property(property="is_active", type="integer"),
+     *     @OA\Property(property="is_vip", type="integer"),
+     *     @OA\Property(property="created_at", type="string"),
+     *     @OA\Property(property="updated_at", type="string"),
+     *     @OA\Property(property="deleted_at", type="string"),
+     *     ))
+     *    )
+     *  )
+     * )
+     */
     public function getAllUser(): \Illuminate\Http\JsonResponse
     {
         $users = $this->userRepository->getAllUser();
