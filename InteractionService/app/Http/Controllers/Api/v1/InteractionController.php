@@ -3,25 +3,78 @@
 namespace App\Http\Controllers\Api\v1;
 
 use App\Http\Controllers\Controller;
-use App\Repository\CommentRepository;
+use App\Interfaces\CommentRepositoryInterface;
 use Illuminate\Http\Request;
 
 class InteractionController extends Controller
 {
-    private CommentRepository $commentRepository;
+    private CommentRepositoryInterface $commentRepository;
 
-    public function __construct(CommentRepository $commentRepository)
+    public function __construct(CommentRepositoryInterface $commentRepository)
     {
         $this->commentRepository = $commentRepository;
     }
 
-    public function show(string $id)
-    {
+    public function commentStore(Request $request) {
+        $data = $request->all();
+
         try {
-            $comment = $this->commentRepository->getAllComment($id);
+            $newComment = $this->commentRepository->store($data);
+            return response()->json($newComment, 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => 'Comment created failed'
+            ], 500);
+        }
+    }
+
+    public function replyComment(Request $request) {
+        $data = $request->all();
+
+        try {
+            $newComment = $this->commentRepository->store($data);
+            return response()->json($newComment, 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => 'Comment created failed'
+            ], 500);
+        }
+    }
+
+    public function commentDelete(Request $request) {
+        $data = $request->all();
+
+        try {
+            $comment = $this->commentRepository->delete($data['target_id'], $data['comment_id'], $data['type']);
+
+            $commentReply = $this->commentRepository->deleteReply($data['target_id'], $data['comment_id'], $data['type']);
+
+            return response()->json($comment + $commentReply, 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => 'Comment delete failed'
+            ], 500);
+        }
+    }
+
+    public function commentUpdate(Request $request, $id) {
+        $data = $request->all();
+        try {
+            $comment = $this->commentRepository->update($id, $data['target_id'], $data['content'], $data['updated_at'], $data['type']);
+            return response()->json($comment, 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => 'Comment update failed'
+            ], 500);
+        }
+    }
+
+    public function getComment($target_id, $type) {
+        try {
+            $comments = $this->commentRepository->getComments($target_id, $type);
             $commentFilter = [];
-            for ($i = 0; $i < count($comment); $i++) {
-                $commentFilter[$comment[$i]['comment_parent_id'] ?? $comment[$i]['id']][] = $comment[$i];
+            for ($i = 0; $i < count($comments); $i++) {
+                $commentFilter[$comments[$i]['comment_parent_id'] ?? $comments[$i]['id']][] = $comments[$i];
             }
             return response()->json($commentFilter, 200);
         } catch (\Exception $e) {
@@ -29,49 +82,17 @@ class InteractionController extends Controller
         }
     }
 
-    public function comment(Request $request) {
-        $data = $request->all();
-        $newComment = [
-            'comment_name' => $data['comment_name'],
-            'content' => $data['content'],
-            'rate' => $data['rate'],
-            'book_id' => $data['book_id'],
-            'user_id' => $data['user_id'],
-        ];
+    public function manageComments() {
         try {
-            $comment = $this->commentRepository->addComment($newComment);
-            return response()->json($comment, 200);
-        } catch (\Exception $e) {
-            return response()->json($e->getMessage(), 500);
-        }
-    }
+            $booksComment = $this->commentRepository->getAllComment(1);
 
-    public function reply(Request $request) {
-        $data = $request->all();
-        $reply = [
-            'comment_name' => $data['comment_name'],
-            'content' => $data['content'],
-            'book_id' => $data['book_id'],
-            'user_id' => $data['user_id'],
-            'comment_parent_id' => $data['comment_parent_id'],
-        ];
+            $booksCommentFilter = [];
+            for ($i = 0; $i < count($booksComment); $i++) {
+                $booksCommentFilter[$booksComment[$i]['comment_parent_id'] ?? $booksComment[$i]['id']][] = $booksComment[$i];
+            }
 
-        try {
-            $comment = $this->commentRepository->addComment($reply);
-            return response()->json($comment, 200);
-        } catch (\Exception $e) {
-            return response()->json($e->getMessage(), 500);
-        }
-    }
-
-    public function manageComments()
-    {
-        try {
-            $comments = $this->commentRepository->getAllCommentForAdmin();
-            $replyComment = $this->commentRepository->getAllCommentReplyForAdmin();
             return response()->json([
-                'comments' => $comments,
-                'replyComment' => $replyComment
+                'booksComment' => $booksCommentFilter
             ], 200);
         } catch (\Exception $e) {
             return response()->json($e->getMessage(), 500);

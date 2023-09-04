@@ -193,7 +193,7 @@
                                                 </div>
                                                 <form onsubmit="onSubmitReview(this); return false;">
                                                     @csrf
-                                                    <input type="hidden" name="book_id" value="{{$result['book']['id']}}">
+                                                    <input type="hidden" name="id" value="{{$result['book']['id']}}">
                                                     <div class="row">
                                                         <div class="col-md-6">
                                                             <div class="default-form-box mb-20">
@@ -491,7 +491,7 @@
 
         var hiddenInputBookId = document.createElement("input");
         hiddenInputBookId.type = "hidden";
-        hiddenInputBookId.name = "book_id";
+        hiddenInputBookId.name = "id";
         hiddenInputBookId.value = bookId; // Use the parent comment's ID
 
         var hiddenCsrfToken = document.createElement("input");
@@ -540,7 +540,7 @@
 
     function onSubmitReplyReview(form) {
         const formData = new FormData(form);
-
+        formData.append("type", 1);
         $.ajax({
             url: "{{route('replyReview')}}",
             type: "POST",
@@ -611,6 +611,7 @@
 
     function onSubmitReview(form) {
         const formData = new FormData(form);
+        formData.append("type", 1);
         var submitBtn = form.querySelector(".form-submit-btn");
         submitBtn.disabled = true;
         $.ajax({

@@ -25,25 +25,15 @@ class CommentController extends Controller
         $client = new Client();
 
         try {
-            $response = $client->get($this->contentService . 'admin/comment', [
-                'headers' => [
-                    'Authorization' => session('token_type') . ' ' . session('access_token')
-                ]
-            ]);
-            $newsComment = json_decode($response->getBody(), true);
-
-            $req = $client->get($this->interactionService . 'comment/admin/manage-comments', [
+            $response = $client->get($this->interactionService . 'comment/admin/manage-comments', [
                 'headers' => [
                     'Authorization' => session('token_type') . ' ' . session('access_token')
                 ]
             ]);
 
-            $booksComment = json_decode($req->getBody(), true);
+            $response = json_decode($response->getBody(), true);
             $result = [
-                'newsComment' => $newsComment['comments'],
-                'newsRepply' => $newsComment['comment_reply'],
-                'booksComment' => $booksComment['comments'],
-                'booksRepply' => $booksComment['replyComment'],
+                'booksComment' => $response['booksComment']
             ];
 
             Log::channel('admin_log')->info('Admin: ' .  session('admin')['email'] . ' view comment list' );
@@ -59,17 +49,19 @@ class CommentController extends Controller
     public function reply(Request $request) {
         $data = $request->all();
         $user = session()->get('admin');
+
         $reply = [
             'comment_name' => $user['fullname'],
             'content' => $data['content'],
             'user_id' => $user['id'],
             'comment_parent_id' => $data['comment_parent_id'],
-            'news_id' => $data['news_id'],
+            'target_id' => $data['target_id'],
+            'type' => $data['type'],
         ];
 
         try {
             $client = new Client();
-            $response = $client->post($this->contentService . 'comment/reply', [
+            $response = $client->post($this->interactionService . 'comment/reply', [
                 'headers' => [
                     'Authorization' => session('token_type') . ' ' . session('access_token')
                 ],
@@ -86,7 +78,7 @@ class CommentController extends Controller
         $data = $request->all();
         try {
             $client = new Client();
-            $response = $client->post($this->contentService . 'comment/delete', [
+            $response = $client->post($this->interactionService . 'comment/delete', [
                 'headers' => [
                     'Authorization' => session('token_type') . ' ' . session('access_token')
                 ],

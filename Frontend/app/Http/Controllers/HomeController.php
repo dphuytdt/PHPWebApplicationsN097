@@ -31,7 +31,6 @@ class HomeController extends Controller
 
         $req2 = $client->get($this->bookService . 'category');
         $categories = json_decode($req2->getBody(), true);
-
         try {
             $req1 = $client->get($this->bookService .'books/homepage');
             $books = json_decode($req1->getBody(), true);

@@ -17,9 +17,10 @@ return new class extends Migration
             $table->text('content');
             $table->integer('rate')->nullable();
             $table->unsignedBigInteger('user_id');
-            $table->unsignedBigInteger('book_id');
+            $table->unsignedBigInteger('target_id');
             $table->unsignedBigInteger('comment_parent_id')->nullable();
             $table->boolean('status')->default(1);
+            $table->integer('type');
             $table->dateTime('created_at')->useCurrent();
             $table->dateTime('updated_at')->nullable();
             $table->dateTime('deleted_at')->nullable();

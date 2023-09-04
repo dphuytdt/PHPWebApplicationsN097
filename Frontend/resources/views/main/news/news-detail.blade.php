@@ -110,7 +110,7 @@
                         <div class="review-form">
                             <form action="#" onsubmit="onSubmitCommentNews(this); return false;">
                                 @csrf
-                                <input type="hidden" name="news_id" value="{{$news['id']}}">
+                                <input type="hidden" name="id" value="{{$news['id']}}">
                                 <div class="row">
                                     <div class="col-12">
                                         <div class="default-form-box mb-20">
@@ -279,7 +279,7 @@
 
             var hiddenInputBookId = document.createElement("input");
             hiddenInputBookId.type = "hidden";
-            hiddenInputBookId.name = "news_id";
+            hiddenInputBookId.name = "id";
             hiddenInputBookId.value = newsId; // Use the parent comment's ID
 
             var hiddenCsrfToken = document.createElement("input");
@@ -334,8 +334,9 @@
 
         function onSubmitReplyReview(form) {
             const formData = new FormData(form);
+            formData.append("type", 2);
             $.ajax({
-                url: "{{route('news.replyComment')}}",
+                url: "{{route('replyReview')}}",
                 type: "POST",
                 data: formData,
                 processData: false,
@@ -464,12 +465,13 @@
 
         function onSubmitCommentNews(form) {
             const formData = new FormData(form);
+            formData.append("type", 2);
             var formPosition = form.closest(".review-form");
             var newReviewPosition = formPosition.nextElementSibling.nextElementSibling;
             var submitBtn = form.querySelector(".form-submit-btn");
             submitBtn.disabled = true;
             $.ajax({
-                url: "{{route('news.comment')}}",
+                url: "{{route('review')}}",
                 type: "POST",
                 data: formData,
                 processData: false,
@@ -598,19 +600,18 @@
             }).then((willDelete) => {
                 const formData = new FormData();
                 formData.append('comment_id', commentId);
-                formData.append('news_id', newsId);
-                formData.append('is_reply', !(isReply));
+                formData.append('id', newsId);
+                formData.append('type', 2);
                 formData.append('_token', "{{csrf_token()}}");
                 if (willDelete) {
                     $.ajax({
-                        url: "{{route('news.deleteComment')}}",
+                        url: "{{route('deleteReview')}}",
                         type: "POST",
                         data: formData,
                         processData: false,
                         contentType: false,
 
                         success: function(response){
-                            console.log(response);
                             if(response){
                                 var commentPosition = element.closest((isReply) ? ".comment-reply" : ".comment-list");
                                 commentPosition.remove();
@@ -618,7 +619,6 @@
                                 var totalCommentNumber = totalComment.textContent.split(" ")[0];
                                 totalCommentNumber = parseInt(totalCommentNumber) - response;
                                 totalComment.textContent = totalCommentNumber + " Comments";
-
                             }
                         }
                     });
@@ -649,7 +649,7 @@
 
             var hiddenInputNewsId = document.createElement("input");
             hiddenInputNewsId.type = "hidden";
-            hiddenInputNewsId.name = "news_id";
+            hiddenInputNewsId.name = "id";
             hiddenInputNewsId.value = newsId; // Use the parent comment's ID
 
             var hiddenCsrfToken = document.createElement("input");
@@ -718,8 +718,9 @@
 
         function onSubmitEditComment(form) {
             const formData = new FormData(form);
+            formData.append("type", 2);
             $.ajax({
-                url: "{{route('news.updateComment')}}",
+                url: "{{route('updateReview')}}",
                 type: "POST",
                 data: formData,
                 processData: false,

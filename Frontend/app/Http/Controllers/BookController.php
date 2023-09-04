@@ -49,7 +49,7 @@ class BookController extends Controller
 
             $isPayment = json_decode($isPaymentResponse->getBody(), true);
 
-            $comments = $client->get($this->interactionService.'comment/'.$id);
+            $comments = $client->get($this->interactionService.'comment/'.$id.'/1');
             $comments = json_decode($comments->getBody(), true);
             $yourComment = null;
             foreach ($comments as $key => $value) {

@@ -125,7 +125,9 @@ class NewsController extends Controller
             $req = $client->get($this->contentService.'user/news/'.$id);
             $res = json_decode($req->getBody(), true);
             $news = $res['news'];
-            $comment = $res['comment'];
+
+            $comment = $client->get($this->interactionService.'comment/'.$id.'/2');
+            $comment = json_decode($comment->getBody(), true);
 
             $totalComment = 0;
             $user = session()->get('user')['id'];
@@ -188,100 +190,6 @@ class NewsController extends Controller
         catch (\Exception|GuzzleException $e) {
             $paginator = [];
             return view('main.news.view-more')->with('error', 'No result found')->with('paginator', $paginator)->with('categories', $categories);
-        }
-    }
-
-    public function comment(Request $request) {
-        $data = $request->all();
-        $client = new Client();
-        $user = session()->get('user');
-        try {
-            $response = $client->post($this->contentService.'comment', [
-                'form_params' => [
-                    'news_id' => $data['news_id'],
-                    'user_id' => $user['id'],
-                    'comment_name' => $user['fullname'],
-                    'content' => $data['comment'],
-                ]
-            ]);
-            $responseData = json_decode($response->getBody(), true);
-            if($responseData) {
-                return $responseData;
-            } else {
-                return redirect()->back()->with('error', 'Review failed!');
-            }
-        } catch (\Exception|GuzzleException $e) {
-            return redirect()->back()->with('error', 'Review failed!');
-        }
-    }
-
-    public function replyComment(Request $request) {
-        $data = $request->all();
-        $client = new Client();
-        $user = session()->get('user');
-        try {
-            $response = $client->post($this->contentService.'comment/reply', [
-                'form_params' => [
-                    'news_id' => $data['news_id'],
-                    'user_id' => $user['id'],
-                    'comment_parent_id' => $data['parent_id'],
-                    'comment_name' => $user['fullname'],
-                    'content' => $data['comment'],
-                ]
-            ]);
-            $responseData = json_decode($response->getBody(), true);
-            if($responseData) {
-                return $responseData;
-            } else {
-                return redirect()->back()->with('error', 'Review failed!');
-            }
-        } catch (\Exception|GuzzleException $e) {
-            return redirect()->back()->with('error', 'Review failed!');
-        }
-    }
-
-    public function deleteComment(Request $request) {
-        $data = $request->all();
-        $client = new Client();
-        try {
-            $response = $client->post($this->contentService.'comment/delete/', [
-                'form_params' => [
-                    'news_id' => $data['news_id'],
-                    'comment_id' => $data['comment_id'],
-                    'is_reply' => $data['is_reply'],
-                ]
-            ]);
-            $responseData = json_decode($response->getBody(), true);
-
-            if($responseData) {
-                return $responseData;
-            } else {
-                return redirect()->back()->with('error', 'Delete failed!');
-            }
-        } catch (\Exception|GuzzleException $e) {
-            return redirect()->back()->with('error', 'Delete failed!');
-        }
-    }
-
-    public function updateComment(Request $request) {
-        $data = $request->all();
-        $client = new Client();
-        try {
-            $response = $client->put($this->contentService.'comment/'.$data['comment_id'], [
-                'form_params' => [
-                    'news_id' => $data['news_id'],
-                    'content' => $data['comment'],
-                ]
-            ]);
-            $responseData = json_decode($response->getBody(), true);
-
-            if($responseData) {
-                return $responseData;
-            } else {
-                return redirect()->back()->with('error', 'Update failed!');
-            }
-        } catch (\Exception|GuzzleException $e) {
-            return redirect()->back()->with('error', 'Update failed!');
         }
     }
 }

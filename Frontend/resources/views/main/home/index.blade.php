@@ -53,8 +53,15 @@
     <div class="product-catagory-wrapper">
         <div class="container">
             <div class="row">
-                @if(isset($categories) && count($categories) > 0)
-                @php foreach ($categories as $key => $value) { if ($key == 4) { break; } $category_selected[] = $value; } @endphp @endif @if(count($category_selected) == 0 || $category_selected == null)
+                @php
+                    $category_selected = [];
+                    if(in_array([], $categories, true))
+                        foreach ($categories as $key => $value) {
+                            if ($key == 4) { break; }
+                            $category_selected[] = $value;
+                        }
+                @endphp
+                @if(count($category_selected) == 0 || $category_selected == null)
                     <div class="col-lg-3 col-md-4 col-sm-6 col-12">
                         <a href="#" class="product-catagory-single">
                             <div class="product-catagory-img">
