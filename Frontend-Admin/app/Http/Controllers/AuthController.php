@@ -46,6 +46,9 @@ class AuthController extends Controller
             if (isset($data['access_token'])) {
 
                 $user = $data['user'];
+                $req1 = $http->post($this->userService . 'auth/user-detail/' . $user['id']);
+                $userDetails = json_decode($req1->getBody(), true);
+                $user['userDetails'] = $userDetails['user']['user_detail'];
                 session()->put('adminToken', $data['access_token']);
                 session()->put('admin', $user);
                 session()->put('adminRole', $user['role']);

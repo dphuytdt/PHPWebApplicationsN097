@@ -32,7 +32,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-12 d-flex justify-content-between justify-content-md-between align-items-center flex-md-row flex-column">
-                    <h3 class="breadcrumb-title">{{__('messages.productDetails')}} {{ $result['book']['title'] }}</h3>
+                    <h3 class="breadcrumb-title">{{__('messages.productDetails')}} {{  Illuminate\Support\Str::limit($result['book']['title'], 10, $end='...') }}</h3>
                     {{ Breadcrumbs::render('bookDetails', $result['book']) }}
                 </div>
             </div>

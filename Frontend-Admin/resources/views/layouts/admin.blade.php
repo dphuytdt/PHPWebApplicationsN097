@@ -13,7 +13,7 @@
     <title>@yield('title') | Ebook</title>
     <link rel="icon" type="image/png" href="{{ asset('admin/img/logo.png') }}" />
     <link href="{{asset('admin/vendor/fontawesome-free/css/all.min.css')}}" rel="stylesheet" type="text/css">
-    <links
+    <link
         href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
         rel="stylesheet">
     <link href="{{asset('admin/css/sb-admin-2.min.css')}}" rel="stylesheet">
@@ -198,7 +198,7 @@
                                         $name = $user['fullname']
                                     @endphp
                                     <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{$name}}
-                                    <img class="img-profile rounded-circle" src="{{asset('admin/img/undraw_profile.svg') }}">
+                                    <img class="img-profile rounded-circle" src="{{$user['userDetails']['avatar']}}">
                                 @else
                                 <span class="mr-2 d-none d-lg-inline text-gray-600 small">
                                 <img class="img-profile rounded-circle" src="{{asset('admin/img/undraw_profile.svg')}}">

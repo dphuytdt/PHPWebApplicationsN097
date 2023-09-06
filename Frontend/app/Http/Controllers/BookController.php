@@ -151,6 +151,9 @@ class BookController extends Controller
     {
         $client = new Client();
 
+        $page = $request->input('page', 1);
+        $perPage = $request->input('perPage', 2);
+
         $req2 = $client->get($this->bookService . 'category');
         $categories = json_decode($req2->getBody(), true);
 
@@ -163,7 +166,7 @@ class BookController extends Controller
         }
         $dataType = $name;
         try {
-            $response = $client->get($this->bookService.'books/category/'.$id);
+            $response = $client->get($this->bookService.'books/category/'.$id.'?page='.$page);
             $responseData = json_decode($response->getBody(), true);
 
             if($responseData) {

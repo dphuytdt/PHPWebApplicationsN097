@@ -27,6 +27,17 @@
 </div>
 
 <div class="container">
+    @if(Session::has('error'))
+        <div class="alert alert-danger">
+            {{Session::get('error')}}
+        </div>
+        <br>
+    @elseif(Session::has('success'))
+        <div class="alert alert-success">
+            {{Session::get('success')}}
+        </div>
+    @endif
+
     <form action="{{route('books.store')}}" method="POST" enctype="multipart/form-data">
         @csrf
         <div class="mb-3">
@@ -76,13 +87,13 @@
             </select>
         </div>
         <div class="mb-3">
-            <label for="price" class="form-label">Price: <color style="color: red;">*</color></label>
+            <label for="price" class="form-label">Price: ($) <color style="color: red;">*</color></label>
             <input type="number" class="form-control" id="price" name="price" required>
         </div>
         <div class="mb-3 contentType">
             <label for="contentType" class="form-label">Is Featured <color style="color: red;">*</color></label>
             <select id="contentType" class="form-select" name="is_featured" required>
-                <option selected>Select Status</option>
+                <option selected disabled>Select Status</option>
                 <option value="1">Yes</option>
                 <option value="0">No</option>
             </select>
@@ -90,7 +101,7 @@
         <div class="mb-3 contentType">
             <label for="is_vip_valid" class="form-label">Is Valid For Vip <color style="color: red;">*</color></label>
             <select id="is_vip_valid" class="form-select" name="is_vip_valid" required>
-                <option selected>Select Status</option>
+                <option selected disabled>Select Status</option>
                 <option value="1">Yes</option>
                 <option value="0">No</option>
             </select>
@@ -98,7 +109,7 @@
         <div class="mb-3 contentType">
             <label for="contentType" class="form-label">Status <color style="color: red;">*</color></label>
             <select id="contentType" class="form-select" name="status" required>
-                <option selected>Select Status</option>
+                <option selected disabled>Select Status</option>
                 <option value="1">Active</option>
                 <option value="0">Inactive</option>
             </select>

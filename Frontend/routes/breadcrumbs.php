@@ -8,7 +8,7 @@ use DaveJamesMiller\Breadcrumbs\Facades\Breadcrumbs;
 
     Breadcrumbs::for('bookDetails', function ($trail, $book) {
         $trail->parent('home');
-        $trail->push($book['title'], route('bookDetails', $book['id']));
+        $trail->push(Illuminate\Support\Str::limit($book['title'], 10, $end='...'), route('bookDetails', $book['id']));
     });
 
     Breadcrumbs::for('search', function ($trail) {

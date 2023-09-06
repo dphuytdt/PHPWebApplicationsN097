@@ -84,10 +84,10 @@
                 <div class="card-body">
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Tasks</div>
+                            <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Users in system</div>
                             <div class="row no-gutters align-items-center">
                                 <div class="col-auto">
-                                    <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">50%</div>
+                                    <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">{{$countUser}}</div>
                                 </div>
                                 <div class="col">
                                     <div class="progress progress-sm mr-2">
@@ -97,7 +97,7 @@
                             </div>
                         </div>
                         <div class="col-auto">
-                            <i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
+                            <i class="fas fa-user-alt fa-2x text-gray-300"></i>
                         </div>
                     </div>
                 </div>
@@ -111,12 +111,12 @@
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
                             <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
-                                Pending Requests
+                                Total Books
                             </div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">18</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{$countBook}}</div>
                         </div>
                         <div class="col-auto">
-                            <i class="fas fa-comments fa-2x text-gray-300"></i>
+                            <i class="fas fa-book fa-2x text-gray-300"></i>
                         </div>
                     </div>
                 </div>

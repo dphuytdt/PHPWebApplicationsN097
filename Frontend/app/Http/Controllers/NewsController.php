@@ -130,7 +130,7 @@ class NewsController extends Controller
             $comment = json_decode($comment->getBody(), true);
 
             $totalComment = 0;
-            $user = session()->get('user')['id'];
+            $user = session()->get('user')['id'] ?? -1;
             $yourComment = [];
             foreach ($comment as $key => $value) {
                 $totalComment += count($value);

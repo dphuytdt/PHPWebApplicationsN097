@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use GuzzleHttp\Client;
+use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 
@@ -35,10 +36,27 @@ class HomeController extends Controller
                 $totalPayment[$key]['total_price'] = number_format($value['total_price'], 0, ',', '.');
                 $sum += $value['total_price'];
             }
-            return view('home.dashboard')->with('totalPayment', $totalPayment)->with('sum', $sum);
+
+            $response = $client->get($this->userService.'auth/admin/user', [
+                'headers' => [
+                    'Authorization' => 'Bearer ' . session('adminToken'),
+                    "Accept"=>"application/json"
+                ],
+
+            ]);
+            $users = json_decode($response->getBody(), true);
+            $countUser = count($users['users']);
+
+            $response = $client->get($this->bookService.'admin/books');
+            $paginator = json_decode($response->getBody(), true);
+
+            $response = $client->get($this->bookService.'admin/books');
+            $paginator = json_decode($response->getBody(), true);
+            $countBook = count($paginator);
+
+            return view('home.dashboard')->with('totalPayment', $totalPayment)->with('sum', $sum)->with('countUser', $countUser)->with('countBook', $countBook);
         } catch (\Throwable|\Exception|GuzzleException $e) {
-            dd($e);
-            return view('home.dashboard');
+            return view('errors.404');
         }
     }
 

@@ -101,10 +101,10 @@ class BookController extends Controller
                 ]);
 
                 Log::channel('admin_log')->info('User: ' .  session('admin')['email'] . ' create book success' );
-                return redirect()->route('books.index')->with('success', 'Create book successfully');
+                return redirect()->back()->with('success', 'Create book successfully');
             } catch (\Exception|GuzzleException $e) {
                 Log::channel('admin_log')->error('User: ' .  session('admin')['email'] . ' create book failed' );
-                return redirect()->route('books.index')->withErrors(['errors' => 'Cannot connect to server']);
+                return redirect()->back()->with('errors', 'Cannot connect to server');
             }
         }
 
