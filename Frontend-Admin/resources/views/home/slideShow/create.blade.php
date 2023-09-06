@@ -1,33 +1,6 @@
 @extends('layouts.admin')
 @section('content')
-@section('title', 'Category List')
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.5/dist/jquery.validate.js" crossorigin="anonymous"></script>
-<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-
-<script>
-    $(document).ready(function() {
-      $("#exampleInputPassword1").on("change", function() {
-        var input = this;
-        if (input.files && input.files[0]) {
-          var reader = new FileReader();
-          reader.onload = function(e) {
-            $('#uploadedImage').attr('src', e.target.result);
-          }
-          reader.readAsDataURL(input.files[0]);
-        }
-      });
-    });
-  </script>
-<!-- Begin Page Content -->
-<div class="container-fluid">
-
-    <h1 class="h3 mb-4 text-gray-800">{{ Breadcrumbs::render('slides.create') }}</h1>
-
-</div>
-@extends('layouts.admin')
-@section('content')
-    @section('title', 'Category List')
+    @section('title', 'Create SlideShow')
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.5/dist/jquery.validate.js" crossorigin="anonymous"></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
@@ -88,5 +61,4 @@
             <button type="submit" class="btn btn-primary">Create</button>
         </form>
     </div>
-@endsection
 @endsection

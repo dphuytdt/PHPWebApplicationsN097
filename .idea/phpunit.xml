@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="PHPUnit">
+    <option name="directories">
+      <list>
+        <option value="$PROJECT_DIR$/ContentManagementService/tests/Unit" />
+        <option value="$PROJECT_DIR$/ContentManagementService/tests/Feature" />
+        <option value="$PROJECT_DIR$/BookService/tests/Unit" />
+        <option value="$PROJECT_DIR$/BookService/tests/Feature" />
+        <option value="$PROJECT_DIR$/Frontend/tests/Unit" />
+        <option value="$PROJECT_DIR$/Frontend/tests/Feature" />
+        <option value="$PROJECT_DIR$/PaymentService/tests/Unit" />
+        <option value="$PROJECT_DIR$/PaymentService/tests/Feature" />
+        <option value="$PROJECT_DIR$/UserService/tests/Unit" />
+        <option value="$PROJECT_DIR$/UserService/tests/Feature" />
+        <option value="$PROJECT_DIR$/Frontend-Admin/tests/Unit" />
+        <option value="$PROJECT_DIR$/Frontend-Admin/tests/Feature" />
+      </list>
+    </option>
+  </component>
+</project>

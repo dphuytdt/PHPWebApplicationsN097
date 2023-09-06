@@ -1,12 +1,19 @@
 @extends('layouts.admin')
 @section('content')
-@section('title', 'Category List')
+@section('title', 'Users List')
 <div class="container-fluid">
     <h1 class="h3 mb-2 text-gray-800">{{ Breadcrumbs::render('users.index') }}</h1>
     <div class="card shadow mb-4">
         <div class="card-body">
+            <form id="exportForm" action="{{route('users.export')}}" method="POST" enctype="multipart/form-data">
+                @csrf
+                <a target="_blank" href="#" id="exportLink" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm" data-toggle="modal" data-target="#importNewsModal">
+                    <i class="fas fa-file-export"></i> Export Users List
+                </a>
+            </form>
+            <br>
             <div class="table-responsive">
-                <table id="listUsers" class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <table id="listUsers" class="table table-bordered" width="100%" cellspacing="0">
                     <thead>
                         <tr>
                             <th>Full Name</th>
@@ -144,6 +151,13 @@
 <script>
     $(document).ready(function() {
         $('#listUsers').DataTable();
+    });
+</script>
+
+<script type="text/javascript">
+    document.getElementById('exportLink').addEventListener('click', function (e) {
+        e.preventDefault();
+        document.getElementById('exportForm').submit();
     });
 </script>
 @endsection

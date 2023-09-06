@@ -8,14 +8,20 @@
       <change afterPath="$PROJECT_DIR$/BookService/app/Imports/BookImport.php" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/BookService/app/Imports/CategoryImport.php" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/BookService/app/Providers/DropboxServiceProvider.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Frontend-Admin/BookService/app/Imports/BookImport.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Frontend-Admin/BookService/app/Imports/CategoryImport.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Frontend-Admin/BookService/app/Providers/DropboxServiceProvider.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Frontend-Admin/app/Exports/UserExport.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/phpunit.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/phpunit.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Frontend-Admin/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend-Admin/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Frontend/resources/views/main/home/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/resources/views/main/home/index.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Frontend-Admin/app/Http/Controllers/UserController.php" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend-Admin/app/Http/Controllers/UserController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Frontend-Admin/resources/views/home/category/create.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend-Admin/resources/views/home/category/create.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Frontend-Admin/resources/views/home/slideShow/create.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend-Admin/resources/views/home/slideShow/create.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Frontend-Admin/resources/views/home/slideShow/list.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend-Admin/resources/views/home/slideShow/list.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Frontend-Admin/resources/views/home/system/logging.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend-Admin/resources/views/home/system/logging.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Frontend-Admin/resources/views/home/system/statistical.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend-Admin/resources/views/home/system/statistical.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Frontend-Admin/resources/views/home/user/create.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend-Admin/resources/views/home/user/create.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Frontend-Admin/resources/views/home/user/list.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend-Admin/resources/views/home/user/list.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Frontend-Admin/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend-Admin/routes/web.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Frontend/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/composer.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UserService/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/UserService/composer.lock" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -627,7 +633,6 @@
       <path value="$PROJECT_DIR$/BookService/vendor/sebastian/cli-parser" />
       <path value="$PROJECT_DIR$/BookService/vendor/dflydev/dot-access-data" />
       <path value="$PROJECT_DIR$/BookService/vendor/sebastian/version" />
-      <path value="$PROJECT_DIR$/BookService/vendor/sebastian/complexity" />
       <path value="$PROJECT_DIR$/BookService/vendor/sebastian/recursion-context" />
       <path value="$PROJECT_DIR$/BookService/vendor/sebastian/environment" />
       <path value="$PROJECT_DIR$/BookService/vendor/sebastian/global-state" />
@@ -674,16 +679,13 @@
       <path value="$PROJECT_DIR$/BookService/vendor/symfony/console" />
       <path value="$PROJECT_DIR$/BookService/vendor/symfony/event-dispatcher" />
       <path value="$PROJECT_DIR$/BookService/vendor/symfony/http-foundation" />
-      <path value="$PROJECT_DIR$/BookService/vendor/laravel/sail" />
       <path value="$PROJECT_DIR$/BookService/vendor/symfony/uid" />
       <path value="$PROJECT_DIR$/BookService/vendor/laravel/framework" />
       <path value="$PROJECT_DIR$/BookService/vendor/symfony/translation-contracts" />
-      <path value="$PROJECT_DIR$/BookService/vendor/laravel/tinker" />
       <path value="$PROJECT_DIR$/BookService/vendor/symfony/service-contracts" />
       <path value="$PROJECT_DIR$/BookService/vendor/theseer/tokenizer" />
       <path value="$PROJECT_DIR$/BookService/vendor/laravel/serializable-closure" />
       <path value="$PROJECT_DIR$/BookService/vendor/symfony/string" />
-      <path value="$PROJECT_DIR$/BookService/vendor/laravel/pint" />
       <path value="$PROJECT_DIR$/BookService/vendor/symfony/yaml" />
       <path value="$PROJECT_DIR$/BookService/vendor/symfony/translation" />
       <path value="$PROJECT_DIR$/BookService/vendor/symfony/polyfill-uuid" />
@@ -717,12 +719,8 @@
       <path value="$PROJECT_DIR$/BookService/vendor/monolog/monolog" />
       <path value="$PROJECT_DIR$/BookService/vendor/dragonmantank/cron-expression" />
       <path value="$PROJECT_DIR$/BookService/vendor/webmozart/assert" />
-      <path value="$PROJECT_DIR$/BookService/vendor/phpunit/php-code-coverage" />
       <path value="$PROJECT_DIR$/BookService/vendor/fruitcake/php-cors" />
-      <path value="$PROJECT_DIR$/BookService/vendor/phpunit/php-file-iterator" />
       <path value="$PROJECT_DIR$/BookService/vendor/phpunit/php-invoker" />
-      <path value="$PROJECT_DIR$/BookService/vendor/guzzlehttp/uri-template" />
-      <path value="$PROJECT_DIR$/BookService/vendor/phpunit/php-text-template" />
       <path value="$PROJECT_DIR$/BookService/vendor/guzzlehttp/psr7" />
       <path value="$PROJECT_DIR$/BookService/vendor/phpunit/phpunit" />
       <path value="$PROJECT_DIR$/BookService/vendor/guzzlehttp/guzzle" />
@@ -966,6 +964,14 @@
       <path value="$PROJECT_DIR$/Frontend-Admin/vendor/barryvdh/laravel-dompdf" />
       <path value="$PROJECT_DIR$/Frontend-Admin/vendor/phenx/php-svg-lib" />
       <path value="$PROJECT_DIR$/Frontend-Admin/vendor/phenx/php-font-lib" />
+      <path value="$PROJECT_DIR$/BookService/vendor/laravel/pint" />
+      <path value="$PROJECT_DIR$/BookService/vendor/laravel/sail" />
+      <path value="$PROJECT_DIR$/BookService/vendor/laravel/tinker" />
+      <path value="$PROJECT_DIR$/BookService/vendor/phpunit/php-text-template" />
+      <path value="$PROJECT_DIR$/BookService/vendor/phpunit/php-file-iterator" />
+      <path value="$PROJECT_DIR$/BookService/vendor/guzzlehttp/uri-template" />
+      <path value="$PROJECT_DIR$/BookService/vendor/phpunit/php-code-coverage" />
+      <path value="$PROJECT_DIR$/BookService/vendor/sebastian/complexity" />
     </include_path>
   </component>
   <component name="ProblemsViewState">
@@ -1020,7 +1026,7 @@
   </component>
   <component name="RunManager" selected="PHPUnit.phpunit.xml">
     <configuration name="Main" type="PHPUnitRunConfigurationType" factoryName="PHPUnit">
-      <TestRunner configuration_file="$PROJECT_DIR$/Frontend/phpunit.xml" scope="XML" use_alternative_configuration_file="true" />
+      <TestRunner configuration_file="$PROJECT_DIR$/BookService/phpunit.xml" scope="XML" use_alternative_configuration_file="true" />
       <method v="2" />
     </configuration>
     <configuration name="phpunit.xml" type="PHPUnitRunConfigurationType" factoryName="PHPUnit">
@@ -1146,6 +1152,8 @@
       <workItem from="1693743672956" duration="365000" />
       <workItem from="1693744339019" duration="832000" />
       <workItem from="1693807089134" duration="2282000" />
+      <workItem from="1693810463294" duration="2712000" />
+      <workItem from="1693963846887" duration="3202000" />
     </task>
     <servers />
   </component>

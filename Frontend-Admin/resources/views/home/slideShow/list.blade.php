@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 @section('content')
-@section('title', 'Category List')
+@section('title', 'Slides List')
 {{-- <script src="https://code.jquery.com/jquery-2.2.4.js"></script> --}}
 <script>
     $(document).ready(function() {

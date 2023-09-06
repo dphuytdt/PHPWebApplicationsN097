@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\UserExport;
 use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
+use Couchbase\User;
 use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Http\Request;
 use GuzzleHttp\Client;
@@ -273,6 +275,28 @@ class UserController extends Controller
 
         } catch (\Exception|\Throwable|GuzzleException $e) {
             dd($e);
+            return redirect()->back()->with('error', 'Something went wrong!');
+        }
+    }
+
+    public function export(): \Symfony\Component\HttpFoundation\BinaryFileResponse|\Illuminate\Http\RedirectResponse
+    {
+        $client = new Client();
+
+        try {
+            $response = $client->get($this->userService.'auth/admin/user', [
+                'headers' => [
+                    'Authorization' => 'Bearer ' . session('adminToken'),
+                    "Accept"=>"application/json"
+                ],
+
+            ]);
+
+            $users = json_decode($response->getBody(), true);
+            $now = date('Y-m-d H:i:s');
+
+            return Excel::download(new UserExport($users['users']), 'users ' . $now . '.csv', \Maatwebsite\Excel\Excel::CSV);
+        } catch (\Exception|\Throwable|GuzzleException $e) {
             return redirect()->back()->with('error', 'Something went wrong!');
         }
     }

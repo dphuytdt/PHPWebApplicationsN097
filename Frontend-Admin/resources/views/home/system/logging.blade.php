@@ -1,4 +1,4 @@
-@extends('layouts.admin') @section('content') @section('title', 'My Profile')
+@extends('layouts.admin') @section('content') @section('title', 'Activity Log')
 <div class="container-fluid">
     <h1 class="h3 mb-4 text-gray-800">{{ Breadcrumbs::render('checkLog') }}</h1>
 
