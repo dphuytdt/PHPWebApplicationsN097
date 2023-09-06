@@ -41,9 +41,7 @@ class BookRepository implements BookRepositoryInterface
             return false;
         }
 
-        if (
-            (isset($data['cover_image']) && ($data['cover_image']  !== $book->cover_image))
-            || (($data['cover_image'] != '') && ($data['cover_image']  !== $book->cover_image))
+        if (($data['cover_image'] != null) && ($data['cover_image']  !== $book->cover_image)
         ) {
             $book->cover_image = $data['cover_image'];
             $book->image_extension = $data['image_extension'];
@@ -65,9 +63,7 @@ class BookRepository implements BookRepositoryInterface
             $book->category_id = $data['category_id'];
         }
 
-        if (
-            isset($data['content']) && ($data['content']  !== $book->content)
-            || (($data['content'] != '') && ($data['content']  !== $book->content))
+        if (($data['content'] != null) && ($data['content']  !== $book->content)
         ) {
             $book->content = $data['content'];
         }
@@ -86,6 +82,10 @@ class BookRepository implements BookRepositoryInterface
 
         if (isset($data['is_featured']) && ($data['is_featured']  !== $book->is_featured)) {
             $book->is_featured = $data['is_featured'];
+        }
+
+        if (isset($data['status']) && ($data['status']  !== $book->status)) {
+            $book->status = $data['status'];
         }
 
         return $book->save();

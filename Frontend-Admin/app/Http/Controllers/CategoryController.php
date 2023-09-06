@@ -85,8 +85,12 @@ class CategoryController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $imageFile = $request->file('image');
-        $pathImage = Cloudinary::upload($imageFile->getRealPath())->getSecurePath();
+        if ($request->hasFile('image')) {
+            $imageFile = $request->file('image');
+            $pathImage = Cloudinary::upload($imageFile->getRealPath())->getSecurePath();
+        } else {
+            $pathImage = null;
+        }
 
         $data = [
             'name' => $request->name,
@@ -103,8 +107,8 @@ class CategoryController extends Controller
                 'form_params' => [
                     'name' => $data['name'] ?? '',
                     'description' => $data['description'] ?? '',
-                    'image' => $data['image'] ?? '',
-                    'image_extension' => $data['image_extension'] ?? '',
+                    'image' => $data['image'],
+                    'image_extension' => $data['image_extension'],
                     'status' => $data['status'] ?? 1,
                 ]
             ]);

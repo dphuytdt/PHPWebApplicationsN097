@@ -89,6 +89,7 @@ class AdminBookController extends Controller
             'image_extension' => 'png',
             'is_vip_valid' => $request->is_vip_valid,
             'is_featured' => $request->is_featured,
+            'status' => $request->status,
         ];
 
         try{

@@ -55,7 +55,7 @@
             <div class="row">
                 @php
                     $category_selected = [];
-                    if(in_array([], $categories, true))
+                    if(count($categories) != 0)
                         foreach ($categories as $key => $value) {
                             if ($key == 4) { break; }
                             $category_selected[] = $value;

@@ -21,33 +21,6 @@ class UserController extends Controller
         $this->userRepository = $userRepository;
         $this->otpRepository = $otpRepository;
     }
-
-    /**
-     * @OA\Get(
-     *     path="/api/admin/user",
-     *     summary="List users",
-     *     tags={"User"},
-     *     security={{"bearerAuth":{}}},
-     *     @OA\Response(
-     *     response=200,
-     *     description="List users",
-     *     @OA\JsonContent(
-     *     type="object",
-     *     @OA\Property(property="users", type="array", @OA\Items(
-     *     @OA\Property(property="id", type="integer"),
-     *     @OA\Property(property="fullname", type="string"),
-     *     @OA\Property(property="email", type="string"),
-     *     @OA\Property(property="role", type="string"),
-     *     @OA\Property(property="is_active", type="integer"),
-     *     @OA\Property(property="is_vip", type="integer"),
-     *     @OA\Property(property="created_at", type="string"),
-     *     @OA\Property(property="updated_at", type="string"),
-     *     @OA\Property(property="deleted_at", type="string"),
-     *     ))
-     *    )
-     *  )
-     * )
-     */
     public function getAllUser(): \Illuminate\Http\JsonResponse
     {
         $users = $this->userRepository->getAllUser();
@@ -142,10 +115,12 @@ class UserController extends Controller
 
     public function import(Request $request)
     {
-        $data = $request->get('file');
+        $data = $request->all();
+        $file = $data['userData'];
 
-        foreach ($data as $key => $value) {
-            dd($value[2]);
+
+
+        foreach ($file as $key => $value) {
             $user = $this->userRepository->getUserByEmail($value[2]);
             if($user) {
                 return response()->json(['message' => 'User is exist at row ' . ($key + 1)]);
@@ -169,11 +144,7 @@ class UserController extends Controller
                 $action = $this->userRepository->createUser($adapter);
 
                 if($action) {
-                    if(AdminSendMailCreateUser::dispatch($action->email, $passwordGenerate)) {
-                        return response()->json(['message' => 'Import user successfully']);
-                    } else {
-                        return response()->json(['message' => 'Import user failed']);
-                    }
+                    AdminSendMailCreateUser::dispatch($action->email, $passwordGenerate);
                 } else {
                     return response()->json(['message' => 'Import user failed']);
                 }
@@ -181,6 +152,8 @@ class UserController extends Controller
                 return response()->json(['message' => $e->getMessage()]);
             }
         }
+
+        return response()->json(['message' => 'Import user successfully']);
     }
 
     public function upgradeVip(Request $request)

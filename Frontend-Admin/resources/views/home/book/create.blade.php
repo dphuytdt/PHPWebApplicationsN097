@@ -35,7 +35,7 @@
         </div>
         <div class="mb-3">
             <label for="description" class="form-label">Description: (Optional)</label>
-            <textarea class="form-control" id="description" name="description"></textarea>
+            <textarea class="form-control" id="description" name="description" rows="6"></textarea>
         </div>
         <div class="mb-3">
             <label for="exampleInputPassword1" class="form-label">Cover Image <color style="color: red;">*</color></label>
@@ -69,7 +69,7 @@
                 }
             </style>
             <select id="disabledSelect" class="form-select" name="category_id" required>
-                <option selected>Select Category:</option>
+                <option disabled selected>Select Category:</option>
                 @foreach($categories as $category)
                     <option value="{{$category['id']}}">{{$category['name']}}</option>
                 @endforeach

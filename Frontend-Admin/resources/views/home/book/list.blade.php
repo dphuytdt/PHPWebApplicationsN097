@@ -44,7 +44,7 @@
                             @foreach($paginator as $key => $book)
                                 <tr>
                                     <td>{{ ++$key }}</td>
-                                    <td>{{ $book['title'] }}</td>
+                                    <td>{{Illuminate\Support\Str::limit($book['title'], $numberLimit)}}</td>
                                     <td><img src="{{ $book['cover_image'] }}" alt="" width="100px" height="100px"></td>
                                     <td>{{ Illuminate\Support\Str::limit($book['author'], $numberLimit) }}</td>
                                    <td>{{ Illuminate\Support\Str::limit($book['category_name'], $numberLimit) }}</td>

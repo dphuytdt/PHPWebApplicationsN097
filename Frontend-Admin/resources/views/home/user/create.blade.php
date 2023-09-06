@@ -40,9 +40,9 @@
                 {{Session::get('success')}}
             </div>
         @endif
-{{--        <a href="" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm" data-toggle="modal" data-target="#importNewsModal">--}}
-{{--            <i class="fas fa-download fa-sm text-white-50"></i> Import Users--}}
-{{--        </a>--}}
+        <a href="" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm" data-toggle="modal" data-target="#importNewsModal">
+            <i class="fas fa-download fa-sm text-white-50"></i> Import Users
+        </a>
 
         <div class="modal fade" id="importNewsModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <form action="{{route('users.import')}}" method="POST" enctype="multipart/form-data">

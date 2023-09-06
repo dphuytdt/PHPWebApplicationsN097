@@ -187,18 +187,19 @@ class UserController extends Controller
 
         $client = new Client();
         try{
-            $client->post($this->userService.'auth/admin/user/import', [
+            $response = $client->post($this->userService.'auth/admin/user/import', [
                 'headers' => [
                     'Authorization' => 'Bearer ' . session('adminToken'),
                 ],
-                'form-param' => [
-                    'file' => $file[0],
+                'form_params' => [
+                    'userData' => $file[0]
                 ],
             ]);
 
             Log::channel('admin_log')->info('Admin: ' .  session('admin')['email'] . ' import user successfully' );
             return redirect()->back()->with('success', 'Import user successfully');
         } catch (\Exception|GuzzleException $e) {
+            dd($e);
             Log::channel('admin_log')->error('Admin: ' .  session('admin')['email'] . ' cannot import user' );
             return view('home.user.list')->withErrors(['errors' => 'Cannot connect to server']);
         }

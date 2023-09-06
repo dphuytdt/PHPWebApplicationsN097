@@ -138,11 +138,16 @@ class BookController extends Controller
             $imageFile = $request->file('image');
             $imageExtension = $imageFile->getClientOriginalExtension();
             $imagePath = Cloudinary::upload($imageFile->getRealPath())->getSecurePath();
+        } else {
+            $imagePath = null;
+            $imageExtension = 'png';
         }
 
         if ($request->hasFile('content')) {
             $contentFile = $request->file('content');
             $contentPath = Cloudinary::uploadFile($contentFile->getRealPath())->getSecurePath();
+        } else {
+            $contentPath = null;
         }
 
         $client = new Client();
@@ -154,10 +159,10 @@ class BookController extends Controller
             'category_id' => $request->category_id,
             'price' => $request->price,
             'discount' => $request->discount,
-            'content' => $contentPath ?? '',
+            'content' => $contentPath,
             'status' => $request->status,
-            'cover_image' => $imagePath ?? '',
-            'image_extension' => $imageExtension ?? '',
+            'cover_image' => $imagePath,
+            'image_extension' => $imageExtension,
             'is_vip_valid' => $request->is_vip_valid ?? '',
             'is_featured' => $request->is_featured ?? ''
         ];

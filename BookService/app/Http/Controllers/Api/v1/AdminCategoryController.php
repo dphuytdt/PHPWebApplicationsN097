@@ -59,6 +59,7 @@ class AdminCategoryController extends Controller
     public function update(Request $request, string $id): \Illuminate\Http\JsonResponse
     {
         $data = $request->all();
+        $data['image'] = $request->image ?? null;
 
         try{
             $category = $this->categoryRepository->updateCategory($data, $id);
