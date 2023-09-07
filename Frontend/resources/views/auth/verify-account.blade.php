@@ -36,7 +36,7 @@
                 @endif
                 <div class="account_form register">
                     <h3>{{__('messages.Acount Verify')}}</h3>
-                    <form id="verifyOtpForm" method="POST" action="{{ route('postInputOtp') }}">
+                    <form id="verifyOtpForm" method="POST" action="{{ route('verify.post') }}">
                         @csrf
                         <div class="default-form-box mb-20">
                             <label>{{__('messages.Your OTP')}} <span>*</span></label>

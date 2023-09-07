@@ -32,7 +32,7 @@
                         @csrf
                         <input type="hidden" name="userName" value="{{$user['fullname']}}">
                         <input type="hidden" name="userId" value="{{$user['id']}}">
-                        <input type="hidden" name="total" value="35">
+                        <input type="hidden" name="total" value="11">
                         <input type="hidden" name="plan" value="1">
                         <input type="hidden" name="currentTimestamp" value="{{date('dmYHis')}}">
                         <input type="hidden" name="payment" value="vnpay">
@@ -43,12 +43,12 @@
                             </div>
                             <div class="price-box">
                                 <div class="title">Monthly Pass</div>
-                                <h4 class="price">$35.99</h4>
+                                <h4 class="price">$10.99</h4>
                             </div>
                             <ul class="features">
                                 <li class="true">Conference plans</li>
-                                <li class="true">Free Lunch And Coffee</li>
-                                <li class="true">Certificate</li>
+                                <li class="true">Free Books with VIP</li>
+                                <li class="true">Feel free to read</li>
                                 <li class="false">Easy Access</li>
                                 <li class="false">Free Contacts</li>
                             </ul>
@@ -63,7 +63,7 @@
                         @csrf
                         <input type="hidden" name="userName" value="{{$user['fullname']}}">
                         <input type="hidden" name="userId" value="{{$user['id']}}">
-                        <input type="hidden" name="total" value="99">
+                        <input type="hidden" name="total" value="21">
                         <input type="hidden" name="plan" value="6">
                         <input type="hidden" name="currentTimestamp" value="{{date('dmYHis')}}">
                         <input type="hidden" name="payment" value="vnpay">
@@ -74,12 +74,12 @@
                             </div>
                             <div class="price-box">
                                 <div class="title">Half Year Pass</div>
-                                <h4 class="price">$99.99</h4>
+                                <h4 class="price">$20.99</h4>
                             </div>
                             <ul class="features">
                                 <li class="true">Conference plans</li>
-                                <li class="true">Free Lunch And Coffee</li>
-                                <li class="true">Certificate</li>
+                                <li class="true">Free Books with VIP</li>
+                                <li class="true">Feel free to read</li>
                                 <li class="true">Easy Access</li>
                                 <li class="false">Free Contacts</li>
                             </ul>
@@ -94,7 +94,7 @@
                         @csrf
                         <input type="hidden" name="userName" value="{{$user['fullname']}}">
                         <input type="hidden" name="userId" value="{{$user['id']}}">
-                        <input type="hidden" name="total" value="199">
+                        <input type="hidden" name="total" value="31">
                         <input type="hidden" name="plan" value="12">
                         <input type="hidden" name="currentTimestamp" value="{{date('dmYHis')}}">
                         <input type="hidden" name="payment" value="vnpay">
@@ -105,12 +105,12 @@
                             </div>
                             <div class="price-box">
                                 <div class="title">Year Pass</div>
-                                <h4 class="price">$199.99</h4>
+                                <h4 class="price">$30.99</h4>
                             </div>
                             <ul class="features">
                                 <li class="true">Conference plans</li>
-                                <li class="true">Free Lunch And Coffee</li>
-                                <li class="true">Certificate</li>
+                                <li class="true">Free Books with VIP</li>
+                                <li class="true">Feel free to read</li>
                                 <li class="true">Easy Access</li>
                                 <li class="true">Free Contacts</li>
                             </ul>

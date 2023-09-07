@@ -29,8 +29,11 @@ class NewsController extends Controller
         $req2 = $client->get($this->bookService . 'category');
         $categories = json_decode($req2->getBody(), true);
 
+        $page = $request->input('page', 1);
+        $perPage = $request->input('perPage', 2);
+
         try{
-            $response = $client->request('GET', $this->contentService . 'user/news');
+            $response = $client->request('GET', $this->contentService . 'user/news?page='.$page);
             $data = json_decode($response->getBody()->getContents());
 
             if($data) {
@@ -146,7 +149,6 @@ class NewsController extends Controller
             $res = json_decode($response->getBody(), true);
             $recentNews = $res['newsRecent'];
             $tags = $res['tags'];
-
             return view('main.news.news-detail', compact('news', 'categories', 'recentNews', 'tags', 'finalComment', 'totalComment'));
         }
         catch (\Exception|GuzzleException $e) {

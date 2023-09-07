@@ -120,22 +120,21 @@ class AuthController extends Controller
     public function verifyGet()
     {
         $client = new Client();
-
         $req2 = $client->get($this->bookService . 'category');
         $categories = json_decode($req2->getBody(), true);
 
-        if (session()->has('token')) {
-            return redirect()->intended('/');
-        } else if (!session()->has('emailRegister')) {
-            return redirect()->route('login')->with('error', 'You must register first');
-        } else {
-            return view('auth.verify-account')->with('categories', $categories);
+        if (session()->has('token') || !session()->has('emailRegister')) {
+            return redirect()->intended('/')->with('error', 'You must logout before verify account');
         }
+
+        return view('auth.verify-account')->with('categories', $categories);
+
     }
 
     public function verifyPost(Request $request)
     {
         $email = session('emailRegister');
+
         $request->merge(['email' => $email]);
 
         $client = new Client();
@@ -153,7 +152,7 @@ class AuthController extends Controller
                 return redirect()->route('verify-account')->with('error', 'Verify account failed');
             }
         } catch (\Exception|GuzzleException $e) {
-            return redirect()->route('verify-account')->with('error', 'Verify account failed')->withInput();
+            return redirect()->route('verify.get')->with('error', 'Verify account failed')->withInput();
         }
     }
 

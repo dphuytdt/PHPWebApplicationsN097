@@ -61,10 +61,10 @@ class CartRepository implements CartRepositoryInterface
 
     public function checkout($userId, $bookId, $totalPrice)
     {
-        $cart = Cart::where('user_id', $userId)->where('status', 0)->get();
-        if($cart) {
-            $cart->status = 1;
-        }
+        $cartModel = new Cart();
+        $cart = $cartModel->where('user_id', $userId)->where('book_id', $bookId)->where('status', 0)->first();
+        $cart->status = 1;
+        $cart->save();
 
         $paymentHistory = new HistoryPayment();
         $paymentHistory->user_id = $userId;

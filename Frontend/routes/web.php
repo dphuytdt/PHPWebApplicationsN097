@@ -58,7 +58,7 @@ Route::group(['middleware' => 'locale'], function() {
 
         Route::prefix('verify') -> group(function () {
             Route::get('/', [AuthController::class, 'verifyGet'])->name('verify.get');
-            Route::get('/', [AuthController::class, 'verifyPost'])->name('verify.get');
+            Route::post('/', [AuthController::class, 'verifyPost'])->name('verify.post');
         });
 
         Route::get('forgot-password', [AuthController::class, 'forgotPassword'])->name('forgotPassword');
@@ -93,10 +93,10 @@ Route::group(['middleware' => 'locale'], function() {
     });
 
     Route::group(['prefix' => 'news'], function () {
-        Route::get('/', [NewsController::class, 'index'])->name('news');
-        Route::get('view-more', [NewsController::class, 'viewMore'])->name('news.viewMore');
+        Route::get('/details/{id}', [NewsController::class, 'newsDetail'])->name('newsDetail');
         Route::get('search/{page?}', [NewsController::class, 'searchNews'])->name('news.search');
-        Route::get('{id}', [NewsController::class, 'newsDetail'])->name('newsDetail');
+        Route::get('/{page?}', [NewsController::class, 'index'])->name('news');
+        Route::get('view-more', [NewsController::class, 'viewMore'])->name('news.viewMore');
     });
 
     Route::get('view-more/{dataType}', [BookController::class, 'viewMore'])->name('view.more');

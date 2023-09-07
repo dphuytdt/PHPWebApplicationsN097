@@ -124,17 +124,17 @@ class CartController extends Controller
     public function payment(Request $request)
     {
         $data = $request->all();
+
         $client = new Client();
 
         try{
-            $client->post($this->paymentService.'cart/checkout', [
+            $respone = $client->post($this->paymentService.'cart/checkout', [
                 'form_params' => [
                     "bookId" => $data['bookId'],
                     "useId" => $data['useId'],
                     "price" => $data['price'],
                 ]
             ]);
-
 
             if($data['payment'] == self::VN_PAY) {
                 error_reporting(E_ALL & ~E_NOTICE & ~E_DEPRECATED);
@@ -207,9 +207,8 @@ class CartController extends Controller
             }
         } catch (\Exception| GuzzleException $e) {
             dd($e->getMessage());
-            print_r($e->getMessage());
+            return redirect()->back();
         }
-        return redirect()->back();
     }
 
     public function paymentMomo(Request $request)

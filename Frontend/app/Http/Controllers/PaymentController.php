@@ -32,6 +32,7 @@ class PaymentController extends Controller
     public function payment(Request $request)
     {
         $data = $request->all();
+        $data['total'] = $data['total'] * 100;
 
         $client = new Client();
 
@@ -79,7 +80,7 @@ class PaymentController extends Controller
                 $vnp_TxnRef = now()->timestamp;
                 $vnp_OrderInfo = "User Name: " . $request->userName . " - Payment for order Vip package";
                 $vnp_OrderType = 'billpayment';
-                $vnp_Amount = (int)$request->total * 100;
+                $vnp_Amount = $data['total'] * 100 * 241;
                 $vnp_Locale = 'vn';
                 $vnp_BankCode = 'NCB';
                 $vnp_IpAddr = $_SERVER['REMOTE_ADDR'];

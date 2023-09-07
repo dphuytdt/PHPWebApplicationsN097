@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('title', 255);
             $table->string('slug', 255)->nullable(true);
-            $table->string('description', 255)->nullable(true);
+            $table->longText('description')->nullable(true);
             $table->text('content');
             $table->longText('image');
             $table->string('image_extension', 255);

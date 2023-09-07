@@ -574,6 +574,7 @@
 
                     wishlistItems.forEach(item => {
                         const li = document.createElement('li');
+                        const bookId = item.id;
                         li.classList.add('offcanvas-wishlist-item-single');
 
                         li.innerHTML = `
